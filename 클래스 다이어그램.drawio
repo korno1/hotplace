@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-06-22T01:24:18.886Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" etag="afGrhxXL7eFMTihK90XH" version="21.5.0" type="github">
+<mxfile host="app.diagrams.net" modified="2023-06-22T01:26:43.438Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" etag="aHCdA7JU1z9gOef2IZPh" version="21.5.0" type="github">
   <diagram name="Page-1" id="9f46799a-70d6-7492-0946-bef42562c5a5">
     <mxGraphModel dx="2497" dy="1634" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="none" math="0" shadow="0">
       <root>
@@ -1837,10 +1837,10 @@
         <mxCell id="hk3U1_z9klaRSqhkHWRh-29" value="+ mai_selectAll(int sender, int page): List&amp;lt;mailVO&amp;gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="hk3U1_z9klaRSqhkHWRh-26" vertex="1">
           <mxGeometry y="60" width="300" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="hk3U1_z9klaRSqhkHWRh-35" value="+ mai_selectAll(int recevier,int page): List&amp;lt;mailVO&amp;gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="hk3U1_z9klaRSqhkHWRh-26" vertex="1">
+        <mxCell id="hk3U1_z9klaRSqhkHWRh-35" value="+ mai_selectAll2(int recevier,int page): List&amp;lt;mailVO&amp;gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="hk3U1_z9klaRSqhkHWRh-26" vertex="1">
           <mxGeometry y="86" width="300" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="hk3U1_z9klaRSqhkHWRh-36" value="+ mai_selectAll(String, String,int page): List&amp;lt;mailVO&amp;gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="hk3U1_z9klaRSqhkHWRh-26" vertex="1">
+        <mxCell id="hk3U1_z9klaRSqhkHWRh-36" value="+ mai_selectAll3(String, String,int page): List&amp;lt;mailVO&amp;gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="hk3U1_z9klaRSqhkHWRh-26" vertex="1">
           <mxGeometry y="112" width="300" height="26" as="geometry" />
         </mxCell>
         <mxCell id="hk3U1_z9klaRSqhkHWRh-30" value="+mai_selectOne(mailVO): List&amp;lt;mailVO&amp;gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="hk3U1_z9klaRSqhkHWRh-26" vertex="1">

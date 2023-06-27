@@ -33,7 +33,7 @@
 		<interceptor>
 			<mapping path="/*.do" />
 			<beans:bean
-				class="project.com.hotplace.interceptor.interceptor"></beans:bean>
+				class="project.com.hotplace.interceptor.Interceptor"></beans:bean>
 		</interceptor>
 	</interceptors>
 

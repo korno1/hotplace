@@ -6,7 +6,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class interceptor extends HandlerInterceptorAdapter {
+public class Interceptor extends HandlerInterceptorAdapter {
 
 //	@Autowired
 //	HttpSession session;

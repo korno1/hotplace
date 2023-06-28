@@ -14,12 +14,12 @@
 	});
 
 	function NickNameCheck() {
-		console.log("NickNameCheck....", $('#NICK_NAME').val());
+		console.log("NickNameCheck....", $('#nick_name').val());
 
 		$.ajax({
 			url : "json/nickNameCheck.do",
 			data : {
-				id : $('#NICK_NAME').val()
+				nick_name : $('#nick_name').val()
 			},
 			method : 'GET',
 			dataType : 'json',
@@ -32,21 +32,21 @@
 				} else {
 					msg = '사용중인 닉네임입니다.';
 				}
-				$('#demo').text(msg);
+				$('#nickNameCheck').text(msg);
 			},
 			error : function(xhr, status, error) {
 				console.log('xhr.status:', xhr.status);
 			}
 		});//end $.ajax()...
 
-	}//end idCheck()...
+	}//end NickNameCheck()...
 	function emailCheck() {
-		console.log("emailCheck....", $('#EMAIL').val());
+		console.log("emailCheck....", $('#email').val());
 
 		$.ajax({
-			url : "json/emailCheck.do.do",
+			url : "json/emailCheck.do",
 			data : {
-				id : $('#EMAIL').val()
+				email : $('#email').val()
 			},
 			method : 'GET',
 			dataType : 'json',
@@ -59,34 +59,75 @@
 				} else {
 					msg = '사용중인 이메일입니다.';
 				}
-				$('#demo').text(msg);
+				$('#emailCheck').text(msg);
 			},
 			error : function(xhr, status, error) {
 				console.log('xhr.status:', xhr.status);
 			}
 		});//end $.ajax()...
 
-	}//end idCheck()...
+	}//end emailCheck()...
+	function insertOK() {
+		console.log("insertOK....");
+		
+		let selectedGender = document.querySelector('input[name="gender"]:checked').value;
+
+	    // 선택된 음식 선호 값을 가져옴
+	    let foodLikes = []; // 배열에 넣기
+	    let foodLikeCheckboxes = document.querySelectorAll('input[name="foodlike"]:checked');
+	    for (let i = 0; i < foodLikeCheckboxes.length; i++) {
+	      foodLikes.push(foodLikeCheckboxes[i].value);
+	    };
+		console.log('foodLikes',foodLikes);
+		$.ajax({
+			url : "json/insertOK.do",
+			data : {
+				nick_name : $('#nick_name').val(),
+				email : $('#email').val(),
+				pw : $('#pw').val(),
+				address : $('#address').val(),
+				gender: selectedGender,
+			    food_like: foodLikes.join(',')
+			},
+			method : 'POST',
+			dataType : 'json',
+			success : function(obj) {
+				console.log('ajax...success:', obj);
+				console.log('ajax...success:', obj.result);
+				let msg = '';
+				if (obj.result === 'OK') {
+					msg = '회원가입에 성공했습니다.';
+				} else {
+					msg = '회원가입에 실패했습니다.';
+				}
+				alert(msg);
+			},
+			error : function(xhr, status, error) {
+				console.log('xhr.status:', xhr.status);
+			}
+		});//end $.ajax()...
+
+	}//end insertOK()...
 </script>
 </head>
 <body>
 	<h1>회원가입</h1>
 
-	<form method="post" enctype="multipart/form-data" onsubmit="insertOK()">
+	<form onsubmit="insertOK()">
 		<table>
 			<tr>
-				<td><label for="NICK_NAME">닉네임:</label></td>
-				<td><input type="text" id="NICK_NAME" name="NICK_NAME"
+				<td><label for="nick_name">닉네임:</label></td>
+				<td><input type="text" id="nick_name" name="nick_name"
 					value="닉네임1">
 					<button type="button" onclick="NickNameCheck()" class="myButton">닉네임
-						중복체크</button> <span id="demo"></span></td>
+						중복체크</button> <span id="nickNameCheck"></span></td>
 			</tr>
 			<tr>
-				<td><label for="EMAIL">이메일:</label></td>
+				<td><label for="email">이메일:</label></td>
 				<td><input type="email" id="email" name="email"
 					value="abc@hotplace.com">
 					<button type="button" onclick="emailCheck()" class="myButton">이메일
-						중복체크</button> <span id="demo"></span></td>
+						중복체크</button> <span id="emailCheck"></span></td>
 			</tr>
 			<tr>
 				<td><label for="pw">비밀번호:</label></td>

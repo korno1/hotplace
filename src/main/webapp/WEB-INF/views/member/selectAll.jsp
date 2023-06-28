@@ -98,7 +98,7 @@
 	<h1>회원목록</h1>
 	<select name="searchKey" id="searchKey">
 		<option value="NICK_NAME">닉네임</option>
-		<option value="email">이메일</option>
+		<option value="EMAIL">이메일</option>
 	</select>
 	<input type="text" name="searchWord" id="searchWord">
 	<button onclick="searchList()">검색</button>

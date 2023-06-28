@@ -14,6 +14,9 @@ local.properties
 .loadpath
 .recommenders
 
+# home.jsp
+home.jsp
+
 # External tool builders
 .externalToolBuilders/
 

@@ -15,7 +15,7 @@ local.properties
 .recommenders
 
 # home.jsp
-home.jsp
+src/main/webapp/WEB-INF/views/home.jsp
 
 # External tool builders
 .externalToolBuilders/

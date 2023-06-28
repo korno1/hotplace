@@ -39,7 +39,7 @@
 			    for (var i = 0; i < arr.length; i++) {
 			    	  msg += `
 			    	    <tr>
-			    		  <td><a href="m_selectOne.do?num=\${arr[i].num}">\${arr[i].num}</a></td>
+			    		  <td><a href="selectOne.do?num=\${arr[i].num}">\${arr[i].num}</a></td>
 	 		    	      <td>\${arr[i].nick_name}</td>
 	 		    	      <td>\${arr[i].email}</td>
 	 		    	      <td>\${arr[i].address}</td>
@@ -74,7 +74,7 @@
 				    for (var i = 0; i < arr.length; i++) {
 				    	  msg += `
 				    	    <tr>
-				    		  <td><a href="m_selectOne.do?num=\${arr[i].num}">\${arr[i].num}</a></td>
+				    		  <td><a href="selectOne.do?num=\${arr[i].num}">\${arr[i].num}</a></td>
 		 		    	      <td>\${arr[i].nick_name}</td>
 		 		    	      <td>\${arr[i].email}</td>
 		 		    	      <td>\${arr[i].address}</td>
@@ -107,13 +107,13 @@
 		<thead>
 			<tr>
 				<th>num</th>
-				<th>id</th>
+				<th>nick_name</th>
+				<th>email</th>
+				<th>address</th>
 				<th>pw</th>
-				<th>name</th>
-				<th>tel</th>
-				<th>pw</th>
-				<th>name</th>
-				<th>tel</th>
+				<th>grade</th>
+				<th>gender</th>
+				<th>foodlike</th>
 			</tr>
 		</thead>
 		<tbody id="vos">

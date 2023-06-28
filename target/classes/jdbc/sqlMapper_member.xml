@@ -52,14 +52,9 @@
 		member(num,nick_name,email,pw,address,gender,food_like)
 		VALUES(mem_sequence.nextval,#{nick_name},#{email},#{pw},#{address},#{gender},#{food_like})
 	</insert>
-
-	<!-- <select id="M_SELECT_ALL" resultType="project.com.hotplace.member.model.MemberVO"> -->
-	<!-- select * from member order by num desc -->
-	<!-- </select> -->
-
-	<!-- <select id="M_SELECT_ONE" resultType="project.com.hotplace.member.model.MemberVO"> -->
-	<!-- select * from member where num = #{num} -->
-	<!-- </select> -->
+	<select id="SELECTONE" resultType="project.com.hotplace.member.model.MemberVO">
+		select * from member where num = #{num}
+	</select>
 
 
 	<!-- <select id="LOGIN" resultType="project.com.hotplace.member.model.MemberVO"> -->

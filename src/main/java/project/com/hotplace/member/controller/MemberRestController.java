@@ -41,7 +41,7 @@ public class MemberRestController {
 	@RequestMapping(value = "/member/json/nickNameCheck.do", method = RequestMethod.GET)
 	@ResponseBody
 	public String nickNameCheck(MemberVO vo) {
-		log.info("{}",vo);
+		log.info("nickNameCheck:{}",vo);
 		
 		MemberVO vo2 = service.nickNameCheck(vo);
 		log.info("{}",vo2);
@@ -55,7 +55,7 @@ public class MemberRestController {
 	@RequestMapping(value = "/member/json/emailCheck.do", method = RequestMethod.GET)
 	@ResponseBody
 	public String emailCheck(MemberVO vo) {
-		log.info("{}",vo);
+		log.info("nickNameCheck:{}",vo);
 		
 		MemberVO vo2 = service.emailCheck(vo);
 		log.info("{}",vo2);
@@ -68,7 +68,7 @@ public class MemberRestController {
 	@RequestMapping(value = "/member/json/insertOK.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String insertOK(MemberVO vo) {
-		log.info("{}",vo);
+		log.info("insert...{}",vo);
 		
 		int result = service.insertOK(vo);
 		log.info("result:{}",result);

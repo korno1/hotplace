@@ -1,0 +1,56 @@
+@charset "UTF-8";
+*{
+	margin:0;
+	padding:0;
+}
+.error {
+	border: 1px solid #FF9999;
+}
+.block{
+	width:900px;
+	display:flex;
+}
+.memberInfo__leftTab{
+	width:300px;
+}
+.memberInfo__rightTab{
+	width:600px;
+}
+.title, .content{
+	height:50px;
+	line-height:50px;
+	font-size:20px;
+}
+.memberInfo__profile{
+	height:100px;
+	line-height:100px;
+}
+.memberInfo__imageTab__content{
+	height:100px;
+	display:flex;
+	align-items: center;
+}
+.memberInfo__image{
+	width:100px;
+	height:100px;
+}
+.memberInfo__pw__content{
+	display:flex;
+	align-items: center;
+    flex-wrap: wrap;
+}
+.memberInfo__pw__content span{
+	font-size:14px;
+}
+.memberInfo__btnWrap{
+	width:900px;
+	height:100px;
+	display:flex;
+	align-items: center;
+	justify-content: space-around;
+}
+button{
+	width:100px;
+	height:30px;
+	line-height:30px;
+}

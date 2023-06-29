@@ -1,6 +1,8 @@
 package project.com.hotplace.notice.model;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +23,21 @@ public class NoticeDAOimpl implements NoticeDAO {
 	
 	
 	@Override
-	public List<NoticeVO> selectAll() {
+	public List<NoticeVO> selectAll(String searchKey, String searchWord) {
 		log.info("selectAll()...");
+		log.info("searchKey: {}", searchKey);
+		log.info("searchWord: {}", searchWord);
 		
-		return sqlSession.selectList("NOT_SELECT_ALL");
+		Map<String, String> map = new HashMap<String, String>();
+		
+		String key = "NOT_SELECTALL";
+		
+		map.put("searchKey", searchKey);
+		map.put("searchWord", "%" + searchWord + "%");
+	
+		sqlSession.delete("NOT_OVERDATE_DELETE");
+		
+		return sqlSession.selectList(key, map);
 	}
 
 	@Override
@@ -35,20 +48,24 @@ public class NoticeDAOimpl implements NoticeDAO {
 	}
 
 	@Override
-	public List<NoticeVO> selectList(String searchKey, String searchWord) {
-		log.info("selectOne()...");
+	public List<NoticeVO> searchList(String searchKey, String searchWord, int page) {
+		log.info("searchList()...");
+		
 		log.info("searchKey: {}", searchKey);
 		log.info("searchWord: {}", searchWord);
+		log.info("page: {}", page);
+		Map<String, Object> map = new HashMap<String, Object>();
 		
-		String key = "";
-		if(searchKey.equals("title")) {
-			key = "NOT_SEARCHLIST_TITLE";
-		}
-		else {
-			key = "NOT_SEARCHLIST_CONTENT";
-		}
+		String key = "NOT_SEARCHLIST";
 		
-		return selectList(key, "%" + searchWord + "%");
+		map.put("searchKey", searchKey);
+		map.put("searchWord", "%" + searchWord + "%");
+	
+		map.put("st", (page-1)*5+1);
+		map.put("en", page*5);
+		
+		
+		return sqlSession.selectList(key, map);
 	}
 
 	@Override
@@ -67,7 +84,7 @@ public class NoticeDAOimpl implements NoticeDAO {
 	@Override
 	public int delete(NoticeVO vo) {
 		log.info("delete()...{}", vo);
-		return sqlSession.delete("NOT_DELETE", vo);
+		return sqlSession.delete("NOT_DELETEDATE_UPDATE", vo);
 	}
 
 	@Override
@@ -75,5 +92,12 @@ public class NoticeDAOimpl implements NoticeDAO {
 		log.info("vCountUp()...{}", vo);
 		sqlSession.update("NOT_VCOUNT_UPDATE", vo);
 	}
+
+
+//	@Override
+//	public void deleteOverDate() {
+//		int res = sqlSession.delete("NOT_OVERDATE_DELETE");
+//		log.info("res: {}", res);
+//	}
 
 }

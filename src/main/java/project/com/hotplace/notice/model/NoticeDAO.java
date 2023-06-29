@@ -4,11 +4,11 @@ import java.util.List;
 
 public interface NoticeDAO {
 	
-	public List<NoticeVO> selectAll();
+	public List<NoticeVO> selectAll(String searchKey, String searchWord);
 	
 	public NoticeVO selectOne(NoticeVO vo);
 	
-	public List<NoticeVO> selectList(String searchKey, String searchWord);
+	public List<NoticeVO> searchList(String searchKey, String searchWord, int page);
 	
 	public int insert(NoticeVO vo);
 	
@@ -17,4 +17,6 @@ public interface NoticeDAO {
 	public int delete(NoticeVO vo);
 	
 	public void vCountUp(NoticeVO vo);
+	
+//	public void deleteOverDate();
 }

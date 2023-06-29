@@ -13,16 +13,16 @@ public class NoticeService {
 	@Autowired
 	NoticeDAO dao;
 	
-	public List<NoticeVO> selectAll(){
-		return dao.selectAll();
+	public List<NoticeVO> selectAll(String searchKey, String searchWord){
+		return dao.selectAll(searchKey, searchWord);
 	}
 	
 	public NoticeVO selectOne(NoticeVO vo) {
 		return dao.selectOne(vo);
 	}
 	
-	public List<NoticeVO> selectList(String searchKey, String searchWord){
-		return dao.selectList(searchKey, searchWord);
+	public List<NoticeVO> searchList(String searchKey, String searchWord, int page){
+		return dao.searchList(searchKey, searchWord, page);
 	}
 	
 	public int insert(NoticeVO vo) {
@@ -41,4 +41,8 @@ public class NoticeService {
 	public void vCountUp(NoticeVO vo) {
 		dao.vCountUp(vo);
 	}
+	
+//	public void deleteOverDate() {
+//		dao.deleteOverDate();
+//	}
 }

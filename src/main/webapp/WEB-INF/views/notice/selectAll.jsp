@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>공지사항</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<link rel="stylesheet" href="../resources/css/notice/button.css">
 </head>
 <body>
 	<h1>공지사항</h1>
@@ -46,8 +47,8 @@
 	<div style="width:30%; display:inline-block">
 		<form action="selectAll.do">
 			<select name="searchKey">
-				<option value="title">제목</option>
-				<option value="content">내용</option>
+				<option value="title" <c:if test="${param.searchKey == 'title'}"> selected </c:if>>제목</option>
+				<option value="content" <c:if test="${param.searchKey =='content'}"> selected </c:if>>내용</option>
 			</select>
 			<input type="text" name="searchWord" id="searchWord" value="">
 			<input type="hidden" name="page" value=1>

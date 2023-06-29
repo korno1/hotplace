@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>공지사항</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<link rel="stylesheet" href="../resources/css/notice/button.css">
 
 <script type="text/javascript">
 

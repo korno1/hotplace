@@ -6,10 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>공지사항</title>
+<link rel="stylesheet" href="../resources/css/notice/button.css">
 </head>
 <body>
 	<h1>공지사항</h1>
-<%-- 	<jsp:include page="../top_menujm.jsp"></jsp:include> --%>
 	<form action="insertOK.do">
 	<div>
 		<div>
@@ -22,7 +22,7 @@
 		
 		
 		<div>
-			<input type="submit" value="작성">
+			<input type="submit" value="작성" class="myButton">
 		</div>
 	</div>
 	</form>

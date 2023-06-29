@@ -23,7 +23,7 @@ public class MailDAOimpl implements MailDAO {
 
 	@Override
 	public List<MailVO> selectAll(int sender_num, int recipient_num, int page) {
-		log.info("selectAll()...user_num: {}", sender_num);
+		log.info("selectAll()...sender_num: {}", sender_num);
 		log.info("selectAll()...recipient_num: {}", recipient_num);
 		log.info("selectAll()...page: {}", page);
 
@@ -31,7 +31,7 @@ public class MailDAOimpl implements MailDAO {
 		Map<String, Object> parameters = new HashMap<>();
 
 		// offset으로 1페이지당 출력할 내용 계산
-		int itemsPerPage = 10;
+		int itemsPerPage = 1;
 		int end = itemsPerPage * page;
 		int start = (page - 1) * itemsPerPage + 1;
 		// 1 -> 1 ~ 10 // 2 -> 11~20
@@ -46,7 +46,7 @@ public class MailDAOimpl implements MailDAO {
 			parameters.put("searchKey", "sender_num");
 			parameters.put("user_num", sender_num);
 		}
-		return sqlSession.selectList("SELECTALL", parameters);
+		return sqlSession.selectList("MAI_SELECTALL", parameters);
 	}
 
 	@Override

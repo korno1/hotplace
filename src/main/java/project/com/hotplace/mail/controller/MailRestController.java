@@ -1,7 +1,9 @@
 package project.com.hotplace.mail.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 
@@ -30,20 +32,29 @@ public class MailRestController {
 
 	@RequestMapping(value = "/mail/json/selectAll.do", method = RequestMethod.GET)
 	@ResponseBody
-	public List<MailVO> selectAll(int sender_num, int recipient_num, int page) {
-		int pageNumber = 1;
-
-		log.info("mail/json/selectAll.do");
-		if (page > 0) {
-			pageNumber = page;
-		}
-
-		// selectAll, searchList
-		List<MailVO> vos = service.selectAll(sender_num,recipient_num, pageNumber);
-		log.info("vos.size():{}", vos.size());
-
-		return vos;
+	public Map<String, Object> selectAll(int sender_num, int recipient_num, int page) {
+	    int pageNumber = 1;
+	    int nextPageNumber = page + 1;
+	    
+	    log.info("mail/json/selectAll.do");
+	    if (page > 0) {
+	        pageNumber = page;
+	    }
+	    List<MailVO> vos = service.selectAll(sender_num, recipient_num, pageNumber);
+	    List<MailVO> vos2 = service.selectAll(sender_num, recipient_num, nextPageNumber);
+	    log.info("nextPageis...{}", vos2.toString());
+	    
+	    boolean isLast = vos2.isEmpty();
+	    
+	    log.info("vos.size():{}", vos.size());
+	    
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("vos", vos);
+	    response.put("isLast", isLast);
+	    
+	    return response;
 	}
+
 
 	@RequestMapping(value = "/mail/json/insertOK.do", method = RequestMethod.POST)
 	@ResponseBody

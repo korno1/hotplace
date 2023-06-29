@@ -45,10 +45,10 @@ public class MemberDAOimpl implements MemberDAO {
 			parameters.put("searchKey", searchKey);
 			parameters.put("searchWord", "%" + searchWord + "%");
 			log.info("parameters...search{}", parameters.toString());
-			return sqlSession.selectList("SEARCHLIST", parameters);
+			return sqlSession.selectList("MEM_SEARCHLIST", parameters);
 		} else {
 			log.info("parameters...select{}", parameters.toString());
-			return sqlSession.selectList("SELECTALL", parameters);
+			return sqlSession.selectList("MEM_SELECTALL", parameters);
 		}
 
 	}
@@ -57,13 +57,13 @@ public class MemberDAOimpl implements MemberDAO {
 	public MemberVO selectOne(MemberVO vo) {
 		log.info("selectOne()...{}", vo);
 
-		return sqlSession.selectOne("SELECTONE", vo);
+		return sqlSession.selectOne("MEM_SELECTONE", vo);
 	}
 
 	@Override
 	public int insertOK(MemberVO vo) {
 		log.info("insertOK()...{}", vo);
-		int flag = sqlSession.insert("INSERTOK", vo);
+		int flag = sqlSession.insert("MEM_INSERTOK", vo);
 
 		return flag;
 	}
@@ -71,7 +71,7 @@ public class MemberDAOimpl implements MemberDAO {
 	@Override
 	public int updateOK(MemberVO vo) {
 		log.info("updateOK()...{}", vo);
-		int flag = sqlSession.update("UPDATEOK", vo);
+		int flag = sqlSession.update("MEM_UPDATEOK", vo);
 
 		return flag;
 	}
@@ -79,7 +79,7 @@ public class MemberDAOimpl implements MemberDAO {
 	@Override
 	public int deleteOK(MemberVO vo) {
 		log.info("deleteOK()...{}", vo);
-		int flag = sqlSession.delete("DELETEOK", vo);
+		int flag = sqlSession.delete("MEM_DELETEOK", vo);
 
 		return flag;
 	}
@@ -87,7 +87,7 @@ public class MemberDAOimpl implements MemberDAO {
 	@Override
 	public MemberVO login(MemberVO vo) {
 		log.info("login()...{}", vo);
-		MemberVO vo2 = sqlSession.selectOne("LOGIN", vo);
+		MemberVO vo2 = sqlSession.selectOne("MEM_LOGIN", vo);
 		;
 
 		return vo2;
@@ -96,7 +96,7 @@ public class MemberDAOimpl implements MemberDAO {
 	@Override
 	public int logout(MemberVO vo) {
 		log.info("logout()...{}", vo);
-		int flag = sqlSession.selectOne("LOGOUT", vo);
+		int flag = sqlSession.selectOne("MEM_LOGOUT", vo);
 
 		return flag;
 	}
@@ -105,21 +105,21 @@ public class MemberDAOimpl implements MemberDAO {
 	public MemberVO nickNameCheck(MemberVO vo) {
 		log.info("nikeNameCheck()...{}", vo);
 
-		return sqlSession.selectOne("NICK_NAME_CHECK", vo);
+		return sqlSession.selectOne("MEM_NICK_NAME_CHECK", vo);
 	}
 
 	@Override
 	public MemberVO emailCheck(MemberVO vo) {
 		log.info("emailCheck()...{}", vo);
 
-		return sqlSession.selectOne("EMAIL_CHECK", vo);
+		return sqlSession.selectOne("MEM_EMAIL_CHECK", vo);
 	}
 
 	@Override
 	public int upgradeOK(MemberVO vo) {
 		log.info("upgradeOK()...{}", vo);
 
-		return sqlSession.update("UPGRADEOK", vo);
+		return sqlSession.update("MEM_UPGRADEOK", vo);
 	}
 
 }

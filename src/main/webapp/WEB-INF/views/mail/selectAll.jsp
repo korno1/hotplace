@@ -9,6 +9,16 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
+		//받은쪽지,보낸쪽지 구분을 위한 전역 변수
+		let mailBoxFilter = 'receive';
+	function changeBox(button){
+		let buttonClass = $(button).attr('class').split(' ')[1];
+		if(buttonClass==='receiveBox'){
+			mailBoxFilter = 'receive';
+		}else if(buttonClass==='sendBox'){
+			mailBoxFilter = 'send';
+		}
+	}	
 		// 현재 URL에서 쿼리 문자열 가져오기
 		let queryString = window.location.search;
 		
@@ -22,14 +32,23 @@
 		console.log('page',page);
 	$(function() {
 		console.log('onload....');
-	$.ajax({
-		url : "json/selectAll.do",
-		data:{
-			num:num,
-			page:page
-			},
-		method:'GET',
-		dataType:'json',
+		let data = {
+	        page: page
+	    };
+
+	    if (mailBoxFilter === "send") {
+	        data.sender_num = ${param.num};
+	        data.recipient_num=0;
+	    } else if (mailBoxFilter === "receive") {
+	        data.recipient_num = ${param.num};
+	        data.sender_num=0;
+	    }
+
+	    $.ajax({
+        url: "json/selectAll.do",
+        data: data,
+        method: 'GET',
+        dataType: 'json',
 		success : function(arr) {
 		console.log('ajax...success:', arr);
 			 let msg ="";
@@ -60,8 +79,8 @@
 <body>
 	<h1>쪽지함</h1>
 	<div class="mailFilterWrap block">
-		<div class="mail__receBox receBox">받은 쪽지함</div>
-		<div class="mail__sendBox sendBox">보낸 쪽지함</div>
+		<div class="mail__receBox receiveBox" onclick="changeBox(this)">받은 쪽지함</div>
+		<div class="mail__sendBox sendBox" onclick="changeBox(this)">보낸 쪽지함</div>
 	</div>
 	<div class="mailBoxWrap block">
 	</div>

@@ -28,24 +28,24 @@ public class MailRestController {
 	@Autowired
 	private MailService service;
 
-	@RequestMapping(value = "/Mail/json/selectAll.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/mail/json/selectAll.do", method = RequestMethod.GET)
 	@ResponseBody
-	public List<MailVO> selectAll(int user_num, int page) {
+	public List<MailVO> selectAll(int sender_num, int recipient_num, int page) {
 		int pageNumber = 1;
 
-		log.info("Mail/json/selectAll.do");
+		log.info("mail/json/selectAll.do");
 		if (page > 0) {
 			pageNumber = page;
 		}
 
 		// selectAll, searchList
-		List<MailVO> vos = service.selectAll(user_num, pageNumber);
+		List<MailVO> vos = service.selectAll(sender_num,recipient_num, pageNumber);
 		log.info("vos.size():{}", vos.size());
 
 		return vos;
 	}
 
-	@RequestMapping(value = "/Mail/json/insertOK.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/mail/json/insertOK.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String insertOK(MailVO vo) {
 		log.info("insert...{}", vo);
@@ -59,7 +59,7 @@ public class MailRestController {
 		}
 	}
 
-	@RequestMapping(value = "/Mail/json/updateOK.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/mail/json/updateOK.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String updateOK(MailVO vo) throws IllegalStateException, IOException {
 		log.info("updateOK...{}", vo);
@@ -75,7 +75,7 @@ public class MailRestController {
 	}
 	
 	
-	@RequestMapping(value = "/Mail/json/deleteOK.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/mail/json/deleteOK.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String deleteOK(MailVO vo) {
 		log.info("insert...{}", vo);

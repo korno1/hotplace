@@ -20,36 +20,29 @@ public class MailController {
 	@Autowired
 	MailService service;
 	
-	@RequestMapping(value = "/jonggwan", method = RequestMethod.GET)
-	public String jonggwan() {
-		log.info("jonggwan.do...");
-		
-		return "jonggwan";
-	}
-	
-	@RequestMapping(value = {"Mail/selectAll.do"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"mail/selectAll.do"}, method = RequestMethod.GET)
 	public String selectAll() {
-		log.info("Mail/selectAll.do...");
+		log.info("mail/selectAll.do...");
 		
-		return "/Mail/selectAll";
+		return "/mail/selectAll";
 	}
 	
-	@RequestMapping(value = {"Mail/insert.do"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"mail/insert.do"}, method = RequestMethod.GET)
 	public String insert() {
-		log.info("Mail/insert.do...");
+		log.info("mail/insert.do...");
 		
-		return "/Mail/insert";
+		return "/mail/insert";
 	}
 	
-	@RequestMapping(value = {"Mail/selectOne.do"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"mail/selectOne.do"}, method = RequestMethod.GET)
 	public String selectOne(MailVO vo, Model model) {
-		log.info("Mail/selectOne.do...");
+		log.info("mail/selectOne.do...");
 		
 		MailVO vo2 = service.selectOne(vo);
 		log.info("vo2 outinfo...{}",vo2);
 		
 		model.addAttribute("vo2",vo2);
 		
-		return "Mail/selectOne";
+		return "mail/selectOne";
 	}
 }

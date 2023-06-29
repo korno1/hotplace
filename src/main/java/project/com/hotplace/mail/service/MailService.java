@@ -19,9 +19,8 @@ public class MailService {
 	public MailService() {
 		log.info("MailService()...");
 	}
-
-	public List<MailVO> selectAll(int user_num, int page) {
-		return dao.selectAll(user_num,page);
+	public List<MailVO> selectAll(int sender_num, int recipient_num, int page) {
+		return dao.selectAll(sender_num,recipient_num,page);
 	}
 
 	public MailVO selectOne(MailVO vo) {

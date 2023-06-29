@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="project.com.hotplace.mail">
+<!-- 	<select id="SELECTALL" parameterType="java.util.Map" -->
+<!-- 		resultType="project.com.hotplace.mail.model.MailVO"> -->
+<!-- 		SELECT * -->
+<!-- 		FROM ( -->
+<!-- 		SELECT t.*, ROWNUM AS row_num -->
+<!-- 		FROM ( -->
+<!-- 		SELECT mail_num,title,content,sender_num,recipient_num -->
+<!-- 		sender_name(select nick_name form member where num=#{user_num}), -->
+<!-- 		 FROM mail -->
+<!-- 		WHERE -->
+<!-- 		<if test="searchKey == 'recipient_num'"> -->
+<!-- 			recipient_num -->
+<!-- 		</if> -->
+<!-- 		<if test="searchKey == 'sender_num'"> -->
+<!-- 			sender_num -->
+<!-- 		</if> -->
+<!-- 		 = #{user_num} -->
+<!-- 		) t -->
+<!-- 		) -->
+<!-- 		WHERE row_num BETWEEN #{start} AND #{end} -->
+<!-- 	</select> -->
+<!-- 	<insert id="INSERTOK" -->
+<!-- 		parameterType="project.com.hotplace.mail.model.MailVO"> -->
+<!-- 		INSERT INTO -->
+<!-- 		Mail(num,nick_name,email,pw,address,gender,food_like) -->
+<!-- 		VALUES(mem_sequence.nextval,#{nick_name},#{email},#{pw},#{address},#{gender},#{food_like}) -->
+<!-- 	</insert> -->
+<!-- 	<select id="SELECTONE" resultType="project.com.hotplace.mail.model.MailVO"> -->
+<!-- 		select * from Mail where num = #{num} -->
+<!-- 	</select> -->
+
+<!-- 	<update id="UPDATEOK" parameterType="project.com.hotplace.mail.model.MailVO"> -->
+<!-- 	update Mail set nick_name=#{nick_name},email=#{email},address=#{address},pw=#{pw},gender=#{gender},food_like=#{food_like} -->
+<!-- 	where num = #{num} -->
+<!-- 	</update> -->
+
+<!-- 	<delete id="DELETEOK"> -->
+<!-- 	delete from Mail where num = #{num} -->
+<!-- 	</delete> -->
+
+</mapper>

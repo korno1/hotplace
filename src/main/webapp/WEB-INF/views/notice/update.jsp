@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>공지사항</title>
+<link rel="stylesheet" href="../resources/css/notice/button.css">
 </head>
 <body>
 	<h1>공지사항</h1>
@@ -31,7 +32,7 @@
 		
 		
 		<div>
-			<input type="submit" value="작성">
+			<input type="submit" value="작성" class="myButton">
 		</div>
 	</div>
 	</form>

@@ -1,0 +1,34 @@
+@charset "UTF-8";
+
+.faq_div{
+	width:300px;
+}
+
+.faq_list{
+	list-style: none;
+	padding-left: 0px;
+/* 	border-top: 1px solid gray; */
+/* 	border-bottom: 1px solid gray; */
+}
+
+
+
+.faq_list li{
+
+	border-bottom: 1px solid gray;
+}
+
+.faq_list li:nth-child(1){
+	border-top: 1px solid gray;
+}
+
+.faq_header {
+	text-align: center;
+}
+
+.faq_content {
+	border-top: 1px solid gray;
+	text-align: left;
+
+	white-space: pre-wrap;
+}

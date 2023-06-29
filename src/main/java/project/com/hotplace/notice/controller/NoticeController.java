@@ -17,7 +17,6 @@ import project.com.hotplace.notice.service.NoticeService;
  */
 @Controller
 @Slf4j
-@RequestMapping(value="/notice")
 public class NoticeController {
 	
 	@Autowired
@@ -26,7 +25,15 @@ public class NoticeController {
 	/** 
 	 * Simply selects the home view to render by returning its name.
 	 */
-	@RequestMapping(value = "/selectAll.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/jm.do", method = RequestMethod.GET)
+	public String jm() {
+		log.info("/jm.do...");
+		
+		
+		return "jm";
+	}
+	
+	@RequestMapping(value = "/notice/selectAll.do", method = RequestMethod.GET)
 	public String selectAll(String searchKey, String searchWord, int page, Model model) {
 		log.info("/not_selectAll.do...");
 		
@@ -43,7 +50,7 @@ public class NoticeController {
 		return "notice/selectAll";
 	}
 	
-	@RequestMapping(value = "/selectOne.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/notice/selectOne.do", method = RequestMethod.GET)
 	public String selectOne(NoticeVO vo, Model model) {
 		log.info("/not_selectAll.do...");
 		
@@ -61,7 +68,7 @@ public class NoticeController {
 		return "notice/selectOne";
 	}
 	
-	@RequestMapping(value = "/insert.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/notice/insert.do", method = RequestMethod.GET)
 	public String insert() {
 		log.info("/not_insert.do...");
 		
@@ -69,7 +76,7 @@ public class NoticeController {
 		return "notice/insert";
 	}
 	
-	@RequestMapping(value = "/insertOK.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/notice/insertOK.do", method = RequestMethod.GET)
 	public String insertOK(NoticeVO vo) {
 		log.info("/not_insertOK.do...{}", vo);
 		
@@ -81,7 +88,7 @@ public class NoticeController {
 		return "redirect:selectAll.do?searchKey=title&searchWord=&page=1";
 	}
 	
-	@RequestMapping(value = "/update.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/notice/update.do", method = RequestMethod.GET)
 	public String update(NoticeVO vo, Model model) {
 		log.info("/not_update.do...");
 		
@@ -93,7 +100,7 @@ public class NoticeController {
 		return "notice/update";
 	}
 	
-	@RequestMapping(value = "/updateOK.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/notice/updateOK.do", method = RequestMethod.GET)
 	public String updateOK(NoticeVO vo) {
 		log.info("/not_updateOK.do...{}", vo);
 		
@@ -103,7 +110,7 @@ public class NoticeController {
 		return "redirect:selectOne.do?num=" + vo.getNum();
 	}
 	
-	@RequestMapping(value = "/deleteOK.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/notice/deleteOK.do", method = RequestMethod.GET)
 	public String deleteOK(NoticeVO vo) {
 		log.info("/not_deleteOK.do...{}", vo);
 		

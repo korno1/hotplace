@@ -29,7 +29,7 @@
 			<list>
 				<value>classpath:jdbc/sqlMapper_member.xml</value>
 				<value>classpath:jdbc/sqlMapper_notice.xml</value>
-				
+				<value>classpath:jdbc/sqlMapper_faq.xml</value>
 				<value>classpath:jdbc/sqlMapper_mail.xml</value>
 			</list>
 		</property>

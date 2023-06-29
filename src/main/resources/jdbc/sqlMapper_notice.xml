@@ -63,7 +63,7 @@
 	</update>
 	
 	<delete id="NOT_OVERDATE_DELETE">
-		delete from notice where delete_date+1 <![CDATA[<=]]> sysdate
+		delete from notice where delete_date+90 <![CDATA[<=]]> sysdate
 	</delete>
 	
 	

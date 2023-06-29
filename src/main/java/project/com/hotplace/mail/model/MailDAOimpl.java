@@ -22,8 +22,9 @@ public class MailDAOimpl implements MailDAO {
 	}
 
 	@Override
-	public List<MailVO> selectAll(int user_num, int page) {
-		log.info("selectAll()...user_num: {}", user_num);
+	public List<MailVO> selectAll(int sender_num, int recipient_num, int page) {
+		log.info("selectAll()...user_num: {}", sender_num);
+		log.info("selectAll()...recipient_num: {}", recipient_num);
 		log.info("selectAll()...page: {}", page);
 
 		// SQL 쿼리에 전달할 파라미터를 저장할 변수를 생성
@@ -38,10 +39,14 @@ public class MailDAOimpl implements MailDAO {
 		// 페이징을 위한 오프셋과 제한(limit) 파라미터를 설정합니다.
 		parameters.put("end", end);
 		parameters.put("start", start);
-		parameters.put("user_num", user_num);
-
-		return sqlSession.selectList("SEARCHLIST", parameters);
-
+		if (sender_num == 0) {
+			parameters.put("searchKey", "recipient_num");
+			parameters.put("user_num", recipient_num);
+		} else if (recipient_num == 0) {
+			parameters.put("searchKey", "sender_num");
+			parameters.put("user_num", sender_num);
+		}
+		return sqlSession.selectList("SELECTALL", parameters);
 	}
 
 	@Override
@@ -74,6 +79,5 @@ public class MailDAOimpl implements MailDAO {
 
 		return flag;
 	}
-
 
 }

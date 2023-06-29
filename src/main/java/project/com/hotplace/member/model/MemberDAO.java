@@ -12,6 +12,7 @@ public interface MemberDAO {
 	int logout(MemberVO vo);
 	MemberVO nickNameCheck(MemberVO vo);
 	MemberVO emailCheck(MemberVO vo);
+	int upgradeOK(MemberVO vo);
 	
 	
 }

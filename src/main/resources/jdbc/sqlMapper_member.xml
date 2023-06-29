@@ -57,9 +57,9 @@
 	</select>
 
 
-	<!-- <select id="LOGIN" resultType="project.com.hotplace.member.model.MemberVO"> -->
-	<!-- select * from member where id = #{id} and pw = #{pw} -->
-	<!-- </select> -->
+	<select id="LOGIN" resultType="project.com.hotplace.member.model.MemberVO">
+	select * from member where email = #{email} and pw = #{pw}
+	</select>
 
 	<!-- <select id="M_SEARCH_LIST_NAME" resultType="project.com.hotplace.member.model.MemberVO"> -->
 	<!-- select * from member where name like #{searchWord} -->
@@ -70,13 +70,17 @@
 	<!-- </select> -->
 
 
-	<!-- <update id="M_UPDATE" parameterType="project.com.hotplace.member.model.MemberVO"> -->
-	<!-- update member set pw=#{pw} , name=#{name} , tel=#{tel} , save_name=#{save_name} -->
-	<!-- where num = #{num} -->
-	<!-- </update> -->
+	<update id="UPGRADEOK" parameterType="project.com.hotplace.member.model.MemberVO">
+	update member set grade=#{grade}
+	where num = #{num}
+	</update>
+	<update id="UPDATEOK" parameterType="project.com.hotplace.member.model.MemberVO">
+	update member set nick_name=#{nick_name},email=#{email},address=#{address},pw=#{pw},gender=#{gender},food_like=#{food_like}
+	where num = #{num}
+	</update>
 
-	<!-- <delete id="M_DELETE"> -->
-	<!-- delete from member where num = #{num} -->
-	<!-- </delete> -->
+	<delete id="DELETEOK">
+	delete from member where num = #{num}
+	</delete>
 
 </mapper>

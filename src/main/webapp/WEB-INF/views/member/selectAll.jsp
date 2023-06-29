@@ -38,7 +38,7 @@
 			 let msg ="";
 			    for (var i = 0; i < arr.length; i++) {
 			    	  msg += `
-			    	    <tr>
+				    	    <tr>
 			    		  <td><a href="selectOne.do?num=\${arr[i].num}">\${arr[i].num}</a></td>
 	 		    	      <td>\${arr[i].nick_name}</td>
 	 		    	      <td>\${arr[i].email}</td>
@@ -47,6 +47,8 @@
 	 		    	      <td>\${arr[i].grade}</td>
 	 		    	      <td>\${arr[i].gender}</td>
 	 		    	      <td>\${arr[i].food_like}</td>
+	 		    	      <td><button class="gradeBtn\${arr[i].num}" onclick=upgrade(this)>관리자설정</button></td>
+	 		    	      <td><button class="deleteBtn\${arr[i].num}" onclick=byeOK(this)>강제탈퇴</button></td>
 			    	    </tr>`;
 			    }
 			$("#vos").html(msg);
@@ -73,7 +75,7 @@
 				 let msg ="";
 				    for (var i = 0; i < arr.length; i++) {
 				    	  msg += `
-				    	    <tr>
+					    	    <tr>
 				    		  <td><a href="selectOne.do?num=\${arr[i].num}">\${arr[i].num}</a></td>
 		 		    	      <td>\${arr[i].nick_name}</td>
 		 		    	      <td>\${arr[i].email}</td>
@@ -82,6 +84,8 @@
 		 		    	      <td>\${arr[i].grade}</td>
 		 		    	      <td>\${arr[i].gender}</td>
 		 		    	      <td>\${arr[i].food_like}</td>
+		 		    	      <td><button class="gradeBtn\${arr[i].num}" onclick=upgrade(this)>관리자설정</button></td>
+		 		    	      <td><button class="deleteBtn\${arr[i].num}" onclick=byeOK(this)>강제탈퇴</button></td>
 				    	    </tr>`;
 				    }
 				$("#vos").html(msg);
@@ -91,7 +95,66 @@
 			}
 		});
 	}
-
+	
+function upgrade(button) {
+	  let buttonClass = $(button).attr('class');
+	  console.log(buttonClass);
+	  let num = buttonClass.match(/\d+/)[0];
+	  console.log(num);
+	  
+	  $.ajax({
+	    url: 'json/upgradeOK.do',
+	    method: 'POST',
+	    data: {
+	    	num : num,
+	    	grade : 1
+	    },
+	    dataType: 'json',
+	    success: function(obj) {
+			console.log('ajax...success:', obj);
+			console.log('ajax...success:', obj.result);
+			let msg = '';
+			if (obj.result === 'OK') {
+				msg = '관리자 설정이 완료되었습니다.';
+				location.reload();
+			} else {
+				msg = '관리자 설정에 실패했습니다.';
+			}
+			alert(msg);
+		},
+	    error: function(xhr, status, error) {
+			console.log('xhr.status:', xhr.status);
+	    }
+	});
+};
+function byeOK(button) {
+	  let buttonClass = $(button).attr('class');
+	  let num = buttonClass.match(/\d+/)[0];
+	  
+	  $.ajax({
+	    url: 'json/deleteOK.do',
+	    method: 'POST',
+	    data: {
+	    	num : num
+	    },
+	    dataType: 'json',
+	    success: function(obj) {
+			console.log('ajax...success:', obj);
+			console.log('ajax...success:', obj.result);
+			let msg = '';
+			if (obj.result === 'OK') {
+				msg = '강제 탈퇴가 완료되었습니다.';
+				location.reload();
+			} else {
+				msg = '강제 탈퇴에 실패했습니다.';
+			}
+			alert(msg);
+		},
+	    error: function(xhr, status, error) {
+			console.log('xhr.status:', xhr.status);
+	    }
+	});
+};
 </script>
 </head>
 <body>
@@ -114,6 +177,8 @@
 				<th>grade</th>
 				<th>gender</th>
 				<th>foodlike</th>
+				<th>등업</th>
+				<th>강탈</th>
 			</tr>
 		</thead>
 		<tbody id="vos">
@@ -121,7 +186,7 @@
 		</tbody>
 		<tfoot>
 			<tr>
-				<td colspan="8">1 2 3 4 5</td>
+				<td colspan="10">1 2 3 4 5</td>
 			</tr>
 		</tfoot>
 	</table>

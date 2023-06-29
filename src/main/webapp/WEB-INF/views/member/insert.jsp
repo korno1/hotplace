@@ -221,9 +221,9 @@
 			</tr>
 			<tr>
 				<td><label for="gender">성별:</label></td>
-				<td><input type="radio" name="gender" value="1"> 남자 <input
-					type="radio" name="gender" value="2"> 여자 <input
-					type="radio" name="gender" value="3"> 비공개</td>
+				<td><input type="radio" name="gender" value="0"> 남자 <input
+					type="radio" name="gender" value="1"> 여자 <input
+					type="radio" name="gender" value="2"> 비공개</td>
 			</tr>
 			<tr>
 				<td><label for="foodlike">음식 선호:</label></td>

@@ -52,4 +52,8 @@ public class MemberService {
 	public MemberVO emailCheck(MemberVO vo) {
 		return dao.emailCheck(vo);
 	}
+
+	public int upgradeOK(MemberVO vo) {
+		return dao.upgradeOK(vo);
+	}
 }

@@ -23,6 +23,18 @@ public class MemberReviewService {
 	public List<MemberReviewVO> selectAll(MemberReviewVO vo) {
 		return dao.selectAll(vo);
 	}
+
+	public int insert(MemberReviewVO vo) {
+		return dao.insert(vo);
+	}
+
+	public int update(MemberReviewVO vo) {
+		return dao.update(vo);
+	}
+
+	public int delete(MemberReviewVO vo) {
+		return dao.delete(vo);
+	}
 	
 	
 }

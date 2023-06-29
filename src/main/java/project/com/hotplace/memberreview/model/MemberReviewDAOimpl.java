@@ -27,19 +27,43 @@ public class MemberReviewDAOimpl implements MemberReviewDAO {
 	@Override
 	public int insert(MemberReviewVO vo) {
 		log.info("insert()...vo{}", vo);
-		return 0;
+		int flag = 0;
+		
+		try {
+			flag = sqlSession.insert("mre_insert", vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return flag;
 	}
 
 	@Override
 	public int update(MemberReviewVO vo) {
 		log.info("update()...vo{}", vo);
-		return 0;
+		
+		int flag = 0;
+		
+		try {
+			flag = sqlSession.insert("mre_update", vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return flag;
 	}
 
 	@Override
 	public int delete(MemberReviewVO vo) {
 		log.info("delete()...vo{}", vo);
-		return 0;
+		
+		int flag = 0;
+		
+		try {
+			flag = sqlSession.insert("mre_delete", vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return flag;
 	}
 
 }

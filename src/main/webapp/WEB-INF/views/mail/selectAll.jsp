@@ -39,11 +39,13 @@ $(function() {
     window.changeBox = function(button) {
         let buttonClass = $(button).attr('class').split(' ')[1];
         if (buttonClass === 'receiveBox') {
+        	page=1;
             $(".sendBox").removeClass("boxSelect").addClass("boxNotSelect");
             mailBoxFilter = 'receive';
             $(button).addClass("boxSelect");
             $(".mailBoxName").text('받은 쪽지함');
         } else if (buttonClass === 'sendBox') {
+        	page=1;
             $(".receiveBox").removeClass("boxSelect").addClass("boxNotSelect");
             mailBoxFilter = 'send';
             $(button).addClass("boxSelect");

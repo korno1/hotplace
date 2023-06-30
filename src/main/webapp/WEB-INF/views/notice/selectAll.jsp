@@ -12,9 +12,6 @@
 </head>
 <body>
 	<h1>공지사항</h1>
-
-	
-	
 <%-- 	<jsp:include page="../top_menujm.jsp"></jsp:include> --%>
 	<table border="1" style="border-collapse: collapse">
 		<thead>
@@ -50,7 +47,7 @@
 				<option value="title" <c:if test="${param.searchKey == 'title'}"> selected </c:if>>제목</option>
 				<option value="content" <c:if test="${param.searchKey =='content'}"> selected </c:if>>내용</option>
 			</select>
-			<input type="text" name="searchWord" id="searchWord" value="">
+			<input type="text" name="searchWord" id="searchWord" value="${param.searchWord}">
 			<input type="hidden" name="page" value=1>
 			<input type="submit" value="검색">
 		</form>

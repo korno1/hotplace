@@ -13,7 +13,6 @@
 <script type="text/javascript">
 
 	$(function(){
-		
 		$('#delButton').click(function(){
 			if(confirm("글을 삭제하시겠습니까?")){
 				location.href="deleteOK.do?num=${param.num}"
@@ -21,7 +20,10 @@
 			
 		}); // end click
 		
+		
 	});
+	
+	
 	
 </script>
 </head>

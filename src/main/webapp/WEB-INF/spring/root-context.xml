@@ -33,7 +33,8 @@
 				<value>classpath:jdbc/sqlMapper_mail.xml</value>
 				<value>classpath:jdbc/sqlMapper_shop.xml</value>
 				<value>classpath:jdbc/sqlMapper_shopreview.xml</value>
-
+				<value>classpath:jdbc/sqlMapper_memberreview.xml</value>
+				<value>classpath:jdbc/sqlMapper_event.xml</value>
 			</list>
 		</property>
 	</bean>
@@ -41,7 +42,7 @@
 	<bean id="sqlSession"
 		class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sqlSessionFactory" />
-	</bean>
+	</bean> 
 
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

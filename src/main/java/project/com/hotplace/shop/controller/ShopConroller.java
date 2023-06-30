@@ -72,7 +72,7 @@ public class ShopConroller {
 	
 	@RequestMapping(value = "/updateOK.do", method = RequestMethod.POST)
 	public String updateOK(ShopVO vo) {
-		log.info("/b_updateOK.do...{}", vo);
+		log.info("/updateOK.do...{}", vo);
 		
 		int result = service.update(vo);
 		log.info("result...{}", result);
@@ -87,7 +87,7 @@ public class ShopConroller {
 	
 	@RequestMapping(value = "/deleteOK.do", method = RequestMethod.GET)
 	public String deleteOK(ShopVO vo) {
-		log.info("/b_deleteOK.do...{}", vo);
+		log.info("/deleteOK.do...{}", vo);
 		
 		int result = service.delete(vo);
 		log.info("result...{}", result);

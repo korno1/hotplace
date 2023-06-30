@@ -6,13 +6,47 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>공지사항</title>
+<title>이벤트</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <link rel="stylesheet" href="../resources/css/notice/button.css">
 
 <script type="text/javascript">
 
 	$(function(){
+		$.ajax({
+			url: "json/selectOne.do",
+			data: {
+				num: ${param.num},
+			},
+			method: 'GET',
+			dataType: 'json',
+			success: function(vo2){
+				console.log(vo2);
+				let nwdate = vo2.wdate.substring(0,16);
+				let hvo = `
+					<tr>
+						<td colspan="3">\${vo2.title}</td>
+					</tr>
+					<tr>
+						<td>\${vo2.writer}</td>
+						<td>\${nwdate}</td>
+						<td>조회 \${vo2.viewCount}</td>
+					</tr>
+				`;
+				let bvo = `
+					<tr>
+						<td colspan="3">\${vo2.content}</td>
+					</tr>
+				`;
+				$('#vo_head').html(hvo);
+				$('#vo_body').html(bvo);
+				
+			}, // end success
+			error:function(xhr,status,error){
+				console.log('xhr.status:', xhr.status);
+			} // end error
+		}); //end ajax
+		
 		$('#delButton').click(function(){
 			if(confirm("글을 삭제하시겠습니까?")){
 				location.href="deleteOK.do?num=${param.num}"
@@ -21,9 +55,8 @@
 		}); // end click
 		
 		
-	});
-	
-	
+		
+	}); // end onload
 	
 </script>
 </head>
@@ -34,23 +67,12 @@
 	
 	
 	<table border="1" style="border-collapse: collapse">
-		<fmt:parseDate var="dateFmt" value="${vo2.wdate}"  pattern="yyyy-MM-dd HH:mm:ss.SSS" />
-		<fmt:formatDate var="fmtwdate" value="${dateFmt}" pattern="yyyy-MM-dd HH:mm" />
-		<thead>
-			<tr>
-				<td colspan="3">${vo2.title}</td>
-			</tr>
-			<tr>
-				<td>${vo2.writer}</td>
-				<td>${fmtwdate}</td>
-				<td>조회 ${vo2.viewCount}</td>
-			</tr>
+		<thead id="vo_head">
+			
 		</thead>
 			
-		<tbody>
-			<tr>
-				<td colspan="3">${vo2.content}</td>
-			</tr>
+		<tbody id="vo_body">
+			
 		</tbody>
 		
 		<tfoot>

@@ -12,7 +12,9 @@
 
 	<li><a href="notice/selectAll.do?searchKey=title&searchWord=&page=1">공지사항 목록</a></li>
 	
-	<li><a href="faq/selectAll.do?searchKey=title&page=1">Faq 목록</a></li>
+	<li><a href="faq/selectAll.do?searchKey=title&page=1">FAQ 목록</a></li>
+	
+	<li><a href="event/selectAll.do?searchKey=title&page=1">이벤트 목록</a></li>
 
 	</ul>
 </body>

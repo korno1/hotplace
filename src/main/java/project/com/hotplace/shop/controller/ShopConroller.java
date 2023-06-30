@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import lombok.extern.slf4j.Slf4j;
 import project.com.hotplace.shop.model.ShopVO;
 import project.com.hotplace.shop.service.ShopService;
+import project.com.hotplace.shopreview.model.ShopReviewVO;
+import project.com.hotplace.shopreview.service.ShopReviewService;
 
 @Slf4j
 @Controller
@@ -22,6 +24,9 @@ public class ShopConroller {
 
 	@Autowired
 	ShopService service;
+	
+	@Autowired
+	ShopReviewService sreService;
 	
 	@Autowired
 	ServletContext sContext;
@@ -72,7 +77,7 @@ public class ShopConroller {
 	
 	@RequestMapping(value = "/updateOK.do", method = RequestMethod.POST)
 	public String updateOK(ShopVO vo) {
-		log.info("/b_updateOK.do...{}", vo);
+		log.info("/updateOK.do...{}", vo);
 		
 		int result = service.update(vo);
 		log.info("result...{}", result);
@@ -87,7 +92,7 @@ public class ShopConroller {
 	
 	@RequestMapping(value = "/deleteOK.do", method = RequestMethod.GET)
 	public String deleteOK(ShopVO vo) {
-		log.info("/b_deleteOK.do...{}", vo);
+		log.info("/deleteOK.do...{}", vo);
 		
 		int result = service.delete(vo);
 		log.info("result...{}", result);
@@ -104,10 +109,15 @@ public class ShopConroller {
 	public String selectOne(ShopVO vo, Model model) {
 		log.info("/selectOne.do...{}", vo);
 		
-		ShopVO vo2 = service.selectOne(vo);
-		model.addAttribute("vo2", vo2);
+		ShopVO shoVO = service.selectOne(vo);
+		model.addAttribute("shoVO", shoVO);
 		
-
+		ShopReviewVO sreVO = new ShopReviewVO();
+		sreVO.setShopNum(vo.getNum());
+		List<ShopReviewVO> sreList = sreService.selectAll(sreVO);
+		
+		model.addAttribute("sreVO", sreVO);
+		
 		return "Shop/selectOne";
 	}
 	

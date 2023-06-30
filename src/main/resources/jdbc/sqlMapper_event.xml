@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="project.com.hotplace.eve">
+	<select id="EVE_SELECTALL" resultType="int">
+		select * from event e join member m on (e.writer_num = m.num) 
+		where
+		<if test="searchKey == 'title'">
+			e.title
+		</if>
+		<if test="searchKey == 'content'">
+			e.content 
+		</if>
+		like #{searchWord} 
+		and delete_date is null
+	</select>
+	
+	
+	<select id="EVE_SEARCHLIST" resultType="project.com.hotplace.event.model.EventVO">
+		select * from
+    		(select rownum rn, e_eve.* from
+        		(select e.num, e.title, m.nick_name as writer, e.wdate, e.view_count as viewCount
+        			from event e join member m on (e.writer_num = m.num)
+        		where 
+        		<if test="searchKey == 'title'">
+					e.title
+				</if>
+				<if test="searchKey == 'content'">
+					e.content
+				</if> like #{searchWord}
+        		and e.delete_date is null
+        		order by e.num desc) e_eve)
+				where rn between #{st} and #{en}
+	</select>
+	
+	<select id="EVE_SELECTONE" resultType="project.com.hotplace.event.model.EventVO">
+		select e.num, e.title, e.content, m.nick_name as writer, e.view_count as viewCount, e.wdate
+		from event e join member m on (e.writer_num = m.num)
+		where e.num = #{num}
+	</select>
+	
+<!-- 	<insert id="EVE_INSERT" parameterType="project.com.hotplace.event.model.EventVO"> -->
+<!-- 		insert into faq(num, title, content)  -->
+<!-- 		values(faq_sequence.nextval, #{title}, #{content}) -->
+<!-- 	</insert> -->
+	
+
+	
+<!-- 	<update id="FAQ_UPDATE" parameterType="project.com.hotplace.faq.model.FaqVO"> -->
+<!-- 		update faq set title=#{title}, content=#{content} -->
+<!-- 		where num = #{num} -->
+<!-- 	</update> -->
+	
+<!-- 	<update id="FAQ_DELETEDATE_UPDATE" parameterType="project.com.hotplace.faq.model.FaqVO"> -->
+<!-- 		update faq set delete_date=sysdate -->
+<!-- 		where num = #{num} -->
+<!-- 	</update> -->
+	
+<!-- 	<delete id="FAQ_OVERDATE_DELETE"> -->
+<!-- 		delete from FAQ where delete_date+90 <![CDATA[<=]]> sysdate -->
+<!-- 	</delete> -->
+	
+	
+</mapper>

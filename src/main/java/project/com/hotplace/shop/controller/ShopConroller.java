@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import lombok.extern.slf4j.Slf4j;
 import project.com.hotplace.shop.model.ShopVO;
 import project.com.hotplace.shop.service.ShopService;
+import project.com.hotplace.shopreview.model.ShopReviewVO;
+import project.com.hotplace.shopreview.service.ShopReviewService;
 
 @Slf4j
 @Controller
@@ -22,6 +24,9 @@ public class ShopConroller {
 
 	@Autowired
 	ShopService service;
+	
+	@Autowired
+	ShopReviewService sreService;
 	
 	@Autowired
 	ServletContext sContext;
@@ -104,10 +109,15 @@ public class ShopConroller {
 	public String selectOne(ShopVO vo, Model model) {
 		log.info("/selectOne.do...{}", vo);
 		
-		ShopVO vo2 = service.selectOne(vo);
-		model.addAttribute("vo2", vo2);
+		ShopVO shoVO = service.selectOne(vo);
+		model.addAttribute("shoVO", shoVO);
 		
-
+		ShopReviewVO sreVO = new ShopReviewVO();
+		sreVO.setShopNum(vo.getNum());
+		List<ShopReviewVO> sreList = sreService.selectAll(sreVO);
+		
+		model.addAttribute("sreVO", sreVO);
+		
 		return "Shop/selectOne";
 	}
 	

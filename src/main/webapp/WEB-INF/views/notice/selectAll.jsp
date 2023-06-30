@@ -12,9 +12,6 @@
 </head>
 <body>
 	<h1>공지사항</h1>
-
-	
-	
 <%-- 	<jsp:include page="../top_menujm.jsp"></jsp:include> --%>
 	<table border="1" style="border-collapse: collapse">
 		<thead>

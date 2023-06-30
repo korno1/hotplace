@@ -48,7 +48,7 @@ public class MailRestController {
 	    
 	    log.info("vos.size():{}", vos.size());
 	    
-	    Map<String, Object> response = new HashMap<>();
+	    Map<String, Object> response = new HashMap<String, Object>();
 	    response.put("vos", vos);
 	    response.put("isLast", isLast);
 	    

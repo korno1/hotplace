@@ -27,6 +27,7 @@
 .mailBoxWrap{
 	width:900px;
 	border:1px solid black;
+	box-sizing:border-box;
 }
 .itemLine{
 	height:50px;
@@ -38,7 +39,7 @@
 	width:500px;
 }
 .itemSender{
-	width:100px;
+	width:150px;
 }
 .itemSendDate{
 	width:200px;

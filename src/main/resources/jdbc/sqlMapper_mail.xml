@@ -4,27 +4,27 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="project.com.hotplace.mail">
-<!-- 	<select id="SELECTALL" parameterType="java.util.Map" -->
-<!-- 		resultType="project.com.hotplace.mail.model.MailVO"> -->
-<!-- 		SELECT * -->
-<!-- 		FROM ( -->
-<!-- 		SELECT t.*, ROWNUM AS row_num -->
-<!-- 		FROM ( -->
-<!-- 		SELECT mail_num,title,content,sender_num,recipient_num -->
-<!-- 		sender_name(select nick_name form member where num=#{user_num}), -->
-<!-- 		 FROM mail -->
-<!-- 		WHERE -->
-<!-- 		<if test="searchKey == 'recipient_num'"> -->
-<!-- 			recipient_num -->
-<!-- 		</if> -->
-<!-- 		<if test="searchKey == 'sender_num'"> -->
-<!-- 			sender_num -->
-<!-- 		</if> -->
-<!-- 		 = #{user_num} -->
-<!-- 		) t -->
-<!-- 		) -->
-<!-- 		WHERE row_num BETWEEN #{start} AND #{end} -->
-<!-- 	</select> -->
+	<select id="MAI_SELECTALL" parameterType="java.util.Map"
+		resultType="project.com.hotplace.mail.model.MailVO">
+	SELECT * FROM (
+    SELECT mail_num, title, content, sender_num, 
+        (SELECT nick_name FROM member WHERE num = sender_num) AS sender_name, 
+        recipient_num, 
+        (SELECT nick_name FROM member WHERE num = recipient_num) AS recipient_name, 
+        send_date, read_flag, 
+        ROWNUM AS row_num
+    FROM mail WHERE 
+    <choose>
+        <when test="searchKey == 'recipient_num'">
+            recipient_num
+        </when>
+        <when test="searchKey == 'sender_num'">
+            sender_num
+        </when>
+    </choose>
+    = #{user_num, jdbcType=BIGINT} ) t
+	WHERE row_num BETWEEN #{start, jdbcType=BIGINT} AND #{end, jdbcType=BIGINT}
+	</select>
 <!-- 	<insert id="INSERTOK" -->
 <!-- 		parameterType="project.com.hotplace.mail.model.MailVO"> -->
 <!-- 		INSERT INTO -->

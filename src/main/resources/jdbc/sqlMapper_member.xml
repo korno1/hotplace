@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="project.com.hotplace.member">
-	<select id="SEARCHLIST" parameterType="java.util.Map"
+	<select id="MEM_SEARCHLIST" parameterType="java.util.Map"
 		resultType="project.com.hotplace.member.model.MemberVO">
 		SELECT *
 		FROM (
@@ -23,7 +23,7 @@
 		)
 		WHERE row_num BETWEEN #{start} AND #{end}
 	</select>
-	<select id="SELECTALL" parameterType="java.util.Map"
+	<select id="MEM_SELECTALL" parameterType="java.util.Map"
 		resultType="project.com.hotplace.member.model.MemberVO">
 		SELECT *
 		FROM (
@@ -38,26 +38,26 @@
 		WHERE row_num BETWEEN #{start,
 		jdbcType=BIGINT} AND #{end, jdbcType=BIGINT}
 	</select>
-	<select id="NICK_NAME_CHECK"
+	<select id="MEM_NICK_NAME_CHECK"
 		resultType="project.com.hotplace.member.model.MemberVO">
 		SELECT nick_name FROM member WHERE nick_name = #{nick_name}
 	</select>
-	<select id="EMAIL_CHECK"
+	<select id="MEM_EMAIL_CHECK"
 		resultType="project.com.hotplace.member.model.MemberVO">
 		SELECT email FROM member WHERE email = #{email}
 	</select>
-	<insert id="INSERTOK"
+	<insert id="MEM_INSERTOK"
 		parameterType="project.com.hotplace.member.model.MemberVO">
 		INSERT INTO
 		member(num,nick_name,email,pw,address,gender,food_like)
 		VALUES(mem_sequence.nextval,#{nick_name},#{email},#{pw},#{address},#{gender},#{food_like})
 	</insert>
-	<select id="SELECTONE" resultType="project.com.hotplace.member.model.MemberVO">
+	<select id="MEM_SELECTONE" resultType="project.com.hotplace.member.model.MemberVO">
 		select * from member where num = #{num}
 	</select>
 
 
-	<select id="LOGIN" resultType="project.com.hotplace.member.model.MemberVO">
+	<select id="MEM_LOGIN" resultType="project.com.hotplace.member.model.MemberVO">
 	select * from member where email = #{email} and pw = #{pw}
 	</select>
 
@@ -70,16 +70,16 @@
 	<!-- </select> -->
 
 
-	<update id="UPGRADEOK" parameterType="project.com.hotplace.member.model.MemberVO">
+	<update id="MEM_UPGRADEOK" parameterType="project.com.hotplace.member.model.MemberVO">
 	update member set grade=#{grade}
 	where num = #{num}
 	</update>
-	<update id="UPDATEOK" parameterType="project.com.hotplace.member.model.MemberVO">
+	<update id="MEM_UPDATEOK" parameterType="project.com.hotplace.member.model.MemberVO">
 	update member set nick_name=#{nick_name},email=#{email},address=#{address},pw=#{pw},gender=#{gender},food_like=#{food_like}
 	where num = #{num}
 	</update>
 
-	<delete id="DELETEOK">
+	<delete id="MEM_DELETEOK">
 	delete from member where num = #{num}
 	</delete>
 

@@ -31,12 +31,14 @@ public class MailService {
 		return dao.insertOK(vo);
 	}
 
-	public int updateOK(MailVO vo) {
-		return dao.updateOK(vo);
-	}
-
 	public int deleteOK(MailVO vo) {
 		return dao.deleteOK(vo);
+	}
+	public int readOK(MailVO vo) {
+		return dao.readOK(vo);
+	}
+	public List<MailVO> selectAllAdmin(int page) {
+		return dao.selectAllAdmin(page);
 	}
 	
 }

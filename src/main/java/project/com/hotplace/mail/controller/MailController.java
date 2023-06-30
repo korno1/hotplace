@@ -34,15 +34,10 @@ public class MailController {
 		return "/mail/insert";
 	}
 	
-	@RequestMapping(value = {"mail/selectOne.do"}, method = RequestMethod.GET)
-	public String selectOne(MailVO vo, Model model) {
-		log.info("mail/selectOne.do...");
+	@RequestMapping(value = {"mail/selectAll_admin.do"}, method = RequestMethod.GET)
+	public String selectAll_admin() {
+		log.info("mail/selectAll_admin.do...");
 		
-		MailVO vo2 = service.selectOne(vo);
-		log.info("vo2 outinfo...{}",vo2);
-		
-		model.addAttribute("vo2",vo2);
-		
-		return "mail/selectOne";
+		return "mail/selectAll_admin";
 	}
 }

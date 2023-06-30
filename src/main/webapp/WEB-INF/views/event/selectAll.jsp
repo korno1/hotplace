@@ -9,6 +9,90 @@
 <title>이벤트</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <link rel="stylesheet" href="../resources/css/notice/button.css">
+
+<script type="text/javascript">
+	$(function(){
+		$('#searchWord').val("${param.searchWord}");
+		$.ajax({
+			url: "json/searchList.do",
+			data:{
+				searchKey: "${param.searchKey}",
+				searchWord: "${param.searchWord}",
+				page: ${param.page},
+			},
+			method: 'GET',
+			dataType: 'json',
+			success: function(arr){
+				console.log('ajax...',arr);
+				let tag_vos = '';
+				
+				$.each(arr, function(index, vo){
+					let nwdate = vo.wdate.substring(0,16);
+					tag_vos +=`
+						<tr onclick="location.href='selectOne.do?num=\${vo.num}'" style="cursor:pointer">
+							<td>\${vo.title}</td>
+							<td>\${vo.writer}</td>
+							<td>\${nwdate}</td>
+							<td>\${vo.viewCount}</td>
+						</tr>
+					`;
+					
+				}); // end for-each
+				$('#vos').html(tag_vos);
+	
+			}, // end success
+			
+			error:function(xhr,status,error){
+				console.log('xhr.status:', xhr.status);
+			} // end error
+		}); // end searchList ajax;
+		
+		$.ajax({
+			url: "json/selectAll.do",
+			data:{
+				searchKey: "${param.searchKey}",
+				searchWord: "${param.searchWord}",
+			},
+			method: 'GET',
+			dataType: 'json',
+			success: function(cnt){
+				console.log('ajax...',cnt);
+				if(${param.page}==1){
+//		 			$('#pre_page').hide();
+					$('#pre_page').click(function(){
+						alert('첫번째 페이지입니다.');
+						return false;
+					});
+				}
+				if((${param.page}*5) >= cnt){
+//		 			$('#next_page').hide();
+					$('#next_page').click(function(){
+						alert('마지막 페이지입니다.');
+						return false;
+					});
+				}
+
+			}, // end success
+			
+			error:function(xhr,status,error){
+				console.log('xhr.status:', xhr.status);
+				
+			} // end error
+		}); // end selectAll ajax;
+		
+		
+		
+	}); // end onload
+	
+	function searchList(){
+		let sKey = $('#searchKey').val();
+		let sWord = $('#searchWord').val();
+		
+		let url = "selectAll.do?searchKey=" + sKey + "&searchWord=" + sWord + "&page=1";
+		location.replace(url);
+	}
+	
+</script>
 </head>
 <body>
 	<h1>이벤트</h1>
@@ -23,18 +107,9 @@
 			</tr>
 		</thead>
 			
-		<tbody>
-			<c:forEach var="vo" items="${vos}">
-				<fmt:parseDate var="dateFmt" value="${vo.wdate}"  pattern="yyyy-MM-dd HH:mm:ss.SSS" />
-				<fmt:formatDate var="fmtwdate" value="${dateFmt}" pattern="yyyy-MM-dd" />
-				
-				<tr onclick="location.href='selectOne.do?num=${vo.num}'" style="cursor:pointer">
-					<td>${vo.title}</td>
-					<td>${vo.writer}</td>
-					<td>${fmtwdate}</td>
-					<td>${vo.viewCount}</td>
-				</tr>
-			</c:forEach>
+		<tbody id="vos">
+
+		
 		</tbody>
 		
 		<tfoot>
@@ -42,15 +117,13 @@
 	</table>
 	
 	<div style="width:30%; display:inline-block">
-		<form action="selectAll.do">
-			<select name="searchKey">
-				<option value="title" <c:if test="${param.searchKey == 'title'}"> selected </c:if>>제목</option>
-				<option value="content" <c:if test="${param.searchKey =='content'}"> selected </c:if>>내용</option>
-			</select>
-			<input type="text" name="searchWord" id="searchWord" value="${param.searchWord}">
-			<input type="hidden" name="page" value=1>
-			<input type="submit" value="검색">
-		</form>
+		<select id="searchKey" name="searchKey">
+			<option value="title" <c:if test="${param.searchKey == 'title'}"> selected </c:if>>제목</option>
+			<option value="content" <c:if test="${param.searchKey =='content'}"> selected </c:if>>내용</option>
+		</select>
+		<input type="text" name="searchWord" id="searchWord" value="${param.searchWord}">
+		<input type="hidden" name="page" value=1>
+		<button onclick="searchList()">검색</button>
 	</div>
 	
 	<div style="width:45%; display:inline">

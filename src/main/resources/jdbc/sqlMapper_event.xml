@@ -5,43 +5,48 @@
 
 <mapper namespace="project.com.hotplace.eve">
 	<select id="EVE_SELECTALL" resultType="int">
-		select * from eve where 
+		select * from event e join member m on (e.writer_num = m.num) 
+		where
 		<if test="searchKey == 'title'">
-			title
+			e.title
 		</if>
 		<if test="searchKey == 'content'">
-			content
+			e.content 
 		</if>
 		like #{searchWord} 
 		and delete_date is null
 	</select>
 	
 	
-<!-- 	<select id="FAQ_SEARCHLIST" resultType="project.com.hotplace.faq.model.FaqVO"> -->
-<!-- 		select * from -->
-<!--     		(select rownum rn, v_faq.* from -->
-<!--         		(select * from faq  -->
-<!--         		where  -->
-<!--         		<if test="searchKey == 'title'"> -->
-<!-- 					title -->
-<!-- 				</if> -->
-<!-- 				<if test="searchKey == 'content'"> -->
-<!-- 					content -->
-<!-- 				</if> like #{searchWord} -->
-<!--         		and delete_date is null -->
-<!--         		order by num desc) v_faq) -->
-<!-- 				where rn between #{st} and #{en} -->
-<!-- 	</select> -->
+	<select id="EVE_SEARCHLIST" resultType="project.com.hotplace.event.model.EventVO">
+		select * from
+    		(select rownum rn, e_eve.* from
+        		(select e.num, e.title, m.nick_name as writer, e.wdate, e.view_count as viewCount
+        			from event e join member m on (e.writer_num = m.num)
+        		where 
+        		<if test="searchKey == 'title'">
+					e.title
+				</if>
+				<if test="searchKey == 'content'">
+					e.content
+				</if> like #{searchWord}
+        		and e.delete_date is null
+        		order by e.num desc) e_eve)
+				where rn between #{st} and #{en}
+	</select>
 	
+	<select id="EVE_SELECTONE" resultType="project.com.hotplace.event.model.EventVO">
+		select e.num, e.title, e.content, m.nick_name as writer, e.view_count as viewCount, e.wdate
+		from event e join member m on (e.writer_num = m.num)
+		where e.num = #{num}
+	</select>
 	
-<!-- 	<insert id="FAQ_INSERT" parameterType="project.com.hotplace.faq.model.FaqVO"> -->
+<!-- 	<insert id="EVE_INSERT" parameterType="project.com.hotplace.event.model.EventVO"> -->
 <!-- 		insert into faq(num, title, content)  -->
 <!-- 		values(faq_sequence.nextval, #{title}, #{content}) -->
 <!-- 	</insert> -->
 	
-<!-- 	<select id="FAQ_SELECTONE" resultType="project.com.hotplace.faq.model.FaqVO"> -->
-<!-- 		select * from faq where num = #{num} -->
-<!-- 	</select> -->
+
 	
 <!-- 	<update id="FAQ_UPDATE" parameterType="project.com.hotplace.faq.model.FaqVO"> -->
 <!-- 		update faq set title=#{title}, content=#{content} -->

@@ -1,0 +1,20 @@
+.star-rating {
+  display: inline-block;
+}
+
+.star {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  color: #ccc;
+  cursor: pointer;
+}
+
+.star.active {
+  color: gold;
+}
+
+
+.star-rating .star.selected {
+    color: gold; /* 별점이 선택된 경우의 스타일 */
+}

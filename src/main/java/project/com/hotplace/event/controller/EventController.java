@@ -27,6 +27,14 @@ public class EventController {
 		return "event/selectAll";
 	}
 	
+	@RequestMapping(value = "/event/selectOne.do", method = RequestMethod.GET)
+	public String selectOne() {
+		log.info("/event/selectOne.do...");
+		
+		
+		return "event/selectOne";
+	}
+	
 	
 	
 }

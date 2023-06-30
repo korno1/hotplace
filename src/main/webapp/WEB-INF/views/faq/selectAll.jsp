@@ -163,7 +163,7 @@
 			<option value="title" <c:if test="${param.searchKey == 'title'}"> selected </c:if>>제목</option>
 			<option value="content" <c:if test="${param.searchKey =='content'}"> selected </c:if>>내용</option>
 		</select>
-		<input type="text" name="searchWord" id="searchWord" value="">
+		<input type="text" name="searchWord" id="searchWord" value="${param.searchWord}">
 		<input type="hidden" name="page" value=1>
 		<button onclick="searchList()">검색</button>
 	</div>

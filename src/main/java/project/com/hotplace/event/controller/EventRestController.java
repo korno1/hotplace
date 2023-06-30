@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.extern.slf4j.Slf4j;
-import project.com.hotplace.faq.model.FaqVO;
-import project.com.hotplace.faq.service.FaqService;
+import project.com.hotplace.event.model.EventVO;
+import project.com.hotplace.event.service.EventService;
 
 /**
  * Handles requests for the application home page.
@@ -20,55 +20,55 @@ import project.com.hotplace.faq.service.FaqService;
 public class EventRestController {
 	
 	@Autowired
-	FaqService service;
+	EventService service;
 	
 	/** 
 	 * Simply selects the home view to render by returning its name.
 	 */
 
 	
-	@RequestMapping(value = "/eve/json/selectAll.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/event/json/selectAll.do", method = RequestMethod.GET)
 	@ResponseBody
 	public int selectAll(String searchKey, String searchWord) {
 		log.info("/eve/json/selectAll.do...");
 		
 		
-//		int cnt = service.selectAll(searchKey, searchWord).size();
-//		log.info("cnt: {}", cnt);
+		int cnt = service.selectAll(searchKey, searchWord).size();
+		log.info("cnt: {}", cnt);
 //		
-		return 0;
+		return cnt;
 	}
 	
-//	@RequestMapping(value = "/faq/json/searchList.do", method = RequestMethod.GET)
-//	@ResponseBody
-//	public List<FaqVO> searchList(String searchKey, String searchWord, int page) {
-//		log.info("/faq/json/selectAll.do...");
-//		log.info("searchKey: {}", searchKey);
-//		log.info("searchWord: {}", searchWord);
-//		log.info("page: {}", page);
-//		
-//		
-//		List<FaqVO> vos = service.searchList(searchKey, searchWord, page);
-//		log.info("vos: {}", vos);
-//		
-//		return vos;
-//	}
+	@RequestMapping(value = "/event/json/searchList.do", method = RequestMethod.GET)
+	@ResponseBody
+	public List<EventVO> searchList(String searchKey, String searchWord, int page) {
+		log.info("/event/json/selectAll.do...");
+		log.info("searchKey: {}", searchKey);
+		log.info("searchWord: {}", searchWord);
+		log.info("page: {}", page);
+		
+		
+		List<EventVO> vos = service.searchList(searchKey, searchWord, page);
+		log.info("vos: {}", vos);
+		
+		return vos;
+	}
 //	
-//	@RequestMapping(value = "/faq/json/selectOne.do", method = RequestMethod.GET)
-//	@ResponseBody
-//	public FaqVO selectOne(FaqVO vo) {
-//		log.info("/faq/json/selectOne.do...");
-//		
-//		FaqVO vo2 = service.selectOne(vo);
-//		log.info("vo2: {}", vo2);
-//		
-//		return vo2;
-//	}
+	@RequestMapping(value = "/event/json/selectOne.do", method = RequestMethod.GET)
+	@ResponseBody
+	public EventVO selectOne(EventVO vo) {
+		log.info("/event/json/selectOne.do...");
+		
+		EventVO vo2 = service.selectOne(vo);
+		log.info("vo2: {}", vo2);
+		
+		return vo2;
+	}
 //	
-//	@RequestMapping(value = "/faq/json/insertOK.do", method = RequestMethod.GET)
+//	@RequestMapping(value = "/event/json/insertOK.do", method = RequestMethod.GET)
 //	@ResponseBody
-//	public String insertOK(FaqVO vo) {
-//		log.info("/faq/json/insertOK.do...{}", vo);
+//	public String insertOK(EventVO vo) {
+//		log.info("/event/json/insertOK.do...{}", vo);
 //
 //		vo.setContent(vo.getContent().replaceAll("\r\n", "<BR>"));
 //		int result = service.insert(vo);
@@ -85,10 +85,10 @@ public class EventRestController {
 //	
 //	}
 //	
-//	@RequestMapping(value = "/faq/json/updateOK.do", method = RequestMethod.GET)
+//	@RequestMapping(value = "/event/json/updateOK.do", method = RequestMethod.GET)
 //	@ResponseBody
-//	public String updateOK(FaqVO vo) {
-//		log.info("/faq/json/updateOK.do...{}", vo);
+//	public String updateOK(EventVO vo) {
+//		log.info("/event/json/updateOK.do...{}", vo);
 //
 //		vo.setContent(vo.getContent().replaceAll("\r\n", "<BR>"));
 //		int result = service.update(vo);
@@ -105,10 +105,10 @@ public class EventRestController {
 //	
 //	}
 //	
-//	@RequestMapping(value = "/faq/json/deleteOK.do", method = RequestMethod.GET)
+//	@RequestMapping(value = "/event/json/deleteOK.do", method = RequestMethod.GET)
 //	@ResponseBody
-//	public String deleteOK(FaqVO vo) {
-//		log.info("/faq/json/deleteOK.do...{}", vo);
+//	public String deleteOK(EventVO vo) {
+//		log.info("/event/json/deleteOK.do...{}", vo);
 //
 //		int result = service.delete(vo);
 //		log.info("result: {}", result);

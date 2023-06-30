@@ -1,0 +1,37 @@
+@charset "UTF-8";
+.mailInsertWrap{
+	width:600px;
+	height:400px;
+	margin:0 auto;
+	background-color:#DEDEDE;
+}
+input{
+	border:none;
+	height:97%;
+	width:100%;
+}
+.Title{
+	widht:300px;
+	height:50px;
+	line-height:50px;
+}
+.RecipientName{
+	widht:200px;
+	height:50px;
+	line-height:50px;
+}
+.Content{
+	widht:600px;
+	height:250px;
+}
+.mailInsert__bottomWrap{
+	display:flex;
+	justify-content: flex-end;
+}
+.InsertBtn{
+	margin:5px 5px 0px 0px;
+	width:50px;
+	height:30px;
+	line-height:30px;
+	background-color:blue;
+}

@@ -6,13 +6,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>공지사항</title>
+<title>이벤트</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <link rel="stylesheet" href="../resources/css/notice/button.css">
 </head>
 <body>
-	<h1>공지사항</h1>
-<%-- 	<jsp:include page="../top_menujm.jsp"></jsp:include> --%>
+	<h1>이벤트</h1>
+
 	<table border="1" style="border-collapse: collapse">
 		<thead>
 			<tr>

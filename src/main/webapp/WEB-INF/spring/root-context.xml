@@ -31,6 +31,8 @@
 				<value>classpath:jdbc/sqlMapper_notice.xml</value>
 				<value>classpath:jdbc/sqlMapper_faq.xml</value>
 				<value>classpath:jdbc/sqlMapper_mail.xml</value>
+				<value>classpath:jdbc/sqlMapper_shop.xml</value>
+
 			</list>
 		</property>
 	</bean>

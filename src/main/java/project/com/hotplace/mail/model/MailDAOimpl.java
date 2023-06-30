@@ -28,7 +28,7 @@ public class MailDAOimpl implements MailDAO {
 		log.info("selectAll()...page: {}", page);
 
 		// SQL 쿼리에 전달할 파라미터를 저장할 변수를 생성
-		Map<String, Object> parameters = new HashMap<>();
+		Map<String, Object> parameters = new HashMap<String, Object>();
 
 		// offset으로 1페이지당 출력할 내용 계산
 		int itemsPerPage = 1;

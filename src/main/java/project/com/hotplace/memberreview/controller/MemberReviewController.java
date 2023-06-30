@@ -20,4 +20,5 @@ public class MemberReviewController {
 		return "memberreview/userpage";
 	}
 	
+	
 }

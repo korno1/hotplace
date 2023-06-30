@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,7 +26,6 @@ public class MemberReviewRestController {
 	@RequestMapping(value = {"/memberreview/json/selectAll.do"}, method = RequestMethod.GET)
 	public List<MemberReviewVO> selectAll(MemberReviewVO vo) {
 		log.info("selectAll.do...{}", vo);
-		log.info("vo.writer_name...{}", vo.getWriter_name());
 		
 		List<MemberReviewVO> vos = service.selectAll(vo);
 		log.info("vos..{}", vos.toString());
@@ -35,7 +35,7 @@ public class MemberReviewRestController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = {"/memberreview/json/insertOK.do"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"/memberreview/json/insertOK.do"}, method = RequestMethod.POST)
 	public Map<String, String> insertOK(MemberReviewVO vo) {
 		log.info("insertOK.do...{}", vo);
 		
@@ -51,7 +51,7 @@ public class MemberReviewRestController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = {"/memberreview/json/updateOK.do"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"/memberreview/json/updateOK.do"}, method = RequestMethod.POST)
 	public Map<String, String> updateOK(MemberReviewVO vo) {
 		log.info("insertOK.do...{}", vo);
 		
@@ -67,7 +67,7 @@ public class MemberReviewRestController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = {"/memberreview/json/deleteOK.do"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"/memberreview/json/deleteOK.do"}, method = RequestMethod.POST)
 	public Map<String, String> deleteOK(MemberReviewVO vo) {
 		log.info("insertOK.do...{}", vo);
 		

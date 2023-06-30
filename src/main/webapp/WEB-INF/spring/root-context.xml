@@ -31,7 +31,7 @@
 				<value>classpath:jdbc/sqlMapper_notice.xml</value>
 				<value>classpath:jdbc/sqlMapper_faq.xml</value>
 				<value>classpath:jdbc/sqlMapper_mail.xml</value>
-				<value>classpath:jdbc/sqlMapper_memberreview.xml</value>
+				<value>classpath:jdbc/sqlMapper_shop.xml</value>
 				<value>classpath:jdbc/sqlMapper_memberreview.xml</value>
 			</list>
 		</property>

@@ -54,6 +54,30 @@ public class MailRestController {
 	    
 	    return response;
 	}
+	@RequestMapping(value = "/mail/json/selectAll_admin.do", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> selectAll_admin(int page) {
+		int pageNumber = 1;
+		int nextPageNumber = page + 1;
+		
+		log.info("json/selectAll_admin.do");
+		if (page > 0) {
+			pageNumber = page;
+		}
+		List<MailVO> vos = service.selectAllAdmin(pageNumber);
+		List<MailVO> vos2 = service.selectAllAdmin(nextPageNumber);
+		log.info("nextPageis...{}", vos2.toString());
+		
+		boolean isLast = vos2.isEmpty();
+		
+		log.info("vos.size():{}", vos.size());
+		
+		Map<String, Object> response = new HashMap<String, Object>();
+		response.put("vos", vos);
+		response.put("isLast", isLast);
+		
+		return response;
+	}
 
 
 	@RequestMapping(value = "/mail/json/insertOK.do", method = RequestMethod.POST)
@@ -70,12 +94,12 @@ public class MailRestController {
 		}
 	}
 
-	@RequestMapping(value = "/mail/json/updateOK.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/mail/json/readOK.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String updateOK(MailVO vo) throws IllegalStateException, IOException {
-		log.info("updateOK...{}", vo);
+	public String readOK(MailVO vo) throws IllegalStateException, IOException {
+		log.info("readOK...{}", vo);
 
-			int result = service.updateOK(vo);
+			int result = service.readOK(vo);
 			log.info("result:{}", result);
 			if (result == 1) {
 				return "{\"result\":\"OK\"}";

@@ -35,6 +35,22 @@ public class EventController {
 		return "event/selectOne";
 	}
 	
+	@RequestMapping(value = "/event/insert.do", method = RequestMethod.GET)
+	public String insert() {
+		log.info("/event/insert.do...");
+		
+		
+		return "event/insert";
+	}
+	
+	@RequestMapping(value = "/event/update.do", method = RequestMethod.GET)
+	public String update() {
+		log.info("/event/update.do...");
+		
+		
+		return "event/update";
+	}
+	
 	
 	
 }

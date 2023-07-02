@@ -4,7 +4,9 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.extern.slf4j.Slf4j;
+import project.com.hotplace.mail.model.MailVO;
 import project.com.hotplace.member.model.MemberVO;
 import project.com.hotplace.member.service.MemberService;
 
@@ -34,9 +37,10 @@ public class MemberRestController {
 
 	@RequestMapping(value = "/member/json/selectAll.do", method = RequestMethod.GET)
 	@ResponseBody
-	public List<MemberVO> selectAll(String searchKey, String searchWord, int page) {
+	public Map<String, Object> selectAll(String searchKey, String searchWord, int page) {
 		int pageNumber = 1;
-
+		int nextPageNumber = page + 1;
+		
 		log.info("member/json/selectAll.do");
 		if (page > 0) {
 			pageNumber = page;
@@ -44,9 +48,27 @@ public class MemberRestController {
 
 		// selectAll, searchList
 		List<MemberVO> vos = service.selectAll(searchKey, searchWord, pageNumber);
-		log.info("vos.size():{}", vos.size());
+	    List<MemberVO> vos2 = service.selectAll(searchKey, searchWord, nextPageNumber);
 
-		return vos;
+	    boolean isLast = vos2.isEmpty();
+		log.info("vos.size():{}", vos.size());
+		
+		Map<String, Object> response = new HashMap<String, Object>();
+	    response.put("vos", vos);
+	    response.put("isLast", isLast);
+
+		return response;
+	}
+	
+	@RequestMapping(value = "/member/json/selectOne.do", method = RequestMethod.POST)
+	@ResponseBody
+	public MemberVO selectOne(MemberVO vo) {
+		log.info("member/json/selectOne...{}",vo);
+		
+		MemberVO vo2 = service.selectOne(vo);
+		log.info("selectOne matching member...{}", vo2);
+		
+		return vo2;
 	}
 
 	@RequestMapping(value = "/member/json/nickNameCheck.do", method = RequestMethod.GET)

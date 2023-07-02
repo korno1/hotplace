@@ -32,11 +32,12 @@ public class ShopService {
 		return dao.update(vo);
 	}
 	
-	public List<ShopVO> selectAll() {
+	public List<ShopVO> selectAll(int pageNum) {
 		return dao.selectAll();
 	}
 	
 	public ShopVO selectOne(ShopVO vo) {
+		log.info("{}",vo);
 		return dao.selectOne(vo);
 	}
 	

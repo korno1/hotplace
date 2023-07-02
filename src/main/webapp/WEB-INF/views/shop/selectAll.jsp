@@ -9,17 +9,25 @@
 <title>selectAll</title>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script type="text/javascript">
+
+$(function(){
+	console.log('onload...');
+})
+
+</script>
 </head>
 <body>
 	<h1>매장목록</h1>
 	
 	<div style="padding:5px">
-		<form action="selectAll.do">
+		<form action="searchList.do">
 			<select name="searchKey" id="searchKey">
 				<option value="name">name</option>
 				<option value="cate">cate</option>
 			</select>
 			<input type="text" name="searchWord" id="searchWord" value="커피">
+			<input type="hidden" name="pageNum" id="pageNum" value=1>
 			<input type="submit" value="검색">
 		</form>
 	</div>
@@ -51,7 +59,6 @@
 		<a href="selectAll.do?searchKey=${param.searchKey}&searchWord=${param.searchWord}&pageNum=${param.pageNum+1}" id="next_page">다음</a>
 	</div>
 	<script type="text/javascript">
-		console.log(${cnt});
 		if(${param.pageNum}==1){
  			$('#pre_page').hide();
 		}

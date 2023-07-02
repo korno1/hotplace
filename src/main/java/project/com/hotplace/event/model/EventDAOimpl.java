@@ -30,7 +30,7 @@ public class EventDAOimpl implements EventDAO {
 		map.put("searchKey", searchKey);
 		map.put("searchWord", "%" + searchWord + "%");
 	
-//		sqlSession.delete("FAQ_OVERDATE_DELETE");
+		sqlSession.delete("EVE_OVERDATE_DELETE");
 		
 		return sqlSession.selectList(key, map);
 	}

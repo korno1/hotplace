@@ -36,31 +36,35 @@
 	</select>
 	
 	<select id="EVE_SELECTONE" resultType="project.com.hotplace.event.model.EventVO">
-		select e.num, e.title, e.content, m.nick_name as writer, e.view_count as viewCount, e.wdate
+		select e.num, e.title, e.content, m.nick_name as writer, e.view_count as viewCount, e.wdate, e.deadline
 		from event e join member m on (e.writer_num = m.num)
 		where e.num = #{num}
 	</select>
 	
-<!-- 	<insert id="EVE_INSERT" parameterType="project.com.hotplace.event.model.EventVO"> -->
-<!-- 		insert into faq(num, title, content)  -->
-<!-- 		values(faq_sequence.nextval, #{title}, #{content}) -->
-<!-- 	</insert> -->
+	<insert id="EVE_INSERT" parameterType="project.com.hotplace.event.model.EventVO">
+		insert into event(num, title, content, writer_num, deadline) 
+		values(eve_sequence.nextval, #{title}, #{content}, #{writerNum}, TO_DATE(#{deadline},'YYYY-MM-DD HH24:MI'))
+	</insert>
 	
+	<update id="EVE_VCOUNT_UPDATE" parameterType="project.com.hotplace.event.model.EventVO">
+		update event set view_count = view_count+1
+		where num = #{num}
+	</update>
 
 	
-<!-- 	<update id="FAQ_UPDATE" parameterType="project.com.hotplace.faq.model.FaqVO"> -->
-<!-- 		update faq set title=#{title}, content=#{content} -->
-<!-- 		where num = #{num} -->
-<!-- 	</update> -->
+	<update id="EVE_UPDATE" parameterType="project.com.hotplace.event.model.EventVO">
+		update event set title=#{title}, content=#{content}, deadline=TO_DATE(#{deadline},'YYYY-MM-DD HH24:MI')
+		where num = #{num}
+	</update>
 	
-<!-- 	<update id="FAQ_DELETEDATE_UPDATE" parameterType="project.com.hotplace.faq.model.FaqVO"> -->
-<!-- 		update faq set delete_date=sysdate -->
-<!-- 		where num = #{num} -->
-<!-- 	</update> -->
+	<update id="EVE_DELETEDATE_UPDATE" parameterType="project.com.hotplace.faq.model.FaqVO">
+		update event set delete_date=sysdate
+		where num = #{num}
+	</update>
 	
-<!-- 	<delete id="FAQ_OVERDATE_DELETE"> -->
-<!-- 		delete from FAQ where delete_date+90 <![CDATA[<=]]> sysdate -->
-<!-- 	</delete> -->
+	<delete id="EVE_OVERDATE_DELETE">
+		delete from event where delete_date+90 <![CDATA[<=]]> sysdate
+	</delete>
 	
 	
 </mapper>

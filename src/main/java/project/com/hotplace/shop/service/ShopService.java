@@ -32,8 +32,8 @@ public class ShopService {
 		return dao.update(vo);
 	}
 	
-	public List<ShopVO> selectAll(int pageNum) {
-		return dao.selectAll(pageNum);
+	public List<ShopVO> selectAll() {
+		return dao.selectAll();
 	}
 	
 	public ShopVO selectOne(ShopVO vo) {

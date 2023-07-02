@@ -122,18 +122,21 @@ public class ShopConroller {
 	
 	@RequestMapping(value = "/selectOne.do", method = RequestMethod.GET)
 	public String selectOne(ShopVO vo, Model model) {
-		ShopVO shoVO = service.selectOne(vo);
-		log.info("/selectOne.do...{}", vo);
-		
-		model.addAttribute("shoVO", shoVO);
-		
-		ShopReviewVO sreVO = new ShopReviewVO();
-		sreVO.setShopNum(vo.getNum());
-		List<ShopReviewVO> sreList = sreService.selectAll(sreVO);
-		
-		model.addAttribute("sreList", sreList);
-		
-		return "Shop/selectOne";
+	    ShopVO shoVO = service.selectOne(vo);
+
+	    int num = shoVO.getNum();
+
+	    ShopReviewVO sreVO = new ShopReviewVO();
+	    sreVO.setShopNum(num);
+
+	    List<ShopReviewVO> sreVOS = sreService.selectAll(sreVO);
+
+	    log.info("/sreList...{}", sreVOS);
+
+	    model.addAttribute("shoVO", shoVO);
+	    model.addAttribute("sreVOS", sreVOS);
+
+	    return "shop/selectOne";
 	}
 	
 }

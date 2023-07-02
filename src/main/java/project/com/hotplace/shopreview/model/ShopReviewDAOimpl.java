@@ -22,29 +22,30 @@ public class ShopReviewDAOimpl implements ShopReviewDAO {
 	@Override
 	public List<ShopReviewVO> selectAll(ShopReviewVO vo) {
 		log.info("selectAll()...");
+		log.info("{}", vo);
 
-		return sqlSession.selectList("SELECT_ALL");
+		return sqlSession.selectList("SRE_SELECT_ALL", vo);
 	}
 
 	@Override
 	public int insert(ShopReviewVO vo) {
 		log.info("insert()...");
 		
-		return sqlSession.insert("INSERT", vo);
+		return sqlSession.insert("SRE_INSERT", vo);
 	}
 
 	@Override
 	public int update(ShopReviewVO vo) {
 		log.info("update()...");
 		
-		return sqlSession.update("UPDATE", vo);
+		return sqlSession.update("SRE_UPDATE", vo);
 	}
 
 	@Override
 	public int delete(ShopReviewVO vo) {
 		log.info("delete()...");
 		
-		return sqlSession.delete("DELETE", vo);
+		return sqlSession.delete("SRE_DELETE", vo);
 	}
 
 }

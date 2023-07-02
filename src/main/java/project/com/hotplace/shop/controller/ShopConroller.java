@@ -47,12 +47,12 @@ public class ShopConroller {
 	}
 	
 	@RequestMapping(value = "/searchList.do", method = RequestMethod.GET)
-	public String selectAll(Model model, String searchKey, String searchWord) {
+	public String searchList(Model model, String searchKey, String searchWord, int pageNum) {
 		log.info("/searchList.do");
 		log.info("searchKey:{}",searchKey);
 		log.info("searchWord:{}",searchWord);
 		
-		List<ShopVO> vos = service.searchList(searchKey,searchWord, 1);
+		List<ShopVO> vos = service.searchList(searchKey,searchWord,pageNum);
 		long cnt = vos.stream().count();
 		
 		model.addAttribute("vos", vos);

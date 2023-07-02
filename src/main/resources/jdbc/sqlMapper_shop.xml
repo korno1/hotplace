@@ -5,7 +5,7 @@
 
 <mapper namespace="project.com.hotplace.shop">
 	<select id="SHO_SELECT_ALL" resultType="project.com.hotplace.shop.model.ShopVO">
-		select * from shop where num between #{start} and #{end} order by num desc
+		select * from shop where num between #{start} and #{end} order by num
 	</select>
 	  
 	<select id="SHO_SELECT_ONE" resultType="project.com.hotplace.shop.model.ShopVO">

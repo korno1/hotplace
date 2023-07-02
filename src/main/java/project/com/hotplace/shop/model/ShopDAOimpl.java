@@ -42,7 +42,13 @@ public class ShopDAOimpl implements ShopDAO {
 	@Override
 	public List<ShopVO> selectAll() {
 		log.info("selectAll()....{}");
-		return sqlSession.selectList("SHO_SELECT_ALL");
+		
+		Map<String, Object> param = new HashMap<String, Object>();
+		
+		param.put("end", 10);
+		param.put("start", 1);
+		
+		return sqlSession.selectList("SHO_SELECT_ALL", param);
 	}
 
 	@Override

@@ -32,7 +32,7 @@ public class ShopService {
 		return dao.update(vo);
 	}
 	
-	public List<ShopVO> selectAll(int pageNum) {
+	public List<ShopVO> selectAll() {
 		return dao.selectAll();
 	}
 	

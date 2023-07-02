@@ -23,10 +23,10 @@ $(function(){
 	<div style="padding:5px">
 		<form action="searchList.do">
 			<select name="searchKey" id="searchKey">
-				<option value="name">name</option>
-				<option value="cate">cate</option>
+				<option value="name" ${param.searchKey == 'name' ? 'selected' : ''}>name</option>
+				<option value="cate" ${param.searchKey == 'cate' ? 'selected' : ''}>cate</option>
 			</select>
-			<input type="text" name="searchWord" id="searchWord" value="커피">
+			<input type="text" name="searchWord" id="searchWord" value="${param.searchWord}">
 			<input type="hidden" name="pageNum" id="pageNum" value=1>
 			<input type="submit" value="검색">
 		</form>
@@ -55,8 +55,8 @@ $(function(){
 	</table>
 	
 	<div>
-		<a href="selectAll.do?searchKey=${param.searchKey}&searchWord=${param.searchWord}&pageNum=${param.pageNum-1}" id="pre_page">이전</a>
-		<a href="selectAll.do?searchKey=${param.searchKey}&searchWord=${param.searchWord}&pageNum=${param.pageNum+1}" id="next_page">다음</a>
+		<a href="searchList.do?searchKey=${param.searchKey}&searchWord=${param.searchWord}&pageNum=${param.pageNum-1}" id="pre_page">이전</a>
+		<a href="searchList.do?searchKey=${param.searchKey}&searchWord=${param.searchWord}&pageNum=${param.pageNum+1}" id="next_page">다음</a>
 	</div>
 	<script type="text/javascript">
 		if(${param.pageNum}==1){

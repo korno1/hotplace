@@ -42,7 +42,13 @@ public class ShopDAOimpl implements ShopDAO {
 	@Override
 	public List<ShopVO> selectAll() {
 		log.info("selectAll()....{}");
-		return sqlSession.selectList("SHO_SELECT_ALL");
+		
+		Map<String, Object> param = new HashMap<String, Object>();
+		
+		param.put("end", 10);
+		param.put("start", 1);
+		
+		return sqlSession.selectList("SHO_SELECT_ALL", param);
 	}
 
 	@Override
@@ -67,10 +73,15 @@ public class ShopDAOimpl implements ShopDAO {
 		param.put("start", start);
 		
 		if(!searchWord.isEmpty()) {
-			param.put("searchKey", searchKey);
-			param.put("searchWord", "%" + searchWord + "%");
-			return sqlSession.selectList("SHO_SEARCH_LIST", param);
+			param.put("sW", "%" + searchWord + "%");
+			log.info("searchKey...{}", searchKey);
+
+			if(searchKey.toLowerCase().equals("cate"))
+				return sqlSession.selectList("SHO_SEARCH_LIST_CATE", param);
+			else
+				return sqlSession.selectList("SHO_SEARCH_LIST_NAME", param);
 		}else {
+			log.info("{}", param);
 			return sqlSession.selectList("SHO_SELECT_ALL", param);
 		}
 	}

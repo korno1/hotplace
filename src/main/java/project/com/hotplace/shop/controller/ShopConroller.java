@@ -30,14 +30,29 @@ public class ShopConroller {
 	
 	@Autowired
 	ServletContext sContext;
-	
+
 	@RequestMapping(value = "/selectAll.do", method = RequestMethod.GET)
-	public String selectAll(Model model, String searchKey, String searchWord, int pageNum) {
+	public String selectAll(Model model, String searchKey, int pageNum, String searchWord) {
 		log.info("/searchList.do");
 		log.info("searchKey:{}",searchKey);
 		log.info("searchWord:{}",searchWord);
 		
 		List<ShopVO> vos = service.searchList(searchKey,searchWord, pageNum);
+		long cnt = vos.stream().count();
+		
+		model.addAttribute("vos", vos);
+		model.addAttribute("cnt", cnt);
+		
+		return "shop/selectAll";
+	}
+	
+	@RequestMapping(value = "/searchList.do", method = RequestMethod.GET)
+	public String searchList(Model model, String searchKey, String searchWord, int pageNum) {
+		log.info("/searchList.do");
+		log.info("searchKey:{}",searchKey);
+		log.info("searchWord:{}",searchWord);
+		
+		List<ShopVO> vos = service.searchList(searchKey,searchWord,pageNum);
 		long cnt = vos.stream().count();
 		
 		model.addAttribute("vos", vos);
@@ -107,18 +122,21 @@ public class ShopConroller {
 	
 	@RequestMapping(value = "/selectOne.do", method = RequestMethod.GET)
 	public String selectOne(ShopVO vo, Model model) {
-		log.info("/selectOne.do...{}", vo);
-		
-		ShopVO shoVO = service.selectOne(vo);
-		model.addAttribute("shoVO", shoVO);
-		
-		ShopReviewVO sreVO = new ShopReviewVO();
-		sreVO.setShopNum(vo.getNum());
-		List<ShopReviewVO> sreList = sreService.selectAll(sreVO);
-		
-		model.addAttribute("sreVO", sreVO);
-		
-		return "Shop/selectOne";
+	    ShopVO shoVO = service.selectOne(vo);
+
+	    int num = shoVO.getNum();
+
+	    ShopReviewVO sreVO = new ShopReviewVO();
+	    sreVO.setShopNum(num);
+
+	    List<ShopReviewVO> sreVOS = sreService.selectAll(sreVO);
+
+	    log.info("/sreList...{}", sreVOS);
+
+	    model.addAttribute("shoVO", shoVO);
+	    model.addAttribute("sreVOS", sreVOS);
+
+	    return "shop/selectOne";
 	}
 	
 }

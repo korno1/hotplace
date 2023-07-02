@@ -37,6 +37,7 @@ public class ShopService {
 	}
 	
 	public ShopVO selectOne(ShopVO vo) {
+		log.info("{}",vo);
 		return dao.selectOne(vo);
 	}
 	

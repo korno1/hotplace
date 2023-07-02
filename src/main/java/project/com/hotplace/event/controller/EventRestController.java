@@ -59,70 +59,74 @@ public class EventRestController {
 	public EventVO selectOne(EventVO vo) {
 		log.info("/event/json/selectOne.do...");
 		
+		service.vCountUp(vo);
+		
 		EventVO vo2 = service.selectOne(vo);
 		log.info("vo2: {}", vo2);
 		
 		return vo2;
 	}
 //	
-//	@RequestMapping(value = "/event/json/insertOK.do", method = RequestMethod.GET)
-//	@ResponseBody
-//	public String insertOK(EventVO vo) {
-//		log.info("/event/json/insertOK.do...{}", vo);
-//
-//		vo.setContent(vo.getContent().replaceAll("\r\n", "<BR>"));
-//		int result = service.insert(vo);
-//		log.info("result: {}", result);
-//		
-//		String msg = "";
-//		
-//		if(result==1) {
-//			msg = "{\"result\" : 1}"; // {"result" : 1}
-//		}
-//		else msg = "{\"result\" : 0}";
-//		
-//		return msg;
+	@RequestMapping(value = "/event/json/insertOK.do", method = RequestMethod.GET)
+	@ResponseBody
+	public String insertOK(EventVO vo) {
+		log.info("/event/json/insertOK.do...{}", vo);
+
+		vo.setContent(vo.getContent().replaceAll("\r\n", "<BR>"));
+		vo.setDeadline(vo.getDeadline().replace("T", " "));
+		int result = service.insert(vo);
+		log.info("result: {}", result);
+		
+		String msg = "";
+		
+		if(result==1) {
+			msg = "{\"result\" : 1}"; // {"result" : 1}
+		}
+		else msg = "{\"result\" : 0}";
+		
+		return msg;
+	
+	}
 //	
-//	}
+	@RequestMapping(value = "/event/json/updateOK.do", method = RequestMethod.GET)
+	@ResponseBody
+	public String updateOK(EventVO vo) {
+		log.info("/event/json/updateOK.do...{}", vo);
+
+		vo.setContent(vo.getContent().replaceAll("\r\n", "<BR>"));
+		vo.setDeadline(vo.getDeadline().replace("T", " "));
+		int result = service.update(vo);
+		log.info("result: {}", result);
+		
+		String msg = "";
+		
+		if(result==1) {
+			msg = "{\"result\" : 1}"; // {"result" : 1}
+		}
+		else msg = "{\"result\" : 0}";
+		
+		return msg;
+	
+	}
 //	
-//	@RequestMapping(value = "/event/json/updateOK.do", method = RequestMethod.GET)
-//	@ResponseBody
-//	public String updateOK(EventVO vo) {
-//		log.info("/event/json/updateOK.do...{}", vo);
-//
-//		vo.setContent(vo.getContent().replaceAll("\r\n", "<BR>"));
-//		int result = service.update(vo);
-//		log.info("result: {}", result);
-//		
-//		String msg = "";
-//		
-//		if(result==1) {
-//			msg = "{\"result\" : 1}"; // {"result" : 1}
-//		}
-//		else msg = "{\"result\" : 0}";
-//		
-//		return msg;
-//	
-//	}
-//	
-//	@RequestMapping(value = "/event/json/deleteOK.do", method = RequestMethod.GET)
-//	@ResponseBody
-//	public String deleteOK(EventVO vo) {
-//		log.info("/event/json/deleteOK.do...{}", vo);
-//
-//		int result = service.delete(vo);
-//		log.info("result: {}", result);
-//		
-//		String msg = "";
-//		
-//		if(result==1) {
-//			msg = "{\"result\" : 1}"; // {"result" : 1}
-//		}
-//		else msg = "{\"result\" : 0}";
-//		
-//		return msg;
-//	
-//	}
+	@RequestMapping(value = "/event/json/deleteOK.do", method = RequestMethod.GET)
+	@ResponseBody
+	public String deleteOK(EventVO vo) {
+		log.info("/event/json/deleteOK.do...{}", vo);
+
+		int result = service.delete(vo);
+		log.info("result: {}", result);
+		
+		String msg = "";
+		
+		if(result==1) {
+			msg = "{\"result\" : 1}"; // {"result" : 1}
+		}
+		else msg = "{\"result\" : 0}";
+		
+		return msg;
+	
+	}
 	
 	
 }

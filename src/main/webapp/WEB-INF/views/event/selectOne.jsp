@@ -23,19 +23,21 @@
 			success: function(vo2){
 				console.log(vo2);
 				let nwdate = vo2.wdate.substring(0,16);
+				let deadline = vo2.deadline.substring(0,16);
 				let hvo = `
 					<tr>
-						<td colspan="3">\${vo2.title}</td>
+						<td colspan="4">\${vo2.title}</td>
 					</tr>
 					<tr>
 						<td>\${vo2.writer}</td>
 						<td>\${nwdate}</td>
+						<td>\${deadline}</td>
 						<td>조회 \${vo2.viewCount}</td>
 					</tr>
 				`;
 				let bvo = `
 					<tr>
-						<td colspan="3">\${vo2.content}</td>
+						<td colspan="4">\${vo2.content}</td>
 					</tr>
 				`;
 				$('#vo_head').html(hvo);
@@ -49,7 +51,7 @@
 		
 		$('#delButton').click(function(){
 			if(confirm("글을 삭제하시겠습니까?")){
-				location.href="deleteOK.do?num=${param.num}"
+				deleteOK();
 			}
 			
 		}); // end click
@@ -57,6 +59,27 @@
 		
 		
 	}); // end onload
+	
+	function deleteOK(){
+		$.ajax({
+			url: "json/deleteOK.do",
+			data: {
+				num: ${param.num},
+			},
+			method: 'GET',
+			dataType: 'json',
+			success: function(obj){
+				console.log('ajax...', obj.result);
+				if(obj.result==1){
+					let url='selectAll.do?searchKey=title&page=1';
+					location.replace(url);
+				}
+			},
+			error:function(xhr,status,error){
+				console.log('xhr.status:', xhr.status);
+			} // end error
+		}); // end ajax
+	} // end deleteOK
 	
 </script>
 </head>

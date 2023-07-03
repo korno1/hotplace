@@ -56,7 +56,7 @@ public class MailRestController {
 	}
 	@RequestMapping(value = "/mail/json/selectAll_admin.do", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> selectAll_admin(int page) {
+	public Map<String, Object> selectAll_admin(String searchKey, String searchWord, int page) {
 		int pageNumber = 1;
 		int nextPageNumber = page + 1;
 		
@@ -64,8 +64,8 @@ public class MailRestController {
 		if (page > 0) {
 			pageNumber = page;
 		}
-		List<MailVO> vos = service.selectAllAdmin(pageNumber);
-		List<MailVO> vos2 = service.selectAllAdmin(nextPageNumber);
+		List<MailVO> vos = service.selectAllAdmin(searchKey,searchWord,pageNumber);
+		List<MailVO> vos2 = service.selectAllAdmin(searchKey,searchWord,nextPageNumber);
 		log.info("nextPageis...{}", vos2.toString());
 		
 		boolean isLast = vos2.isEmpty();

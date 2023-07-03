@@ -1,0 +1,84 @@
+@charset "UTF-8";
+h1 {
+  text-align: center;
+}
+
+.bodyWrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.loginWrap {
+  width: 300px;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+.loginHead {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.inputWrap {
+  margin-bottom: 20px;
+}
+
+.emailWrap,
+.pwWrap {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.eamilText,
+.pwText {
+  width: 80px;
+}
+
+.emailInput,
+.pwInput {
+  flex-grow: 1;
+}
+
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.loginBottmMenu {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.singUp,
+.findId,
+.findPw {
+  cursor: pointer;
+}
+
+.loginBtnWrap {
+  text-align: center;
+}
+
+.LoginBtn {
+  padding: 10px 20px;
+  background-color: #337ab7;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.LoginBtn:hover {
+  background-color: #23527c;
+}

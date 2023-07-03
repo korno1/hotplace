@@ -5,7 +5,7 @@
 
 <mapper namespace="project.com.hotplace.party">
 	<select id="NOT_SELECTALL" resultType="int">
-		select * from notice n join member m on (n.writer_num = m.num)
+		select * from party n join member m on (n.writer_num = m.num)
 		where 
 		<if test="searchKey == 'title'">
 			n.title like #{searchWord}
@@ -18,11 +18,11 @@
 	</select>
 	
 	
-	<select id="NOT_SEARCHLIST" resultType="project.com.hotplace.notice.model.NoticeVO">
+	<select id="NOT_SEARCHLIST" resultType="project.com.hotplace.party.model.PartyVO">
 		select *
 			from (select rownum rn, v_not.*
     		from (select n.num, n.title, m.nick_name as writer, n.wdate, n.view_count as viewCount
-        		from notice n join member m on (n.writer_num = m.num)
+        		from party n join member m on (n.writer_num = m.num)
         		where 
 					<if test="searchKey == 'title'">
 						n.title
@@ -37,33 +37,33 @@
 	</select>
 	
 	
-	<select id="NOT_SELECT_ONE" resultType="project.com.hotplace.notice.model.NoticeVO">
-		select n.num, n.title, n.content, m.nick_name as writer, n.view_count as viewCount, n.wdate from notice n join member m on (n.writer_num = m.num)
+	<select id="NOT_SELECT_ONE" resultType="project.com.hotplace.party.model.PartyVO">
+		select n.num, n.title, n.content, m.nick_name as writer, n.view_count as viewCount, n.wdate from party n join member m on (n.writer_num = m.num)
 		where n.num = #{num}
 	</select>
 	
-	<update id="NOT_VCOUNT_UPDATE" parameterType="project.com.hotplace.notice.model.NoticeVO">
-		update notice set view_count = view_count+1
+	<update id="NOT_VCOUNT_UPDATE" parameterType="project.com.hotplace.party.model.PartyVO">
+		update party set view_count = view_count+1
 		where num = #{num}
 	</update>
 	
-	<insert id="NOT_INSERT" parameterType="project.com.hotplace.notice.model.NoticeVO">
-		insert into notice(num, title, content, writer_num) 
+	<insert id="NOT_INSERT" parameterType="project.com.hotplace.party.model.PartyVO">
+		insert into party(num, title, content, writer_num) 
 		values(not_sequence.nextval, #{title}, #{content}, #{writerNum})
 	</insert>
 	
-	<update id="NOT_UPDATE" parameterType="project.com.hotplace.notice.model.NoticeVO">
-		update notice set title=#{title}, content=#{content}
+	<update id="NOT_UPDATE" parameterType="project.com.hotplace.party.model.PartyVO">
+		update party set title=#{title}, content=#{content}
 		where num = #{num}
 	</update>
 	
-	<update id="NOT_DELETEDATE_UPDATE" parameterType="project.com.hotplace.notice.model.NoticeVO">
-		update notice set delete_date=sysdate
+	<update id="NOT_DELETEDATE_UPDATE" parameterType="project.com.hotplace.party.model.PartyVO">
+		update party set delete_date=sysdate
 		where num = #{num}
 	</update>
 	
 	<delete id="NOT_OVERDATE_DELETE">
-		delete from notice where delete_date+90 <![CDATA[<=]]> sysdate
+		delete from party where delete_date+90 <![CDATA[<=]]> sysdate
 	</delete>
 	
 	

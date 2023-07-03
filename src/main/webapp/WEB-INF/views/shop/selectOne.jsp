@@ -7,9 +7,17 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<style type="text/css">
+        .large {
+            border: 1px solid black;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
-<div>
+<div class="large">
 	<div>그림 예정</div>
 	<div>
 		<div>${shoVO.name}</div>
@@ -30,7 +38,7 @@
 		<a href="insert.do" id="re_insert">후기등록</a>
 	</div>
 	<c:forEach var="vo" items="${sreVOS}">
-		<div>
+		<div class="large">
 			<div>그림예정</div>
 			<div>
 				<div>

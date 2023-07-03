@@ -10,4 +10,5 @@ public class ShopVO {
 	private String tel;
 	private float locX;
 	private float locY;
+	private double avgRated;
 }

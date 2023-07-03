@@ -67,7 +67,7 @@ $(function(){
 		if(${param.pageNum}==1){
  			$('#pre_page').hide();
 		}
-		if(${cnt}!=10){
+		if(${cnt}==0){
 			$('#next_page').hide();
 		}
 </script>

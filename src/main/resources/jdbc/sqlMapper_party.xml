@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="project.com.hotplace.party">
+	<select id="NOT_SELECTALL" resultType="int">
+		select * from notice n join member m on (n.writer_num = m.num)
+		where 
+		<if test="searchKey == 'title'">
+			n.title like #{searchWord}
+		</if>
+		<if test="searchKey == 'content'">
+			n.content like #{searchWord}
+		</if>
+		 and n.delete_date is null
+		 order by n.num desc
+	</select>
+	
+	
+	<select id="NOT_SEARCHLIST" resultType="project.com.hotplace.notice.model.NoticeVO">
+		select *
+			from (select rownum rn, v_not.*
+    		from (select n.num, n.title, m.nick_name as writer, n.wdate, n.view_count as viewCount
+        		from notice n join member m on (n.writer_num = m.num)
+        		where 
+					<if test="searchKey == 'title'">
+						n.title
+					</if>
+					<if test="searchKey == 'content'">
+						n.content
+					</if>
+				 like #{searchWord}
+				 and n.delete_date is null
+        		order by n.num desc) v_not)
+		where rn between #{st} and #{en}
+	</select>
+	
+	
+	<select id="NOT_SELECT_ONE" resultType="project.com.hotplace.notice.model.NoticeVO">
+		select n.num, n.title, n.content, m.nick_name as writer, n.view_count as viewCount, n.wdate from notice n join member m on (n.writer_num = m.num)
+		where n.num = #{num}
+	</select>
+	
+	<update id="NOT_VCOUNT_UPDATE" parameterType="project.com.hotplace.notice.model.NoticeVO">
+		update notice set view_count = view_count+1
+		where num = #{num}
+	</update>
+	
+	<insert id="NOT_INSERT" parameterType="project.com.hotplace.notice.model.NoticeVO">
+		insert into notice(num, title, content, writer_num) 
+		values(not_sequence.nextval, #{title}, #{content}, #{writerNum})
+	</insert>
+	
+	<update id="NOT_UPDATE" parameterType="project.com.hotplace.notice.model.NoticeVO">
+		update notice set title=#{title}, content=#{content}
+		where num = #{num}
+	</update>
+	
+	<update id="NOT_DELETEDATE_UPDATE" parameterType="project.com.hotplace.notice.model.NoticeVO">
+		update notice set delete_date=sysdate
+		where num = #{num}
+	</update>
+	
+	<delete id="NOT_OVERDATE_DELETE">
+		delete from notice where delete_date+90 <![CDATA[<=]]> sysdate
+	</delete>
+	
+	
+<!-- 	<select id="M_ID_CHECK" resultType="test.com.project.member.model.MemberVO"> -->
+<!-- 		select id from member where id = #{id} -->
+<!-- 	</select> -->
+	
+<!-- 	<select id="LOGIN" resultType="test.com.project.member.model.MemberVO"> -->
+<!-- 		select * from member where id = #{id} and pw = #{pw} -->
+<!-- 	</select> -->
+	
+<!-- 	<select id="M_SEARCH_LIST_NAME" resultType="test.com.project.member.model.MemberVO"> -->
+<!-- 		select * from member where name like #{searchWord} -->
+<!-- 	</select> -->
+	
+<!-- 	<select id="M_SEARCH_LIST_TEL" resultType="test.com.project.member.model.MemberVO"> -->
+<!-- 		select * from member where tel like #{searchWord}  -->
+<!-- 	</select> -->
+	
+<!-- 	<insert id="M_INSERT" parameterType="test.com.project.member.model.MemberVO"> -->
+<!-- 		insert into member(num,id,pw,name,tel,save_name)  -->
+<!-- 		values(seq_member.nextval,#{id},#{pw},#{name},#{tel},#{save_name}) -->
+<!-- 	</insert> -->
+	
+<!-- 	<update id="M_UPDATE" parameterType="test.com.project.member.model.MemberVO"> -->
+<!-- 		update member set pw=#{pw} , name=#{name} , tel=#{tel} , save_name=#{save_name} -->
+<!-- 		where num = #{num} -->
+<!-- 	</update> -->
+	
+<!-- 	<delete id="M_DELETE"> -->
+<!-- 		delete from member where num = #{num} -->
+<!-- 	</delete> -->
+	
+</mapper>

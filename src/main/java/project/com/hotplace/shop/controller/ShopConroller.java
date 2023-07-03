@@ -1,6 +1,5 @@
 package project.com.hotplace.shop.controller;
 
-import java.lang.reflect.Array;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -38,7 +37,9 @@ public class ShopConroller {
 		log.info("searchWord:{}",searchWord);
 		
 		List<ShopVO> vos = service.searchList(searchKey,searchWord, pageNum);
-		long cnt = vos.stream().count();
+		
+		List<ShopVO> nextVos = service.searchList(searchKey,searchWord,pageNum+1);
+		long cnt = nextVos.stream().count();
 		
 		model.addAttribute("vos", vos);
 		model.addAttribute("cnt", cnt);
@@ -53,12 +54,21 @@ public class ShopConroller {
 		log.info("searchWord:{}",searchWord);
 		
 		List<ShopVO> vos = service.searchList(searchKey,searchWord,pageNum);
-		long cnt = vos.stream().count();
+		
+		List<ShopVO> nextVos = service.searchList(searchKey,searchWord,pageNum+1);
+		long cnt = nextVos.stream().count();
 		
 		model.addAttribute("vos", vos);
 		model.addAttribute("cnt", cnt);
 		
 		return "shop/selectAll";
+	}
+	
+	@RequestMapping(value = "/searchLocation.do", method = RequestMethod.GET)
+	public String searchLocation() {
+		log.info("/shop/searchLocation.do");
+
+		return "shop/searchLocation";
 	}
 	
 	@RequestMapping(value = "/insert.do", method = RequestMethod.GET)

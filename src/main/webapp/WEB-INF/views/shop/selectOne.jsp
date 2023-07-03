@@ -7,10 +7,18 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<style type="text/css">
+        .large {
+            border: 1px solid black;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
-<div>
-	<div>그림 예정</div>
+<div class="large">
+	<!-- <div><img width="35px" src="resources/uploading/shop_${vo.save_name}"></div> -->
 	<div>
 		<div>${shoVO.name}</div>
 		<div>cate:${shoVO.cate}</div>
@@ -30,7 +38,7 @@
 		<a href="insert.do" id="re_insert">후기등록</a>
 	</div>
 	<c:forEach var="vo" items="${sreVOS}">
-		<div>
+		<div class="large">
 			<div>그림예정</div>
 			<div>
 				<div>
@@ -39,7 +47,7 @@
 				</div>
 				<div>
 					<div>${vo.rated}</div>
-					<div>${vo.writer}</div>
+					<div>${vo.writerName}</div>
 				</div>
 				<div>
                 <!-- 수정, 삭제 링크 -->

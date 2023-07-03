@@ -35,6 +35,7 @@
 				<value>classpath:jdbc/sqlMapper_shopreview.xml</value>
 				<value>classpath:jdbc/sqlMapper_memberreview.xml</value>
 				<value>classpath:jdbc/sqlMapper_event.xml</value>
+				<value>classpath:jdbc/sqlMapper_party.xml</value>
 			</list>
 		</property>
 	</bean>

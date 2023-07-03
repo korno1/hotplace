@@ -64,6 +64,13 @@ public class ShopConroller {
 		return "shop/selectAll";
 	}
 	
+	@RequestMapping(value = "/searchLocation.do", method = RequestMethod.GET)
+	public String searchLocation() {
+		log.info("/shop/searchLocation.do");
+
+		return "shop/searchLocation";
+	}
+	
 	@RequestMapping(value = "/insert.do", method = RequestMethod.GET)
 	public String insert() {
 		log.info("/shop/insert.do");

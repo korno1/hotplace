@@ -4,21 +4,27 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.extern.slf4j.Slf4j;
-import project.com.hotplace.mail.model.MailVO;
 import project.com.hotplace.member.model.MemberVO;
 import project.com.hotplace.member.service.MemberService;
 
@@ -40,7 +46,7 @@ public class MemberRestController {
 	public Map<String, Object> selectAll(String searchKey, String searchWord, int page) {
 		int pageNumber = 1;
 		int nextPageNumber = page + 1;
-		
+
 		log.info("member/json/selectAll.do");
 		if (page > 0) {
 			pageNumber = page;
@@ -48,26 +54,26 @@ public class MemberRestController {
 
 		// selectAll, searchList
 		List<MemberVO> vos = service.selectAll(searchKey, searchWord, pageNumber);
-	    List<MemberVO> vos2 = service.selectAll(searchKey, searchWord, nextPageNumber);
+		List<MemberVO> vos2 = service.selectAll(searchKey, searchWord, nextPageNumber);
 
-	    boolean isLast = vos2.isEmpty();
+		boolean isLast = vos2.isEmpty();
 		log.info("vos.size():{}", vos.size());
-		
+
 		Map<String, Object> response = new HashMap<String, Object>();
-	    response.put("vos", vos);
-	    response.put("isLast", isLast);
+		response.put("vos", vos);
+		response.put("isLast", isLast);
 
 		return response;
 	}
-	
+
 	@RequestMapping(value = "/member/json/selectOne.do", method = RequestMethod.POST)
 	@ResponseBody
 	public MemberVO selectOne(MemberVO vo) {
-		log.info("member/json/selectOne...{}",vo);
-		
+		log.info("member/json/selectOne...{}", vo);
+
 		MemberVO vo2 = service.selectOne(vo);
 		log.info("selectOne matching member...{}", vo2);
-		
+
 		return vo2;
 	}
 
@@ -119,10 +125,10 @@ public class MemberRestController {
 		log.info("updateOK...{}", vo);
 
 		if (vo.getMultipartFile() != null && !vo.getMultipartFile().isEmpty()) {
-		String getOriginalFilename = vo.getMultipartFile().getOriginalFilename();
-		int fileNameLength = vo.getMultipartFile().getOriginalFilename().length();
-		log.info("getOriginalFilename:{}", getOriginalFilename);
-		log.info("fileNameLength:{}", fileNameLength);
+			String getOriginalFilename = vo.getMultipartFile().getOriginalFilename();
+			int fileNameLength = vo.getMultipartFile().getOriginalFilename().length();
+			log.info("getOriginalFilename:{}", getOriginalFilename);
+			log.info("fileNameLength:{}", fileNameLength);
 
 //		if (fileNameLength != 0) {
 			String originalFilename = vo.getMultipartFile().getOriginalFilename();
@@ -151,7 +157,7 @@ public class MemberRestController {
 			} else {
 				return "{\"result\":\"NotOK\"}";
 			}
-		}else {
+		} else {
 			int result = service.updateOK(vo);
 			log.info("result:{}", result);
 			if (result == 1) {
@@ -159,15 +165,46 @@ public class MemberRestController {
 			} else {
 				return "{\"result\":\"NotOK\"}";
 			}
-			
+
 		}
+	}
+	@RequestMapping(value = "/member/json/pwResetOK.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String pwResetOK(MemberVO vo){
+		log.info("updateOK...{}", vo);
+			
+			int result = service.pwResetOK(vo);
+			log.info("result:{}", result);
+			if (result == 1) {
+				return "{\"result\":\"OK\"}";
+			} else {
+				return "{\"result\":\"NotOK\"}";
+			}
+	}
+
+	@RequestMapping(value = "/member/json/loginOK.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String loginOK(MemberVO vo, HttpSession session) {
+		log.info("loginOK...{}", vo);
+
+		MemberVO vo2 = service.login(vo);
+		log.info("result:{}", vo2);
+
+		if (vo2 == null) {
+			return "{\"result\":\"NotOK\"}";
+		} else {
+			session.setAttribute("num", vo2.getNum());
+			session.setMaxInactiveInterval(5 * 60);
+			return "{\"result\":\"OK\"}";
+		}
+
 	}
 
 	@RequestMapping(value = "/member/json/upgradeOK.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String upgradeOK(MemberVO vo) {
 		log.info("upgradeOK...{}", vo);
-		
+
 		int result = service.upgradeOK(vo);
 		log.info("result:{}", result);
 		if (result == 1) {
@@ -176,7 +213,7 @@ public class MemberRestController {
 			return "{\"result\":\"NotOK\"}";
 		}
 	}
-	
+
 	@RequestMapping(value = "/member/json/deleteOK.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String deleteOK(MemberVO vo) {
@@ -188,6 +225,24 @@ public class MemberRestController {
 			return "{\"result\":\"OK\"}";
 		} else {
 			return "{\"result\":\"NotOK\"}";
+		}
+	}
+
+	@RequestMapping(value = "/member/json/authCheck.do", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<Object, Object> authCheck(MemberVO vo,HttpServletRequest request, HttpSession session) {
+		Map<Object, Object> response = new HashMap<Object, Object>();
+		if(request.getParameter("num").equals(session.getAttribute("authNum"))){
+			response.put("result", "OK");
+			if(session.getAttribute("email").toString()!=null) {
+			response.put("email", session.getAttribute("email"));
+			session.removeAttribute("email");
+			}
+			session.removeAttribute("authNum");
+			return response;
+		} else {
+			response.put("result", "NotOK");
+			return response;
 		}
 	}
 

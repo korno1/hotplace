@@ -35,12 +35,20 @@ $(function() {
         // 쪽지 목록 갱신을 위해 Ajax 요청 호출
         refreshMailList();
     }
+    $('#searchButton').click(function() {
+    	refreshMailList();
+	});
+    
     function refreshMailList(){
     console.log('onload....');
         $.ajax({
             url: "json/selectAll_admin.do",
             method: 'GET',
-            data:{page:page},
+            data:{
+            	page:page,
+            	searchKey: $("#searchKey").val(),
+		        searchWord: $("#searchWord").val()	
+            },
             dataType: 'json',
             success: function(result) {
                 console.log('ajax...success:', result);
@@ -125,7 +133,7 @@ $(document).on('click', '.itemLine', function() {
 		<option value="RECIPIENT_NAME">받는 사람</option>
 	</select>
 	<input type="text" name="searchWord" id="searchWord">
-	<button onclick="searchList()">검색</button>
+	<button id="searchButton">검색</button>
 	<div class="mailBoxHead block">
 		<div class="mailList__itemHead itemHead">
 			<div class="mailList__itemTitle itemTitle">쪽지 제목</div>

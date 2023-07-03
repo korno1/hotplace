@@ -56,4 +56,16 @@ public class MemberService {
 	public int upgradeOK(MemberVO vo) {
 		return dao.upgradeOK(vo);
 	}
+
+	public MemberVO idAuth(MemberVO vo) {
+		return dao.idAuth(vo);
+	}
+
+	public MemberVO pwAuth(MemberVO vo) {
+		return dao.pwAuth(vo);
+	}
+
+	public int pwResetOK(MemberVO vo) {
+		return dao.pwResetOK(vo);
+	}
 }

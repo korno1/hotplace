@@ -56,19 +56,15 @@
 		select * from member where num = #{num}
 	</select>
 
-
 	<select id="MEM_LOGIN" resultType="project.com.hotplace.member.model.MemberVO">
 	select * from member where email = #{email} and pw = #{pw}
 	</select>
-
-	<!-- <select id="M_SEARCH_LIST_NAME" resultType="project.com.hotplace.member.model.MemberVO"> -->
-	<!-- select * from member where name like #{searchWord} -->
-	<!-- </select> -->
-
-	<!-- <select id="M_SEARCH_LIST_TEL" resultType="project.com.hotplace.member.model.MemberVO"> -->
-	<!-- select * from member where tel like #{searchWord} -->
-	<!-- </select> -->
-
+	<select id="MEM_IDAUTH" resultType="project.com.hotplace.member.model.MemberVO">
+	select * from member where nick_name = #{nick_name}
+	</select>
+	<select id="MEM_PWAUTH" resultType="project.com.hotplace.member.model.MemberVO">
+	select * from member where nick_name = #{nick_name} and email = #{email}
+	</select>
 
 	<update id="MEM_UPGRADEOK" parameterType="project.com.hotplace.member.model.MemberVO">
 	update member set grade=#{grade}
@@ -77,6 +73,9 @@
 	<update id="MEM_UPDATEOK" parameterType="project.com.hotplace.member.model.MemberVO">
 	update member set nick_name=#{nick_name},email=#{email},address=#{address},pw=#{pw},gender=#{gender},food_like=#{food_like}
 	where num = #{num}
+	</update>
+	<update id="MEM_PWRESETOK" parameterType="project.com.hotplace.member.model.MemberVO">
+	update member set pw=#{pw} where num=#{num}
 	</update>
 
 	<delete id="MEM_DELETEOK">

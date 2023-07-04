@@ -9,7 +9,11 @@
 <title>이벤트</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <link rel="stylesheet" href="../resources/css/notice/button.css">
-
+<style type="text/css">
+	#contentArea p{
+		margin: 0;
+	}
+</style>
 <script type="text/javascript">
 
 	$(function(){
@@ -37,9 +41,20 @@
 				`;
 				let bvo = `
 					<tr>
-						<td colspan="4">\${vo2.content}</td>
-					</tr>
+						<td id="contentArea" colspan="4">\${vo2.content}</td>
+					</tr>	
 				`;
+				
+				if(vo2.saveName != null){
+					bvo += `
+					<tr>
+						<td colspan="4">
+							<img src="../resources/PostImage/\${vo2.saveName}">
+						</td>
+					</tr>
+					`;
+				}
+				
 				$('#vo_head').html(hvo);
 				$('#vo_body').html(bvo);
 				
@@ -100,7 +115,7 @@
 		
 		<tfoot>
 			<tr>
-				<td colspan="3">
+				<td colspan="4">
 					<button type="button" onclick="location.href='update.do?num=${param.num}'">수정</button>
 					<button type="button" id="delButton">삭제</button>
 				</td>

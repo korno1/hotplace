@@ -44,7 +44,7 @@ $(function(){
 <c:forEach var="vo" items="${vos}">
     <div class="large" onclick="selectOne('${vo.num}')">
         <div><img id="preview" width="100px"
-						src="../resources/ShopSymbol/${vo.symbol}""></div>
+						src="../resources/ShopSymbol/${vo.symbol}"></div>
         <div>
             <div>${vo.name}</div>
             <div>${vo.avgRated}</div>

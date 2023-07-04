@@ -36,6 +36,10 @@ public class ShopService {
 		return dao.selectAll();
 	}
 	
+	public List<ShopVO> selectAllHome() {
+		return dao.selectAllHome();
+	}
+	
 	public ShopVO selectOne(ShopVO vo) {
 		log.info("{}",vo);
 		return dao.selectOne(vo);

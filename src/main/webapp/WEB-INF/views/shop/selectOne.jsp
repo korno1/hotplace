@@ -18,7 +18,7 @@
 </head>
 <body>
 <div class="large">
-	<div>그림 예정</div>
+	<!-- <div><img width="35px" src="resources/uploading/shop_${vo.save_name}"></div> -->
 	<div>
 		<div>${shoVO.name}</div>
 		<div>cate:${shoVO.cate}</div>
@@ -47,7 +47,7 @@
 				</div>
 				<div>
 					<div>${vo.rated}</div>
-					<div>${vo.writer}</div>
+					<div>${vo.writerName}</div>
 				</div>
 				<div>
                 <!-- 수정, 삭제 링크 -->

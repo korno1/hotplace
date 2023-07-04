@@ -43,7 +43,8 @@ $(function(){
 
 <c:forEach var="vo" items="${vos}">
     <div class="large" onclick="selectOne('${vo.num}')">
-        <div>그림 예정</div>
+        <div><img id="preview" width="100px"
+						src="../resources/ShopSymbol/${vo.symbol}""></div>
         <div>
             <div>${vo.name}</div>
             <div>${vo.avgRated}</div>
@@ -67,7 +68,7 @@ $(function(){
 		if(${param.pageNum}==1){
  			$('#pre_page').hide();
 		}
-		if(${cnt}!=10){
+		if(${cnt}==0){
 			$('#next_page').hide();
 		}
 </script>

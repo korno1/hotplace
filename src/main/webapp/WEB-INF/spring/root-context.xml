@@ -10,7 +10,6 @@
 			<value>classpath:jdbc/oracle.properties</value>
 		</property>
 	</bean>
-
 	<!--1. pom.xml commons-dbcp.jar -->
 	<bean id="dataSource"
 		class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
@@ -20,7 +19,6 @@
 		<property name="username" value="${oracle.USER}" />
 		<property name="password" value="${oracle.PASSWORD}" />
 	</bean>
-
 	<!--2. pom.xml mybatis.jar -->
 	<bean id="sqlSessionFactory"
 		class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -35,18 +33,30 @@
 				<value>classpath:jdbc/sqlMapper_shopreview.xml</value>
 				<value>classpath:jdbc/sqlMapper_memberreview.xml</value>
 				<value>classpath:jdbc/sqlMapper_event.xml</value>
+				<value>classpath:jdbc/sqlMapper_party.xml</value>
 			</list>
 		</property>
 	</bean>
-
 	<bean id="sqlSession"
 		class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sqlSessionFactory" />
 	</bean> 
-
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="maxUploadSize" value="-1" />
 		<!-- -1 이면 크기제한 없음 -->
+	</bean>
+	<!-- 이메일 보내기 -->
+	<!-- gmail 로그인 후 로그인 &보안 ====보안 수준이 낮은 앱 허용: 사용으로 변경 -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="multihotplace@gmail.com" />
+		<property name="password" value="itvmkroxmqikvsco" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+			</props>
+		</property>
 	</bean>
 </beans>

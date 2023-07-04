@@ -13,4 +13,5 @@ public class ShopReviewVO {
 	private int shopNum;
 	private int rated;
 	private Timestamp wdate;
+	private String writerName;
 }

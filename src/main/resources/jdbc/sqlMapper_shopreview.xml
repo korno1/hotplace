@@ -5,7 +5,11 @@
 
 <mapper namespace="project.com.hotplace.shop">
 	<select id="SRE_SELECT_ALL" resultType="project.com.hotplace.shopreview.model.ShopReviewVO">
-		select * from shopreview where shopnum=#{shopNum} order by num
+		select sr.*, m.nick_name as writerName
+    	from shopreview sr
+   		left join member m on sr.writer = m.num
+	    where sr.shopnum = #{shopNum}
+	    order by sr.num
 	</select>
 	
 	<select id="SRE_SELECT_ONE" resultType="project.com.hotplace.shopreview.model.ShopReviewVO">
@@ -15,7 +19,7 @@
 	
 	<insert id="SRE_INSERT" parameterType="project.com.hotplace.shopreview.model.ShopReviewVO">
 		insert into shop(num,writer,content,shopnum,rated) 
-		values(sho_sequence.nextval,#{writer},#{content},#{shopnum},#{rated})
+		values(sho_sequence.nextval,#{writer},#{content},#{shopNum},#{rated})
 	</insert>
 	
 	

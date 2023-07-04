@@ -13,6 +13,9 @@ public interface MemberDAO {
 	MemberVO nickNameCheck(MemberVO vo);
 	MemberVO emailCheck(MemberVO vo);
 	int upgradeOK(MemberVO vo);
+	MemberVO idAuth(MemberVO vo);
+	MemberVO pwAuth(MemberVO vo);
+	int pwResetOK(MemberVO vo);
 	
 	
 }

@@ -23,6 +23,9 @@ public class MailService {
 		return dao.selectAll(sender_num,recipient_num,page);
 	}
 
+	public List<MailVO> selectAllAdmin(String searchKey, String searchWord, int page) {
+		return dao.selectAllAdmin(searchKey,searchWord,page);
+	}
 	public MailVO selectOne(MailVO vo) {
 		return dao.selectOne(vo);
 	}
@@ -36,9 +39,6 @@ public class MailService {
 	}
 	public int readOK(MailVO vo) {
 		return dao.readOK(vo);
-	}
-	public List<MailVO> selectAllAdmin(int page) {
-		return dao.selectAllAdmin(page);
 	}
 	
 }

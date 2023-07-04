@@ -23,23 +23,29 @@
 	
 	<select id="SHO_SEARCH_LIST_NAME" parameterType="java.util.Map"
 		resultType="project.com.hotplace.shop.model.ShopVO">
-			select * from
-				(select t.*, rownum as rn
-				from (
-					select * from shop where name like #{sW}
-				) t
-			) s
-			where rn between #{start} and #{end}
+			select s.*, (
+    			select avg(rated) from shopreview where shopnum = s.num
+  			) as avgRated
+ 			from (
+    			select t.*, rownum as rn
+		    	from (
+		    		select * from shop where name like #{sW}
+    			) t
+  			) s
+ 			 where rn between #{start} and #{end}
 	</select>
 	
 	<select id="SHO_SEARCH_LIST_CATE" resultType="project.com.hotplace.shop.model.ShopVO">
-		select * from
-				(select t.*, rownum as rn
-				from (
-					select * from shop where cate like #{sW}
-				) t
-			)
-			where rn between #{start} and #{end}
+		select s.*, (
+    		select avg(rated) from shopreview where shopnum = s.num
+  		) as avgRated
+  		from (
+    		select t.*, rownum as rn
+    		from (
+      			select * from shop where cate like #{sW}
+    		) t
+  		) s
+		where rn between #{start} and #{end}
 	</select>
 	
 	<insert id="SHO_INSERT" parameterType="project.com.hotplace.shop.model.ShopVO">

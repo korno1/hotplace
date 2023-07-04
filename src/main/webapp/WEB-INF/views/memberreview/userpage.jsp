@@ -32,35 +32,78 @@ $(function par_selectAll(){
 			method:'GET',
 			dataType:'json',
 			success : function(vos) {
-				console.log('ajax...success:', vos);
+// 				console.log('ajax...success:', vos);
 	
 				let tag_txt = '';
 				
+// 			  $(document).ready(function() {
+// 				    function showStarRating(ratedValue) {
+// 				      var starRating = '';
+// 				      for (var i = 1; i <= 5; i++) {
+// 				        if (i <= ratedValue) {
+// 				          starRating += '<i class="fas fa-star"></i>';
+// 				        } else {
+// 				          starRating += '<i class="far fa-star"></i>';
+// 				        }
+// 				      }
+// 				      return starRating;
+// 				    }
+
+// 				    // 별점 채우기
+// 				    $('.star-rating').each(function() {
+// 				      var ratedValue = parseInt($(this).data('rating'));
+// 				      $(this).html(showStarRating(ratedValue));
+// 				    });
+// 				  });
+				
+				
+				
+				
 				$.each(vos,function(index,vo){
-					console.log('ajax...success:', vos);
-					let tag_td = `<td>\${vo.content}</td>`;
+					console.log('ajax...success:', vo);
+					let tag_td = `<div>\${vo.content}</div>`;
 					
 					let ratedValue = parseInt(vo.rated);
+					console.log('vo.rated:', vo.rated);
+
 					let tag_rated = `
-				        <td id="input_rated">
-			            <ul class="star-rating" data-rating="\${vo.rated}">
+				        <div id="starRating">
+			            <ul class="star-rating"  data-rating="\${ratedValue}">
 			                <li class="star fa fa-star"></li>
 			                <li class="star fa fa-star"></li>
 			                <li class="star fa fa-star"></li>
 			                <li class="star fa fa-star"></li>
 			                <li class="star fa fa-star"></li>
 			            </ul>
-			        </td>`;
-					
-					let stars = $(tag_rated).find('.star');
-					for (let i = 0; i < ratedValue; i++) {
-					    $(stars[i]).addClass('active');
-					}
-					
+			        </div>`;
+			       
 					// user_num==vo.user_num
 					if(memberreview_num==vo.memberreview_num) {
-						tag_td = `<td><input type="text" value="\${vo.content}" id="input_content"><button onclick="updateOK(\${vo.memberreview_num})">수정완료</button></td>`;
+						tag_td = `<div><input type="text" value="\${vo.content}" id="input_content"><button onclick="updateOK(\${vo.memberreview_num})">수정완료</button></div>`;
+						tag_rated = `
+					        <div id="starRating">
+				            <ul class="star-rating"  data-rating="\${ratedValue}">
+				                <li class="star fa fa-star" data-rating="1"></li>
+				                <li class="star fa fa-star" data-rating="2"></li>
+				                <li class="star fa fa-star" data-rating="3"></li>
+				                <li class="star fa fa-star" data-rating="4"></li>
+				                <li class="star fa fa-star" data-rating="5"></li>
+				            </ul>
+				        </div>`;
+						$(document).ready(function() {
+				            $('.star-rating .star').click(function() {
+				              var rating = $(this).attr('data-rating');
+				              $('.star-rating .star').removeClass('active');
+				              $(this).prevAll().addBack().addClass('active');
+				              console.log('별점: ' + rating);
+				              $('#mre_rated').val(rating); // input2 폼에 선택한 별점 값 설
+				            });
+				          });
+
+				        isFormInserted = true;
 					}
+					
+					
 					let tag_div = ``;
 					if(6==vo.writer_num){ //'${user_id}'===vo.writer_num
 						tag_div = `<div>
@@ -70,37 +113,32 @@ $(function par_selectAll(){
 
 					}
 					
-					
 					tag_txt += `
-						<tr>
-							<td>\${vo.save_name}</td>
-							<td>\${vo.writer_name}</td>
+						<div>
+							<div>\${vo.save_name}</div>
+							<div>\${vo.writer_name}</div>
 							\${tag_rated}
-							<td>\${vo.wdate}</td>
-						</tr>
-						<tr>
+							<div>\${vo.wdate}</div>
+						</div>
+						<div>
 							\${tag_td}
-							<td colspan="3">\${tag_div}</td>
-						</tr>
+							<div colspan="3">\${tag_div}</div>
+						</div>
 					`;
 				});//end ajax
-				
-
 				
 				$('#memberreview_list').html(tag_txt);
 				$('#insertButton').show();
 				
-	            // 별점 채우기
-				$('.star-rating .star').click(function() {
-				    var rating = $(this).attr('data-rating');
-				    $(this).closest('.star-rating').find('.star').removeClass('active');
-				    $(this).closest('.star-rating').find('.star').each(function() {
-				        if ($(this).attr('data-rating') <= rating) {
-				            $(this).addClass('active');
-				        }
-				    });
+// 				// 별점 채우기
+				$('.star-rating').each(function() {
+				  var ratedValue = parseInt($(this).data('rating'));
+				  var stars = $(this).find('.star');
+				  for (var i = 0; i < ratedValue; i++) {
+				    $(stars[i]).addClass('active');
+				  }
 				});
-
+				
 			},
 			error:function(xhr,status,error){
 				console.log('xhr.status:', xhr.status);
@@ -216,14 +254,16 @@ $(function par_selectAll(){
 	
 	function updateOK(memberreview_num=0){
 		console.log('updateOK()....',memberreview_num);
-		console.log($('#input_content').val());
+		console.log($('#starRating').val());
+		
+		let rated = $('.star-rating .star.active').last().data('rating');
 		
 		$.ajax({
 			url : "memberreview/json/updateOK.do",
 			data:{
 				memberreview_num:memberreview_num,
 				content: $('#input_content').val(),
-	            rated: $('#input_rated').val()
+				rated: rated
 			},
 			method:'POST',
 			dataType:'json',
@@ -268,40 +308,16 @@ $(function par_selectAll(){
 	<hr>	
 	<button onclick="myParty">내 모임 확인</button>
 	
+	
 	<ul>
-		<li><a href="home.do">HOME</a></li>
-		<li><a href="memberreview/json/selectAll.do?user_num=3">selectAll.do</a></li>
-		<li><a href="memberreview/json/insertOK.do?party_num=9&user_num=3&writer_num=5&content=content33&rated=5">insertOK.do</a></li>
-		<li><a href="memberreview/json/updateOK.do?memberreview_num=12&content=후기12&rated=4">updateOK.do</a></li>
-		<li><a href="memberreview/json/deleteOK.do?memberreview_num=13">deleteOK.do</a></li>
+		<li><a href="my.do">HOME</a></li>
 	</ul>
 	
-	<table border="1" id="memberreview_list"> </table>
+	<div id="memberreview_list" class="custom-div"></div>
 	
 	<div id="formContainer"><button onclick="insert()">작성</button></div>
 
 	<hr>
-<!-- <h2>별점주기</h2> -->
-<!-- <ul class="star-rating"> -->
-<!--   <li class="star fa fa-star" data-rating="1"></li> -->
-<!--   <li class="star fa fa-star" data-rating="2"></li> -->
-<!--   <li class="star fa fa-star" data-rating="3"></li> -->
-<!--   <li class="star fa fa-star" data-rating="4"></li> -->
-<!--   <li class="star fa fa-star" data-rating="5"></li> -->
-<!-- </ul> -->
-
-<script type="text/javascript">
-//   $(document).ready(function() {
-//     $('.star-rating .star').click(function() {
-//       var rating = $(this).attr('data-rating');
-//       $('.star-rating .star').removeClass('active');
-//       $(this).prevAll().addBack().addClass('active');
-//       console.log('별점: ' + rating);
-//       $('#mre_rated').val(rating); // input2 폼에 선택한 별점 값 설
-//     });
-//   });
-</script>
-
 
 </body>
 </html>

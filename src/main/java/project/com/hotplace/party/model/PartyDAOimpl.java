@@ -30,12 +30,12 @@ public class PartyDAOimpl implements PartyDAO {
 		
 		Map<String, String> map = new HashMap<String, String>();
 		
-		String key = "NOT_SELECTALL";
+		String key = "par_selectAll";
 		
 		map.put("searchKey", searchKey);
 		map.put("searchWord", "%" + searchWord + "%");
 	
-		sqlSession.delete("NOT_OVERDATE_DELETE");
+//		sqlSession.delete("NOT_OVERDATE_DELETE");
 		
 		return sqlSession.selectList(key, map);
 	}
@@ -44,7 +44,7 @@ public class PartyDAOimpl implements PartyDAO {
 	public PartyVO selectOne(PartyVO vo) {
 		log.info("selectOne()...{}", vo);
 		
-		return sqlSession.selectOne("NOT_SELECT_ONE", vo);
+		return sqlSession.selectOne("par_selectOne", vo);
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class PartyDAOimpl implements PartyDAO {
 		log.info("page: {}", page);
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		String key = "NOT_SEARCHLIST";
+		String key = "par_searchList";
 		
 		map.put("searchKey", searchKey);
 		map.put("searchWord", "%" + searchWord + "%");
@@ -90,7 +90,7 @@ public class PartyDAOimpl implements PartyDAO {
 	@Override
 	public void vCountUp(PartyVO vo) {
 		log.info("vCountUp()...{}", vo);
-		sqlSession.update("NOT_VCOUNT_UPDATE", vo);
+		sqlSession.update("par_views", vo);
 	}
 
 

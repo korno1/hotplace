@@ -19,9 +19,9 @@
 	<ul id="top_menu_post">
 	  <li id="search_hotplace"><a href="#">맛집찾기</a></li>
 	  <li id="search_party"><a href="#">모임찾기</a></li>
-	  <li id="notice_menu"><a href="notice/selectAll.do?title=?page=1">공지사항</a></li>
-	  <li id="event_menu"><a href="#">이벤트</a></li>
-	  <li id="faq_menu"><a href="#">FAQ</a></li>
+	  <li id="notice_menu"><a href="notice/selectAll.do?searchKey=title&searchWord=&page=1">공지사항</a></li>
+	  <li id="event_menu"><a href="event/selectAll.do?searchKey=title&page=1">이벤트</a></li>
+	  <li id="faq_menu"><a href="faq/selectAll.do?searchKey=title&page=1">FAQ</a></li>
 	</ul>
 	<ul id="top_menu_member">
 	    <li id="sign_up_menu"><a href="#">회원가입</a></li>

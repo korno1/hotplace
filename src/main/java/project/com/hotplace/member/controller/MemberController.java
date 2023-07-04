@@ -37,7 +37,7 @@ public class MemberController {
 	public String myPage() {
 		log.info("myPage.do...");
 		
-		return "myPage";
+		return "layouts/myPage";
 	}
 	
 	@RequestMapping(value = {"member/selectAll.do"}, method = RequestMethod.GET)
@@ -51,7 +51,7 @@ public class MemberController {
 	public String insert() {
 		log.info("member/insert.do...");
 		
-		return "/member/insert";
+		return ".member/insert";
 	}
 	
 	@RequestMapping(value = {"member/findId.do"}, method = RequestMethod.GET)

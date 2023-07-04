@@ -5,8 +5,8 @@
 <tiles-definitions>
 	<definition name=".*/*" template="/WEB-INF/views/layouts/layouts-tiles2.jsp">
 	  <put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp" />
-	  <put-attribute name="header" value="/WEB-INF/layouts/header.jsp" />
-	  <put-attribute name="footer" value="/WEB-INF/layouts/footer.jsp" />
+	  <put-attribute name="header" value="/WEB-INF/views/layouts/header.jsp" />
+	  <put-attribute name="footer" value="/WEB-INF/views/layouts/footer.jsp" />
 	  <put-attribute name="leftSide" value="/WEB-INF/views/layouts/myPage.jsp" />
 	</definition>
 </tiles-definitions>

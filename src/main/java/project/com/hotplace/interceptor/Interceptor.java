@@ -21,21 +21,21 @@ public class Interceptor extends HandlerInterceptorAdapter {
 			throws Exception {
 		log.info("preHandle()...");
 
-		String sPath=request.getServletPath();
-		log.info("preHandle-ServletPath...{}",sPath);
-		
-		int num = 0;
-		num=(int) session.getAttribute("num");
-		log.info("preHandle()-session...{}",num);
-		
-		if(sPath.equals("/selectAll.do")||sPath.equals("/selectOne.do")) {
-			
-			if(num == 0) {
-			response.sendRedirect("login.do");
-			return false;
-			}
-		}
-		
+//		String sPath=request.getServletPath();
+//		log.info("preHandle-ServletPath...{}",sPath);
+//		
+//		int num = 0;
+//		num=(int) session.getAttribute("num");
+//		log.info("preHandle()-session...{}",num);
+//		
+//		if(sPath.equals("/selectAll.do")||sPath.equals("/selectOne.do")) {
+//			
+//			if(num == 0) {
+//			response.sendRedirect("login.do");
+//			return false;
+//			}
+//		}
+//		
 		return true;
 	}
 

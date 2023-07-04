@@ -1,6 +1,11 @@
 package project.com.hotplace.event.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
+
+import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +27,8 @@ public class EventRestController {
 	@Autowired
 	EventService service;
 	
+	@Autowired
+	ServletContext sContext;
 	/** 
 	 * Simply selects the home view to render by returning its name.
 	 */
@@ -67,12 +74,33 @@ public class EventRestController {
 		return vo2;
 	}
 //	
-	@RequestMapping(value = "/event/json/insertOK.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/event/json/insertOK.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String insertOK(EventVO vo) {
+	public String insertOK(EventVO vo) throws IllegalStateException, IOException {
 		log.info("/event/json/insertOK.do...{}", vo);
+		
+		
+		
+		
+		if (vo.getFile()!=null && vo.getFile().getOriginalFilename().length() != 0) {
+			String getOriginalFilename = vo.getFile().getOriginalFilename();
+			log.info("getOriginalFilename:{}", getOriginalFilename);
+			
+			UUID uuid = UUID.randomUUID();
+			getOriginalFilename = uuid.toString() + getOriginalFilename;
+			log.info("{}", getOriginalFilename);
+			log.info("{}", getOriginalFilename.length());
 
-		vo.setContent(vo.getContent().replaceAll("\r\n", "<BR>"));
+			vo.setSaveName(getOriginalFilename);
+			// 웹 어플리케이션이 갖는 실제 경로: 이미지를 업로드할 대상 경로를 찾아서 파일저장.
+			String realPath = sContext.getRealPath("resources/PostImage");
+			log.info("realPath : {}", realPath);
+
+			File f = new File(realPath + "\\" + vo.getSaveName());
+			vo.getFile().transferTo(f);
+
+		}
+
 		vo.setDeadline(vo.getDeadline().replace("T", " "));
 		int result = service.insert(vo);
 		log.info("result: {}", result);
@@ -88,13 +116,30 @@ public class EventRestController {
 	
 	}
 //	
-	@RequestMapping(value = "/event/json/updateOK.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/event/json/updateOK.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String updateOK(EventVO vo) {
+	public String updateOK(EventVO vo) throws IllegalStateException, IOException {
 		log.info("/event/json/updateOK.do...{}", vo);
+		
+		if (vo.getFile()!=null && vo.getFile().getOriginalFilename().length() != 0) {
+			String getOriginalFilename = vo.getFile().getOriginalFilename();
+			log.info("getOriginalFilename:{}", getOriginalFilename);
+			
+			UUID uuid = UUID.randomUUID();
+			getOriginalFilename = uuid.toString() + getOriginalFilename;
+			log.info("{}", getOriginalFilename);
+			log.info("{}", getOriginalFilename.length());
 
-		vo.setContent(vo.getContent().replaceAll("\r\n", "<BR>"));
-		vo.setDeadline(vo.getDeadline().replace("T", " "));
+			vo.setSaveName(getOriginalFilename);
+			// 웹 어플리케이션이 갖는 실제 경로: 이미지를 업로드할 대상 경로를 찾아서 파일저장.
+			String realPath = sContext.getRealPath("resources/PostImage");
+			log.info("realPath : {}", realPath);
+
+			File f = new File(realPath + "\\" + vo.getSaveName());
+			vo.getFile().transferTo(f);
+
+		}
+		vo.setDeadline(vo.getDeadline().replace("T", " ").substring(0, 16));
 		int result = service.update(vo);
 		log.info("result: {}", result);
 		

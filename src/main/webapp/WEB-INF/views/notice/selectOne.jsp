@@ -9,7 +9,11 @@
 <title>공지사항</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <link rel="stylesheet" href="../resources/css/notice/button.css">
-
+<style type="text/css">
+	#contentArea p{
+		margin: 0;
+	}
+</style>
 <script type="text/javascript">
 
 	$(function(){
@@ -49,9 +53,18 @@
 			
 		<tbody>
 			<tr>
-				<td colspan="3">${vo2.content}</td>
+				<td id="contentArea" colspan="3">${vo2.content}</td>
 			</tr>
+			
+			<c:if test="${vo2.saveName != null}">
+			<tr>
+				<td colspan="3">
+					<img src="../resources/PostImage/${vo2.saveName}">
+				</td>
+			</tr>
+			</c:if>
 		</tbody>
+		
 		
 		<tfoot>
 			<tr>

@@ -29,7 +29,7 @@ public class PartyController {
 	
 	@RequestMapping(value = "/party/selectAll.do", method = RequestMethod.GET)
 	public String selectAll(String searchKey, String searchWord, int page, Model model) {
-		log.info("/not_selectAll.do...");
+		log.info("/par_selectAll.do...");
 		
 		List<PartyVO> vos = service.searchList(searchKey, searchWord, page);
 		log.info("vos: {}", vos);
@@ -46,17 +46,13 @@ public class PartyController {
 	
 	@RequestMapping(value = "/party/selectOne.do", method = RequestMethod.GET)
 	public String selectOne(PartyVO vo, Model model) {
-		log.info("/not_selectAll.do...");
+		log.info("/par_selectOne.do...");
 		
 		service.vCountUp(vo);
 		
 		PartyVO vo2 = service.selectOne(vo);
 		log.info("vo2: {}", vo2);
 		
-		
-
-	
-
 		model.addAttribute("vo2", vo2);
 		
 		return "party/selectOne";
@@ -64,17 +60,16 @@ public class PartyController {
 	
 	@RequestMapping(value = "/party/insert.do", method = RequestMethod.GET)
 	public String insert() {
-		log.info("/not_insert.do...");
+		log.info("/par_insert.do...");
 		
-				
 		return "party/insert";
 	}
 	
 	@RequestMapping(value = "/party/insertOK.do", method = RequestMethod.GET)
 	public String insertOK(PartyVO vo) {
-		log.info("/not_insertOK.do...{}", vo);
+		log.info("/par_insertOK.do...{}", vo);
 		
-		vo.setWriter_num(1);
+//		vo.setWriterNum(1);
 		int result = service.insert(vo);
 		log.info("result: {}", result);
 		
@@ -84,7 +79,7 @@ public class PartyController {
 	
 	@RequestMapping(value = "/party/update.do", method = RequestMethod.GET)
 	public String update(PartyVO vo, Model model) {
-		log.info("/not_update.do...");
+		log.info("/par_update.do...");
 		
 		PartyVO vo2 = service.selectOne(vo);
 		log.info("vo2: {}", vo2);
@@ -96,17 +91,18 @@ public class PartyController {
 	
 	@RequestMapping(value = "/party/updateOK.do", method = RequestMethod.GET)
 	public String updateOK(PartyVO vo) {
-		log.info("/not_updateOK.do...{}", vo);
+		log.info("/par_updateOK.do...{}", vo);
 		
 		int result = service.update(vo);
 		log.info("result: {}", result);
 		
-		return "redirect:selectOne.do?Party_num=" + vo.getParty_num();
+//		return "redirect:selectOne.do?Party_num=" + vo.getPartyNum();
+		return "redirect:selectOne.do?Party_num=";
 	}
 	
 	@RequestMapping(value = "/party/deleteOK.do", method = RequestMethod.GET)
 	public String deleteOK(PartyVO vo) {
-		log.info("/not_deleteOK.do...{}", vo);
+		log.info("/par_deleteOK.do...{}", vo);
 		
 		int result = service.delete(vo);
 		log.info("result: {}", result);

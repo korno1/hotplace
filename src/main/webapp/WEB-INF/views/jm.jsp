@@ -8,7 +8,6 @@
 
 </head>
 <body>
-	<jsp:include page="top_menu.jsp"></jsp:include>
 	<ul style="list-style:none">
 
 	<li><a href="notice/selectAll.do?searchKey=title&searchWord=&page=1">공지사항 목록</a></li>

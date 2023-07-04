@@ -1,15 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!-- <!DOCTYPE html> -->
-<!-- <html> -->
-<!-- <head> -->
-<!-- <meta charset="UTF-8"> -->
-<!-- <title>Insert title here</title> -->
-<!-- </head> -->
-<!-- <body> -->
-
-<!-- </body> -->
-<!-- </html> -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
 <link rel="stylesheet" href="resources/css/top_menu.css?after">
 <div id="top_menu_div">
 	<ul id="top_menu_logo">
@@ -28,7 +25,7 @@
 	    <li id="login_menu"><a href="#">로그인</a></li>
 	    <li id="logout_menu"><a href="#">로그아웃</a></li>
 	    <li id="mypage_ment"><a href="#">xxx님</a></li>
-	   
 	</ul>
-	
 </div>
+</body>
+</html>

@@ -9,16 +9,18 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/style.css" >
 </head>
 <body>
-
-	<div class="header">
-		<tiles:insertAttribute name="header"/>
+<div class="tilesWrap">
+	<div class="tilesHeader">
+		<tiles:insertAttribute name="header" />
 	</div>
-	<div class="content">
-		<tiles:insertAttribute name="content"/>
+	<div class="tilesMiddleWrap">
+		<div class="tilesContent">
+			<tiles:insertAttribute name="content" />
+		</div>
 	</div>
-			
-	<div class="footer">
-		<tiles:insertAttribute name="footer"/>
+	<div class="tilesFooter">
+		<tiles:insertAttribute name="footer" />
 	</div>
+</div>
 </body>
 </html>

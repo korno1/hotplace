@@ -194,6 +194,7 @@ public class MemberRestController {
 			return "{\"result\":\"NotOK\"}";
 		} else {
 			session.setAttribute("num", vo2.getNum());
+			session.setAttribute("grade", vo2.getGrade());
 			session.setMaxInactiveInterval(5 * 60);
 			return "{\"result\":\"OK\"}";
 		}

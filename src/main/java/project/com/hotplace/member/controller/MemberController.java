@@ -1,7 +1,6 @@
 package project.com.hotplace.member.controller;
 
 import java.io.IOException;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,11 +33,11 @@ public class MemberController {
 	@Autowired
     private EmailSender emailSender;
 	
-	@RequestMapping(value = "/jonggwan", method = RequestMethod.GET)
-	public String jonggwan() {
-		log.info("jonggwan.do...");
+	@RequestMapping(value = "/myPage", method = RequestMethod.GET)
+	public String myPage() {
+		log.info("myPage.do...");
 		
-		return "jonggwan";
+		return "myPage";
 	}
 	
 	@RequestMapping(value = {"member/selectAll.do"}, method = RequestMethod.GET)
@@ -85,7 +84,6 @@ public class MemberController {
 	@RequestMapping(value = {"login.do"}, method = RequestMethod.GET)
 	public String login(MemberVO vo) {
 		log.info("login.do...");
-		
 			return "member/login";
 		
 	}

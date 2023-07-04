@@ -6,14 +6,15 @@ import lombok.Data;
 
 @Data
 public class PartyVO {
-	private int party_num;
-	private int writer_num;
+	private int partyNum;
+	private int writerNum;
+	private String writerName;
 	private String title;
 	private int views;
 	private String content;
 	private int applicants;
 	private int max;
 	private String place;
-	private String time_limit;
+	private String timeLimit;
 	private Timestamp wdate;
 }

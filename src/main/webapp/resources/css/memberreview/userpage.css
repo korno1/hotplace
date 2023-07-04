@@ -1,15 +1,3 @@
-#memberreview_list > div{
-	width: 1000px;
-    margin: 0px auto;
-    border: 1px solid blue;
-}
-
-.custom-div{
-	border: 1px solid #000;
-	width: 80%;
-	font-size: 40px;
-}
-
 .star-rating {
   display: inline-block;
 }

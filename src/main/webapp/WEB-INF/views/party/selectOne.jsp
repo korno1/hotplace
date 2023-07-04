@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>공지사항</title>
+<title>모임정보</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <link rel="stylesheet" href="../resources/css/notice/button.css">
 
@@ -20,48 +20,48 @@
 			
 		}); // end click
 		
-		
 	});
-	
-	
 	
 </script>
 </head>
 <body>
-	<h1>공지사항</h1>
-<%-- 	<jsp:include page="../top_menujm.jsp"></jsp:include> --%>
+	<h1>모임정보</h1>
 
-	
-	
-	<table border="1" style="border-collapse: collapse">
-		<fmt:parseDate var="dateFmt" value="${vo2.wdate}"  pattern="yyyy-MM-dd HH:mm:ss.SSS" />
-		<fmt:formatDate var="fmtwdate" value="${dateFmt}" pattern="yyyy-MM-dd HH:mm" />
-		<thead>
-			<tr>
-				<td colspan="3">${vo2.title}</td>
-			</tr>
-			<tr>
-				<td>${vo2.writer}</td>
-				<td>${fmtwdate}</td>
-				<td>조회 ${vo2.viewCount}</td>
-			</tr>
-		</thead>
-			
-		<tbody>
-			<tr>
-				<td colspan="3">${vo2.content}</td>
-			</tr>
-		</tbody>
+<%-- 		<fmt:parseDate var="dateFmt" value="${vo2.wdate}" --%>
+<%-- 			pattern="yyyy-MM-dd HH:mm:ss.SSS" /> --%>
+<%-- 		<fmt:formadivate var="fmtwdate" value="${dateFmt}" pattern="yyyy-MM-dd" /> --%>
+
+
+		<div>(status)</div>
 		
-		<tfoot>
-			<tr>
-				<td colspan="3">
-					<button type="button" onclick="location.href='update.do?num=${param.num}'">수정</button>
-					<button type="button" id="delButton">삭제</button>
-				</td>
-			</tr>
-		</tfoot>
-	</table>
+		<div>${vo2.title}(제목)</div>
+		
+		<div>
+<%-- 		<div>${vo2.saveName}(프로필사진)</div> --%>
+			<div>${vo2.writerName}(작성자)</div>
+		</div>
+
+		
+		<div>
+			<div>${vo2.wdate}(작성일)</div>
+			<div>조회수 : ${vo2.views}</div>
+		</div>
+		<div>
+			<div>모집인원 : ${vo2.applicants}/${vo2.max} 명</div>
+			<div>모집마감일 : </div>
+			<div>식당 : ${vo2.place}</div>
+			<div>모집날짜 : ${vo2.timeLimit}</div>
+		</div>
+		
+		<div>${vo2.content}(내용)</div>
+		
+	<div>
+		<button type="button"
+			onclick="location.href='update.do?partyNum=${param.partyNum}'">수정</button>
+		<button type="button" id="delButton">삭제</button>
+	</div>
+	
+	
 <!-- 		<div> -->
 <!-- 			<ul style="list-style:none"> -->
 <!-- 				<li> -->

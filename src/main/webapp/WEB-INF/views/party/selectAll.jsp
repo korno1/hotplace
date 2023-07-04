@@ -8,7 +8,6 @@
 <meta charset="UTF-8">
 <title>모임리스트</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<link rel="stylesheet" href="../resources/css/notice/button.css">
 </head>
 <body>
 	<h1>모임리스트</h1>
@@ -22,7 +21,7 @@
 		<form action="selectAll.do">
 			<select name="searchKey">
 				<option value="title" <c:if test="${param.searchKey == 'title'}"> selected </c:if>>제목</option>
-				<option value="content" <c:if test="${param.searchKey =='content'}"> selected </c:if>>내용</option>
+				<option value="place" <c:if test="${param.searchKey =='place'}"> selected </c:if>>장소</option>
 			</select>
 			<input type="text" name="searchWord" id="searchWord" value="${param.searchWord}">
 			<input type="hidden" name="page" value=1>
@@ -31,16 +30,23 @@
 	</div>
 	
 	<hr>
-	
-	
-	
-	
-	
-	
-	
 
-	
-	
+	<c:forEach var="vo" items="${vos}">
+<%-- 		<fmt:parseDate var="dateFmt" value="${vo.wdate}" --%>
+<%-- 			pattern="yyyy-MM-dd HH:mm:ss.SSS" /> --%>
+<%-- 		<fmt:formadivate var="fmtwdate" value="${dateFmt}" pattern="yyyy-MM-dd" /> --%>
+
+		<div onclick="location.href='selectOne.do?partyNum=${vo.partyNum}'"
+			style="cursor: pointer">
+			<div>${vo.partyNum}</div>
+			<div>${vo.applicants}/${vo.max}</div>
+			<div>${vo.timeLimit}</div>
+			<div>${vo.writerName}</div>
+			<div>조회수 : ${vo.views}</div>
+		</div>
+	</c:forEach>
+
+
 	<div style="width:45%; display:inline">
 		<a href="insert.do">글작성</a>
 	</div>
@@ -49,8 +55,7 @@
 		<a href="selectAll.do?searchKey=${param.searchKey}&searchWord=${param.searchWord}&page=${param.page-1}" id="pre_page">이전</a>
 		<a href="selectAll.do?searchKey=${param.searchKey}&searchWord=${param.searchWord}&page=${param.page+1}" id="next_page">다음</a>
 	</div>
-	
-	
+
 	
 	<script type="text/javascript">
 		if(${param.page}==1){

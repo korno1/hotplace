@@ -5,11 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>insert</title>
-<style>
-.error {
-	border: 1px solid #FF9999;
-}
-</style>
+<link rel="stylesheet" href="../resources/css/member/insert.css">
+
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">

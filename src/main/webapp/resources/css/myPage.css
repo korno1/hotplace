@@ -1,0 +1,48 @@
+@charset "UTF-8";
+.myPage{
+	width:180px;
+	height:600px;
+	display:flex;
+	box-sizing:border-box;
+	flex-direction: column;
+	border-bottom:2px solid #FF5700;
+}
+.myPageTitle{
+	width:180px;
+	height:120px;
+	border-top:2px solid #FF5700;
+	border-bottom:2px solid #FF5700;
+	box-sizing:border-box;
+}
+.myPageTitle__eng{
+	margin-top:33px;
+	font-size:20px;
+	color:#C7C7C7;
+}
+.myPageTitle__kor{
+	font-size:30px;
+	font-weight:500;
+}
+.wrap{
+	margin-top:50px;
+	height:70px;
+}
+.title{
+	font-size:20px;
+	font-weight:bold;
+	margin-bottom:15px;
+}
+.menu{
+	font-size:18px;
+	margin-top:10px;
+	color:#818181;
+}
+.menu:hover{
+	color:black;
+	font-weight:bold;
+	cursor:pointer;
+}
+.selected{
+	color:black;
+	font-weight:bold;
+}

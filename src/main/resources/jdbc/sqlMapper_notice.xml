@@ -38,7 +38,7 @@
 	
 	
 	<select id="NOT_SELECT_ONE" resultType="project.com.hotplace.notice.model.NoticeVO">
-		select n.num, n.title, n.content, m.nick_name as writer, n.view_count as viewCount, n.wdate from notice n join member m on (n.writer_num = m.num)
+		select n.num, n.title, n.content, m.nick_name as writer, n.view_count as viewCount, n.wdate, n.savename as saveName from notice n join member m on (n.writer_num = m.num)
 		where n.num = #{num}
 	</select>
 	
@@ -48,12 +48,12 @@
 	</update>
 	
 	<insert id="NOT_INSERT" parameterType="project.com.hotplace.notice.model.NoticeVO">
-		insert into notice(num, title, content, writer_num) 
-		values(not_sequence.nextval, #{title}, #{content}, #{writerNum})
+		insert into notice(num, title, content, writer_num, savename) 
+		values(not_sequence.nextval, #{title}, #{content}, #{writerNum}, #{saveName, jdbcType=VARCHAR})
 	</insert>
 	
 	<update id="NOT_UPDATE" parameterType="project.com.hotplace.notice.model.NoticeVO">
-		update notice set title=#{title}, content=#{content}
+		update notice set title=#{title}, content=#{content}, savename=#{saveName}
 		where num = #{num}
 	</update>
 	

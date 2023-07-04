@@ -59,7 +59,20 @@ public class MemberDAOimpl implements MemberDAO {
 
 		return sqlSession.selectOne("MEM_SELECTONE", vo);
 	}
+	@Override
+	public MemberVO idAuth(MemberVO vo) {
+		log.info("idAuth()...{}", vo);
+		
+		return sqlSession.selectOne("MEM_IDAUTH", vo);
+	}
 
+
+	@Override
+	public MemberVO pwAuth(MemberVO vo) {
+		return sqlSession.selectOne("MEM_PWAUTH", vo);
+	}
+
+	
 	@Override
 	public int insertOK(MemberVO vo) {
 		log.info("insertOK()...{}", vo);
@@ -120,6 +133,12 @@ public class MemberDAOimpl implements MemberDAO {
 		log.info("upgradeOK()...{}", vo);
 
 		return sqlSession.update("MEM_UPGRADEOK", vo);
+	}
+
+	@Override
+	public int pwResetOK(MemberVO vo) {
+
+		return sqlSession.update("MEM_PWRESETOK", vo);
 	}
 
 }

@@ -36,14 +36,14 @@
 	</select>
 	
 	<select id="EVE_SELECTONE" resultType="project.com.hotplace.event.model.EventVO">
-		select e.num, e.title, e.content, m.nick_name as writer, e.view_count as viewCount, e.wdate, e.deadline
+		select e.num, e.title, e.content, m.nick_name as writer, e.view_count as viewCount, e.wdate, e.deadline, e.savename as saveName
 		from event e join member m on (e.writer_num = m.num)
 		where e.num = #{num}
 	</select>
 	
 	<insert id="EVE_INSERT" parameterType="project.com.hotplace.event.model.EventVO">
-		insert into event(num, title, content, writer_num, deadline) 
-		values(eve_sequence.nextval, #{title}, #{content}, #{writerNum}, TO_DATE(#{deadline},'YYYY-MM-DD HH24:MI'))
+		insert into event(num, title, content, writer_num, deadline, savename) 
+		values(eve_sequence.nextval, #{title}, #{content}, #{writerNum}, TO_DATE(#{deadline},'YYYY-MM-DD HH24:MI'), #{saveName, jdbcType=VARCHAR})
 	</insert>
 	
 	<update id="EVE_VCOUNT_UPDATE" parameterType="project.com.hotplace.event.model.EventVO">
@@ -53,7 +53,7 @@
 
 	
 	<update id="EVE_UPDATE" parameterType="project.com.hotplace.event.model.EventVO">
-		update event set title=#{title}, content=#{content}, deadline=TO_DATE(#{deadline},'YYYY-MM-DD HH24:MI')
+		update event set title=#{title}, content=#{content}, deadline=TO_DATE(#{deadline},'YYYY-MM-DD HH24:MI'), savename=#{saveName, jdbcType=VARCHAR}
 		where num = #{num}
 	</update>
 	

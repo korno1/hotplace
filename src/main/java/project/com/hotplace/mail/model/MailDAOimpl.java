@@ -51,7 +51,7 @@ public class MailDAOimpl implements MailDAO {
 	
 
 	@Override
-	public List<MailVO> selectAllAdmin(int page) {
+	public List<MailVO> selectAllAdmin(String searchKey, String searchWord,int page) {
 		log.info("selectAll()...page: {}", page);
 
 		// SQL 쿼리에 전달할 파라미터를 저장할 변수를 생성
@@ -66,7 +66,17 @@ public class MailDAOimpl implements MailDAO {
 		// 페이징을 위한 오프셋과 제한(limit) 파라미터를 설정합니다.
 		parameters.put("end", end);
 		parameters.put("start", start);
-		return sqlSession.selectList("MAI_SELECTALL_ADMIN", parameters);
+		
+		// 검색 키워드(searchKey)와 검색어(searchWord)가 null이 아닌 경우에만 파라미터로 설정
+		if (!searchKey.isEmpty() && !searchWord.isEmpty()) {
+			parameters.put("searchKey", searchKey);
+			parameters.put("searchWord", "%" + searchWord + "%");
+			log.info("parameters...search{}", parameters.toString());
+			return sqlSession.selectList("MAI_SEARCHLIST_ADMIN", parameters);
+		} else {
+			log.info("parameters...select{}", parameters.toString());
+			return sqlSession.selectList("MAI_SELECTALL_ADMIN", parameters);
+		}
 	}
 
 	@Override

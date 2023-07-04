@@ -3,7 +3,7 @@
 <html>
 <head>
 <title>마이 페이지</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/myPage.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/layouts/myPage.css">
 </head>
 <body>
 	<div class="myPage block">

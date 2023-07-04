@@ -105,7 +105,7 @@ public class MemberRestController {
 		}
 	}
 
-	@RequestMapping(value = "/member/json/insertOK.do", method = RequestMethod.POST)
+	@RequestMapping(value = "account/json/insertOK.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String insertOK(MemberVO vo) {
 		log.info("insert...{}", vo);
@@ -168,7 +168,7 @@ public class MemberRestController {
 
 		}
 	}
-	@RequestMapping(value = "/member/json/pwResetOK.do", method = RequestMethod.POST)
+	@RequestMapping(value = "account/json/pwResetOK.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String pwResetOK(MemberVO vo){
 		log.info("updateOK...{}", vo);
@@ -182,7 +182,7 @@ public class MemberRestController {
 			}
 	}
 
-	@RequestMapping(value = "/member/json/loginOK.do", method = RequestMethod.POST)
+	@RequestMapping(value = "account/json/loginOK.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String loginOK(MemberVO vo, HttpSession session) {
 		log.info("loginOK...{}", vo);
@@ -201,7 +201,7 @@ public class MemberRestController {
 
 	}
 
-	@RequestMapping(value = "/member/json/upgradeOK.do", method = RequestMethod.POST)
+	@RequestMapping(value = "member/json/upgradeOK.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String upgradeOK(MemberVO vo) {
 		log.info("upgradeOK...{}", vo);
@@ -215,7 +215,7 @@ public class MemberRestController {
 		}
 	}
 
-	@RequestMapping(value = "/member/json/deleteOK.do", method = RequestMethod.POST)
+	@RequestMapping(value = "member/json/deleteOK.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String deleteOK(MemberVO vo) {
 		log.info("insert...{}", vo);
@@ -229,7 +229,7 @@ public class MemberRestController {
 		}
 	}
 
-	@RequestMapping(value = "/member/json/authCheck.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/account/json/authCheck.do", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<Object, Object> authCheck(MemberVO vo,HttpServletRequest request, HttpSession session) {
 		Map<Object, Object> response = new HashMap<Object, Object>();

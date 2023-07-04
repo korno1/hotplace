@@ -2,12 +2,12 @@
 h1 {
   text-align: center;
 }
-
 .bodyWrap {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  flex-direction: column;
+  margin:300px 0px 300px 0px;
 }
 
 .loginWrap {

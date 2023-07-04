@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>insert</title>
-<link rel="stylesheet" href="../resources/css/member/insert.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/member/insert.css">
 
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -21,7 +21,7 @@
 		console.log("NickNameCheck....", $('#nick_name').val());
 
 		$.ajax({
-			url : "json/nickNameCheck.do",
+			url : "/hotplace/member/json/nickNameCheck.do",
 			data : {
 				nick_name : $('#nick_name').val()
 			},
@@ -49,7 +49,7 @@
 		console.log("emailCheck....", $('#email').val());
 
 		$.ajax({
-			url : "json/emailCheck.do",
+			url : "/hotplace/member/json/emailCheck.do",
 			data : {
 				email : $('#email').val()
 			},
@@ -127,7 +127,7 @@
 			return; // 요청 중단
 		}
 		$.ajax({
-			url : "json/insertOK.do",
+			url : "/hotplace/member/json/insertOK.do",
 			data : {
 				nick_name : $('#nick_name').val(),
 				email : $('#email').val(),
@@ -193,14 +193,14 @@
 				<td><input type="text" id="nick_name" name="nick_name"
 					value="닉네임1">
 					<button type="button" onclick="NickNameCheck()" class="myButton">닉네임
-						중복체크</button> <span id="nickNameCheck"></span></td>
+						중복체크</button><br><span id="nickNameCheck"></span></td>
 			</tr>
 			<tr>
 				<td><label for="email">이메일:</label></td>
 				<td><input type="email" id="email" name="email"
 					value="abc@hotplace.com">
 					<button type="button" onclick="EmailCheck()" class="myButton">이메일
-						중복체크</button> <span id="emailCheck"></span></td>
+						중복체크</button><br><span id="emailCheck"></span></td>
 			</tr>
 			<tr>
 				<td><label for="pw">비밀번호:</label></td>

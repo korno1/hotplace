@@ -1,54 +1,46 @@
 @charset "UTF-8";
 h1 {
-  text-align: center;
+	margin-top:300px;
+		text-align: center;
 }
-
 form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-bottom:300px;
 }
-
 table {
-  margin-top: 20px;
-  width: 100%;
-  max-width: 400px;
+	margin-top: 20px;
+	width: 600px;
 }
-
 td {
-  padding: 5px;
+	padding: 5px;
 }
-
 label {
-  font-weight: bold;
+	font-weight: bold;
 }
-
 input[type="text"],
 input[type="email"],
 input[type="password"] {
-  width: 100%;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
+	width: 300px;
+	padding: 5px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
 }
-
 .myButton {
-  margin-top: 10px;
-  padding: 5px 10px;
-  background-color: #337ab7;
-  color: #fff;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
+	margin-top: 10px;
+	padding: 5px 10px;
+	background-color: #337ab7;
+	color: #fff;
+	border: none;
+	border-radius: 3px;
+	cursor: pointer;
 }
-
 .myButton:hover {
-  background-color: #23527c;
+	background-color: #23527c;
 }
-
 span {
-  margin-left: 10px;
-  font-size: 12px;
-  color: #888;
+	margin-left: 10px;
+	font-size: 12px;
+	color: #888;
 }

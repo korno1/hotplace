@@ -24,7 +24,7 @@ public class MailController {
 	public String selectAll() {
 		log.info("mail/selectAll.do...");
 		
-		return "/mail/selectAll";
+		return "..mail/selectAll";
 	}
 	
 	@RequestMapping(value = {"mail/insert.do"}, method = RequestMethod.GET)
@@ -38,6 +38,6 @@ public class MailController {
 	public String selectAll_admin() {
 		log.info("mail/selectAll_admin.do...");
 		
-		return "mail/selectAll_admin";
+		return "..mail/selectAll_admin";
 	}
 }

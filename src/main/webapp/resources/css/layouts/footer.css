@@ -6,12 +6,11 @@
 }
 
 .footerWrap {
-	width: 1080px;
-	height: 120px;
+	width: 1320px;
+	height:100%;
 	display: flex;
-	padding: 40px 0px 40px 0px;
 	flex-direction: column;
-	justify-content: space-between;
+	justify-content: space-evenly;
 	margin: 0 auto;
 }
 

@@ -1,0 +1,14 @@
+@charset "UTF-8";
+.headerSubWrap{
+	width:1320px;
+	margin:0 auto;
+	height: 70px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.headerSubTitle:hover{
+	color:black;
+	font-weight:bold;
+	cursor:pointer;
+}

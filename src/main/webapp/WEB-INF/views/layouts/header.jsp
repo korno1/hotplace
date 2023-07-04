@@ -6,26 +6,79 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/layouts/header.css">
 <body>
-<link rel="stylesheet" href="resources/css/top_menu.css?after">
-<div id="top_menu_div">
-	<ul id="top_menu_logo">
-	  <li id="main_logo"><a href="#">맛집찾아조</a></li>
-	</ul>
-	
-	<ul id="top_menu_post">
-	  <li id="search_hotplace"><a href="#">맛집찾기</a></li>
-	  <li id="search_party"><a href="#">모임찾기</a></li>
-	  <li id="notice_menu"><a href="notice/selectAll.do?searchKey=title&searchWord=&page=1">공지사항</a></li>
-	  <li id="event_menu"><a href="event/selectAll.do?searchKey=title&page=1">이벤트</a></li>
-	  <li id="faq_menu"><a href="faq/selectAll.do?searchKey=title&page=1">FAQ</a></li>
-	</ul>
-	<ul id="top_menu_member">
-	    <li id="sign_up_menu"><a href="#">회원가입</a></li>
-	    <li id="login_menu"><a href="#">로그인</a></li>
-	    <li id="logout_menu"><a href="#">로그아웃</a></li>
-	    <li id="mypage_ment"><a href="#">xxx님</a></li>
-	</ul>
-</div>
+	<div class="top_menu_div">
+		<ul class="top_menu_logo">
+			<li class="main_logo menu">HOTPLACE</li>
+		</ul>
+		<ul class="top_menu_post">
+			<li class="search_hotplace menu">맛집찾기</li>
+			<li class="search_party menu">모임찾기</li>
+			<li class="notice_menu menu">공지사항</li>
+			<li class="event_menu menu">이벤트</li>
+			<li class="faq_menu menu">FAQ</li>
+		</ul>
+		<ul class="top_menu_member">
+			<li class="sign_up_menu menu">회원가입</li>
+			<li class="login_menu menu">로그인</li>
+			<li class="logout_menu menu">로그아웃</li>
+			<li class="mypage_menu menu">xxx님</li>
+		</ul>
+	</div>
+<script type="text/javascript">
+	const menuElements = document.querySelectorAll('.menu');
+
+	menuElements.forEach((element) => {
+	element.addEventListener('click', function() {
+    // 클릭한 요소에 selected 클래스 추가
+    menuElements.forEach((menuElement) => {
+      menuElement.classList.remove('selected');
+    });
+    this.classList.add('selected');
+    
+    const menuClass = this.classList[0];
+    let link;
+
+    switch (menuClass) {
+      case 'search_hotplace':
+        link = '/hotplace/party/selectAll.do';
+        break;
+      case 'search_party':
+        link = '모임_정보_링크';
+        break;
+      case 'notice_menu':
+    	link = '/hotplace/notice/selectAll.do';
+        break;
+      case 'event_menu':
+        link = '/hotplace/event/selectAll.do';
+        break;
+      case 'faq_menu':
+        link = '/hotplace/faq/selectAll.do';
+        break;
+      case 'sign_up_menu':
+        link = '/hotplace/account/insert.do';
+        break;
+      case 'login_menu':
+        link = '/hotplace/account/login.do';
+        break;
+      case 'logout_menu':
+        link = '/hotplace/account/logout.do';
+        break;
+      case 'mypage_menu':
+        link = '/hotplace/member/mypage.do';
+        break;
+      default:
+        link = 'myPage.do'; // 기본 링크
+    }
+
+    console.log('link...', link);
+    console.log('click...');
+
+    window.location.href = link;
+  });
+});
+</script>
 </body>
 </html>

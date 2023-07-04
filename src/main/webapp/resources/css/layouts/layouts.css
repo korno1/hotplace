@@ -9,28 +9,20 @@
 	flex-wrap: wrap;
 }
 .tilesMiddleWrap{
-	width:1080px;
+	width:1320px;
 	height:100%;
 	display:flex;
 	margin:0 auto;
+	justify-content: center;
 }
-.leftSide{
-	width: 180px;
-	height: 600px;
-}
-
-.tilesContent{
-	width: 900px;
-	height: 600px;
-}
-
 .tilesHeader{
 	width:100%;
-	background-color: #ABF200;
+	background-color: #EAEAEA;
 }
 
 .tilesFooter{
 	width:100%;
 	height:200px;
+	display:block;
 	background-color: #EAEAEA;
 }

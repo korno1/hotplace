@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>insert</title>
-<link rel="stylesheet" href="resources/css/member/login.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/member/login.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
@@ -53,19 +53,19 @@
 	
 function linkSignUp() {
 	  // 회원가입 페이지로 이동하는 코드 작성
-	  window.location.href = "member/insert.do"; // 회원가입 페이지의 경로를 설정
+	  window.location.href = "/hotplace/account/insert.do"; // 회원가입 페이지의 경로를 설정
 	}
 function findId() {
-	  window.location.href = "member/findId.do";
+	  window.location.href = "/hotplace/account/findId.do";
 	}
 function findPw() {
-	  window.location.href = "member/findPw.do";
+	  window.location.href = "/hotplace/account/findPw.do";
 	}
 </script>
 </head>
 <body>
-	<h1>로그인</h1>
 	<div class="bodyWrap">
+	<h1>HOTPLACE 로그인</h1>
 		<div class="loginWrap">
 			<div class="loginHead"></div>
 			<div class="inputWrap">

@@ -33,39 +33,32 @@ public class MemberController {
 	@Autowired
     private EmailSender emailSender;
 	
-	@RequestMapping(value = "/myPage", method = RequestMethod.GET)
-	public String myPage() {
-		log.info("myPage.do...");
-		
-		return "layouts/myPage";
-	}
-	
 	@RequestMapping(value = {"member/selectAll.do"}, method = RequestMethod.GET)
 	public String selectAll() {
 		log.info("member/selectAll.do...");
 		
-		return "/member/selectAll";
+		return "..member/selectAll";
 	}
 	
-	@RequestMapping(value = {"member/insert.do"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"account/insert.do"}, method = RequestMethod.GET)
 	public String insert() {
-		log.info("member/insert.do...");
+		log.info("insert.do...");
 		
-		return ".member/insert";
+		return ".account/insert";
 	}
 	
-	@RequestMapping(value = {"member/findId.do"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"account/findId.do"}, method = RequestMethod.GET)
 	public String findId() {
 		log.info("findId.do...");
 		
-		return "member/findId";
+		return ".account/findId";
 		
 	}
-	@RequestMapping(value = {"member/findPw.do"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"account/findPw.do"}, method = RequestMethod.GET)
 	public String findPw() {
 		log.info("findPw.do...");
 		
-		return "member/findPw";
+		return ".account/findPw";
 		
 	}
 	
@@ -78,17 +71,17 @@ public class MemberController {
 		
 		model.addAttribute("vo2",vo2);
 		
-		return "member/selectOne";
+		return "..member/selectOne";
 	}
 	
-	@RequestMapping(value = {"login.do"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"account/login.do"}, method = RequestMethod.GET)
 	public String login(MemberVO vo) {
 		log.info("login.do...");
-			return "member/login";
+			return ".account/login";
 		
 	}
 
-	@RequestMapping(value = "/member/idAuth.do", method = RequestMethod.POST)
+	@RequestMapping(value = "account/idAuth.do", method = RequestMethod.POST)
 	public ModelAndView idAuth(MemberVO vo,HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
 	    vo.setNick_name(request.getParameter("nick_name"));
 
@@ -121,23 +114,23 @@ public class MemberController {
 			}
 
 			ModelAndView mv = new ModelAndView();
-			mv.setViewName("member/idAuth");
+			mv.setViewName(".account/idAuth");
 			mv.addObject("num", formattedNum);
 			return mv;
 		}else {
 			ModelAndView mv = new ModelAndView();
-			mv.setViewName("member/findId");
+			mv.setViewName(".account/findId");
 		    mv.addObject("errorMessage", "일치하는 정보가 존재하지 않습니다."); // 에러 메시지 추가
 			return mv;
 		}
 		}else {
 			ModelAndView mv = new ModelAndView();
-			mv.setViewName("member/findId");
+			mv.setViewName(".account/findId");
 		    mv.addObject("errorMessage", "일치하는 정보가 존재하지 않습니다."); // 에러 메시지 추가
 			return mv;
 		}
 	}
-	@RequestMapping(value = "/member/pwAuth.do", method = RequestMethod.POST)
+	@RequestMapping(value = "account/pwAuth.do", method = RequestMethod.POST)
 	public ModelAndView pwAuth(MemberVO vo,HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		vo.setNick_name(request.getParameter("nick_name"));
 		vo.setEmail(request.getParameter("email"));
@@ -170,19 +163,19 @@ public class MemberController {
 				}
 				
 				ModelAndView mv = new ModelAndView();
-				mv.setViewName("member/pwAuth");
+				mv.setViewName(".account/pwAuth");
 				mv.addObject("num", formattedNum);
 				mv.addObject("vo2Num", vo2.getNum());
 				return mv;
 			}else {
 				ModelAndView mv = new ModelAndView();
-				mv.setViewName("member/findPw");
+				mv.setViewName(".account/findPw");
 			    mv.addObject("errorMessage", "일치하는 정보가 존재하지 않습니다."); // 에러 메시지 추가
 				return mv;
 			}
 		}else {
 			ModelAndView mv = new ModelAndView();
-			mv.setViewName("member/findPw");
+			mv.setViewName(".account/findPw");
 		    mv.addObject("errorMessage", "일치하는 정보가 존재하지 않습니다."); // 에러 메시지 추가
 			return mv;
 		}

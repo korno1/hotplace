@@ -1,0 +1,7 @@
+@charset "UTF-8";
+
+#top_menu_list li{
+	float: left;
+	list-style: none;
+	margin-right: 1rem;
+}

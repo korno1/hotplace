@@ -1,7 +1,5 @@
 package project.com.hotplace.party.model;
 
-import java.security.Timestamp;
-
 import lombok.Data;
 
 @Data
@@ -16,5 +14,6 @@ public class PartyVO {
 	private int max;
 	private String place;
 	private String timeLimit;
-	private Timestamp wdate;
+	private String wdate;
+	private String deadLine;
 }

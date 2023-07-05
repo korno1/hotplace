@@ -36,29 +36,6 @@ $(function par_selectAll(){
 	
 				let tag_txt = '';
 				
-// 			  $(document).ready(function() {
-// 				    function showStarRating(ratedValue) {
-// 				      var starRating = '';
-// 				      for (var i = 1; i <= 5; i++) {
-// 				        if (i <= ratedValue) {
-// 				          starRating += '<i class="fas fa-star"></i>';
-// 				        } else {
-// 				          starRating += '<i class="far fa-star"></i>';
-// 				        }
-// 				      }
-// 				      return starRating;
-// 				    }
-
-// 				    // 별점 채우기
-// 				    $('.star-rating').each(function() {
-// 				      var ratedValue = parseInt($(this).data('rating'));
-// 				      $(this).html(showStarRating(ratedValue));
-// 				    });
-// 				  });
-				
-				
-				
-				
 				$.each(vos,function(index,vo){
 					console.log('ajax...success:', vo);
 					let tag_td = `<div>\${vo.content}</div>`;
@@ -112,10 +89,12 @@ $(function par_selectAll(){
 						</div>`;
 
 					}
-					
+
+// 							<img width="20px" src="../resources/ProfileImage/\${vo.writer_num}"
+// 							onerror="this.src='../resources/ProfileImage/default.png'">
 					tag_txt += `
 						<div>
-							<div>\${vo.save_name}</div>
+							<div>\${vo.writer_num}</div>
 							<div>\${vo.writer_name}</div>
 							\${tag_rated}
 							<div>\${vo.wdate}</div>
@@ -318,6 +297,7 @@ $(function par_selectAll(){
 	<div id="formContainer"><button onclick="insert()">작성</button></div>
 
 	<hr>
+
 
 </body>
 </html>

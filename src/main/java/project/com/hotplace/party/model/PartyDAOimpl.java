@@ -72,19 +72,19 @@ public class PartyDAOimpl implements PartyDAO {
 	public int insert(PartyVO vo) {
 		log.info("insert()...{}", vo);
 		
-		return sqlSession.insert("NOT_INSERT", vo);
+		return sqlSession.insert("par_insert", vo);
 	}
 
 	@Override
 	public int update(PartyVO vo) {
 		log.info("update()...{}", vo);
-		return sqlSession.update("NOT_UPDATE", vo);
+		return sqlSession.update("par_update", vo);
 	}
 
 	@Override
 	public int delete(PartyVO vo) {
 		log.info("delete()...{}", vo);
-		return sqlSession.delete("NOT_DELETEDATE_UPDATE", vo);
+		return sqlSession.delete("par_delete", vo);
 	}
 
 	@Override

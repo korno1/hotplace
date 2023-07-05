@@ -45,10 +45,11 @@
 			<div>조회수 : ${vo.views}</div>
 		</div>
 	</c:forEach>
-
-
+	
+	
+	
 	<div style="width:45%; display:inline">
-		<a href="insert.do">글작성</a>
+		<a href="insert.do">모임글쓰기</a>
 	</div>
 	
 	<div>

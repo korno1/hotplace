@@ -19,7 +19,7 @@
 	<select id="par_searchList" resultType="project.com.hotplace.party.model.PartyVO">
 		select *
 			from (select rownum rn, v_not.*
-    		from (select p.party_num as partyNum, m.nick_name as writerName, p.title, p.views, p.content, p.applicants, p.max, p.place, p.time_limit as timeLimit, p.wdate 
+    		from (select p.party_num as partyNum, m.nick_name as writerName, p.title, p.views, p.content, p.applicants, p.max, p.place, p.time_limit as timeLimit, p.wdate, p.dead_line as deadLine
         		from party p join member m on (p.writer_num = m.num)
         		where 
 					<if test="searchKey == 'title'">
@@ -33,7 +33,7 @@
 	</select>
 	
 	<select id="par_selectOne" resultType="project.com.hotplace.party.model.PartyVO">
-		select p.party_num as partyNum, p.title, p.content, m.nick_name as writerName, p.views, p.wdate 
+		select p.party_num as partyNum, m.nick_name as writerName, p.title, p.views, p.content, p.applicants, p.max, p.place, p.time_limit as timeLimit, p.wdate, p.dead_line as deadLine
 		from party p join member m on (p.writer_num = m.num)
 		where p.party_num = #{partyNum}
 	</select>
@@ -44,17 +44,17 @@
 	</update>
 	
 	<insert id="par_insert" parameterType="project.com.hotplace.party.model.PartyVO">
-		insert into party(party_num, title, max, time_limit as timeLimit, place, content, writer_num as writerNum) 
-		values(not_sequence.nextval, #{title}, #{max}, #{timeLimit},#{content}, #{writerNum})
+		insert into party(party_num, title, max, time_limit, place, content, writer_num, dead_line) 
+		values(par_sequence.nextval, #{title}, #{max}, TO_DATE(#{timeLimit},'YYYY-MM-DD HH24:MI:SS'), #{place}, #{content}, #{writerNum}, TO_DATE(#{deadLine},'YYYY-MM-DD HH24:MI:SS'))
 	</insert>
 	
-<!-- 	<update id="par_update" parameterType="project.com.hotplace.party.model.PartyVO"> -->
-<!-- 		update party set title=#{title}, max=#{max}, time_limit=#{timeLimit}, place=#{place}, content=#{content} -->
-<!-- 		where party_num = #{party_num} -->
-<!-- 	</update> -->
+	<update id="par_update" parameterType="project.com.hotplace.party.model.PartyVO">
+		update party set title=#{title}, max=#{max}, time_limit=#{timeLimit}, place=#{place}, content=#{content}, dead_line=#{deadLine}
+		where party_num = #{partyNum}
+	</update>
 	
-<!-- 	<delete id="par_delete"> -->
-<!-- 		delete from party where party_num = #{party_num} -->
-<!-- 	</delete> -->
+	<delete id="par_delete">
+		delete from party where party_num = #{partyNum}
+	</delete>
 	
 </mapper>

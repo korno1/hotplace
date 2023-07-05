@@ -65,16 +65,22 @@ public class PartyController {
 		return "party/insert";
 	}
 	
-	@RequestMapping(value = "/party/insertOK.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/party/insertOK.do", method = RequestMethod.POST)
 	public String insertOK(PartyVO vo) {
 		log.info("/par_insertOK.do...{}", vo);
 		
-//		vo.setWriterNum(1);
+		vo.setTimeLimit(vo.getTimeLimit().replace("T", " "));
+		vo.setDeadLine(vo.getDeadLine().replace("T", " "));
+		vo.setWriterNum(3);
+		
 		int result = service.insert(vo);
 		log.info("result: {}", result);
 		
-				
-		return "redirect:selectAll.do?searchKey=title&searchWord=&page=1";
+		if(result==1) {
+			return "redirect:selectAll.do?searchKey=title&searchWord=&page=1";
+		}else {
+			return "redirect:insert.do";
+		}		
 	}
 	
 	@RequestMapping(value = "/party/update.do", method = RequestMethod.GET)
@@ -89,15 +95,14 @@ public class PartyController {
 		return "party/update";
 	}
 	
-	@RequestMapping(value = "/party/updateOK.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/party/updateOK.do", method = RequestMethod.POST)
 	public String updateOK(PartyVO vo) {
 		log.info("/par_updateOK.do...{}", vo);
 		
 		int result = service.update(vo);
 		log.info("result: {}", result);
 		
-//		return "redirect:selectOne.do?Party_num=" + vo.getPartyNum();
-		return "redirect:selectOne.do?Party_num=";
+		return "redirect:selectOne.do?Party_num=" + vo.getPartyNum();
 	}
 	
 	@RequestMapping(value = "/party/deleteOK.do", method = RequestMethod.GET)

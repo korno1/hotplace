@@ -13,8 +13,8 @@ public class ApplicantsService {
 	@Autowired
 	ApplicantsDAO dao;
 	
-	public List<ApplicantsVO> selectAll(){
-		return dao.selectAll();
+	public List<ApplicantsVO> selectAll(ApplicantsVO vo){
+		return dao.selectAll(vo);
 	}
 	
 	public int insert(ApplicantsVO vo) {
@@ -23,7 +23,7 @@ public class ApplicantsService {
 	public int approve(ApplicantsVO vo) {
 		return dao.approve(vo);
 	}
-	public int delete(ApplicantsVO vo) {
-		return dao.delete(vo);
+	public int reject(ApplicantsVO vo) {
+		return dao.reject(vo);
 	}
 }

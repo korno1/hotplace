@@ -20,9 +20,9 @@ public class ApplicantsDAOimpl implements ApplicantsDAO {
 	}
 
 	@Override
-	public List<ApplicantsVO> selectAll() {
+	public List<ApplicantsVO> selectAll(ApplicantsVO vo) {
 		log.info("selectAll()...");
-		return sqlSession.selectList("APP_SELECTALL");
+		return sqlSession.selectList("APP_SELECTALL", vo);
 	}
 
 	@Override
@@ -38,8 +38,8 @@ public class ApplicantsDAOimpl implements ApplicantsDAO {
 	}
 
 	@Override
-	public int delete(ApplicantsVO vo) {
-		log.info("delete()...{}", vo);
-		return sqlSession.delete("APP_DELETE", vo);
+	public int reject(ApplicantsVO vo) {
+		log.info("reject()...{}", vo);
+		return sqlSession.delete("APP_REJECT", vo);
 	}
 }

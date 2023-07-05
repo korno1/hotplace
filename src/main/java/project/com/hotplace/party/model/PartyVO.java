@@ -16,4 +16,4 @@ public class PartyVO {
 	private String timeLimit;
 	private String wdate;
 	private String deadLine;
-}
+} 

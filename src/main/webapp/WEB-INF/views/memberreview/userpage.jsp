@@ -6,18 +6,97 @@
 <head>
 <meta charset="UTF-8">
 <title>userpage</title>
-<link rel="stylesheet" href="/hotplace/resources/css/memberreview/userpage.css" />
+<link rel="stylesheet" href="/hotplace/resources/css/memberreview/userpage.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
 
-$(function par_selectAll(){
-	console.log('onload...');
-// 	$('#insertButton').hide(); // 페이지가 로드될 때 작성 버튼 숨김
+function par_selectAll(searchKey=title, page=1){
+	$(function(){
+		$('#searchWord').val("${param.searchWord}");
+		$.ajax({
+			url: "party/json/searchList.do",
+			data:{
+				searchKey: "${param.searchKey}",
+				searchWord: "${param.searchWord}",
+				page: ${param.page},
+			},
+			method: 'GET',
+			dataType: 'json',
+			success: function(arr){
+				console.log('ajax...',arr);
+				let tag_vos = '';
+				
+				$.each(arr, function(index, vo){
+					tag_vos +=`
+						<div onclick="location.href='selectOne.do?partyNum=\${vo.partyNum}'"class="post">
+							<div>\${vo.applicants}/${vo.max}</div>
+							<hr>
+							<div>마감일 : \${vo.deadLine}</div>
+							<div>[\${vo.place}] \${vo.title}</div>
+							<div>조회수: \${vo.views}</div>
+							<hr>
+							<div>작성자 : \${vo.writerName}</div>
+						</div>
+					`;
+					
+				}); // end for-each
+				$('#par_vos').html(tag_vos);
+
+			}, // end success
+			
+			error:function(xhr,status,error){
+				console.log('xhr.status:', xhr.status);
+			} // end error
+		}); // end searchList ajax;
+		
+		$.ajax({
+			url: "party/json/selectAll.do",
+			data:{
+				searchKey: "${param.searchKey}",
+				searchWord: "${param.searchWord}",
+			},
+			method: 'GET',
+			dataType: 'json',
+			success: function(cnt){
+				console.log('ajax...',cnt);
+				if(${param.page}==1){
+//		 			$('#pre_page').hide();
+					$('#pre_page').click(function(){
+						alert('첫번째 페이지입니다.');
+						return false;
+					});
+				}
+				if((${param.page}*6) >= cnt){
+//		 			$('#next_page').hide();
+					$('#next_page').click(function(){
+						alert('마지막 페이지입니다.');
+						return false;
+					});
+				}
+
+			}, // end success
+			
+			error:function(xhr,status,error){
+				console.log('xhr.status:', xhr.status);
+				
+			} // end error
+		}); // end selectAll ajax;
+		
+		
+		
+	}); // end onload
 	
+	function searchList(){
+		let sKey = $('#searchKey').val();
+		let sWord = $('#searchWord').val();
+		console.log('skey:', sKey);
+		console.log('sWord:', sWord);
+		let url = 'selectAll.do?searchKey=' + sKey + "&searchWord=" + sWord + "&page=1";
+		location.replace(url);
+	}; // end searchList
 	
-});
 
 	function mre_selectAll(user_num=3, memberreview_num=0){ // ${param.memberreview_num}
 		console.log('mer_selectAll()....user_num:',user_num);
@@ -38,13 +117,13 @@ $(function par_selectAll(){
 				
 				$.each(vos,function(index,vo){
 					console.log('ajax...success:', vo);
-					let tag_td = `<div>\${vo.content}</div>`;
+					let tag_td = `<div class="board-cell">\${vo.content}</div>`;
 					
 					let ratedValue = parseInt(vo.rated);
 					console.log('vo.rated:', vo.rated);
 
 					let tag_rated = `
-				        <div id="starRating">
+				        <div id="starRating" class="board-cell">
 			            <ul class="star-rating"  data-rating="\${ratedValue}">
 			                <li class="star fa fa-star"></li>
 			                <li class="star fa fa-star"></li>
@@ -56,7 +135,7 @@ $(function par_selectAll(){
 			       
 					// user_num==vo.user_num
 					if(memberreview_num==vo.memberreview_num) {
-						tag_td = `<div><input type="text" value="\${vo.content}" id="input_content"><button onclick="updateOK(\${vo.memberreview_num})">수정완료</button></div>`;
+						tag_td = `<div class="board-cell"><input type="text" value="\${vo.content}" id="input_content"><button onclick="updateOK(\${vo.memberreview_num})">수정완료</button></div>`;
 						tag_rated = `
 					        <div id="starRating">
 				            <ul class="star-rating"  data-rating="\${ratedValue}">
@@ -85,7 +164,7 @@ $(function par_selectAll(){
 					if(6==vo.writer_num){ //'${user_id}'===vo.writer_num
 						tag_div = `<div>
 							<button onclick="mre_selectAll(\${vo.user_num},\${vo.memberreview_num})">수정</button>
-							<button onclick="deleteOK(\${vo.memberreview_num})">삭제</button>
+							<button type="button" onclick="deleteOK(\${vo.memberreview_num})">삭제</button>
 						</div>`;
 
 					}
@@ -93,15 +172,15 @@ $(function par_selectAll(){
 // 							<img width="20px" src="../resources/ProfileImage/\${vo.writer_num}"
 // 							onerror="this.src='../resources/ProfileImage/default.png'">
 					tag_txt += `
-						<div>
-							<div>\${vo.writer_num}</div>
-							<div>\${vo.writer_name}</div>
+						<div class="board-row">
+							<div class="board-cell">\${vo.writer_num}</div>
+							<div class="board-cell">\${vo.writer_name}</div>
 							\${tag_rated}
-							<div>\${vo.wdate}</div>
+							<div class="board-cell">\${vo.wdate}</div>
 						</div>
-						<div>
+						<div class="board-content">
 							\${tag_td}
-							<div colspan="3">\${tag_div}</div>
+							<div colspan="3" class="board-content-cell">\${tag_div}</div>
 						</div>
 					`;
 				});//end ajax
@@ -260,21 +339,26 @@ $(function par_selectAll(){
 	function deleteOK(memberreview_num=0){
 		console.log('deleteOK()....',memberreview_num);
 		
-		$.ajax({
-			url : "memberreview/json/deleteOK.do",
-			data:{
-				memberreview_num:memberreview_num
-			},
-			method:'POST',
-			dataType:'json',
-			success : function(obj) {
-				console.log('ajax...success:', obj);
-				if(obj.result==1) mre_selectAll(user_num='\${vo.user_num}');
-			},
-			error:function(xhr,status,error){
-				console.log('xhr.status:', xhr.status);
-			}
-		});
+	  if (confirm("글을 삭제하시겠습니까?")) {
+		  $.ajax({
+				url : "memberreview/json/deleteOK.do",
+				data:{
+					memberreview_num:memberreview_num
+				},
+				method:'POST',
+				dataType:'json',
+				success : function(obj) {
+					console.log('ajax...success:', obj);
+					if(obj.result==1) mre_selectAll(user_num='\${vo.user_num}');
+				},
+				error:function(xhr,status,error){
+					console.log('xhr.status:', xhr.status);
+				}
+			});
+		    return;
+		  }
+		
+		
 		
 	}//end deleteOK
 
@@ -285,14 +369,16 @@ $(function par_selectAll(){
 	<a href="#" onclick="mre_selectAll()">후기목록</a>
 		
 	<hr>	
-	<button onclick="myParty">내 모임 확인</button>
+<!-- 	<button onclick="myParty">내 모임 확인</button> -->
 	
 	
 	<ul>
 		<li><a href="my.do">HOME</a></li>
 	</ul>
 	
-	<div id="memberreview_list" class="custom-div"></div>
+	<div id="par_vos"></div>
+	
+	<div id="memberreview_list"></div>
 	
 	<div id="formContainer"><button onclick="insert()">작성</button></div>
 

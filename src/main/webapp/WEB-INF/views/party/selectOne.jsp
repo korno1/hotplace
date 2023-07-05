@@ -26,11 +26,6 @@
 <body>
 	<h1>모임정보</h1>
 
-<%-- 		<fmt:parseDate var="dateFmt" value="${vo2.wdate}" --%>
-<%-- 			pattern="yyyy-MM-dd HH:mm:ss.SSS" /> --%>
-<%-- 		<fmt:formadivate var="fmtwdate" value="${dateFmt}" pattern="yyyy-MM-dd" /> --%>
-
-
 		<div>(status)</div>
 		
 		<div>${vo2.title}(제목)</div>
@@ -48,7 +43,7 @@
 		</div>
 		<div>
 			<div>모집인원 : ${vo2.applicants}/${vo2.max} 명</div>
-			<div>모집마감일 : </div>
+			<div>모집마감일 : ${vo2.deadLine}</div>
 			<div>식당 : ${vo2.place}</div>
 			<div>모집날짜 : ${vo2.timeLimit}</div>
 		</div>
@@ -59,26 +54,6 @@
 			onclick="location.href='update.do?partyNum=${param.partyNum}'">수정</button>
 		<button type="button" id="delButton">삭제</button>
 	</div>
-	
-	
-<!-- 		<div> -->
-<!-- 			<ul style="list-style:none"> -->
-<!-- 				<li> -->
-<!-- 					<div style="display:table-cell"> -->
-<!-- 						<span>제목</span> -->
-<!-- 					</div> -->
-<!-- 					<div style="display:table-cell"> -->
-<!-- 						<span>작성자</span> -->
-<!-- 					</div> -->
-<!-- 					<div style="display:table-cell"> -->
-<!-- 						<span>작성일</span> -->
-<!-- 					</div> -->
-<!-- 					<div style="display:table-cell"> -->
-<!-- 						<span>조회수</span> -->
-<!-- 					</div> -->
-<!-- 				</li> -->
-<!-- 			</ul> -->
-<!-- 		</div> -->
 	
 </body>
 </html>

@@ -11,7 +11,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 </head>
 <body>
-	<h1>모임글쓰기</h1>
+	<h1>모임글쓰기</h1> 
 
 	<form action="insertOK.do" method="post" enctype="multipart/form-data">
 		<div>

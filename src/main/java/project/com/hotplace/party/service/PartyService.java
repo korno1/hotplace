@@ -48,8 +48,4 @@ public class PartyService {
 	public void vCountUp(PartyVO vo) {
 		dao.vCountUp(vo);
 	}
-	
-//	public void deleteOverDate() {
-//		dao.deleteOverDate();
-//	}
 }

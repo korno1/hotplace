@@ -1,0 +1,55 @@
+.container {
+	width: 100%;
+	margin: 0 auto;
+	padding: 20px;
+}
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 20px;
+}
+
+.search-form {
+	width: 30%;
+}
+
+.write-post {
+	text-align: right;
+}
+
+.post {
+	width: calc(30% - 20px);
+/* 	height: 200px; */
+	cursor: pointer;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	padding: 10px;
+	margin-bottom: 20px;
+	margin-right: 20px;
+	box-sizing: border-box;
+	display: inline-block;
+	vertical-align: top;
+}
+
+.pagination {
+	margin-top: 20px;
+	text-align: center;
+}
+
+.pagination-links {
+	display: inline-block;
+}
+
+.pagination a {
+	margin-right: 10px;
+	text-decoration: none;
+	color: #000;
+}
+
+.pagination a:hover {
+	color: blue;
+}
+
+/* Additional styles can be added as per your requirements */

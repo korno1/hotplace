@@ -41,7 +41,7 @@ public class PartyController {
 		model.addAttribute("vos", vos);
 		model.addAttribute("cnt", cnt);
 		
-		return "party/selectAll";
+		return "party/selectAll.tiles";
 	}
 	
 	@RequestMapping(value = "/party/selectOne.do", method = RequestMethod.GET)
@@ -55,14 +55,14 @@ public class PartyController {
 		
 		model.addAttribute("vo2", vo2);
 		
-		return "party/selectOne";
+		return "party/selectOne.tiles";
 	}
 	
 	@RequestMapping(value = "/party/insert.do", method = RequestMethod.GET)
 	public String insert() {
 		log.info("/par_insert.do...");
 		
-		return "party/insert";
+		return "party/insert.tiles";
 	}
 	
 	@RequestMapping(value = "/party/insertOK.do", method = RequestMethod.POST)
@@ -92,17 +92,24 @@ public class PartyController {
 		
 		model.addAttribute("vo2", vo2);
 				
-		return "party/update";
+		return "party/update.tiles";
 	}
 	
 	@RequestMapping(value = "/party/updateOK.do", method = RequestMethod.POST)
 	public String updateOK(PartyVO vo) {
 		log.info("/par_updateOK.do...{}", vo);
 		
+		vo.setTimeLimit(vo.getTimeLimit().replace("T", " "));
+		vo.setDeadLine(vo.getDeadLine().replace("T", " "));
+		
 		int result = service.update(vo);
 		log.info("result: {}", result);
 		
-		return "redirect:selectOne.do?Party_num=" + vo.getPartyNum();
+		if(result==1) {
+			return "redirect:selectAll.do?searchKey=title&searchWord=&page=1";
+		}else {
+			return "redirect:selectOne.do?partyNum=" + vo.getPartyNum();
+		}	
 	}
 	
 	@RequestMapping(value = "/party/deleteOK.do", method = RequestMethod.GET)
@@ -115,4 +122,4 @@ public class PartyController {
 		return "redirect:selectAll.do?searchKey=title&searchWord=&page=1";
 	}
 	
-}
+} 

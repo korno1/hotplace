@@ -44,7 +44,7 @@ public class ShopConroller {
 		model.addAttribute("vos", vos);
 		model.addAttribute("cnt", cnt);
 		
-		return "shop/selectAll";
+		return "shop/selectAll.tiles";
 	}
 	
 	@RequestMapping(value = "/searchList.do", method = RequestMethod.GET)
@@ -61,7 +61,7 @@ public class ShopConroller {
 		model.addAttribute("vos", vos);
 		model.addAttribute("cnt", cnt);
 		
-		return "shop/selectAll";
+		return "shop/selectAll.tiles";
 	}
 	
 	@RequestMapping(value = "/searchLocation.do", method = RequestMethod.GET)
@@ -146,7 +146,7 @@ public class ShopConroller {
 	    model.addAttribute("shoVO", shoVO);
 	    model.addAttribute("sreVOS", sreVOS);
 
-	    return "shop/selectOne";
+	    return "shop/selectOne.tiles";
 	}
 	
 }

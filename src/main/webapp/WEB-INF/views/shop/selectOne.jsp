@@ -8,6 +8,20 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script>
+    function openReviewForm() {
+        window.open('review/insert.do', 'test', 'width=1000, height=1000');
+    }
+    
+    function refreshPage() {
+        setTimeout(function() {
+            location.reload();
+        }, 1000); // 1초 후에 페이지 새로고침
+    }
+</script>
+
 <style type="text/css">
         .large {
             border: 1px solid black;
@@ -35,7 +49,7 @@
 <div>
 	<div>
 		<div>후기</div>
-		<a href="insert.do" id="re_insert">후기등록</a>
+		<div><input type="button" value="후기작성" onclick="openReviewForm()"></div>
 	</div>
 	<c:forEach var="vo" items="${sreVOS}">
 		<div class="large">

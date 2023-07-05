@@ -45,21 +45,6 @@
 			<div><input type="text" id="loc" name="loc" value="loc"></div>
 			<div><input type="button" value="검색" onclick="openSearchLocation()"></div>
 		</div>
-		<div id="map"></div>
-		<script>
-        var mapOptions = {
-            center: new naver.maps.LatLng(37.5665, 126.9780), // 지도의 중심 좌표 (서울시 좌표)
-            zoom: 12, // 지도의 확대 레벨
-            zoomControl: true, // 줌 컨트롤 표시 여부
-            zoomControlOptions: {
-                style: naver.maps.ZoomControlStyle.SMALL, // 줌 컨트롤 스타일 (SMALL, LARGE)
-                position: naver.maps.Position.TOP_RIGHT // 줌 컨트롤 위치 (TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT)
-            },
-            mapTypeId: naver.maps.MapTypeId.NORMAL // 지도 타입 (NORMAL, TERRAIN, SATELLITE, HYBRID)
-        };
-
-        var map = new naver.maps.Map('map', mapOptions); // map 요소와 옵션을 사용하여 지도 객체 생성
-    </script>
 		<div><input type="submit" class="addBtn"></div>
 	</form>
 </body>

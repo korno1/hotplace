@@ -24,7 +24,7 @@ public class EventController {
 		log.info("/event/selectAll.do...");
 		
 		
-		return "event/selectAll";
+		return "event/selectAll.tiles";
 	}
 	
 	@RequestMapping(value = "/event/selectOne.do", method = RequestMethod.GET)
@@ -32,7 +32,7 @@ public class EventController {
 		log.info("/event/selectOne.do...");
 		
 		
-		return "event/selectOne";
+		return "event/selectOne.tiles";
 	}
 	
 	@RequestMapping(value = "/event/insert.do", method = RequestMethod.GET)
@@ -40,7 +40,7 @@ public class EventController {
 		log.info("/event/insert.do...");
 		
 		
-		return "event/insert";
+		return "event/insert.tiles";
 	}
 	
 	@RequestMapping(value = "/event/update.do", method = RequestMethod.GET)
@@ -48,7 +48,7 @@ public class EventController {
 		log.info("/event/update.do...");
 		
 		
-		return "event/update";
+		return "event/update.tiles";
 	}
 	
 	

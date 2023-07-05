@@ -39,6 +39,9 @@ public class EventRestController {
 	public int selectAll(String searchKey, String searchWord) {
 		log.info("/eve/json/selectAll.do...");
 		
+		if(searchKey.equals("")) {
+			searchKey = "title";
+		}
 		
 		int cnt = service.selectAll(searchKey, searchWord).size();
 		log.info("cnt: {}", cnt);
@@ -49,11 +52,14 @@ public class EventRestController {
 	@RequestMapping(value = "/event/json/searchList.do", method = RequestMethod.GET)
 	@ResponseBody
 	public List<EventVO> searchList(String searchKey, String searchWord, int page) {
-		log.info("/event/json/selectAll.do...");
+		log.info("/event/json/searchList.do...");
 		log.info("searchKey: {}", searchKey);
 		log.info("searchWord: {}", searchWord);
 		log.info("page: {}", page);
 		
+		if(searchKey.equals("")) {
+			searchKey = "title";
+		}
 		
 		List<EventVO> vos = service.searchList(searchKey, searchWord, page);
 		log.info("vos: {}", vos);

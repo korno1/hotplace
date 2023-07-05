@@ -7,22 +7,24 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/resources/css/style.css">
+	href="${pageContext.request.contextPath}/resources/css/layouts/layouts-tiles2.css">
 </head>
 <body>
-
-<!-- 	<div class="header"> -->
-<%-- 		<tiles:insertAttribute name="header" /> --%>
-<!-- 	</div> -->
-	<div class="leftSide">
-		<tiles:insertAttribute name="leftSide" />
+<div class="tilesWrap">
+	<div class="tilesHeader">
+		<tiles:insertAttribute name="header" />
 	</div>
-	<div class="content">
-		<tiles:insertAttribute name="content" />
+	<div class="tilesMiddleWrap">
+		<div class="leftSide">
+			<tiles:insertAttribute name="leftSide" />
+		</div>
+		<div class="tilesContent">
+			<tiles:insertAttribute name="content" />
+		</div>
 	</div>
-
-<!-- 	<div class="footer"> -->
-<%-- 		<tiles:insertAttribute name="footer" /> --%>
-<!-- 	</div> -->
+	<div class="tilesFooter">
+		<tiles:insertAttribute name="footer" />
+	</div>
+</div>
 </body>
 </html>

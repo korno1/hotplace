@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+.footerWrap {
+	width: 1320px;
+	height:100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	margin: 0 auto;
+}
+
+.footerLine {
+	display: flex;
+}
+
+.footerContent {
+	margin-right: 15px;
+	font-size: 16px;
+}
+
+.foonter__name {
+	font-weight: bold;
+}
+
+.footer3rdLine {
+	display: flex;
+	justify-content: space-between;
+}

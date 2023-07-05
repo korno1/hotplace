@@ -6,11 +6,12 @@
 <head>
 <meta charset="UTF-8">
 <title>insert</title>
-<link rel="stylesheet" href="../resources/css/member/findId.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/member/findId.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <body>
 	<div class="form-container">
+	<h2>비밀번호 찾기</h2>
 		<form action="pwAuth.do" method="POST">
 			<div class="textbox">
 				<input id="name" name="nick_name" required type="text"

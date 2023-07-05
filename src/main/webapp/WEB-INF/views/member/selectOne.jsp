@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>selectOne</title>
-<link rel="stylesheet" href="../resources/css/member/selectOne.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/member/selectOne.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 //닉네임, 이메일 중복처리를 위한 전역 변수 설정

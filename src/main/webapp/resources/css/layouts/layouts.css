@@ -1,0 +1,28 @@
+@charset "UTF-8";
+*{
+	margin: 0;
+	padding: 0;
+}
+.tilesWrap{
+	width: 100%;
+	display:flex;
+	flex-wrap: wrap;
+}
+.tilesMiddleWrap{
+	width:1320px;
+	height:100%;
+	display:flex;
+	margin:0 auto;
+	justify-content: center;
+}
+.tilesHeader{
+	width:100%;
+	background-color: #EAEAEA;
+}
+
+.tilesFooter{
+	width:100%;
+	height:200px;
+	display:block;
+	background-color: #EAEAEA;
+}

@@ -1,0 +1,36 @@
+@charset "UTF-8";
+
+li{
+	list-style-type:none;
+}
+a{
+	text-decoration:none;
+	color:black;
+}
+ul{
+	display:flex;
+	align-items: center;
+}
+.top_menu_div{
+	width:1320px;
+	margin:0 auto;
+	height: 70px;
+	display: flex;
+	justify-content: space-between;
+}
+.top_menu_logo{
+	width:100px;	
+}
+.top_menu_div li{
+	margin-right: 10px;
+	white-spcae: nowrap;
+}
+.menu:hover{
+	color:black;
+	font-weight:bold;
+	cursor:pointer;
+}
+.selected{
+	color:black;
+	font-weight:bold;
+}

@@ -6,19 +6,21 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/style.css" >
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/layouts/layouts.css" >
 </head>
 <body>
-
-	<div class="header">
-		<tiles:insertAttribute name="header"/>
+<div class="tilesWrap">
+	<div class="tilesHeader">
+		<tiles:insertAttribute name="header" />
 	</div>
-	<div class="content">
-		<tiles:insertAttribute name="content"/>
+	<div class="tilesMiddleWrap">
+		<div class="tilesContent">
+			<tiles:insertAttribute name="content" />
+		</div>
 	</div>
-			
-	<div class="footer">
-		<tiles:insertAttribute name="footer"/>
+	<div class="tilesFooter">
+		<tiles:insertAttribute name="footer" />
 	</div>
+</div>
 </body>
 </html>

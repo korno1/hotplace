@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>insert</title>
-<link rel="stylesheet" href="../resources/css/member/findId.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/member/findId.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <link rel="stylesheet"
@@ -64,10 +64,10 @@ let authResult=0;
 		  $('#errorModal').on('hidden.bs.modal', function (e) {
 		    if (authResult === 1) {
 		      // 인증번호가 일치하는 경우
-		      window.location.href = '../login.do';
+		      window.location.href = '/hotplace/account/login.do';
 		    } else {
 		      // 인증번호가 일치하지 않는 경우
-		      window.location.href = 'findPw.do';
+		      window.location.href = '/hotplace/account/findPw.do';
 		    }
 		  });
 		}
@@ -125,7 +125,7 @@ let authResult=0;
 </script>
 </head>
 <body>
-	<div class="content">
+	<div class=form-container>
 		<div class="textbox">
 			<label class="label">비밀번호 찾기 인증번호</label> <input type="text" id="authNum"
 				name="authNum" class="input-field" placeholder="인증번호를 입력하세요">

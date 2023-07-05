@@ -8,14 +8,13 @@
 <meta charset="UTF-8">
 <title>모임정보</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<link rel="stylesheet" href="../resources/css/notice/button.css">
 
 <script type="text/javascript">
 
 	$(function(){
 		$('#delButton').click(function(){
 			if(confirm("글을 삭제하시겠습니까?")){
-				location.href="deleteOK.do?num=${param.num}"
+				location.href="deleteOK.do?partyNum=${param.partyNum}"
 			}
 			
 		}); // end click
@@ -37,7 +36,8 @@
 		<div>${vo2.title}(제목)</div>
 		
 		<div>
-<%-- 		<div>${vo2.saveName}(프로필사진)</div> --%>
+			<img width="100px" src="../resources/ProfileImage/${vo2.writerNum}"
+						onerror="this.src='../resources/ProfileImage/default.png'">
 			<div>${vo2.writerName}(작성자)</div>
 		</div>
 
@@ -54,7 +54,6 @@
 		</div>
 		
 		<div>${vo2.content}(내용)</div>
-		
 	<div>
 		<button type="button"
 			onclick="location.href='update.do?partyNum=${param.partyNum}'">수정</button>

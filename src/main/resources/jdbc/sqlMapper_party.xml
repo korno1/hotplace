@@ -19,7 +19,7 @@
 	<select id="par_searchList" resultType="project.com.hotplace.party.model.PartyVO">
 		select *
 			from (select rownum rn, v_not.*
-    		from (select p.party_num as partyNum, m.nick_name as writerName, p.title, p.views, p.content, p.applicants, p.max, p.place, p.time_limit as timeLimit, p.wdate, p.dead_line as deadLine
+    		from (select p.party_num as partyNum, m.nick_name as writerName, p.title, p.views, p.content, p.applicants, p.max, p.place, p.time_limit as timeLimit, p.wdate, p.dead_line as deadLine, p.writer_num as writerNum
         		from party p join member m on (p.writer_num = m.num)
         		where 
 					<if test="searchKey == 'title'">
@@ -33,7 +33,7 @@
 	</select>
 	
 	<select id="par_selectOne" resultType="project.com.hotplace.party.model.PartyVO">
-		select p.party_num as partyNum, m.nick_name as writerName, p.title, p.views, p.content, p.applicants, p.max, p.place, p.time_limit as timeLimit, p.wdate, p.dead_line as deadLine
+		select p.party_num as partyNum, m.nick_name as writerName, p.title, p.views, p.content, p.applicants, p.max, p.place, p.time_limit as timeLimit, p.wdate, p.dead_line as deadLine, p.writer_num as writerNum
 		from party p join member m on (p.writer_num = m.num)
 		where p.party_num = #{partyNum}
 	</select>
@@ -49,7 +49,7 @@
 	</insert>
 	
 	<update id="par_update" parameterType="project.com.hotplace.party.model.PartyVO">
-		update party set title=#{title}, max=#{max}, time_limit=#{timeLimit}, place=#{place}, content=#{content}, dead_line=#{deadLine}
+		update party set title=#{title}, max=#{max}, time_limit = TO_DATE(#{timeLimit},'YYYY-MM-DD HH24:MI:SS'), place=#{place}, content=#{content}, dead_line = TO_DATE(#{deadLine},'YYYY-MM-DD HH24:MI:SS')
 		where party_num = #{partyNum}
 	</update>
 	

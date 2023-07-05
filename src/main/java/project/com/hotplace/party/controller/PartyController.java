@@ -99,10 +99,17 @@ public class PartyController {
 	public String updateOK(PartyVO vo) {
 		log.info("/par_updateOK.do...{}", vo);
 		
+		vo.setTimeLimit(vo.getTimeLimit().replace("T", " "));
+		vo.setDeadLine(vo.getDeadLine().replace("T", " "));
+		
 		int result = service.update(vo);
 		log.info("result: {}", result);
 		
-		return "redirect:selectOne.do?Party_num=" + vo.getPartyNum();
+		if(result==1) {
+			return "redirect:selectAll.do?searchKey=title&searchWord=&page=1";
+		}else {
+			return "redirect:selectOne.do?partyNum=" + vo.getPartyNum();
+		}	
 	}
 	
 	@RequestMapping(value = "/party/deleteOK.do", method = RequestMethod.GET)

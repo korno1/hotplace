@@ -48,7 +48,7 @@
 		</div>
 		<div>
 			<div>모집인원 : ${vo2.applicants}/${vo2.max} 명</div>
-			<div>모집마감일 : </div>
+			<div>모집마감일 : ${vo2.deadLine}</div>
 			<div>식당 : ${vo2.place}</div>
 			<div>모집날짜 : ${vo2.timeLimit}</div>
 		</div>

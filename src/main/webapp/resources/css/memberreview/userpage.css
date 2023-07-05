@@ -1,3 +1,35 @@
+.board-container {
+	border: 1px solid #ccc;
+	padding: 10px;
+	margin-bottom: 10px;
+}
+
+.board-row {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin-bottom: 5px;
+}
+
+.board-cell {
+	flex: 1;
+	padding: 5px;
+}
+
+.board-title {
+	font-weight: bold;
+}
+
+.board-content {
+	margin-top: 10px;
+	border-top: 1px solid #ccc;
+	padding-top: 10px;
+}
+
+.board-content-cell {
+	padding: 5px;
+}
+
 .star-rating {
   display: inline-block;
 }

@@ -25,7 +25,6 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "home", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-<<<<<<< HEAD
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
 		Date date = new Date();
@@ -36,17 +35,15 @@ public class HomeController {
 		model.addAttribute("serverTime", formattedDate );
 		
 		return "home";
-=======
 	    logger.info("Welcome home! The client locale is {}.", locale);
 	    
 	    // 데이터 조회
-	    List<ShopVO> shopList = shopService.selectAllHome();
+//	    List<ShopVO> shopList = shopService.selectAllHome();
 
 	    // 모델에 데이터 추가
 	    model.addAttribute("vos", shopList);
-	    
+//	    
 	    return "home.tiles"; // 수정된 반환값
->>>>>>> branch 'main' of https://github.com/Multi-hotplace/hotplace.git
 	}
 	
 }

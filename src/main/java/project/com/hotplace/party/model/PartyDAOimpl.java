@@ -35,8 +35,6 @@ public class PartyDAOimpl implements PartyDAO {
 		map.put("searchKey", searchKey);
 		map.put("searchWord", "%" + searchWord + "%");
 	
-//		sqlSession.delete("NOT_OVERDATE_DELETE");
-		
 		return sqlSession.selectList(key, map);
 	}
 
@@ -61,9 +59,8 @@ public class PartyDAOimpl implements PartyDAO {
 		map.put("searchKey", searchKey);
 		map.put("searchWord", "%" + searchWord + "%");
 	
-		map.put("st", (page-1)*5+1);
-		map.put("en", page*5);
-		
+		map.put("st", (page-1)*6+1);
+		map.put("en", page*6);
 		
 		return sqlSession.selectList(key, map);
 	}
@@ -92,12 +89,5 @@ public class PartyDAOimpl implements PartyDAO {
 		log.info("vCountUp()...{}", vo);
 		sqlSession.update("par_views", vo);
 	}
-
-
-//	@Override
-//	public void deleteOverDate() {
-//		int res = sqlSession.delete("NOT_OVERDATE_DELETE");
-//		log.info("res: {}", res);
-//	}
 
 }

@@ -9,6 +9,12 @@
 <title>공지사항</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <link rel="stylesheet" href="../resources/css/notice/button.css">
+<script type="text/javascript"> 
+	$(function(){
+		 history.replaceState({}, null, location.pathname); 
+	})
+  
+</script> 
 </head>
 <body>
 	<h1>공지사항</h1>
@@ -44,10 +50,10 @@
 	<div style="width:30%; display:inline-block">
 		<form action="selectAll.do">
 			<select name="searchKey">
-				<option value="title" <c:if test="${param.searchKey == 'title'}"> selected </c:if>>제목</option>
-				<option value="content" <c:if test="${param.searchKey =='content'}"> selected </c:if>>내용</option>
+				<option value="title" <c:if test="${searchKey == 'title'}"> selected </c:if>>제목</option>
+				<option value="content" <c:if test="${searchKey =='content'}"> selected </c:if>>내용</option>
 			</select>
-			<input type="text" name="searchWord" id="searchWord" value="${param.searchWord}">
+			<input type="text" name="searchWord" id="searchWord" value="${searchWord}">
 			<input type="hidden" name="page" value=1>
 			<input type="submit" value="검색">
 		</form>
@@ -58,20 +64,20 @@
 	</div>
 	
 	<div>
-		<a href="selectAll.do?searchKey=${param.searchKey}&searchWord=${param.searchWord}&page=${param.page-1}" id="pre_page">이전</a>
-		<a href="selectAll.do?searchKey=${param.searchKey}&searchWord=${param.searchWord}&page=${param.page+1}" id="next_page">다음</a>
+		<a href="selectAll.do?searchKey=${searchKey}&searchWord=${searchWord}&page=${page-1}" id="pre_page">이전</a>
+		<a href="selectAll.do?searchKey=${searchKey}&searchWord=${searchWord}&page=${page+1}" id="next_page">다음</a>
 	</div>
 	
 	
 	
 	<script type="text/javascript">
-		if(${param.page}==1){
+		if(${page}==1){
 // 			$('#pre_page').hide();
 			$('#pre_page').click(function(){
 				return false;
 			});
 		}
-		if((${param.page}*5) >= ${cnt}){
+		if((${page}*5) >= ${cnt}){
 // 			$('#next_page').hide();
 			$('#next_page').click(function(){
 				return false;

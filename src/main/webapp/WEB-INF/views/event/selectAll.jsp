@@ -11,19 +11,35 @@
 <link rel="stylesheet" href="../resources/css/notice/button.css">
 
 <script type="text/javascript">
+	let urlStr = window.location.search;
+	let urlParams = new URLSearchParams(urlStr);
+	
+	let searchKey = "${param.searchKey}";
+	let searchWord = "${param.searchWord}";
 	$(function(){
-		$('#searchWord').val("${param.searchWord}");
+		
+		let page;
+		if(urlParams.get("page")==null){
+			page=1;
+		}
+		else{
+			page = urlParams.get("page");
+			
+		}
+		console.log(page);
+		console.log(window.location.href);
 		$.ajax({
 			url: "json/searchList.do",
 			data:{
 				searchKey: "${param.searchKey}",
 				searchWord: "${param.searchWord}",
-				page: ${param.page},
+				page: page
 			},
 			method: 'GET',
 			dataType: 'json',
 			success: function(arr){
 				console.log('ajax...',arr);
+				console.log("p: ", page);
 				let tag_vos = '';
 				
 				$.each(arr, function(index, vo){
@@ -38,7 +54,15 @@
 					`;
 					
 				}); // end for-each
+// 				let n_page= parseIntpage+1;
+				let pr_nx = `
+					<a href="selectAll.do?searchKey=\${searchKey}&searchWord=\${searchWord}&page=\${page-1}" id="pre_page">이전</a>
+					<a href="selectAll.do?searchKey=\${searchKey}&searchWord=\${searchWord}&page=\${parseInt(page)+1}" id="next_page">다음</a>
+				`;
+				
 				$('#vos').html(tag_vos);
+				$('#pre_next').html(pr_nx);
+				
 	
 			}, // end success
 			
@@ -57,14 +81,14 @@
 			dataType: 'json',
 			success: function(cnt){
 				console.log('ajax...',cnt);
-				if(${param.page}==1){
+				if(page==1){
 //		 			$('#pre_page').hide();
 					$('#pre_page').click(function(){
 						alert('첫번째 페이지입니다.');
 						return false;
 					});
 				}
-				if((${param.page}*5) >= cnt){
+				if((page*5) >= cnt){
 //		 			$('#next_page').hide();
 					$('#next_page').click(function(){
 						alert('마지막 페이지입니다.');
@@ -130,27 +154,13 @@
 		<a href="insert.do">글작성</a>
 	</div>
 	
-	<div>
-		<a href="selectAll.do?searchKey=${param.searchKey}&searchWord=${param.searchWord}&page=${param.page-1}" id="pre_page">이전</a>
-		<a href="selectAll.do?searchKey=${param.searchKey}&searchWord=${param.searchWord}&page=${param.page+1}" id="next_page">다음</a>
+	<div id="pre_next">
+		
 	</div>
 	
 	
 	
-	<script type="text/javascript">
-		if(${param.page}==1){
-// 			$('#pre_page').hide();
-			$('#pre_page').click(function(){
-				return false;
-			});
-		}
-		if((${param.page}*5) >= ${cnt}){
-// 			$('#next_page').hide();
-			$('#next_page').click(function(){
-				return false;
-			});
-		}
-	</script>
+
 	
 	
 <!-- 		<div> -->

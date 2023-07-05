@@ -1,15 +1,9 @@
 @charset "UTF-8";
 
-li{
-	list-style-type:none;
-}
-a{
-	text-decoration:none;
-	color:black;
-}
-ul{
-	display:flex;
-	align-items: center;
+.headerWrap{
+	display: flex;
+	justify-content: space-between;
+    align-items: center;
 }
 .top_menu_div{
 	width:1320px;
@@ -21,11 +15,11 @@ ul{
 .top_menu_logo{
 	width:100px;	
 }
-.top_menu_div li{
+.headerMenu{
 	margin-right: 10px;
 	white-spcae: nowrap;
 }
-.menu:hover{
+.headerMenu:hover{
 	color:black;
 	font-weight:bold;
 	cursor:pointer;

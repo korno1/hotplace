@@ -18,7 +18,7 @@ function NickNameCheck() {
 	console.log("NickNameCheck....", $('#nick_name').val());
 
 	$.ajax({
-		url : "json/nickNameCheck.do",
+		url : "../json/nickNameCheck.do",
 		data : {
 			nick_name : $('#nick_name').val()
 		},
@@ -46,7 +46,7 @@ function EmailCheck() {
 	console.log("emailCheck....", $('#email').val());
 
 	$.ajax({
-		url : "json/emailCheck.do",
+		url : "../json/emailCheck.do",
 		data : {
 			email : $('#email').val()
 		},
@@ -147,7 +147,7 @@ function updateOK() {
 		  console.log(entry[0] + ": " + entry[1]);
 		}
 	$.ajax({
-	 url: "json/updateOK.do",
+	 url: "../json/updateOK.do",
 	 data: formData,
 	 method: 'POST',
 	 dataType: 'json',
@@ -174,7 +174,7 @@ function updateOK() {
 
 function deleteOK() {
 	$.ajax({
-		url : "json/deleteOK.do",
+		url : "../json/deleteOK.do",
 		data : {
 			num : ${param.num},
 		},

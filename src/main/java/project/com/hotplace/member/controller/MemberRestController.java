@@ -77,7 +77,7 @@ public class MemberRestController {
 		return vo2;
 	}
 
-	@RequestMapping(value = "account/json/nickNameCheck.do", method = RequestMethod.GET)
+	@RequestMapping(value = "json/nickNameCheck.do", method = RequestMethod.GET)
 	@ResponseBody
 	public String nickNameCheck(MemberVO vo) {
 		log.info("nickNameCheck:{}", vo);
@@ -91,7 +91,7 @@ public class MemberRestController {
 		}
 	}
 
-	@RequestMapping(value = "account/json/emailCheck.do", method = RequestMethod.GET)
+	@RequestMapping(value = "json/emailCheck.do", method = RequestMethod.GET)
 	@ResponseBody
 	public String emailCheck(MemberVO vo) {
 		log.info("nickNameCheck:{}", vo);
@@ -119,7 +119,7 @@ public class MemberRestController {
 		}
 	}
 
-	@RequestMapping(value = "/member/json/updateOK.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/json/updateOK.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String updateOK(MemberVO vo) throws IllegalStateException, IOException {
 		log.info("updateOK...{}", vo);
@@ -129,7 +129,6 @@ public class MemberRestController {
 			int fileNameLength = vo.getMultipartFile().getOriginalFilename().length();
 			log.info("getOriginalFilename:{}", getOriginalFilename);
 			log.info("fileNameLength:{}", fileNameLength);
-
 //		if (fileNameLength != 0) {
 			String originalFilename = vo.getMultipartFile().getOriginalFilename();
 			String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
@@ -139,6 +138,7 @@ public class MemberRestController {
 			String filePath = realPath + File.separator + newFilename;
 			File file = new File(filePath);
 			vo.getMultipartFile().transferTo(file);
+			log.info("RealPath..{}", realPath);
 
 			// 썸네일 이미지 생성 코드
 			BufferedImage originalBufferedImage = ImageIO.read(file);
@@ -165,7 +165,6 @@ public class MemberRestController {
 			} else {
 				return "{\"result\":\"NotOK\"}";
 			}
-
 		}
 	}
 	@RequestMapping(value = "account/json/pwResetOK.do", method = RequestMethod.POST)
@@ -199,7 +198,6 @@ public class MemberRestController {
 			session.setMaxInactiveInterval(5 * 60);
 			return "{\"result\":\"OK\"}";
 		}
-
 	}
 
 	@RequestMapping(value = "member/json/upgradeOK.do", method = RequestMethod.POST)

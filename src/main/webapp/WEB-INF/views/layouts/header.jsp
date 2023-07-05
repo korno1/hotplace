@@ -43,7 +43,7 @@
 
     switch (menuClass) {
       case 'search_hotplace':
-        link = '/hotplace/party/selectAll.do';
+        link = '/hotplace/shop/selectAll.do?saerchKey=&searchWord=&pageNum=1';
         break;
       case 'search_party':
         link = '모임_정보_링크';

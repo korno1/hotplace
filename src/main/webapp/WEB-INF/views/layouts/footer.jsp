@@ -9,7 +9,7 @@
 <body>
 	<div class="footerWrap">
 		<div class="footer1stLine footerLine">
-			<div class="foonter__name footerContent">HOTPLACE</div>
+			<div class="foonter__name footerContent"><img style="width:200px;"src="${pageContext.request.contextPath}/resources/hotLogo.png"></div>
 			<div class="foonter__address footerContent">서울특별시 강남구 언주로 508 14 3/4층 어딘가...(역삼동, 서울상록빌딩)</div>
 		</div>
 		<div class="footer2ndLine footerLine">

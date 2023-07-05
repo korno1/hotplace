@@ -10,7 +10,7 @@
 	href="${pageContext.request.contextPath}/resources/css/layouts/headerSub.css">
 <body>
 	<div class="headerSubWrap">
-		<div class="headerSubTitle" onclick="window.location.href='/hotplace/home'">HOTPLACE</div>
+		<div class="headerSubTitle" onclick="window.location.href='/hotplace/home'"><img style="width:200px;"src="${pageContext.request.contextPath}/resources/hotLogo.png"></div>
 	</div>
 </body>
 </html>

@@ -11,7 +11,7 @@
 <body>
 	<div class="top_menu_div">
 		<div class="top_menu_logo headerWrap">
-			<div class="main_logo headerMenu">HOTPLACE</div>
+			<div class="main_logo headerMenu"><img style="width:200px;"src="${pageContext.request.contextPath}/resources/hotLogo.png"></div>
 		</div>
 		<div class="top_menu_post headerWrap">
 			<div class="search_hotplace headerMenu">맛집찾기</div>
@@ -28,7 +28,7 @@
 		</div>
 	</div>
 <script type="text/javascript">
-	const menuElements = document.querySelectorAll('.menu');
+	const menuElements = document.querySelectorAll('.headerMenu');
 
 	menuElements.forEach((element) => {
 	element.addEventListener('click', function() {

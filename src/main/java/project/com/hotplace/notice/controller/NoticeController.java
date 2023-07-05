@@ -41,8 +41,20 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value = "/notice/selectAll.do", method = RequestMethod.GET)
-	public String selectAll(String searchKey, String searchWord, int page, Model model) {
+	public String selectAll(String searchKey, String searchWord, Integer page, Model model) {
 		log.info("/not_selectAll.do...");
+		
+		if(page == null) {
+			page = 1;
+		}
+		
+		if(searchKey == null) {
+			searchKey = "title";
+		}
+		
+		if(searchWord == null) {
+			searchWord = "";
+		}
 		
 		List<NoticeVO> vos = service.searchList(searchKey, searchWord, page);
 		log.info("vos: {}", vos);
@@ -53,10 +65,11 @@ public class NoticeController {
 		
 		model.addAttribute("vos", vos);
 		model.addAttribute("cnt", cnt);
+		model.addAttribute("searchKey", searchKey);
+		model.addAttribute("searchWord", searchWord);
+		model.addAttribute("page", page);
 		
-		
-				
-		return "notice/selectAll";
+		return "notice/selectAll.tiles";
 	}
 	
 	@RequestMapping(value = "/notice/selectOne.do", method = RequestMethod.GET)
@@ -74,7 +87,7 @@ public class NoticeController {
 
 		model.addAttribute("vo2", vo2);
 		
-		return "notice/selectOne";
+		return "notice/selectOne.tiles";
 	}
 	
 	@RequestMapping(value = "/notice/insert.do", method = RequestMethod.GET)
@@ -82,7 +95,7 @@ public class NoticeController {
 		log.info("/not_insert.do...");
 		
 				
-		return "notice/insert";
+		return "notice/insert.tiles";
 	}
 	
 	@RequestMapping(value = "/notice/insertOK.do", method = RequestMethod.POST)
@@ -131,7 +144,7 @@ public class NoticeController {
 		
 		model.addAttribute("vo2", vo2);
 				
-		return "notice/update";
+		return "notice/update.tiles";
 	}
 	
 	@RequestMapping(value = "/notice/updateOK.do", method = RequestMethod.POST)

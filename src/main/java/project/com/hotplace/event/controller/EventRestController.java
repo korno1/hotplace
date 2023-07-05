@@ -61,6 +61,11 @@ public class EventRestController {
 			searchKey = "title";
 		}
 		
+		log.info("searchKey: {}", searchKey);
+		log.info("searchWord: {}", searchWord);
+		log.info("page: {}", page);
+		
+		
 		List<EventVO> vos = service.searchList(searchKey, searchWord, page);
 		log.info("vos: {}", vos);
 		

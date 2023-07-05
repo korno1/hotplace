@@ -7,29 +7,31 @@
 <meta charset="UTF-8">
 <title>FAQ</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/38.1.0/classic/ckeditor.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
 <link rel="stylesheet" href="../resources/css/notice/button.css">
 
 <script type="text/javascript">
 	
 	$(function(){
-		
-		$.ajax({
-			url: "json/selectOne.do",
-			data: {
-				num: ${param.num}
-			},
-			method: 'GET',
-			dataType: 'json',
-			success: function(vo){
-				$('#title').val(vo.title);
-				$('#content').val(vo.content);
+		let eve_content;
+// 		$.ajax({
+// 			url: "json/selectOne.do",
+// 			data: {
+// 				num: ${param.num}
+// 			},
+// 			method: 'GET',
+// 			dataType: 'json',
+// 			success: function(vo){
+// 				$('#title').val(vo.title);
+// 				$('#content').val(vo.content);
 				
-			}, // end success
-			error:function(xhr,status,error){
-				console.log('xhr.status:', xhr.status);
+// 			}, // end success
+// 			error:function(xhr,status,error){
+// 				console.log('xhr.status:', xhr.status);
 				
-			} // end error
-		})
+// 			} // end error
+// 		}) // end ajax
 	}); // end onload
 	
 	function updateOK(){
@@ -38,7 +40,9 @@
 			data: {
 				num: ${param.num},
 				title: $('#title').val(),
-				content: $('#content').val(),
+// 				content: $('#content').val(),
+				content: eve_content.getData()
+
 			},
 			method: 'GET',
 			dataType: 'json',
@@ -79,5 +83,34 @@
 		</div>
 	</div>
 
+	<script type="text/javascript">
+		
+		$.ajax({
+			url: "json/selectOne.do",
+			data: {
+				num: ${param.num}
+			},
+			method: 'GET',
+			dataType: 'json',
+			success: function(vo){
+				$('#title').val(vo.title);
+				ClassicEditor
+			    .create(document.querySelector('#content'), {
+			    	language: "ko",
+		 	    	
+			    })
+			    .then(content => {
+			    	eve_content = content;
+			    	eve_content.setData(vo.content);
+			    });
+				
+			}, // end success
+			error:function(xhr,status,error){
+				console.log('xhr.status:', xhr.status);
+				
+			} // end error
+		})
+		
+	</script>
 </body>
 </html>

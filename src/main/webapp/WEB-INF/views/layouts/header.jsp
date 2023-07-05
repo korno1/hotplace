@@ -10,22 +10,22 @@
 	href="${pageContext.request.contextPath}/resources/css/layouts/header.css">
 <body>
 	<div class="top_menu_div">
-		<ul class="top_menu_logo">
-			<li class="main_logo menu">HOTPLACE</li>
-		</ul>
-		<ul class="top_menu_post">
-			<li class="search_hotplace menu">맛집찾기</li>
-			<li class="search_party menu">모임찾기</li>
-			<li class="notice_menu menu">공지사항</li>
-			<li class="event_menu menu">이벤트</li>
-			<li class="faq_menu menu">FAQ</li>
-		</ul>
-		<ul class="top_menu_member">
-			<li id="signUp" class="sign_up_menu menu">회원가입</li>
-			<li id="login" class="login_menu menu">로그인</li>
-			<li id="logout" class="logout_menu menu">로그아웃</li>
-			<li id="myPage" class="mypage_menu menu">${nick_name}님</li>
-		</ul>
+		<div class="top_menu_logo headerWrap">
+			<div class="main_logo headerMenu">HOTPLACE</div>
+		</div>
+		<div class="top_menu_post headerWrap">
+			<div class="search_hotplace headerMenu">맛집찾기</div>
+			<div class="search_party headerMenu">모임찾기</div>
+			<div class="notice_menu headerMenu">공지사항</div>
+			<div class="event_menu headerMenu">이벤트</div>
+			<div class="faq_menu headerMenu">FAQ</div>
+		</div>
+		<div class="top_menu_member headerWrap">
+			<div id="signUp" class="sign_up_menu headerMenu">회원가입</div>
+			<div id="login" class="login_menu headerMenu">로그인</div>
+			<div id="logout" class="logout_menu headerMenu">로그아웃</div>
+			<div id="myPage" class="mypage_menu headerMenu">${nick_name}님</div>
+		</div>
 	</div>
 <script type="text/javascript">
 	const menuElements = document.querySelectorAll('.menu');

@@ -77,7 +77,7 @@ public class MemberRestController {
 		return vo2;
 	}
 
-	@RequestMapping(value = "/member/json/nickNameCheck.do", method = RequestMethod.GET)
+	@RequestMapping(value = "account/json/nickNameCheck.do", method = RequestMethod.GET)
 	@ResponseBody
 	public String nickNameCheck(MemberVO vo) {
 		log.info("nickNameCheck:{}", vo);
@@ -91,7 +91,7 @@ public class MemberRestController {
 		}
 	}
 
-	@RequestMapping(value = "/member/json/emailCheck.do", method = RequestMethod.GET)
+	@RequestMapping(value = "account/json/emailCheck.do", method = RequestMethod.GET)
 	@ResponseBody
 	public String emailCheck(MemberVO vo) {
 		log.info("nickNameCheck:{}", vo);
@@ -195,6 +195,7 @@ public class MemberRestController {
 		} else {
 			session.setAttribute("num", vo2.getNum());
 			session.setAttribute("grade", vo2.getGrade());
+			session.setAttribute("nick_name", vo2.getNick_name());
 			session.setMaxInactiveInterval(5 * 60);
 			return "{\"result\":\"OK\"}";
 		}

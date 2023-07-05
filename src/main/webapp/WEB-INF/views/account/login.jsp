@@ -26,7 +26,7 @@
 		}
 		
 		$.ajax({
-			url : "member/json/loginOK.do",
+			url : "json/loginOK.do",
 			data : {
 				email : $('#email').val(),
 				pw : $('#pw').val(),
@@ -39,7 +39,7 @@
 				let msg = '';
 				if (obj.result === 'OK') {
 					msg = '로그인에 성공했습니다.';
-					// 					location.reload();
+					window.location.href = "/hotplace/home";
 				} else {
 					msg = '로그인에 실패했습니다.';
 				}

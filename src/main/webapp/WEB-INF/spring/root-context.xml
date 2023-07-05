@@ -75,6 +75,6 @@
 		<property name="order" value="0" />
 		<property name="viewClass"
 			value="org.springframework.web.servlet.view.tiles2.TilesView" />
-		<property name="viewNames" value=".*" />
+<!-- 		<property name="viewNames" value=".*" /> -->
 	</bean>
 </beans>

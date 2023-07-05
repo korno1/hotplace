@@ -16,6 +16,10 @@
 			) s
 			where rn between #{start} and #{end}
 	</select>
+	
+	<select id="SHO_SELECT_ALL_HOME" resultType="project.com.hotplace.shop.model.ShopVO">
+		select * from shop
+	</select>
 	  
 	<select id="SHO_SELECT_ONE" resultType="project.com.hotplace.shop.model.ShopVO">
 		select * from shop where num = #{num}

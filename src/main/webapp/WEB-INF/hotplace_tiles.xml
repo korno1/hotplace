@@ -3,21 +3,35 @@
 		"-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
 		"http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
 <tiles-definitions>
-	<definition name="..*/*" template="/WEB-INF/views/layouts/layouts-left.jsp">
-	  <put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp" />
-	  <put-attribute name="header" value="/WEB-INF/views/layouts/header.jsp" />
-	  <put-attribute name="footer" value="/WEB-INF/views/layouts/footer.jsp" />
-	  <put-attribute name="leftSide" value="/WEB-INF/views/layouts/myPage.jsp" />
-	</definition>
-	
+	<!-- 헤더 간단 + 푸터 -->
 	<definition name=".account/*" template="/WEB-INF/views/layouts/layouts.jsp">
-	  <put-attribute name="content" value="/WEB-INF/views/account/{1}.jsp" />
-	  <put-attribute name="header" value="/WEB-INF/views/layouts/headerSub.jsp" />
-	  <put-attribute name="footer" value="/WEB-INF/views/layouts/footer.jsp" />
+		<put-attribute name="content" value="/WEB-INF/views/account/{1}.jsp" />
+		<put-attribute name="header" value="/WEB-INF/views/layouts/headerSub.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/layouts/footer.jsp" />
 	</definition>
-	<definition name=".*/*" template="/WEB-INF/views/layouts/layouts.jsp">
-	  <put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp" />
-	  <put-attribute name="header" value="/WEB-INF/views/layouts/header.jsp" />
-	  <put-attribute name="footer" value="/WEB-INF/views/layouts/footer.jsp" />
+	<!-- 왼쪽 마이페이지 레이아웃 -->
+	<definition name="layouts" template="/WEB-INF/views/layouts/layouts.jsp">
+		<put-attribute name="content" value="" />
+		<put-attribute name="header" value="/WEB-INF/views/layouts/header.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/layouts/footer.jsp" />
+	</definition>
+	<definition name="*.tiles" extends="layouts">
+		<put-attribute name="content" value="/WEB-INF/views/{1}.jsp" />
+	</definition>
+	<definition name="*/*.tiles" extends="layouts">
+		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp" />
+	</definition>
+<!-- 	왼쪽 마이페이지 레이아웃 -->
+	<definition name="layouts-left" template="/WEB-INF/views/layouts/layouts-left.jsp">
+		<put-attribute name="content" value="" />
+		<put-attribute name="header" value="/WEB-INF/views/layouts/header.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/layouts/footer.jsp" />
+		<put-attribute name="leftSide" value="/WEB-INF/views/layouts/myPage.jsp" />
+	</definition>
+	<definition name="*.tilesLeft" extends="layouts-left">
+		<put-attribute name="content" value="/WEB-INF/views/{1}.jsp" />
+	</definition>
+	<definition name="*/*.tilesLeft" extends="layouts-left">
+		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp" />
 	</definition>
 </tiles-definitions>

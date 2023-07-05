@@ -24,20 +24,20 @@ public class MailController {
 	public String selectAll() {
 		log.info("mail/selectAll.do...");
 		
-		return "..mail/selectAll";
+		return "mail/selectAll.tiles";
 	}
 	
 	@RequestMapping(value = {"mail/insert.do"}, method = RequestMethod.GET)
 	public String insert() {
 		log.info("mail/insert.do...");
 		
-		return "/mail/insert";
+		return "mail/insert";
 	}
 	
 	@RequestMapping(value = {"mail/selectAll_admin.do"}, method = RequestMethod.GET)
 	public String selectAll_admin() {
 		log.info("mail/selectAll_admin.do...");
 		
-		return "..mail/selectAll_admin";
+		return "mail/selectAll_admin.tiles";
 	}
 }

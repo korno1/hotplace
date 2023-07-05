@@ -36,17 +36,17 @@ public class HomeController {
 	 * Simply selects the home view to render by returning its name.
 	 * 
 	 */
-	@RequestMapping(value = {"/","/*.do"}, method = RequestMethod.GET)
+	@RequestMapping(value = "home", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-		
-		// 데이터 조회
+	    logger.info("Welcome home! The client locale is {}.", locale);
+	    
+	    // 데이터 조회
 	    List<ShopVO> shopList = shopService.selectAllHome();
 
 	    // 모델에 데이터 추가
 	    model.addAttribute("vos", shopList);
-		
-		return "home";
+	    
+	    return "home.tiles"; // 수정된 반환값
 	}
 	
 }

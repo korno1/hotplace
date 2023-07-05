@@ -60,4 +60,4 @@ public class PartyRestController {
 //		
 //		return "party/selectOne";
 //	}	
-}
+} 

@@ -75,26 +75,5 @@
 			});
 		}
 	</script>
-	
-	
-<!-- 		<div> -->
-<!-- 			<ul style="list-style:none"> -->
-<!-- 				<li> -->
-<!-- 					<div style="display:table-cell"> -->
-<!-- 						<span>제목</span> -->
-<!-- 					</div> -->
-<!-- 					<div style="display:table-cell"> -->
-<!-- 						<span>작성자</span> -->
-<!-- 					</div> -->
-<!-- 					<div style="display:table-cell"> -->
-<!-- 						<span>작성일</span> -->
-<!-- 					</div> -->
-<!-- 					<div style="display:table-cell"> -->
-<!-- 						<span>조회수</span> -->
-<!-- 					</div> -->
-<!-- 				</li> -->
-<!-- 			</ul> -->
-<!-- 		</div> -->
-	
 </body>
 </html>

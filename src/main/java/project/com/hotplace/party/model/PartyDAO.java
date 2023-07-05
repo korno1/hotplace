@@ -18,6 +18,4 @@ public interface PartyDAO {
 	
 	public void vCountUp(PartyVO vo);
 	
-//	public void deleteOverDate();
-
 }

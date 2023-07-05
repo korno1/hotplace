@@ -36,7 +36,7 @@
 				<textarea name="content" id="content" style="resize: none; width: 100%; height: 300px;">${vo2.content}</textarea>
 			</div>
 			<div>
-				<input type="submit" value="글수정">
+				<input type="submit" value="글수정"> 
 			</div>
 		</div>
 	</form>

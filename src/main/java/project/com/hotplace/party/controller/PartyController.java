@@ -122,4 +122,4 @@ public class PartyController {
 		return "redirect:selectAll.do?searchKey=title&searchWord=&page=1";
 	}
 	
-}
+} 

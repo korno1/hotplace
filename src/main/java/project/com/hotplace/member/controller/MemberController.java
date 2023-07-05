@@ -37,7 +37,7 @@ public class MemberController {
 	public String selectAll() {
 		log.info("member/selectAll.do...");
 		
-		return "..member/selectAll";
+		return "member/selectAll.tilesLeft";
 	}
 	
 	@RequestMapping(value = {"account/insert.do"}, method = RequestMethod.GET)
@@ -71,7 +71,7 @@ public class MemberController {
 		
 		model.addAttribute("vo2",vo2);
 		
-		return "..member/selectOne";
+		return "member/selectOne.tilesLeft";
 	}
 	
 	@RequestMapping(value = {"account/login.do"}, method = RequestMethod.GET)

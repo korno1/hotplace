@@ -41,7 +41,7 @@ public class PartyController {
 		model.addAttribute("vos", vos);
 		model.addAttribute("cnt", cnt);
 		
-		return "party/selectAll";
+		return "party/selectAll.tiles";
 	}
 	
 	@RequestMapping(value = "/party/selectOne.do", method = RequestMethod.GET)
@@ -55,14 +55,14 @@ public class PartyController {
 		
 		model.addAttribute("vo2", vo2);
 		
-		return "party/selectOne";
+		return "party/selectOne.tiles";
 	}
 	
 	@RequestMapping(value = "/party/insert.do", method = RequestMethod.GET)
 	public String insert() {
 		log.info("/par_insert.do...");
 		
-		return "party/insert";
+		return "party/insert.tiles";
 	}
 	
 	@RequestMapping(value = "/party/insertOK.do", method = RequestMethod.POST)
@@ -92,7 +92,7 @@ public class PartyController {
 		
 		model.addAttribute("vo2", vo2);
 				
-		return "party/update";
+		return "party/update.tiles";
 	}
 	
 	@RequestMapping(value = "/party/updateOK.do", method = RequestMethod.POST)

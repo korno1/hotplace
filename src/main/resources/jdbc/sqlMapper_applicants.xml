@@ -5,14 +5,29 @@
 
 <mapper namespace="project.com.hotplace.applicants">	
 	<select id="APP_SELECTALL" resultType="project.com.hotplace.applicants.model.ApplicantsVO">
-		
+		select a.applicants_num as applicantsNum, a.party_num as partyNum, m.nick_name as userName, a.comments, a.status,
+		m.num as userNum 
+		from applicants a join member m
+		on (a.user_num = m.num)
+		where a.party_num=#{partyNum} and a.status=#{status}
 	</select>
 	
 	
-<!-- 	<insert id="par_insert" parameterType="project.com.hotplace.applicants.model.ApplicantsVO"> -->
-<!-- 		insert into party(party_num, title, max, time_limit as timeLimit, place, content, writer_num as writerNum)  -->
-<!-- 		values(not_sequence.nextval, #{title}, #{max}, #{timeLimit},#{content}, #{writerNum}) -->
-<!-- 	</insert> -->
+	<insert id="APP_INSERT" parameterType="project.com.hotplace.applicants.model.ApplicantsVO">
+		insert into applicants(applicants_num, party_num, user_num, comments, status) 
+		values(app_sequence.nextval, #{partyNum}, #{userNum}, #{comments}, #{status})
+	</insert>
+	
+	<update id="APP_APPROVE" parameterType="project.com.hotplace.applicants.model.ApplicantsVO">
+		update applicants set status=1
+		where applicants_num = #{applicantsNum}
+	</update>
+	
+	<update id="APP_REJECT" parameterType="project.com.hotplace.applicants.model.ApplicantsVO">
+		update applicants set status=2
+		where applicants_num = #{applicantsNum}
+	</update>
+	
 	
 
 	

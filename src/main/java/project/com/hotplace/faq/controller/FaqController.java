@@ -24,7 +24,7 @@ public class FaqController {
 		log.info("/faq/selectAll.do...");
 		
 		
-		return "faq/selectAll";
+		return "faq/selectAll.tiles";
 	}
 	
 	@RequestMapping(value = "/faq/insert.do", method = RequestMethod.GET)
@@ -32,7 +32,7 @@ public class FaqController {
 		log.info("/faq/insert.do...");
 		
 		
-		return "faq/insert";
+		return "faq/insert.tiles";
 	}
 	
 	@RequestMapping(value = "/faq/update.do", method = RequestMethod.GET)
@@ -40,7 +40,7 @@ public class FaqController {
 		log.info("/faq/update.do...");
 		
 		
-		return "faq/update";
+		return "faq/update.tiles";
 	}
 	
 	

@@ -18,7 +18,7 @@ function NickNameCheck() {
 	console.log("NickNameCheck....", $('#nick_name').val());
 
 	$.ajax({
-		url : "json/nickNameCheck.do",
+		url : "../json/nickNameCheck.do",
 		data : {
 			nick_name : $('#nick_name').val()
 		},
@@ -46,7 +46,7 @@ function EmailCheck() {
 	console.log("emailCheck....", $('#email').val());
 
 	$.ajax({
-		url : "json/emailCheck.do",
+		url : "../json/emailCheck.do",
 		data : {
 			email : $('#email').val()
 		},
@@ -147,7 +147,7 @@ function updateOK() {
 		  console.log(entry[0] + ": " + entry[1]);
 		}
 	$.ajax({
-	 url: "json/updateOK.do",
+	 url: "../json/updateOK.do",
 	 data: formData,
 	 method: 'POST',
 	 dataType: 'json',
@@ -174,7 +174,7 @@ function updateOK() {
 
 function deleteOK() {
 	$.ajax({
-		url : "json/deleteOK.do",
+		url : "../json/deleteOK.do",
 		data : {
 			num : ${param.num},
 		},
@@ -270,16 +270,16 @@ function uploadFile() {
 	<h1>회원정보</h1>
 	<div class="memberInfoWrap block">
 		<div class="memberInfo__leftTab">
-			<div class="memberInfo__profile title">프로필 사진</div>
-			<div class="memberInfo__nickName title">닉네임</div>
-			<div class="memberInfo__email title">이메일 주소</div>
-			<div class="memberInfo__pw title">비밀 번호</div>
-			<div class="memberInfo__address title">사는 지역</div>
-			<div class="memberInfo__gender title">성별</div>
-			<div class="memberInfo__foodLike title">음식 취향</div>
+			<div class="memberInfo__profile myTitle">프로필 사진</div>
+			<div class="memberInfo__nickName myTitle">닉네임</div>
+			<div class="memberInfo__email myTitle">이메일 주소</div>
+			<div class="memberInfo__pw myTitle">비밀 번호</div>
+			<div class="memberInfo__address myTitle">사는 지역</div>
+			<div class="memberInfo__gender myTitle">성별</div>
+			<div class="memberInfo__foodLike myTitle">음식 취향</div>
 		</div>
 		<div class="memberInfo__rightTab">
-			<div class="memberInfo__imageTab__content content">
+			<div class="memberInfo__imageTab__content myContent">
 				<div class="memberInfo__image">
 					<img id="preview" width="100px"
 						src="../resources/ProfileImage/${vo2.num}"
@@ -290,30 +290,30 @@ function uploadFile() {
 						onchange="uploadFile()">
 				</div>
 			</div>
-			<div class="memberInfo__nickName__content content">
+			<div class="memberInfo__nickName__content myContent">
 				<input type="text" id="nick_name" name="nick_name"
 					value="${vo2.nick_name}">
 				<button type="button" onclick="NickNameCheck()" class="myButton">닉네임
 					중복체크</button>
 				<span id="nickNameCheck"></span>
 			</div>
-			<div class="memberInfo__email__content content">
+			<div class="memberInfo__email__content myContent">
 				<input type="email" id="email" name="email" value="${vo2.email}">
 				<button type="button" onclick="EmailCheck()" class="myButton">이메일
 					중복체크</button>
 				<span id="emailCheck"></span>
 			</div>
-			<div class="memberInfo__pw__content content">
+			<div class="memberInfo__pw__content myContent">
 				<input type="password" id="pw" name="pw" value="${vo2.pw}">
 				<input type="password" id="pwCheck" name="pwCheck"
 					oninput="checkPassword()" value="${vo2.pw}"> <span>
 					특수문자(예: !@#$ 등) 1자 이상을 포함한 10~16 글자의 비밀번호로 설정해주세요. </span>
 			</div>
-			<div class="memberInfo__address__content content">
+			<div class="memberInfo__address__content myContent">
 				<input type="text" id="address" name="address"
 					value="${vo2.address}">
 			</div>
-			<div class="memberInfo__gender__content content">
+			<div class="memberInfo__gender__content myContent">
 				<div>
 					<input type="radio" name="gender" value="0"
 						${vo2.gender == '0' ? 'checked' : ''}> 남자 <input
@@ -323,7 +323,7 @@ function uploadFile() {
 						${vo2.gender == '2' ? 'checked' : ''}> 비공개
 				</div>
 			</div>
-			<div class="memberInfo__foodLike__content content">
+			<div class="memberInfo__foodLike__content myContent">
 				<input type="checkbox" name="foodlike" value="한식"
 					${vo2.food_like.contains('한식') ? 'checked' : ''}> 한식 <input
 					type="checkbox" name="foodlike" value="중식"

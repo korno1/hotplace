@@ -282,8 +282,10 @@ function uploadFile() {
 			<div class="memberInfo__imageTab__content myContent">
 				<div class="memberInfo__image">
 					<img id="preview" width="100px"
-						src="../resources/ProfileImage/${vo2.num}"
-						onerror="this.src='../resources/ProfileImage/default.png'">
+						src="../resources/ArrowSource/default.png"
+						>
+<%-- 						src="../resources/ProfileImage/${vo2.num}.png" --%>
+<!-- 						> -->
 				</div>
 				<div class="memberInfo__imageBtn">
 					<input type="file" id="imageFile" accept="image/*"

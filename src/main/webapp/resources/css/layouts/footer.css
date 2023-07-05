@@ -16,6 +16,7 @@
 
 .footerLine {
 	display: flex;
+	align-items: center;
 }
 
 .footerContent {

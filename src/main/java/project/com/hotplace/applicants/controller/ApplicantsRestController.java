@@ -31,10 +31,49 @@ public class ApplicantsRestController {
 	
 	@RequestMapping(value = "/party/json/AppselectAll.do", method = RequestMethod.GET)
 	@ResponseBody
-	public List<ApplicantsVO> selectAll() {
-		log.info("/party/json/AppselectAll.do...");
+	public List<ApplicantsVO> selectAll(ApplicantsVO vo) {
+		log.info("/party/json/AppselectAll.do...{}", vo);
 		
-		return null;
+		// vo = partyNum & status
+		
+		List<ApplicantsVO> vos = service.selectAll(vo);
+		
+		return vos;
+	}
+	
+	@RequestMapping(value = "/party/json/AppinsertOK.do", method = RequestMethod.GET)
+	@ResponseBody
+	public int insertOK(ApplicantsVO vo) {
+		log.info("/party/json/AppinsertOK.do...{}", vo);
+		// partyNum = parameter
+		// userNum = session
+		// comments, status = view
+
+		int result = service.insert(vo);
+		
+		return result;
+	}
+	
+	@RequestMapping(value = "/party/json/AppapproveOK.do", method = RequestMethod.GET)
+	@ResponseBody
+	public int approveOK(ApplicantsVO vo) {
+		log.info("/party/json/AppapproveOK.do...{}", vo);
+		// applicantsNum = view
+
+		int result = service.approve(vo);
+		
+		return result;
+	}
+	
+	@RequestMapping(value = "/party/json/ApprejectOK.do", method = RequestMethod.GET)
+	@ResponseBody
+	public int rejectOK(ApplicantsVO vo) {
+		log.info("/party/json/ApprejectOK.do...{}", vo);
+		// applicantsNum = view
+
+		int result = service.reject(vo);
+		
+		return result;
 	}
 	
 	

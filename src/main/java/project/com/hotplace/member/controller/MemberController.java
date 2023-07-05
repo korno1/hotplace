@@ -61,6 +61,14 @@ public class MemberController {
 		return ".account/findPw";
 		
 	}
+	@RequestMapping(value = {"member/mypage.do"}, method = RequestMethod.GET)
+	public String mypage(HttpSession session) {
+		log.info("mypage.do...");
+		int num = (int) session.getAttribute("num");
+		
+		return "redirect:selectOne.do?num="+num;
+		
+	}
 	
 	@RequestMapping(value = {"member/selectOne.do"}, method = RequestMethod.GET)
 	public String selectOne(MemberVO vo, Model model) {
@@ -78,6 +86,17 @@ public class MemberController {
 	public String login(MemberVO vo) {
 		log.info("login.do...");
 			return ".account/login";
+		
+	}
+	@RequestMapping(value = {"account/logout.do"}, method = RequestMethod.GET)
+	public String logout(HttpSession session) {
+		log.info("logout.do...");
+		
+		session.removeAttribute("grade");
+		session.removeAttribute("nick_name");
+		session.removeAttribute("num");
+		
+		return "redirect:/home";
 		
 	}
 

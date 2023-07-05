@@ -6,7 +6,7 @@
 .error {
 	border: 1px solid #FF9999;
 }
-.block{
+.memberInfoWrap{
 	width:900px;
 	display:flex;
 }
@@ -16,7 +16,7 @@
 .memberInfo__rightTab{
 	width:600px;
 }
-.title, .content{
+.myTitle, .myContent{
 	height:50px;
 	line-height:50px;
 	font-size:20px;

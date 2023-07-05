@@ -10,7 +10,7 @@
 	href="${pageContext.request.contextPath}/resources/css/layouts/headerSub.css">
 <body>
 	<div class="headerSubWrap">
-		<div class="headerSubTitle">HOTPLACE</div>
+		<div class="headerSubTitle" onclick="window.location.href='/hotplace/home'">HOTPLACE</div>
 	</div>
 </body>
 </html>

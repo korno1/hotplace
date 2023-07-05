@@ -21,10 +21,10 @@
 			<li class="faq_menu menu">FAQ</li>
 		</ul>
 		<ul class="top_menu_member">
-			<li class="sign_up_menu menu">회원가입</li>
-			<li class="login_menu menu">로그인</li>
-			<li class="logout_menu menu">로그아웃</li>
-			<li class="mypage_menu menu">xxx님</li>
+			<li id="signUp" class="sign_up_menu menu">회원가입</li>
+			<li id="login" class="login_menu menu">로그인</li>
+			<li id="logout" class="logout_menu menu">로그아웃</li>
+			<li id="myPage" class="mypage_menu menu">${nick_name}님</li>
 		</ul>
 	</div>
 <script type="text/javascript">
@@ -70,7 +70,7 @@
         link = '/hotplace/member/mypage.do';
         break;
       default:
-        link = 'myPage.do'; // 기본 링크
+        link = '/hotplace/home'; // 기본 링크
     }
 
     console.log('link...', link);
@@ -79,6 +79,21 @@
     window.location.href = link;
   });
 });
+	
+let nickName = '<%= session.getAttribute("nick_name") %>';
+	if (nickName == 'null' || nickName == "") {
+	    // 비로그인 상태인 경우
+	    document.getElementById("myPage").style.display = "none";
+	    document.getElementById("logout").style.display = "none";
+	    document.getElementById("signUp").style.display = "block";
+	    document.getElementById("login").style.display = "block";
+	} else {
+	    // 로그인 상태인 경우
+	    document.getElementById("myPage").style.display = "block";
+	    document.getElementById("logout").style.display = "block";
+	    document.getElementById("signUp").style.display = "none";
+	    document.getElementById("login").style.display = "none";
+	}
 </script>
 </body>
 </html>

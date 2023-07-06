@@ -26,6 +26,10 @@
             flex-wrap: nowrap;
             overflow-x: hidden;
             scroll-behavior: smooth;
+            -webkit-user-select: none;
+    		-moz-user-select: none;
+    		-ms-user-select: none;
+    		user-select: none;
         }
         .left-arrow,
         .right-arrow {
@@ -36,6 +40,9 @@
         }
     </style>
     <script>
+   		var isDragging = false;
+   		var startX, scrollLeft;
+    
         function slideLeft() {
             var container = document.querySelector('.shop-items');
             container.scrollLeft -= 800; // Adjust the sliding distance as needed
@@ -48,6 +55,23 @@
         function selectOne(num) {
             // Redirect to selectOne.do with the provided num parameter
             window.location.href = 'shop/selectOne.do?num=' + num;
+        }
+
+        function startDrag(event) {
+            isDragging = true;
+            startX = event.clientX;
+            scrollLeft = document.getElementById('shopItems').scrollLeft;
+        }
+
+        function drag(event) {
+            if (!isDragging) return;
+            var x = event.clientX;
+            var walk = (x - startX) * 2; // 슬라이딩 속도 조절을 위해 스칼라 값 조정
+            document.getElementById('shopItems').scrollLeft = scrollLeft - walk;
+        }
+
+        function endDrag() {
+            isDragging = false;
         }
     </script>
 </head>
@@ -66,24 +90,24 @@
 <div>
     <div>
         <div>집 주변에 이런게 있어요</div>
-        <div class="shop-container">
-            <div class="arrow left-arrow" onclick="slideLeft()">
-                <img id="prevArrow" width="30px" src="resources/ArrowSource/Left.png">
-            </div>
-            <div class="shop-items">
-                <c:forEach var="vo" items="${vos}" varStatus="loop">
-                    <div class="shop-item" onClick="selectOne('${vo.num}')">
-                        <div>
-                            <img id="symbol" width="200px" src="resources/ShopSymbol/${vo.symbol}">
-                        </div>
-                        <div>${vo.name}</div>
-                    </div>
-                </c:forEach>
-            </div>
-            <div class="arrow right-arrow" onclick="slideRight()">
-                <img id="nextArrow" width="30px" src="resources/ArrowSource/Right.png">
-            </div>
-        </div>
+        <div class="shop-container" onmousedown="startDrag(event)" onmousemove="drag(event)" onmouseup="endDrag()">
+    		<div class="arrow left-arrow" onclick="slideLeft()">
+        		<img id="prevArrow" width="30px" src="resources/ArrowSource/Left.png">
+    		</div>
+    		<div class="shop-items" id="shopItems">
+        		<c:forEach var="vo" items="${vos}" varStatus="loop">
+            		<div class="shop-item" onClick="selectOne('${vo.num}')">
+                		<div>
+                    		<img id="symbol" width="200px" src="resources/ShopSymbol/${vo.symbol}" draggable="false">
+                		</div>
+                		<div>${vo.name}</div>
+            		</div>
+        		</c:forEach>
+    		</div>
+    		<div class="arrow right-arrow" onclick="slideRight()">
+        		<img id="nextArrow" width="30px" src="resources/ArrowSource/Right.png">
+    		</div>
+		</div>
     </div>
 </div>
 </body>

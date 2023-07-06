@@ -5,102 +5,83 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>userpage</title>
+<title>유저페이지</title>
 <link rel="stylesheet" href="/hotplace/resources/css/memberreview/userpage.css"/>
+<link rel="stylesheet" href="/hotplace/resources/css/party/selectAll.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
 
-function par_selectAll(searchKey=title, page=1){
-	$(function(){
-		$('#searchWord').val("${param.searchWord}");
-		$.ajax({
-			url: "party/json/searchList.do",
-			data:{
-				searchKey: "${param.searchKey}",
-				searchWord: "${param.searchWord}",
-				page: ${param.page},
-			},
-			method: 'GET',
-			dataType: 'json',
-			success: function(arr){
-				console.log('ajax...',arr);
-				let tag_vos = '';
-				
-				$.each(arr, function(index, vo){
+
+$(function(){
+	console.log('onload...');
+	let searchKey = 'title';
+	let page = 1;
+	
+	console.log(page);
+	console.log(searchKey);
+	
+	$('#searchWord').val("${param.searchWord}");
+	$.ajax({
+		url: "party/json/searchList.do",
+		data:{
+			searchKey: "title", // ${param.searchKey}
+			searchWord: "${param.searchWord}",
+			page: 1, //${param.page}
+		},
+		method: 'GET',
+		dataType: 'json',
+		success: function(arr){
+			console.log('ajax...',arr);
+			let tag_vos = '';
+			
+			$.each(arr, function(index, vo){
+				if (vo.writerNum === 3) { // user_id
 					tag_vos +=`
-						<div onclick="location.href='selectOne.do?partyNum=\${vo.partyNum}'"class="post">
-							<div>\${vo.applicants}/${vo.max}</div>
+						<div onclick="location.href='party/selectOne.do?partyNum=\${vo.partyNum}'" class="post">
+							<div>\${vo.applicants}/\${vo.max}</div>
 							<hr>
 							<div>마감일 : \${vo.deadLine}</div>
 							<div>[\${vo.place}] \${vo.title}</div>
 							<div>조회수: \${vo.views}</div>
 							<hr>
-							<div>작성자 : \${vo.writerName}</div>
+							<div>작성자 : ${vo.writerName}</div>
 						</div>
 					`;
-					
-				}); // end for-each
-				$('#par_vos').html(tag_vos);
-
-			}, // end success
-			
-			error:function(xhr,status,error){
-				console.log('xhr.status:', xhr.status);
-			} // end error
-		}); // end searchList ajax;
-		
-		$.ajax({
-			url: "party/json/selectAll.do",
-			data:{
-				searchKey: "${param.searchKey}",
-				searchWord: "${param.searchWord}",
-			},
-			method: 'GET',
-			dataType: 'json',
-			success: function(cnt){
-				console.log('ajax...',cnt);
-				if(${param.page}==1){
-//		 			$('#pre_page').hide();
-					$('#pre_page').click(function(){
-						alert('첫번째 페이지입니다.');
-						return false;
-					});
 				}
-				if((${param.page}*6) >= cnt){
-//		 			$('#next_page').hide();
-					$('#next_page').click(function(){
-						alert('마지막 페이지입니다.');
-						return false;
-					});
-				}
-
-			}, // end success
-			
-			error:function(xhr,status,error){
-				console.log('xhr.status:', xhr.status);
 				
-			} // end error
-		}); // end selectAll ajax;
+			}); // end for-each
+			$('#par_vos').html(tag_vos);
+			
+		}, // end success
 		
-		
-		
-	}); // end onload
+		error:function(xhr,status,error){
+			console.log('xhr.status:', xhr.status);
+		} // end error
+	}); // end searchList ajax;
 	
-	function searchList(){
-		let sKey = $('#searchKey').val();
-		let sWord = $('#searchWord').val();
-		console.log('skey:', sKey);
-		console.log('sWord:', sWord);
-		let url = 'selectAll.do?searchKey=' + sKey + "&searchWord=" + sWord + "&page=1";
-		location.replace(url);
-	}; // end searchList
+	  $('#par_vos').show();
+	  $('#memberreview_list').hide();
+
+}); // end onload	
+
 	
+// 	function searchList(){
+// 		let sKey = $('#searchKey').val();
+// 		let sWord = $('#searchWord').val();
+// 		console.log('skey:', sKey);
+// 		console.log('sWord:', sWord);
+// 		let url = 'selectAll.do?searchKey=' + sKey + "&searchWord=" + sWord + "&page=1";
+// 		location.replace(url);
+// 	}; // end searchList
 
 	function mre_selectAll(user_num=3, memberreview_num=0){ // ${param.memberreview_num}
 		console.log('mer_selectAll()....user_num:',user_num);
 		console.log('mer_selectAll()....memverreview_num:',memberreview_num);
+		
+		$('#par_vos').hide(); // 모임리스트 요소를 숨기도록 설정
+		$('#memberreview_list').show();
 		
 		$('#insertButton').show();
 		$.ajax({
@@ -172,15 +153,17 @@ function par_selectAll(searchKey=title, page=1){
 // 							<img width="20px" src="../resources/ProfileImage/\${vo.writer_num}"
 // 							onerror="this.src='../resources/ProfileImage/default.png'">
 					tag_txt += `
-						<div class="board-row">
-							<div class="board-cell">\${vo.writer_num}</div>
-							<div class="board-cell">\${vo.writer_name}</div>
-							\${tag_rated}
-							<div class="board-cell">\${vo.wdate}</div>
-						</div>
-						<div class="board-content">
-							\${tag_td}
-							<div colspan="3" class="board-content-cell">\${tag_div}</div>
+						<div class="board">
+							<div class="board-row">
+								<div class="board-cell">\${vo.writer_num}</div>
+								<div class="board-cell">\${vo.writer_name}</div>
+								\${tag_rated}
+								<div class="board-cell">\${vo.wdate}</div>
+							</div>
+							<div class="board-content">
+								\${tag_td}
+								<div colspan="3" class="board-content-cell">\${tag_div}</div>
+							</div>
 						</div>
 					`;
 				});//end ajax
@@ -357,24 +340,115 @@ function par_selectAll(searchKey=title, page=1){
 			});
 		    return;
 		  }
-		
-		
-		
 	}//end deleteOK
+	
+	function par_selectAll(){
+		$('#par_vos').show(); // 모임리스트 요소를 보이도록 설정
+		$('#memberreview_list').hide();
+		
+		$(function() {
+			console.log('onload...');
+			
+			let searchKey = 'title';
+			let page = 1;
+			
+			console.log(page);
+			console.log(searchKey);
+			
+			$('#searchWord').val("${param.searchWord}");
+			$.ajax({
+				url: "party/json/searchList.do",
+				data:{
+					searchKey: "title", // ${param.searchKey}
+					searchWord: "${param.searchWord}",
+					page: 1, //${param.page}
+				},
+				method: 'GET',
+				dataType: 'json',
+				success: function(arr){
+					console.log('ajax...',arr);
+					let tag_vos = '';
+					
+					$.each(arr, function(index, vo){
+						if (vo.writerNum === 3) { // user_id
+							tag_vos +=`
+								<div onclick="location.href='party/selectOne.do?partyNum=\${vo.partyNum}'" class="post">
+									<div>\${vo.applicants}/\${vo.max}</div>
+									<hr>
+									<div>마감일 : \${vo.deadLine}</div>
+									<div>[\${vo.place}] \${vo.title}</div>
+									<div>조회수: \${vo.views}</div>
+									<hr>
+									<div>작성자 : ${vo.writerName}</div>
+								</div>
+							`;
+						}
+						
+					}); // end for-each
+					$('#par_vos').html(tag_vos);
+					
+				}, // end success
+				
+				error:function(xhr,status,error){
+					console.log('xhr.status:', xhr.status);
+				} // end error
+			}); // end searchList ajax;
+			
+//		 	$.ajax({
+//	 		url: "party/json/selectAll.do",
+//	 		data:{
+//	 			searchKey: "${param.searchKey}",
+//	 			searchWord: "${param.searchWord}",
+//	 		},
+//	 		method: 'GET',
+//	 		dataType: 'json',
+//	 		success: function(cnt){
+//	 			console.log('ajax...',cnt);
+//	 			if(${param.page}==1){
+	// //	 			$('#pre_page').hide();
+//	 				$('#pre_page').click(function(){
+//	 					alert('첫번째 페이지입니다.');
+//	 					return false;
+//	 				});
+//	 			}
+//	 			if((${param.page}*5) >= cnt){
+	// //	 			$('#next_page').hide();
+//	 				$('#next_page').click(function(){
+//	 					alert('마지막 페이지입니다.');
+//	 					return false;
+//	 				});
+//	 			}
 
+//	 		}, // end success
+			
+//	 		error:function(xhr,status,error){
+//	 			console.log('xhr.status:', xhr.status);
+				
+//	 		} // end error
+//	 	}); // end selectAll ajax;
+			
+		  });
+	}
+	
+	
 </script>
 </head>
 <body>
-	<a href="#" onclick="par_selectAll()">모임리스트</a>
-	<a href="#" onclick="mre_selectAll()">후기목록</a>
-		
-	<hr>	
-<!-- 	<button onclick="myParty">내 모임 확인</button> -->
-	
 	
 	<ul>
 		<li><a href="my.do">HOME</a></li>
 	</ul>
+<!-- 	<div> -->
+<!-- 		<img width="20px" src="hotplace/resources/ProfileImage/default.png" onerror="this.src='../resources/ProfileImage/default.png'"> -->
+<!-- 	</div> -->
+	
+	
+	<a href="#" onclick="par_selectAll()">모임리스트</a>
+	<a href="#" onclick="mre_selectAll()" id="reviewLink">후기목록</a>
+		
+	<hr>	
+<!-- 	<button onclick="myParty">내 모임 확인</button> -->
+	
 	
 	<div id="par_vos"></div>
 	
@@ -383,8 +457,7 @@ function par_selectAll(searchKey=title, page=1){
 	<div id="formContainer"><button onclick="insert()">작성</button></div>
 
 	<hr>
-
-
+	
 </body>
 </html>
 

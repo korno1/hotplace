@@ -30,13 +30,18 @@ public class ShopReviewService {
 		return dao.update(vo);
 	}
 
-	public int delete(ShopReviewVO vo)
+	public int delete(int num)
 	{
-		return dao.delete(vo);
+		return dao.delete(num);
 	}
 	
 	public List<ShopReviewVO> selectAll(ShopReviewVO vo)
 	{
 		return dao.selectAll(vo);
+	}
+	
+	public ShopReviewVO selectOne(ShopReviewVO vo)
+	{
+		return dao.selectOne(vo);
 	}
 }

@@ -99,7 +99,7 @@
 </script>
 </head>
 <body>
-	<h1>공지사항</h1>
+	<h1>이벤트</h1>
 <%-- 	<jsp:include page="../top_menujm.jsp"></jsp:include> --%>
 
 	

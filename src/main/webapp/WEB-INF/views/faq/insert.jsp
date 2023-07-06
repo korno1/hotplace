@@ -7,9 +7,20 @@
 <meta charset="UTF-8">
 <title>FAQ</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/38.1.0/classic/ckeditor.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
 <link rel="stylesheet" href="../resources/css/notice/button.css">
 
+<style>
+  .ck-editor__editable { height: 400px; }
+  .ck-editor__editable p {margin: 0}
+</style>
+
 <script type="text/javascript">
+
+	$(function(){
+		let eve_content;
+	});
 	
 	function insertOK(){
 		
@@ -17,7 +28,7 @@
 			url: "json/insertOK.do",
 			data: {
 				title: $('#title').val(),
-				content: $('#content').val()
+				content: eve_content.getData(),
 			},
 			method: 'GET',
 			dataType: 'json',
@@ -56,6 +67,20 @@
 			<button onclick="insertOK()" class="myButton">작성</button>
 		</div>
 	</div>
+	
+	<script type="text/javascript">
+		
+		ClassicEditor
+	    .create(document.querySelector('#content'), {
+	    	language: "ko",
+ 	    	
+	    })
+	    .then(content => {
+	    	eve_content = content;
+	    });
+		
+		
+	</script>
 
 </body>
 </html>

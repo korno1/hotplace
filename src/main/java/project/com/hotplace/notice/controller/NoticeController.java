@@ -10,8 +10,10 @@ import javax.servlet.ServletContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.extern.slf4j.Slf4j;
 import project.com.hotplace.notice.model.NoticeVO;
@@ -41,7 +43,31 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value = "/notice/selectAll.do", method = RequestMethod.GET)
-	public String selectAll(String searchKey, String searchWord, Integer page, Model model) {
+	public String selectAll(Model model) {
+		log.info("/not_selectAll.do...");
+		
+		int page = 1;
+		String searchKey = "title";
+		String searchWord = "";
+		
+		List<NoticeVO> vos = service.searchList(searchKey, searchWord, page);
+		log.info("vos: {}", vos);
+		
+		int cnt = service.selectAll(searchKey, searchWord).size();
+		log.info("cnt: {}", cnt);
+	
+		
+		model.addAttribute("vos", vos);
+		model.addAttribute("cnt", cnt);
+		model.addAttribute("searchKey", searchKey);
+		model.addAttribute("searchWord", searchWord);
+		model.addAttribute("page", page);
+		
+		return "notice/selectAll.tiles";
+	}
+	
+	@RequestMapping(value = "/notice/searchList.do", method = RequestMethod.POST)
+	public String searchList(String searchKey, String searchWord, Integer page, Model model) {
 		log.info("/not_selectAll.do...");
 		
 		if(page == null) {
@@ -71,6 +97,9 @@ public class NoticeController {
 		
 		return "notice/selectAll.tiles";
 	}
+	
+
+
 	
 	@RequestMapping(value = "/notice/selectOne.do", method = RequestMethod.GET)
 	public String selectOne(NoticeVO vo, Model model) {

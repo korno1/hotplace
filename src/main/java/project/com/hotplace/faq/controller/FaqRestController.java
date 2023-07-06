@@ -32,6 +32,10 @@ public class FaqRestController {
 	public int selectAll(String searchKey, String searchWord) {
 		log.info("/faq/json/selectAll.do...");
 		
+		if(searchKey.equals("")) {
+			searchKey = "title";
+		}
+		
 		
 		int cnt = service.selectAll(searchKey, searchWord).size();
 		log.info("cnt: {}", cnt);
@@ -46,6 +50,10 @@ public class FaqRestController {
 		log.info("searchKey: {}", searchKey);
 		log.info("searchWord: {}", searchWord);
 		log.info("page: {}", page);
+		
+		if(searchKey.equals("")) {
+			searchKey = "title";
+		}
 		
 		
 		List<FaqVO> vos = service.searchList(searchKey, searchWord, page);

@@ -21,7 +21,7 @@
 	<select id="EVE_SEARCHLIST" resultType="project.com.hotplace.event.model.EventVO">
 		select * from
     		(select rownum rn, e_eve.* from
-        		(select e.num, e.title, m.nick_name as writer, e.wdate, e.view_count as viewCount
+        		(select e.num, e.title, m.nick_name as writer, e.wdate, e.view_count as viewCount, e.deadline
         			from event e join member m on (e.writer_num = m.num)
         		where 
         		<if test="searchKey == 'title'">

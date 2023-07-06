@@ -12,16 +12,16 @@
 	width:1320px;
 	height:100%;
 	display:flex;
-	margin:150px auto 150px auto;
+	margin:72px auto 72px auto;
 }
 .leftSide{
 	width: 180px;
 	height: 600px;
-	margin-right:50px;
+	margin-right:110px;
 }
 
 .tilesContent{
-	width: 1090px;
+	width: 1030px;
 }
 
 .tilesHeader{

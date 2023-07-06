@@ -29,6 +29,12 @@
 	</div>
 <script type="text/javascript">
 document.addEventListener('DOMContentLoaded', function() {
+	if(${grade}==1){
+		$(".partyAll").css("display", "block");
+		$(".memberAll").css("display", "block");
+		$(".mailAll").css("display", "block");
+	}
+	
 	  const menuElements = document.querySelectorAll('.leftMenu');
 
 	  menuElements.forEach((element) => {

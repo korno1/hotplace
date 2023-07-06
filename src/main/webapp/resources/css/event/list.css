@@ -1,0 +1,76 @@
+@charset "UTF-8";
+
+.eve_body {
+  text-align: center;
+  /* 	display: flex; */
+}
+
+.eve_header {
+  display: flex;
+  border-top: 1px solid gray;
+}
+
+.eve_content {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid gray;
+}
+
+.eve_selectOne {
+  display: flex;
+  border-bottom: 1px solid gray;
+  align-items: center;
+}
+
+.eve_title,
+.eve_content_title {
+  width: 300px;
+}
+
+.eve_writer,
+.eve_content_writer {
+  width: 100px;
+}
+.eve_wdate,
+.eve_content_wdate {
+  width: 100px;
+}
+.eve_deadline,
+.eve_content_deadline {
+  width: 100px;
+}
+.eve_vcount,
+.eve_content_vcount {
+  width: 50px;
+}
+
+.eve_content_title {
+  display: flex;
+  align-items: center;
+}
+
+.eve_search {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.eve_change_page {
+  display: flex;
+  margin-top: 10px;
+}
+
+.eve_next_page {
+  margin-left: 5px;
+  margin-right: auto;
+}
+
+.event_check {
+  font-size: 9px;
+  color: #959595;
+  width: 30px;
+}
+
+.vo_title {
+  margin-left: 10px;
+}

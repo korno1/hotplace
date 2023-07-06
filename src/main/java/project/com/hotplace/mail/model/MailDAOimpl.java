@@ -51,6 +51,12 @@ public class MailDAOimpl implements MailDAO {
 	
 
 	@Override
+	public int newMailCnt(int recipient_num) {
+		
+		return sqlSession.selectOne("MAI_NEW_CNT", recipient_num);
+	}
+
+	@Override
 	public List<MailVO> selectAllAdmin(String searchKey, String searchWord,int page) {
 		log.info("selectAll()...page: {}", page);
 

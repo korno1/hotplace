@@ -26,17 +26,29 @@
 }
 .mailBoxWrap{
 	width:900px;
-	border:1px solid black;
 	box-sizing:border-box;
 }
 .itemLine{
 	height:50px;
 	line-height:50px;
+	border-bottom:1px solid #818181;
 	display:flex;
-	justify-content: space-between;
+	justify-content: space-evenly;
+}
+.mailBoxTitle{
+	width:900px;
+	height:50px;
+	border-top:1px solid #818181;
+	border-bottom:1px solid #818181;
+	display:flex;
+	align-items: center;
+	justify-content: space-evenly;
 }
 .itemTitle{
 	width:500px;
+}
+.headTitle{
+	text-align:center;
 }
 .itemSender{
 	width:150px;
@@ -46,6 +58,11 @@
 }
 .itemLine--hide {
     display: none;
+}
+.itemContent{
+	background-color:#F3F3F3;
+	height:170px;
+	padding:17px 40px 17px 40px;
 }
 .pagegation{
 	width:900px;

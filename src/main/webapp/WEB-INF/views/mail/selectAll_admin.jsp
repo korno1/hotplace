@@ -134,7 +134,7 @@ $(document).on('click', '.itemLine', function() {
 	</select>
 	<input type="text" name="searchWord" id="searchWord">
 	<button id="searchButton">검색</button>
-	<div class="mailBoxHead block">
+	<div class="mailBoxTitle block">
 		<div class="mailList__itemHead itemHead">
 			<div class="mailList__itemTitle itemTitle">쪽지 제목</div>
 			<div class="mailList__itemSender itemSender">보낸 사람</div>

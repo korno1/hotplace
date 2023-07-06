@@ -7,50 +7,114 @@
 	border: 1px solid #FF9999;
 }
 .memberInfoWrap{
-	width:900px;
+	width:990px;
 	display:flex;
-}
-.memberInfo__leftTab{
-	width:300px;
-}
-.memberInfo__rightTab{
-	width:600px;
-}
-.myTitle, .myContent{
-	height:50px;
-	line-height:50px;
-	font-size:20px;
-}
-.memberInfo__profile{
-	height:100px;
-	line-height:100px;
+	flex-direction: column;
 }
 .memberInfo__imageTab__content{
-	height:100px;
+	margin-top:50px;
+	margin-bottom:35px;
+	height:120px;
+	display:flex;
+}
+#preview{
+	width:120px;
+	height:120px;
+	border-radius:50%;
+	border:1px solid black;
+}
+.memberInfo__imageBtn{
+	margin:40px 0px 0px 30px;
+	display:flex;
+	flex-direction: column;
+}
+.imageFileBtn, button{
+	display: block;
+	width:170px;
+	height: 50px;
+	border-radius: 25px;
+	background-color: #17395C;
+	color: #fff;
+	font-size: 18px;
+	font-weight: 600;
 	display:flex;
 	align-items: center;
+    justify-content: center;
 }
-.memberInfo__image{
-	width:100px;
-	height:100px;
+.imageFileBtn:hover, button:hover{
+	background-color: #23527c;
+	cursor: pointer;
 }
-.memberInfo__pw__content{
-	display:flex;
-	align-items: center;
-    flex-wrap: wrap;
+#imageFile{
+	display:none;
 }
-.memberInfo__pw__content span{
+.fileUploadText{
+	display: block;
 	font-size:14px;
 }
-.memberInfo__btnWrap{
-	width:900px;
-	height:100px;
+.memberInfo__table{
+	width:990px;
+	border-top: 1px solid #707070;
+}
+.memberInfo__tr{
+	width:100%;
+	height:80px;
+	display:flex;
+	border-bottom: 1px solid #C7C7C7;
+	align-items: center;
+}
+.myTitle{
+	width:180px;
+	font-size:18px;
+	font-weight:bold;
+	padding-left:20px;
+}
+.myContent{
+	width:790px;
+	height:80px;
 	display:flex;
 	align-items: center;
-	justify-content: space-around;
 }
-button{
-	width:100px;
-	height:30px;
-	line-height:30px;
+.memberInfo__trSpan{
+	border-bottom:none;
+}
+.myButton{
+	margin:0 20px 0 20px;	
+}
+#emailCheck{
+	margin-left:20px;
+}
+input[type=text], input[type=email], input[type=password] {
+	margin-right:20px;
+	width: 280px;
+	height: 50px;
+	padding-left: 18px;
+	border: 1px solid #3D3D3D;
+	border-radius: 8px;
+	box-sizing: border-box;
+}
+input[type=radio],input[type=checkbox]{
+	margin-right:8px;
+}
+input[type=radio]+label,input[type=checkbox]+label{
+	margin-right:52px;
+}
+.memberInfo__btnWrap{
+	margin-top:50px;
+	display:flex;
+	align-items: center;
+}
+.memberInfo__updateBtn{
+	width:440px;
+	display:flex;
+	align-items: center;
+	justify-content: flex-end;
+	
+}
+.deleteBtn{
+	background-color:#ffffff;
+	color:#17395C;
+}
+.deleteBtn:hover{
+	color:#ffffff;
 }

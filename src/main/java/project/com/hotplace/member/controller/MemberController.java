@@ -31,7 +31,7 @@ public class MemberController {
 	MemberService service;
 	
 	@Autowired
-    private EmailSender emailSender;
+    EmailSender emailSender;
 	
 	@RequestMapping(value = {"member/selectAll.do"}, method = RequestMethod.GET)
 	public String selectAll() {

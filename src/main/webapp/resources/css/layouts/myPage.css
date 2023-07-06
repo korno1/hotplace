@@ -46,3 +46,6 @@
 	color:black;
 	font-weight:bold;
 }
+.partyAll, .memberAll, .mailAll{
+	display:none;
+}

@@ -6,7 +6,8 @@
 <mapper namespace="project.com.hotplace.mail">
 	<select id="MAI_SELECTALL" parameterType="java.util.Map"
 		resultType="project.com.hotplace.mail.model.MailVO">
-		SELECT * FROM (
+		SELECT *
+		FROM (
 		SELECT mail_num, title, content, sender_num,
 		(SELECT
 		nick_name FROM member WHERE num = sender_num) AS sender_name,
@@ -25,22 +26,27 @@
 				sender_num
 			</when>
 		</choose>
-		= #{user_num, jdbcType=BIGINT} ) t
-		WHERE row_num BETWEEN #{start,
-		jdbcType=BIGINT} AND #{end, jdbcType=BIGINT}
+		= #{user_num, jdbcType=BIGINT}
+		ORDER BY send_date DESC
+		) t
+		WHERE row_num BETWEEN #{start, jdbcType=BIGINT} AND #{end,
+		jdbcType=BIGINT}
 	</select>
 	<select id="MAI_SEARCHLIST_ADMIN" parameterType="java.util.Map"
 		resultType="project.com.hotplace.mail.model.MailVO">
 		SELECT mail_num, title, content, sender_num,
-		(SELECT nick_name FROM member WHERE num = sender_num) AS sender_name,
+		(SELECT nick_name FROM
+		member WHERE num = sender_num) AS sender_name,
 		recipient_num,
-		(SELECT nick_name FROM member WHERE num = recipient_num) AS recipient_name,
+		(SELECT
+		nick_name FROM member WHERE num = recipient_num) AS recipient_name,
 		send_date, read_flag
 		FROM (
 		SELECT mail_num, title, content, sender_num,
 		recipient_num, send_date,
 		read_flag,
-		ROW_NUMBER() OVER (ORDER BY mail_num DESC) AS row_num
+		ROW_NUMBER() OVER (ORDER BY
+		send_date DESC) AS row_num
 		FROM mail
 		WHERE
 		<choose>
@@ -48,10 +54,12 @@
 				title LIKE #{searchWord}
 			</when>
 			<when test="searchKey == 'RECIPIENT_NAME'">
-				recipient_num IN (SELECT num FROM member WHERE nick_name LIKE #{searchWord})
+				recipient_num IN (SELECT num FROM member WHERE
+				nick_name LIKE #{searchWord})
 			</when>
 			<when test="searchKey == 'SENDER_NAME'">
-				sender_num IN (SELECT num FROM member WHERE nick_name LIKE #{searchWord})
+				sender_num IN (SELECT num FROM member WHERE nick_name
+				LIKE #{searchWord})
 			</when>
 		</choose>
 		) t
@@ -61,21 +69,17 @@
 	<select id="MAI_SELECTALL_ADMIN" parameterType="java.util.Map"
 		resultType="project.com.hotplace.mail.model.MailVO">
 		SELECT mail_num, title, content, sender_num,
-		(SELECT
-		nick_name FROM member WHERE num = sender_num) AS sender_name,
+		(SELECT nick_name FROM member WHERE num = sender_num) AS sender_name,
 		recipient_num,
-		(SELECT nick_name FROM member WHERE num = recipient_num)
-		AS recipient_name,
+		(SELECT nick_name FROM member WHERE num = recipient_num) AS recipient_name,
 		send_date, read_flag
 		FROM (
-		SELECT mail_num, title,
-		content, sender_num, recipient_num, send_date,
+		SELECT mail_num, title, content, sender_num, recipient_num, send_date,
 		read_flag,
-		ROW_NUMBER()
-		OVER (ORDER BY mail_num DESC) AS row_num
-		FROM mail) t
-		WHERE t.row_num
-		BETWEEN #{start, jdbcType=BIGINT} AND #{end,
+		ROW_NUMBER() OVER (ORDER BY send_date DESC) AS row_num
+		FROM mail
+		) t
+		WHERE t.row_num BETWEEN #{start, jdbcType=BIGINT} AND #{end,
 		jdbcType=BIGINT}
 	</select>
 	<insert id="INSERTOK"
@@ -86,7 +90,9 @@
 	</insert>
 	<insert id="MAI_NEW_CNT"
 		parameterType="project.com.hotplace.mail.model.MailVO">
-	  	SELECT COUNT(*) FROM mail WHERE read_flag=1 AND recipient_num = #{recipient_num}
+		SELECT COUNT(*) FROM mail WHERE read_flag=1 AND
+		recipient_num =
+		#{recipient_num}
 	</insert>
 	<update id="READOK"
 		parameterType="project.com.hotplace.mail.model.MailVO">

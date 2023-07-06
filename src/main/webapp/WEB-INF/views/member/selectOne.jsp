@@ -173,30 +173,37 @@ function updateOK() {
 }//end updateOK()...
 
 function deleteOK() {
-	$.ajax({
-		url : "${pageContext.request.contextPath}/member/json/deleteOK.do",
-		data : {
-			num : ${param.num},
-		},
-		method : 'POST',
-		dataType : 'json',
-		success : function(obj) {
-			console.log('ajax...success:', obj);
-			console.log('ajax...success:', obj.result);
-			let msg = '';
-			if (obj.result === 'OK') {
-				msg = '회원탈퇴에 성공했습니다.';
-				location.reload();
-			} else {
-				msg = '회원탈퇴에 실패했습니다.';
-			}
-			alert(msg);
-		},
-		error : function(xhr, status, error) {
-			console.log('xhr.status:', xhr.status);
-		}
-	});//end $.ajax()...
-}//end deleteeOK()...
+	  let deleteConfirmMsg = "회원탈퇴 시 모든 정보가 삭제되며<br>추후 어떠한 방법으로도 복구가 불가능합니다.";
+	  let confirmed = confirm(deleteConfirmMsg);
+
+	  if (confirmed) {
+	    $.ajax({
+	      url: "${pageContext.request.contextPath}/member/json/deleteOK.do",
+	      data: {
+	        num: ${param.num},
+	      },
+	      method: "POST",
+	      dataType: "json",
+	      success: function (obj) {
+	        console.log("ajax...success:", obj);
+	        console.log("ajax...success:", obj.result);
+	        let msg = "";
+	        if (obj.result === "OK") {
+	          window.location.href = "account/logout.do";
+	          msg = "회원탈퇴에 성공했습니다.";
+	        } else {
+	          msg = "회원탈퇴에 실패했습니다.";
+	        }
+	        alert(msg);
+	      },
+	      error: function (xhr, status, error) {
+	        console.log("xhr.status:", xhr.status);
+	      },
+	    });
+	  } else {
+	    return;
+	  }
+	}
 
 //닉네임,이메일 중복체크 후 input태그 선택 시, 중복체크 결과 초기화 시키기
 $(document).ready(function() {

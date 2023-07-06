@@ -1,37 +1,57 @@
 @charset "UTF-8";
 .mailInsertWrap{
-	width:600px;
-	height:400px;
+	width:650px;
+	height:500px;
 	margin:0 auto;
-	background-color:#DEDEDE;
+}
+.mailInsertHead{
+	height:40px;
+	line-height:50px;
+	font-size:28;
+	font-weight:bold;
 }
 input{
+	width:540px;
+	height:40px;
+	border:1px solid #DBDBDB;
+	border-radius:2px;
+}
+.mailInsert{
+	widht:70px;
+	height:60px;
+	border-top:1px solid #DBDBDB;
+	display:flex;
+	align-items: center
+}
+#recipientName{
 	border:none;
-	height:97%;
-	width:100%;
 }
-.Title{
-	widht:300px;
-	height:50px;
-	line-height:50px;
+.mailInsertLeft{
+	width:120px;
+	padding:20px;
+	font-size:18;
+	font-weight:bold;
 }
-.RecipientName{
-	widht:200px;
-	height:50px;
-	line-height:50px;
+.mailInsertContent{
+	height:270px;
 }
-.Content{
-	widht:600px;
+#Content{
 	height:250px;
+	border-radius:15px;
 }
 .mailInsert__bottomWrap{
 	display:flex;
 	justify-content: flex-end;
+	border-top:1px solid #DBDBDB;
 }
 .InsertBtn{
-	margin:5px 5px 0px 0px;
-	width:50px;
-	height:30px;
-	line-height:30px;
-	background-color:blue;
+	margin-top:13px;
+	width:180px;
+	height:40px;
+	display:flex;
+	border-radius:25px;
+	align-items: center;
+	justify-content: center;
+	color:#ffffff;
+	background-color:#17395C;
 }

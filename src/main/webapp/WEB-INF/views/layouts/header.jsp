@@ -23,9 +23,9 @@
 		<div class="top_menu_member headerWrap">
 			<div id="signUp" class="sign_up_menu headerMenu">회원가입</div>
 			<div id="login" class="login_menu headerMenu">로그인</div>
+			<div id="myPage" class="mypage_menu headerMenu">${nick_name}님</div>
 			<div id="logout" class="logout_menu headerMenu">로그아웃</div>
 <!-- 			<div id="newMail"class="newMail">N</div> -->
-			<div id="myPage" class="mypage_menu headerMenu">${nick_name}님</div>
 		</div>
 	</div>
 <script type="text/javascript">

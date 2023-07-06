@@ -4,10 +4,23 @@
 	margin-bottom: 10px;
 }
 
+.board {
+	width: calc(100% - 20px);
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	padding: 10px;
+	margin-bottom: 20px;
+	margin-right: 20px;
+	box-sizing: border-box;
+	display: inline-block;
+	vertical-align: top;
+}
+
 .board-row {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
+	align-items: center; 
 	margin-bottom: 5px;
 }
 

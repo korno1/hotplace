@@ -28,8 +28,21 @@ public class PartyController {
 	}
 	
 	@RequestMapping(value = "/party/selectAll.do", method = RequestMethod.GET)
-	public String selectAll(String searchKey, String searchWord, int page, Model model) {
+	public String selectAll(String searchKey, String searchWord, Integer page, Model model) {
 		log.info("/par_selectAll.do...");
+		
+		if(page == null) {
+			page = 1;
+		}
+		
+		if(searchKey == null) {
+			searchKey = "title";
+		}
+		
+		if(searchWord == null) {
+			searchWord = "";
+		}
+		
 		
 		List<PartyVO> vos = service.searchList(searchKey, searchWord, page);
 		log.info("vos: {}", vos);
@@ -37,9 +50,11 @@ public class PartyController {
 		int cnt = service.selectAll(searchKey, searchWord).size();
 		log.info("cnt: {}", cnt);
 	
-		
 		model.addAttribute("vos", vos);
 		model.addAttribute("cnt", cnt);
+		model.addAttribute("searchKey", searchKey);
+		model.addAttribute("searchWord", searchWord);
+		model.addAttribute("page", page);
 		
 		return "party/selectAll.tiles";
 	}

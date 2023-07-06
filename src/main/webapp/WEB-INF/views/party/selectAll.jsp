@@ -9,7 +9,9 @@
 <title>모임리스트</title>
 <link rel="stylesheet" href="/hotplace/resources/css/party/selectAll.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js">
-
+$(function(){
+	 history.replaceState({}, null, location.pathname); 
+})
 </script>
 </head>
 <body>
@@ -25,11 +27,11 @@
 			<form action="selectAll.do">
 				<select name="searchKey">
 					<option value="title"
-						<c:if test="${param.searchKey == 'title'}"> selected </c:if>>제목</option>
+						<c:if test="${searchKey == 'title'}"> selected </c:if>>제목</option>
 					<option value="place"
-						<c:if test="${param.searchKey =='place'}"> selected </c:if>>장소</option>
+						<c:if test="${searchKey =='place'}"> selected </c:if>>장소</option>
 				</select> <input type="text" name="searchWord" id="searchWord"
-					value="${param.searchWord}"> <input type="hidden"
+					value="${searchWord}"> <input type="hidden"
 					name="page" value=1> <input type="submit" value="검색">
 			</form>
 		</div>
@@ -55,8 +57,8 @@
 
 		<div class="pagination">
 			<div class="pagination-links">
-				<a href="selectAll.do?searchKey=${param.searchKey}&searchWord=${param.searchWord}&page=${param.page-1}" id="pre_page">이전</a>
-				<a href="selectAll.do?searchKey=${param.searchKey}&searchWord=${param.searchWord}&page=${param.page+1}" id="next_page">다음</a>
+				<a href="selectAll.do?searchKey=${searchKey}&searchWord=${searchWord}&page=${page-1}" id="pre_page">이전</a>
+				<a href="selectAll.do?searchKey=${searchKey}&searchWord=${searchWord}&page=${page+1}" id="next_page">다음</a>
 			</div>
 		</div>
 	</div>

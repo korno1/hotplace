@@ -55,6 +55,6 @@
 	
 	<delete id="par_delete">
 		delete from party where party_num = #{partyNum}
-	</delete>
+	</delete> 
 	
 </mapper>

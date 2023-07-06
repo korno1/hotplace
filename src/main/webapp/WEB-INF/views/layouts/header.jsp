@@ -24,6 +24,7 @@
 			<div id="signUp" class="sign_up_menu headerMenu">회원가입</div>
 			<div id="login" class="login_menu headerMenu">로그인</div>
 			<div id="logout" class="logout_menu headerMenu">로그아웃</div>
+<!-- 			<div id="newMail"class="newMail">N</div> -->
 			<div id="myPage" class="mypage_menu headerMenu">${nick_name}님</div>
 		</div>
 	</div>
@@ -79,7 +80,27 @@
     window.location.href = link;
   });
 });
-	
+// document.addEventListener('DOMContentLoaded', function() {
+// 	$.ajax({
+// 	      url: "/mail/json/newMailCnt.do",
+// 	      data: {
+<%-- 	        recipient_num:'<%= session.getAttribute("num") %>'; --%>
+// 	      },
+// 	      method: 'GET',
+// 	      dataType: 'json',
+// 	      success: function(result) {
+// 	        console.log('ajax...success:', result);
+// 	        if(result.reslut==="OK"){
+// 			document.getElementById("newMail").style.display = "block";
+// 	        }else{
+// 			document.getElementById("newMail").style.display = "none";
+// 	        }
+// 	      },
+// 	      error: function(xhr, status, error) {
+// 	        console.log('xhr.status:', xhr.status);
+// 	      }
+// 	    });
+// 	  }
 let nickName = '<%= session.getAttribute("nick_name") %>';
 	if (nickName == 'null' || nickName == "") {
 	    // 비로그인 상태인 경우

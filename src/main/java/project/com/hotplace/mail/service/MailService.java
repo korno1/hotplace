@@ -40,5 +40,8 @@ public class MailService {
 	public int readOK(MailVO vo) {
 		return dao.readOK(vo);
 	}
+	public int newMailCnt(int recipient_num) {
+		return dao.newMailCnt(recipient_num);
+	}
 	
 }

@@ -1,83 +1,89 @@
 @charset "UTF-8";
-h1 {
-  text-align: center;
-}
+
 .bodyWrap {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.loginText {
+	font-size: 35px;
+	text-align: center;
 }
 
 .loginWrap {
-  width: 300px;
-  padding: 20px;
-  background-color: #f7f7f7;
-  border-radius: 5px;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-}
-
-.loginHead {
-  text-align: center;
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
+	margin-top: 55px;
+	width: 450px;
 }
 
 .inputWrap {
-  margin-bottom: 20px;
+	margin-bottom: 55px;
 }
 
-.emailWrap,
-.pwWrap {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
+.emailWrap {
+	display: flex;
+	align-items: center;
+	margin-bottom: 22px;
 }
 
-.eamilText,
-.pwText {
-  width: 80px;
+.emailInput, .pwInput {
+	flex-grow: 1;
 }
 
-.emailInput,
-.pwInput {
-  flex-grow: 1;
-}
-
-input[type="email"],
-input[type="password"] {
-  width: 100%;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-}
-
-.loginBottmMenu {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-
-.singUp,
-.findId,
-.findPw {
-  cursor: pointer;
+input[type="email"], input[type="password"] {
+	width: 410px;
+	height: 50px;
+	line-height: 50px;
+	border: 1px solid #686868;
+	border-radius: 8px;
+	padding-left: 30px;
+	color: #686868;
+	font-size: 15px;
 }
 
 .loginBtnWrap {
-  text-align: center;
+	text-align: center;
 }
 
 .LoginBtn {
-  padding: 10px 20px;
-  background-color: #337ab7;
-  color: #fff;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
+	width: 440px;
+	height: 50px;
+	display: flex;
+	background-color: #17395C;
+	color: #fff;
+	border: none;
+	border-radius: 25px;
+	cursor: pointer;
+	justify-content: center;
+	align-items: center;
+}
+
+.loginBottmMenu {
+	width:270px;
+	margin:0 auto;
+	display: flex;
+	justify-content: space-around;
+	margin-top: 35px;
+}
+.findId{
+	padding:0px 7px 0px 7px;
+	border-left:1px solid #17395C;
+	border-right:1px solid #17395C;
+}
+
+.singUp, .findId, .findPw {
+	cursor: pointer;
+	font-size: 15px;
+	display:flex;
+	justify-content: center;
+	color:#17395C;
+}
+.singUp:hover, .findId:hover, .findPw:hover{
+	color:#23527c;
+	font-weight:bold;
 }
 
 .LoginBtn:hover {
-  background-color: #23527c;
+	background-color: #23527c;
 }

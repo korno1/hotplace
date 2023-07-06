@@ -4,10 +4,10 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
@@ -15,16 +15,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.extern.slf4j.Slf4j;
+import project.com.hotplace.email.Email;
+import project.com.hotplace.email.EmailSender;
 import project.com.hotplace.member.model.MemberVO;
 import project.com.hotplace.member.service.MemberService;
 
@@ -38,6 +36,12 @@ public class MemberRestController {
 	@Autowired
 	ServletContext sContext;
 
+	@Autowired
+	HttpSession session;
+	
+	@Autowired
+    EmailSender emailSender;
+	
 	@Autowired
 	private MemberService service;
 
@@ -77,7 +81,7 @@ public class MemberRestController {
 		return vo2;
 	}
 
-	@RequestMapping(value = "json/nickNameCheck.do", method = RequestMethod.GET)
+	@RequestMapping(value = "member/json/nickNameCheck.do", method = RequestMethod.GET)
 	@ResponseBody
 	public String nickNameCheck(MemberVO vo) {
 		log.info("nickNameCheck:{}", vo);
@@ -91,21 +95,42 @@ public class MemberRestController {
 		}
 	}
 
-	@RequestMapping(value = "json/emailCheck.do", method = RequestMethod.GET)
+	@RequestMapping(value = "member/json/emailCheck.do", method = RequestMethod.GET)
 	@ResponseBody
 	public String emailCheck(MemberVO vo) {
-		log.info("nickNameCheck:{}", vo);
+		log.info("emailCheck:{}", vo);
 
 		MemberVO vo2 = service.emailCheck(vo);
 		log.info("{}", vo2);
 		if (vo2 == null) {
+			int num = ThreadLocalRandom.current().nextInt(100_000, 1_000_000); // 100000 이상 1000000 미만의 난수 생성
+			String formattedNum = String.format("%06d", num); // 6자리로 포맷팅된 문자열 생성
+			
+			session.setAttribute("authNum", formattedNum);
+			session.setMaxInactiveInterval(5*60);
+			
+			Email email = new Email();
+			String reciver = vo.getEmail(); //받는사람
+			String subject = "[HOTPLACE] 이메일 인증 이메일 입니다"; 
+			String content = System.getProperty("line.separator") + "안녕하세요 회원님" + System.getProperty("line.separator")
+			+ "HOTPLACE 이메일 인증번호는 [" + formattedNum + "] 입니다." + System.getProperty("line.separator"); // 
+			
+			try {
+				email.setReciver(reciver);
+				email.setSubject(subject);
+				email.setContent(content);
+				
+				emailSender.SendEmail(email);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
 			return "{\"result\":\"OK\"}";
 		} else {
 			return "{\"result\":\"NotOK\"}";
 		}
 	}
 
-	@RequestMapping(value = "account/json/insertOK.do", method = RequestMethod.POST)
+	@RequestMapping(value = "member/json/insertOK.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String insertOK(MemberVO vo) {
 		log.info("insert...{}", vo);
@@ -119,7 +144,7 @@ public class MemberRestController {
 		}
 	}
 
-	@RequestMapping(value = "/json/updateOK.do", method = RequestMethod.POST)
+	@RequestMapping(value = "member/json/updateOK.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String updateOK(MemberVO vo) throws IllegalStateException, IOException {
 		log.info("updateOK...{}", vo);
@@ -131,8 +156,7 @@ public class MemberRestController {
 			log.info("fileNameLength:{}", fileNameLength);
 //		if (fileNameLength != 0) {
 			String originalFilename = vo.getMultipartFile().getOriginalFilename();
-			String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
-			String newFilename = vo.getNum() + extension;
+			String newFilename = vo.getNum() + ".png";
 
 			String realPath = sContext.getRealPath("resources/ProfileImage");
 			String filePath = realPath + File.separator + newFilename;
@@ -146,9 +170,9 @@ public class MemberRestController {
 			Graphics2D graphics = thumbnailBufferedImage.createGraphics();
 			graphics.drawImage(originalBufferedImage, 0, 0, 200, 200, null);
 
-			String thumbnailFilePath = realPath + File.separator + vo.getNum() + extension;
+			String thumbnailFilePath = realPath + File.separator + vo.getNum() + ".png";
 			File thumbnailFile = new File(thumbnailFilePath);
-			ImageIO.write(thumbnailBufferedImage, extension.substring(1), thumbnailFile);
+			ImageIO.write(thumbnailBufferedImage, ".png", thumbnailFile);
 
 			int result = service.updateOK(vo);
 			log.info("result:{}", result);
@@ -230,11 +254,13 @@ public class MemberRestController {
 
 	@RequestMapping(value = "/account/json/authCheck.do", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<Object, Object> authCheck(MemberVO vo,HttpServletRequest request, HttpSession session) {
+	public Map<Object, Object> authCheck(HttpServletRequest request, HttpSession session) {
+		log.info("authCheck...inputNum{}", request.getParameter("num"));
+		log.info("authCheck...sessionauthNum{}", session.getAttribute("authNum"));
 		Map<Object, Object> response = new HashMap<Object, Object>();
 		if(request.getParameter("num").equals(session.getAttribute("authNum"))){
 			response.put("result", "OK");
-			if(session.getAttribute("email").toString()!=null) {
+			if(session.getAttribute("email")!=null) {
 			response.put("email", session.getAttribute("email"));
 			session.removeAttribute("email");
 			}

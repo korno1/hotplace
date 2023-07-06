@@ -18,12 +18,12 @@
 	});
 
 	function NickNameCheck() {
-		console.log("NickNameCheck....", $('#nick_name').val());
+		console.log("NickNameCheck....", $('#nickName').val());
 
 		$.ajax({
 			url : "/hotplace/member/json/nickNameCheck.do",
 			data : {
-				nick_name : $('#nick_name').val()
+				nick_name : $('#nickName').val()
 			},
 			method : 'GET',
 			dataType : 'json',
@@ -47,7 +47,9 @@
 	}//end NickNameCheck()...
 	function EmailCheck() {
 		console.log("emailCheck....", $('#email').val());
-
+		$('#emailCheck').html('');
+		const fiveMinutes = 5 * 60;
+		const display = document.getElementById('authTime');
 		$.ajax({
 			url : "/hotplace/member/json/emailCheck.do",
 			data : {
@@ -61,11 +63,14 @@
 				let msg = '';
 				if (obj.result === 'OK') {
 					emailCheck = 1;
-					msg = '사용가능한 이메일입니다.';
+				    $('.emailBtn').attr('onclick', 'authNumCheck()');
+				    $('.emailBtn').text('인증번호 확인');
+					msg = '사용가능한 이메일입니다.<br>발송된 이메일 확인 후 인증 번호를 입력해주세요.';
+					startTimer(fiveMinutes, display);
 				} else {
 					msg = '사용중인 이메일입니다.';
 				}
-				$('#emailCheck').text(msg);
+				$('#emailCheck').html(msg);
 			},
 			error : function(xhr, status, error) {
 				console.log('xhr.status:', xhr.status);
@@ -89,7 +94,7 @@
 		console.log('foodLikes', foodLikes);
 
 		// 필수 입력 필드 검증
-		let nickName = $('#nick_name').val();
+		let nickName = $('#nickName').val();
 		let email = $('#email').val();
 		let pw = $('#pw').val();
 		let pwCheck = $('#pwCheck').val();
@@ -106,30 +111,24 @@
 			alert('비밀번호를 입력해주세요.');
 		} else if (pw !== pwCheck) {
 			alert('입력된 비밀번호가 일치하지 않습니다.');
-		} else if (gender === '') {
-			alert('성별을 선택해주세요.');
-		} else if (food_like === '') {
-			alert('음식 취향을 선택해주세요.');
 		} else if (address === '') {
 			alert('주소를 입력해주세요.');
 			return; // 요청 중단
 		}
-		console.log('필수 입력 필드 검증 done...')
-
 		// 		닉네임,이메일 중복확인 통과 예외 처리
-		if (nickNameCheck !== 1) {
-			console.log('nickNameCheck', nickNameCheck);
+		else if (nickNameCheck !== 1) {
 			alert('닉네임 중복을 확인해주시기 바랍니다.');
 			return; // 요청 중단
 		} else if (emailCheck !== 1) {
-			console.log('emailCheck', emailCheck);
-			alert('이메일 중복을 확인해주시기 바랍니다.');
+			alert('이메일 인증을 확인해주시기 바랍니다.');
 			return; // 요청 중단
+		console.log('필수 입력 필드 검증 done...')
+
 		}
 		$.ajax({
 			url : "/hotplace/member/json/insertOK.do",
 			data : {
-				nick_name : $('#nick_name').val(),
+				nick_name : $('#nickName').val(),
 				email : $('#email').val(),
 				pw : $('#pw').val(),
 				address : $('#address').val(),
@@ -144,7 +143,7 @@
 				let msg = '';
 				if (obj.result === 'OK') {
 					msg = '회원가입에 성공했습니다.';
-					// 					location.reload();
+				    window.location.href = '/hotplace/home';
 				} else {
 					msg = '회원가입에 실패했습니다.';
 				}
@@ -158,7 +157,7 @@
 	}//end insertOK()...
 
 	$(document).ready(function() {
-		$('#nick_name').click(function() {
+		$('#nickName').click(function() {
 			nickNameCheck = 0;
 			$('#nickNameCheck').text('');
 		});
@@ -173,66 +172,116 @@
 		let confirmPassword = document.getElementById("pwCheck");
 
 		if (password !== confirmPassword.value) {
-			confirmPassword.classList.add("error");
+			$('#pwWorng').html('입력된 비밀번호가 일치하지 않습니다.');
 			return false;
 		} else {
-			confirmPassword.classList.remove("error");
+			$('#pwWorng').html('');
 			return true;
 		}
 	}
+	
+	function startTimer(duration, display) {
+		  let timer = duration;
+		  let minutes, seconds;
+
+		  const timerInterval = setInterval(function() {
+		    minutes = parseInt(timer / 60, 10);
+		    seconds = parseInt(timer % 60, 10);
+
+		    minutes = minutes < 10 ? '0' + minutes : minutes;
+		    seconds = seconds < 10 ? '0' + seconds : seconds;
+
+		    display.textContent = minutes + ':' + seconds;
+
+		    if (--timer < 0) {
+		      clearInterval(timerInterval);
+			  emailCheck = 0;
+			  $('.emailBtn').attr('onclick', 'EmailCheck()');
+			  $('.emailBtn').text('이메일 인증');
+			  $('#emailCheck').html('인증번호 입력시간이 초과되었습니다.<br>이메일 인증을 다시 시도해주시기 바랍니다.');
+		    }
+		  }, 1000);
+		}
+	function authNumCheck() {
+		  let message = ''; // 메시지 변수 초기화
+
+		  $.ajax({
+		    url: "json/authCheck.do",
+		    data: {
+		      num : $("#authNum").val()
+		    },
+		    method: 'POST',
+		    dataType: 'json',
+		    success: function(result) {
+		      console.log('ajax...success:', result);
+
+		      if (result.result === "OK") {
+		        // 인증번호가 일치하는 경우
+		        emailCheck=1;
+		        message= "이메일 인증이 완료되었습니다.";
+		      } else if(result.result === "NotOK") {
+		        // 인증번호가 일치하지 않는 경우
+		        message = "인증번호가 일치하지 않습니다.";
+		      }
+
+		      $('#emailCheck').html(message);
+		    },
+		    error: function(xhr, status, error) {
+		      console.log('xhr.status:', xhr.status);
+		    }
+		  });
+		}
 </script>
 </head>
 <body>
 	<h1>회원가입</h1>
-
-	<form onsubmit="insertOK()">
-		<!-- 	<form id="myForm"> -->
-		<table>
-			<tr>
-				<td><label for="nick_name">닉네임:</label></td>
-				<td><input type="text" id="nick_name" name="nick_name"
-					value="닉네임1">
-					<button type="button" onclick="NickNameCheck()" class="myButton">닉네임
-						중복체크</button><br><span id="nickNameCheck"></span></td>
-			</tr>
-			<tr>
-				<td><label for="email">이메일:</label></td>
-				<td><input type="email" id="email" name="email"
-					value="abc@hotplace.com">
-					<button type="button" onclick="EmailCheck()" class="myButton">이메일
-						중복체크</button><br><span id="emailCheck"></span></td>
-			</tr>
-			<tr>
-				<td><label for="pw">비밀번호:</label></td>
-				<td><input type="password" id="pw" name="pw"></td>
-			</tr>
-			<tr>
-				<td><label for="pwCheck">비밀번호 확인:</label></td>
-				<td><input type="password" id="pwCheck" name="pwCheck"
-					oninput="checkPassword()"></td>
-			</tr>
-			<tr>
-				<td><label for="address">주소:</label></td>
-				<td><input type="text" id="address" name="address"
-					value="강남대로 1번길"></td>
-			</tr>
-			<tr>
-				<td><label for="gender">성별:</label></td>
-				<td><input type="radio" name="gender" value="0"> 남자 <input
-					type="radio" name="gender" value="1"> 여자 <input
-					type="radio" name="gender" value="2"> 비공개</td>
-			</tr>
-			<tr>
-				<td><label for="foodlike">음식 선호:</label></td>
-				<td><input type="checkbox" name="foodlike" value="한식">
-					한식 <input type="checkbox" name="foodlike" value="중식"> 중식 <input
-					type="checkbox" name="foodlike" value="일식"> 일식 <input
-					type="checkbox" name="foodlike" value="양식"> 양식</td>
-			</tr>
-			<tr>
-				<td colspan="2"><input type="submit" class="myButton"></td>
-			</tr>
-		</table>
-	</form>
+		<div class="signWrap">
+			<div class="nickNameWrap">	
+				<div class="nickNameTitle signTitle">(*필수)닉네임</div>
+				<div class="nickNameContent signContent">
+				<input type="text" id="nickName" name="nickName" placeholder="닉네임 입력">
+				<button type="button" onclick="NickNameCheck()" class="nickNameBtn signButton">중복확인</button><br>
+				</div>
+				<span id="nickNameCheck"></span>
+			</div>
+			<div class="emailWrap">	
+				<div class="emailTitle signTitle">(*필수)이메일 (로그인시 아이디로 사용)</div>
+				<input type="email" id="email" name="email" placeholder="이메일 입력">
+				<div class="emailAuthWrap">
+					<input type="text" id="authNum" name="authNum" placeholder="인증번호 입력">
+					<span id="authTime"></span>	
+					<button type="button" onclick="EmailCheck()" class="emailBtn signButton">이메일 인증</button>
+				</div>
+					<span id="emailCheck"></span>
+					
+			</div>
+			<div class="pwWrap">	
+				<div class="pwTitle signTitle">(*필수)비밀번호</div>
+				<input type="password" id="pw" name="pw" placeholder="비밀번호 입력">
+				<input type="password" id="pwCheck" name="pwCheck" onchange="checkPassword()" placeholder="비밀번호 재확인">
+				<span id="pwWorng"></span>	
+			</div>
+			<div class="addressWrap">
+				<div class="addressTitle signTitle">(*필수)사는지역</div>
+				<input type="text" id="address" name="address" value="(예시)서울특별시 강남구">
+			</div>
+			<div class="genderWrap">
+				<div class="genderTitle signTitle">성별</div>
+				<input type="radio" name="gender" value="0"><label for="gender">남자</label>
+				<input type="radio" name="gender" value="1"><label for="gender">여자</label>
+				<input type="radio" name="gender" value="2"><label for="gender">비공개</label>
+				<br><span class="genderText">성별 정보는 모임 참여신청시 공개됩니다.</span>
+			</div>
+			<div class="foodLikeWrap">
+				<div class="foodlikeTitle signTitle">음식 취향</div>
+				<span><input type="checkbox" name="foodlike" value="한식"><label for="foodLike">한식</label></span>
+				<span><input type="checkbox" name="foodlike" value="중식"><label for="foodLike">중식</label></span>
+				<span><input type="checkbox" name="foodLike" value="일식"><label for="foodLike">일식</label></span>
+				<span><input type="checkbox" name="foodLike" value="양식"><label for="foodLike">양식</label></span>
+			</div>
+			<div class="submitWrap">
+				<input type="submit" class="signBtn signButton" onclick="insertOK()" value="회원가입">
+			</div>	
+		</div>
 </body>
 </html>

@@ -1,44 +1,85 @@
 @charset "UTF-8";
+
 h1 {
-		text-align: center;
+	text-align: center;
 }
-form {
+
+.signWrap {
+	width: 440px;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
 }
-table {
-	margin-top: 20px;
-	width: 600px;
+
+input[type=text], input[type=email], input[type=password] {
+	width: 440px;
+	height: 50px;
+	padding-left: 18px;
+	border: 1px solid #3D3D3D;
+	border-radius: 8px;
+	box-sizing: border-box;
 }
-td {
-	padding: 5px;
+#nickName {
+	width: 260px;
 }
-label {
-	font-weight: bold;
+.nickNameBtn {
+	width: 150px;
 }
-input[type="text"],
-input[type="email"],
-input[type="password"] {
-	width: 300px;
-	padding: 5px;
-	border: 1px solid #ccc;
-	border-radius: 3px;
+.nickNameContent {
+	display: flex;
+	justify-content: space-between;
 }
-.myButton {
+
+.signTitle {
+	margin: 30px 0px 14px 0px;
+	color: #3E3E3E;
+}
+.emailAuthWrap{
+	display:flex;
+	justify-content: space-between;
+	align-items: baseline;
+}
+#authNum, #pwCheck {
 	margin-top: 10px;
-	padding: 5px 10px;
-	background-color: #337ab7;
+}
+
+#authNum {
+	width: 180px;
+}
+
+.emailBtn {
+	width: 200px;
+}
+
+.signButton {
+	height: 50px;
+	border-radius: 25px;
+	background-color: #17395C;
 	color: #fff;
-	border: none;
-	border-radius: 3px;
+	font-size: 18px;
+	font-weight: 600;
+}
+
+.signButton:hover {
+	background-color: #23527c;
 	cursor: pointer;
 }
-.myButton:hover {
-	background-color: #23527c;
-}
-span {
+.genderText {
 	margin-left: 10px;
 	font-size: 12px;
 	color: #888;
+}
+input[type=radio],input[type=checkbox]{
+	margin-right:8px;
+}
+input[type=radio]+label,input[type=checkbox]+label{
+	margin-right:52px;
+}
+.submitWrap{
+	margin-top:56px;
+}
+.signBtn{
+	width:440px;
+}
+#pwWorng{
+	color:red;
 }

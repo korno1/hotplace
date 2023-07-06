@@ -37,7 +37,7 @@
             <button type="submit">검색</button> 
         </form>
     </div>
-    <div>주소</div>
+    <div id="currentAddress">주소</div>
     <ul id="placesList"></ul>
 
     <script>

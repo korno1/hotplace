@@ -98,9 +98,9 @@
 function insertMail(button) {
 	  let buttonClass = $(button).attr('class');
 	  let num = buttonClass.match(/\d+/)[0];
-	  
-	  let width = 800; // 팝업창의 너비
-	  let height = 600; // 팝업창의 높이
+
+	  let width = 840; // 팝업창의 너비
+	  let height = 700; // 팝업창의 높이
 
 	  // 브라우저 사이즈 측정
 	  let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
@@ -110,9 +110,9 @@ function insertMail(button) {
 	  let left = (screenWidth - width) / 2;
 	  let top = (screenHeight - height) / 2;
 
-	  // 팝업창열기
-	  window.open('../mail/insert.do?num=' + num, 'Popup', 'width=' + width + ',height=' + height + ',left=' + left + ',top=' + top);
-	}	
+	  // 팝업창 열기
+	  window.open('../mail/insert.do?num=' + num, 'Popup', 'width=' + width + ',height=' + height + ',left=' + left + ',top=' + top + ',resizable=no');
+}
 function byeOK(button) {
 	  let buttonClass = $(button).attr('class');
 	  let num = buttonClass.match(/\d+/)[0];

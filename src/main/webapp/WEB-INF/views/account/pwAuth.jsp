@@ -108,7 +108,7 @@ let authResult=0;
 				let msg = '';
 				if (obj.result === 'OK') {
 					msg = '비밀번호를 변경했습니다.';
-				    window.location.href = '../login.do';
+				    window.location.href = '/hotplace/account/login.do';
 				} else {
 					msg = '비밀번호 변경이 실패되었습니다.';
 				}

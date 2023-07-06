@@ -1,0 +1,53 @@
+@charset "UTF-8";
+
+.not_body {
+	text-align: center;
+/* 	display: flex; */
+}
+
+.not_header{
+	display: flex;
+	border-top: 1px solid gray;
+}
+
+.not_content{
+	display: flex;
+	flex-direction: column;
+	border-top: 1px solid gray;
+}
+
+.not_selectOne{
+	display: flex;	
+	border-bottom: 1px solid gray;
+	align-items: center;
+}
+
+.not_title, .not_content_title{
+	width: 300px;
+}
+
+.not_writer, .not_content_writer{
+	width: 100px;
+}
+.not_wdate, .not_content_wdate{
+	width: 100px;
+}
+.not_vcount, .not_content_vcount{
+	width: 50px;
+}
+
+.not_search {
+	margin-top: 10px;
+	display: flex;
+	justify-content: center;
+}
+
+.change_page {
+	display: flex;
+	margin-top: 10px;
+}
+
+.next_page {
+	margin-left: 5px;
+	margin-right: auto;
+}

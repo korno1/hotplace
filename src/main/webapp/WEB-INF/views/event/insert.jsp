@@ -17,10 +17,24 @@
 </style>
 
 <script type="text/javascript">
-
+	
+	let date;
+	
 	$(function(){
+		date = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, -8);
+		$('#deadline').val(date);
+		$('#deadline').attr('min', date);
 		let eve_content;
+		
+		
 	});
+	
+	function setMin(){
+		if($('#deadline').val() < date){
+			alert('현재 시간보다 이전의 시간입니다.');
+			$('#deadline').val(date);
+		}
+	}
 	
 // 	function insertOK(){
 // 		let form = $('#file')[0].files[0];
@@ -98,7 +112,7 @@
 	<div>
 		<div>
 			<input type="text" name="title" id="title" placeholder="제목" onfocus="this.placeholder=''" onblur="this.placeholder='제목'" style="border:0 solid black; outline: none;" value="">
-			<span><input type="datetime-local" name="deadline" id="deadline"></span>
+			<span><input type="datetime-local" name="deadline" id="deadline" onchange="setMin()"></span>
 		</div>
 		<hr>
 		<div>

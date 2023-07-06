@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>이벤트</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<link rel="stylesheet" href="../resources/css/notice/button.css">
+<link rel="stylesheet" href="../resources/css/event/list.css">
 
 <script type="text/javascript">
 // 	let urlStr = window.location.search;
@@ -91,21 +91,47 @@
 	 				let tag_vos = '';
 					
 	 				$.each(arr, function(index, vo){
-	 					let nwdate = vo.wdate.substring(0,16);
+	 					let nwdate = vo.wdate.substring(0,11);
+	 					let deadline;
+	 					if(vo.deadline != null){
+	 						deadline = vo.deadline.substring(0,11);
+	 					}
+	 					let today = new Date();
+	 					
+	 					if(new Date(vo.deadline) < today){
+	 						tag_vos += `
+	 							<div class="eve_selectOne" onclick="location.href='selectOne.do?num=\${vo.num}'" style="cursor:pointer">
+	 							<div class="eve_content_title">
+	 								<span class="event_check">종료</span>
+	 								<span class="vo_title">\${vo.title}</span>
+	 							</div>
+	 						`;
+	 					}
+	 					else{
+	 						tag_vos += `
+	 							<div class="eve_selectOne" onclick="location.href='selectOne.do?num=\${vo.num}'" style="cursor:pointer">
+	 							<div class="eve_content_title">
+	 								<span class="event_check">진행중</span>
+	 								<span class="vo_title">\${vo.title}</span>
+	 							</div>
+	 						`;
+	 					}
+	 					
 	 					tag_vos +=`
-	 						<tr onclick="location.href='selectOne.do?num=\${vo.num}'" style="cursor:pointer">
-	 							<td>\${vo.title}</td>
-	 							<td>\${vo.writer}</td>
-	 							<td>\${nwdate}</td>
-	 							<td>\${vo.viewCount}</td>
-	 						</tr>
+	 							<div class="eve_content_writer" id="dddd_writer">\${vo.writer}</div>
+	 							<div class="eve_content_wdate">\${nwdate}</div>
+	 							<div class="eve_content_deadline">\${deadline}</div>
+	 							<div class="eve_content_vcount">\${vo.viewCount}</div>
+	 						</div>
 	 					`;
 						
+	 					
 	 				}); // end for-each
 	 				
 	 				let pr_nx = `
 	 					<button id="eve_pre_page">이전</button>
 	 					<button id="eve_next_page">다음</button>
+	 					<a href="insert.do" id="event_insert">글작성</a>
 	 				`;
 					
 	 				$('#vos').html(tag_vos);
@@ -220,50 +246,43 @@
 <body>
 	<h1>이벤트</h1>
 
-	<table border="1" style="border-collapse: collapse">
-		<thead>
-			<tr>
-				<th>제목</th>
-				<th>작성자</th>
-				<th>작성일</th>
-				<th>조회수</th>
-			</tr>
-		</thead>
+	<div class="eve_body">
+		<div class="eve_header">
+			<div class="eve_title">제목</div>
+			<div class="eve_writer">작성자</div>
+			<div class="eve_wdate">작성일</div>
+			<div class="eve_deadline">마감일</div>
+			<div class="eve_vcount">조회수</div>
+		</div>
 			
-		<tbody id="vos">
+		<div class="eve_content" id="vos">
 
 		
-		</tbody>
+		</div>
+	</div>
+	
+	<div class="eve_footer">
+		<div class="eve_search">
+			<form id="searchForm">
+				<select id="searchKey" name="searchKey">
+					<option value="title" <c:if test="${param.searchKey == 'title'}"> selected </c:if>>제목</option>
+					<option value="content" <c:if test="${param.searchKey =='content'}"> selected </c:if>>내용</option>
+				</select>
+				<input type="text" name="searchWord" id="searchWord" value="${param.searchWord}">
+				<input type="hidden" name="page" value=1>
+				<button type="submit">검색</button>
+			</form>
+		</div>
 		
-		<tfoot>
-		</tfoot>
-	</table>
-	
-	<div style="width:30%; display:inline-block">
-		<form id="searchForm">
-		<select id="searchKey" name="searchKey">
-			<option value="title" <c:if test="${param.searchKey == 'title'}"> selected </c:if>>제목</option>
-			<option value="content" <c:if test="${param.searchKey =='content'}"> selected </c:if>>내용</option>
-		</select>
-		<input type="text" name="searchWord" id="searchWord" value="${param.searchWord}">
-		<input type="hidden" name="page" value=1>
-<!-- 		<button onclick="searchList()">검색</button> -->
-		<button type="submit">검색</button>
-		</form>
-	</div>
-	
-	<div style="width:45%; display:inline">
-		<a href="insert.do" id="notice_insert">글작성</a>
-	</div>
-	
-	<div id="eve_pre_next">
+		<div class="eve_change_page" id="eve_pre_next">
+			
+		</div>
 		
 	</div>
-	
 	
 	<script type="text/javascript">
 		if("${grade}" == null || "${grade}" != 1){
-			$('#notice_insert').hide();
+			$('#event_insert').hide();
 		}
 		
 	</script>

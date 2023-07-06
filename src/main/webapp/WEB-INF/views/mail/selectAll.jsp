@@ -59,10 +59,10 @@ $(function() {
             page: page
         };
         if (mailBoxFilter === "send") {
-            data.sender_num = ${param.num};
+            data.sender_num = ${num};
             data.recipient_num = 0;
         } else if (mailBoxFilter === "receive") {
-            data.recipient_num = ${param.num};
+            data.recipient_num = ${num};
             data.sender_num = 0;
         }
         $.ajax({
@@ -122,6 +122,11 @@ $(document).on('click', '.itemLine', function() {
 	<div class="mailFilterWrap block">
 		<div class="mail__receBox receiveBox" onclick="changeBox(this)">받은 쪽지함</div>
 		<div class="mail__sendBox sendBox boxNotSelect" onclick="changeBox(this)">보낸 쪽지함</div>
+	</div>
+	<div class="mailBoxTitle block">
+		<div class="itemTitle headTitle">제목</div>
+		<div class="itemSender headTitle">작성자</div>
+		<div class="itemSendDate headTitle">작성일자</div>
 	</div>
 	<div class="mailBoxWrap block">
 	</div>

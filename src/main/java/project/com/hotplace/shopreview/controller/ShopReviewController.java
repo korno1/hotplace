@@ -117,7 +117,7 @@ public class ShopReviewController {
 	    	
 	    	log.info("?");
 	        // 작성자가 일치하지 않을 경우 처리
-	        return "redirect:/shop/selectOne.do?num=" + vo.getShopNum(); // 에러 페이지로 이동하도록 수정해야 합니다.
+	        return "redirect:/shop/selectOne.do?num=" + vo.getShopNum();
 	    }
 		
 		sreVO.setContent(vo.getContent());

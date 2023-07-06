@@ -13,6 +13,9 @@
 	width:100px;
 	text-align:center;
 }
+.receiveBox:hover, .sendBox:hover, .itemLine:hover{
+	cursor: pointer;
+}
 .receiveBox{
 	border-right:1px solid #666666;
 	font-weight:bold;
@@ -44,6 +47,27 @@
 	align-items: center;
 	justify-content: space-evenly;
 }
+.replyBtnWrap{
+	height:50px;
+	background-color:#F3F3F3;
+	display:flex;
+	justify-content: flex-end;
+    align-items: center;
+}
+.replyBtn{
+	border-radius:15px;
+	background-color:#17395C;
+	margin-right:50px;
+	width:100px;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	color:#ffffff;
+}
+.replyBtn:hover{
+	background-color: #23527c;
+	cursor: pointer;
+}
 .itemTitle{
 	width:500px;
 }
@@ -60,6 +84,7 @@
     display: none;
 }
 .itemContent{
+	border-bottom:1px solid #818181;
 	background-color:#F3F3F3;
 	height:170px;
 	padding:17px 40px 17px 40px;

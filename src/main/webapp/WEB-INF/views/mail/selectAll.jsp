@@ -84,6 +84,9 @@ $(function() {
                         </div>
                         <div class="mailList__itemLine--hide itemLine--hide">
                             <div class="mailList__itemContent itemContent">\${result.vos[i].content}</div>
+                            <div class="mailList__replyBtnWrap replyBtnWrap">
+                            <button class="insertMailBtn\${result.vos[i].sender_num} replyBtn" onclick="insertMail(this)">답장 보내기</button>
+                            </div>
                         </div>
                     </div>
                     `;
@@ -111,6 +114,25 @@ $(function() {
     // 페이지 로드 시 쪽지 목록 갱신
     refreshMailList();
 });
+
+function insertMail(button) {
+	  let buttonClass = $(button).attr('class');
+	  let num = buttonClass.match(/\d+/)[0];
+
+	  let width = 840; // 팝업창의 너비
+	  let height = 700; // 팝업창의 높이
+
+	  // 브라우저 사이즈 측정
+	  let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+	  let screenHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+
+	  // 팝업창 위치 계산
+	  let left = (screenWidth - width) / 2;
+	  let top = (screenHeight - height) / 2;
+
+	  // 팝업창 열기
+	  window.open('../mail/insert.do?num=' + num, 'Popup', 'width=' + width + ',height=' + height + ',left=' + left + ',top=' + top + ',resizable=no');
+}
 
 $(document).on('click', '.itemLine', function() {
     $(this).toggleClass('active').siblings('.itemLine--hide').slideToggle();

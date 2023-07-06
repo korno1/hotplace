@@ -55,3 +55,7 @@ input{
 	color:#ffffff;
 	background-color:#17395C;
 }
+.InsertBtn:hover{
+	background-color: #23527c;
+	cursor: pointer;
+}

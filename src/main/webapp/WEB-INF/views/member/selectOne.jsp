@@ -11,16 +11,17 @@
 //닉네임, 이메일 중복처리를 위한 전역 변수 설정
 let nickNameCheck = 0;
 let emailCheck = 0;
+
 $(function() {
 	console.log("onload....");
 });
 function NickNameCheck() {
-	console.log("NickNameCheck....", $('#nick_name').val());
+	console.log("NickNameCheck....", $('#nickName').val());
 
 	$.ajax({
-		url : "../json/nickNameCheck.do",
+		url : "${pageContext.request.contextPath}/member/json/nickNameCheck.do",
 		data : {
-			nick_name : $('#nick_name').val()
+			nick_name : $('#nickName').val()
 		},
 		method : 'GET',
 		dataType : 'json',
@@ -44,9 +45,11 @@ function NickNameCheck() {
 }//end NickNameCheck()...
 function EmailCheck() {
 	console.log("emailCheck....", $('#email').val());
-
+	$('#emailCheck').html('');
+	const fiveMinutes = 5 * 60;
+	const display = document.getElementById('authTime');
 	$.ajax({
-		url : "../json/emailCheck.do",
+		url : "${pageContext.request.contextPath}/member/json/emailCheck.do",
 		data : {
 			email : $('#email').val()
 		},
@@ -58,11 +61,14 @@ function EmailCheck() {
 			let msg = '';
 			if (obj.result === 'OK') {
 				emailCheck = 1;
-				msg = '사용가능한 이메일입니다.';
+			    $('.emailBtn').attr('onclick', 'authNumCheck()');
+			    $('.emailBtn').text('인증번호 확인');
+				msg = '사용가능한 이메일입니다.<br>발송된 이메일 확인 후 인증 번호를 입력해주세요.';
+				startTimer(fiveMinutes, display);
 			} else {
 				msg = '사용중인 이메일입니다.';
 			}
-			$('#emailCheck').text(msg);
+			$('#emailCheck').html(msg);
 		},
 		error : function(xhr, status, error) {
 			console.log('xhr.status:', xhr.status);
@@ -96,7 +102,7 @@ function updateOK() {
 	uploadFile2(); // formData 업데이트
 
 	// 필수 입력 필드 검증
-	let nickName = $('#nick_name').val();
+	let nickName = $('#nickName').val();
 	let email = $('#email').val();
 	let pw = $('#pw').val();
 	let pwCheck = $('#pwCheck').val();
@@ -113,31 +119,25 @@ function updateOK() {
 	  alert('비밀번호를 입력해주세요.');
 	} else if (pw !== pwCheck) {
 	  alert('입력된 비밀번호가 일치하지 않습니다.');
-	} else if (gender === '') {
-	  alert('성별을 선택해주세요.');
-	} else if (food_like === '') {
-	  alert('음식 취향을 선택해주세요.');
 	} else if (address === '') {
 	  alert('주소를 입력해주세요.');
 	  return; // 요청 중단
 	}
 	
 	// 닉네임, 이메일 중복확인 통과 예외 처리
-	if ('${vo2.nick_name}' !== nickName) {
+	else if ('${vo2.nick_name}' !== nickName) {
 	  if (nickNameCheck !== 1) {
 	    alert('닉네임 중복을 확인해주시기 바랍니다.');
 	    return; // 요청 중단
 	  }
-	}
-	
-	if ('${vo2.email}' !== email) {
+	} else if ('${vo2.email}' !== email) {
 	  if (emailCheck !== 1) {
-	    alert('이메일 중복을 확인해주시기 바랍니다.');
+	    alert('이메일 인증을 확인해주시기 바랍니다.');
 	    return; // 요청 중단
 	  }
 	}
 	formData.append("num", ${param.num});
-	formData.append("nick_name", $('#nick_name').val());
+	formData.append("nick_name", $('#nickName').val());
 	formData.append("email", $('#email').val());
 	formData.append("pw", $('#pw').val());
 	formData.append("address", $('#address').val());
@@ -147,7 +147,7 @@ function updateOK() {
 		  console.log(entry[0] + ": " + entry[1]);
 		}
 	$.ajax({
-	 url: "../json/updateOK.do",
+	 url: "${pageContext.request.contextPath}/member/json/updateOK.do",
 	 data: formData,
 	 method: 'POST',
 	 dataType: 'json',
@@ -174,7 +174,7 @@ function updateOK() {
 
 function deleteOK() {
 	$.ajax({
-		url : "../json/deleteOK.do",
+		url : "${pageContext.request.contextPath}/member/json/deleteOK.do",
 		data : {
 			num : ${param.num},
 		},
@@ -200,7 +200,7 @@ function deleteOK() {
 
 //닉네임,이메일 중복체크 후 input태그 선택 시, 중복체크 결과 초기화 시키기
 $(document).ready(function() {
-	$('#nick_name').click(function() {
+	$('#nickName').click(function() {
 		//전역변수 초기화
 		nickNameCheck = 0;
 		// 중복확인 결과 텍스트 초기화
@@ -223,12 +223,10 @@ function checkPassword() {
 	
 	//1번째=2번째 확인
 	if (password !== confirmPassword.value) {
-		//CSS error 클래스 등록
-		confirmPassword.classList.add("error");
+		$('#pwWorng').html('입력된 비밀번호가 일치하지 않습니다.');
 		return false;
 	} else {
-		//CSS error 클래스 제거
-		confirmPassword.classList.remove("error");
+		$('#pwWorng').html('');
 		return true;
 	}
 }
@@ -264,82 +262,155 @@ function uploadFile() {
     };
     reader.readAsDataURL(file);
 }
+function startTimer(duration, display) {
+	  let timer = duration;
+	  let minutes, seconds;
+
+	  const timerInterval = setInterval(function() {
+	    minutes = parseInt(timer / 60, 10);
+	    seconds = parseInt(timer % 60, 10);
+
+	    minutes = minutes < 10 ? '0' + minutes : minutes;
+	    seconds = seconds < 10 ? '0' + seconds : seconds;
+
+	    display.textContent = minutes + ':' + seconds;
+
+	    if (--timer < 0) {
+	      clearInterval(timerInterval);
+		  emailCheck = 0;
+		  $('.emailBtn').attr('onclick', 'EmailCheck()');
+		  $('.emailBtn').text('이메일 인증');
+		  $('#emailCheck').html('인증번호 입력시간이 초과되었습니다.<br>이메일 인증을 다시 시도해주시기 바랍니다.');
+	    }
+	  }, 1000);
+	}
+function authNumCheck() {
+	  let message = ''; // 메시지 변수 초기화
+
+	  $.ajax({
+	    url: "${pageContext.request.contextPath}/account/json/authCheck.do",
+	    data: {
+	      num : $("#authNum").val()
+	    },
+	    method: 'POST',
+	    dataType: 'json',
+	    success: function(result) {
+	      console.log('ajax...success:', result);
+
+	      if (result.result === "OK") {
+	        // 인증번호가 일치하는 경우
+	        emailCheck=1;
+	        message= "이메일 인증이 완료되었습니다.";
+	      } else if(result.result === "NotOK") {
+	        // 인증번호가 일치하지 않는 경우
+	        message = "인증번호가 일치하지 않습니다.";
+	      }
+
+	      $('#emailCheck').html(message);
+	    },
+	    error: function(xhr, status, error) {
+	      console.log('xhr.status:', xhr.status);
+	    }
+	  });
+	}
 </script>
 </head>
 <body>
 	<h1>회원정보</h1>
 	<div class="memberInfoWrap block">
-		<div class="memberInfo__leftTab">
-			<div class="memberInfo__profile myTitle">프로필 사진</div>
-			<div class="memberInfo__nickName myTitle">닉네임</div>
-			<div class="memberInfo__email myTitle">이메일 주소</div>
-			<div class="memberInfo__pw myTitle">비밀 번호</div>
-			<div class="memberInfo__address myTitle">사는 지역</div>
-			<div class="memberInfo__gender myTitle">성별</div>
-			<div class="memberInfo__foodLike myTitle">음식 취향</div>
-		</div>
-		<div class="memberInfo__rightTab">
-			<div class="memberInfo__imageTab__content myContent">
+			<div class="memberInfo__imageTab__content">
 				<div class="memberInfo__image">
-					<img id="preview" width="100px"
-						src="../resources/ArrowSource/default.png"
-						>
-<%-- 						src="../resources/ProfileImage/${vo2.num}.png" --%>
-<!-- 						> -->
+					<img id="preview" width="100px" src="${pageContext.request.contextPath}/resources/ProfileImage/${vo2.num}.png"
+					onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/resources/ProfileImage/default.png';">
 				</div>
 				<div class="memberInfo__imageBtn">
+					<label class="imageFileBtn" for="imageFile">찾아보기</label>
 					<input type="file" id="imageFile" accept="image/*"
-						onchange="uploadFile()">
+						onchange="uploadFile()"><br>
+					<span class="fileUploadText">회원 프로필 사진으로 사용될 이미지를 등록해 주세요. 이미지는 png,jpg,jpeg 확장자만 등록이 가능하며 3mb이하만 허용됩니다.</span>
 				</div>
 			</div>
-			<div class="memberInfo__nickName__content myContent">
-				<input type="text" id="nick_name" name="nick_name"
-					value="${vo2.nick_name}">
-				<button type="button" onclick="NickNameCheck()" class="myButton">닉네임
-					중복체크</button>
-				<span id="nickNameCheck"></span>
+		<div class="memberInfo__table">
+			<div class="memberInfo__tr1 memberInfo__tr">
+				<div class="memberInfo__nickNameTitle myTitle">닉네임</div>
+				<div class="memberInfo__nickName__content myContent">
+					<input type="text" id="nickName" name="nickName"
+						value="${vo2.nick_name}">
+					<button type="button" onclick="NickNameCheck()" class="myButton">중복확인</button>
+					<span id="nickNameCheck"></span>
+				</div>
 			</div>
-			<div class="memberInfo__email__content myContent">
-				<input type="email" id="email" name="email" value="${vo2.email}">
-				<button type="button" onclick="EmailCheck()" class="myButton">이메일
-					중복체크</button>
-				<span id="emailCheck"></span>
+			<div class="memberInfo__trSpan memberInfo__tr">
+				<div class="memberInfo__nickNameTitle myTitle">아이디(이메일)</div>
+				<div class="memberInfo__email__content myContent">
+					<input type="email" id="email" name="email" value="${vo2.email}">
+					<button type="button" onclick="EmailCheck()" class="emailBtn myButton">이메일 인증</button>
+				</div>
 			</div>
-			<div class="memberInfo__pw__content myContent">
-				<input type="password" id="pw" name="pw" value="${vo2.pw}">
-				<input type="password" id="pwCheck" name="pwCheck"
-					oninput="checkPassword()" value="${vo2.pw}"> <span>
-					특수문자(예: !@#$ 등) 1자 이상을 포함한 10~16 글자의 비밀번호로 설정해주세요. </span>
+			<div class="memberInfo__tr2 memberInfo__tr">
+				<div class="memberInfo__nickNameTitle myTitle"></div>
+				<div class="memberInfo__email__content myContent">
+					<input type="text" id="authNum" name="authNum" placeholder="인증번호 입력">
+					<span id="authTime"></span>
+					<span id="emailCheck"></span>
+				</div>
 			</div>
-			<div class="memberInfo__address__content myContent">
+			<div class="memberInfo__tr3 memberInfo__tr">
+				<div class="memberInfo__nickNameTitle myTitle">비밀번호</div>
+				<div class="memberInfo__pw__content myContent">
+					<input type="password" id="pw" name="pw" value="${vo2.pw}">
+				</div>
+			</div>
+			<div class="memberInfo__tr4 memberInfo__tr">
+				<div class="memberInfo__pwCheckTitle myTitle">비밀번호 확인</div>
+				<div class="memberInfo__pwCheck__content myContent">
+					<input type="password" id="pwCheck" name="pwCheck"
+						oninput="checkPassword()" value="${vo2.pw}">
+					<span id="pwWorng"></span>	
+				</div>
+			</div>
+			<div class="memberInfo__tr5 memberInfo__tr">
+				<div class="memberInfo__pwCheckTitle myTitle">주소지</div>
+				<div class="memberInfo__address__content myContent">
 				<input type="text" id="address" name="address"
 					value="${vo2.address}">
-			</div>
-			<div class="memberInfo__gender__content myContent">
-				<div>
-					<input type="radio" name="gender" value="0"
-						${vo2.gender == '0' ? 'checked' : ''}> 남자 <input
-						type="radio" name="gender" value="1"
-						${vo2.gender == '1' ? 'checked' : ''}> 여자 <input
-						type="radio" name="gender" value="2"
-						${vo2.gender == '2' ? 'checked' : ''}> 비공개
 				</div>
 			</div>
-			<div class="memberInfo__foodLike__content myContent">
-				<input type="checkbox" name="foodlike" value="한식"
-					${vo2.food_like.contains('한식') ? 'checked' : ''}> 한식 <input
-					type="checkbox" name="foodlike" value="중식"
-					${vo2.food_like.contains('중식') ? 'checked' : ''}> 중식 <input
-					type="checkbox" name="foodlike" value="일식"
-					${vo2.food_like.contains('일식') ? 'checked' : ''}> 일식 <input
-					type="checkbox" name="foodlike" value="양식"
-					${vo2.food_like.contains('양식') ? 'checked' : ''}> 양식
+			<div class="memberInfo__tr6 memberInfo__tr">
+				<div class="memberInfo__genderTitle myTitle">성별</div>
+				<div class="memberInfo__gender__content myContent">
+				<div>
+					<input type="radio" name="gender" value="0"	${vo2.gender == '0' ? 'checked' : ''}>
+					<label for="gender">남자</label>
+					<input type="radio" name="gender" value="1" ${vo2.gender == '1' ? 'checked' : ''}>
+					<label for="gender">여자</label>
+					<input type="radio" name="gender" value="2" ${vo2.gender == '2' ? 'checked' : ''}>
+					<label for="gender">비공개</label>
+				</div>
+				</div>
 			</div>
-		</div>
+			<div class="memberInfo__tr7 memberInfo__tr">
+				<div class="memberInfo__genderTitle myTitle">음식 선호</div>
+				<div class="memberInfo__foodLike__content myContent">
+				<input type="checkbox" name="foodlike" value="한식" ${vo2.food_like.contains('한식') ? 'checked' : ''}>
+				<label for="foodlike">한식</label>
+				<input type="checkbox" name="foodlike" value="중식" ${vo2.food_like.contains('중식') ? 'checked' : ''}>
+				<label for="foodlike">중식</label>
+				<input type="checkbox" name="foodlike" value="일식" ${vo2.food_like.contains('일식') ? 'checked' : ''}>
+				<label for="foodlike">일식</label>
+				<input type="checkbox" name="foodlike" value="양식" ${vo2.food_like.contains('양식') ? 'checked' : ''}>
+				<label for="foodlike">양식</label>
+			</div>
+			</div>
+		</div><!-- end table -->
 	</div>
 	<div class="memberInfo__btnWrap">
-		<button onclick="updateOK()">회원수정</button>
-		<button onclick="deleteOK()">회원삭제</button>
+		<div class="myTitle">
+		<button class="deleteBtn" onclick="deleteOK()">회원탈퇴</button>
+		</div>
+		<div class="memberInfo__updateBtn">
+		<button class="updatedBtn" onclick="updateOK()">회원수정</button>
+		</div>
 	</div>
 </body>
 </html>

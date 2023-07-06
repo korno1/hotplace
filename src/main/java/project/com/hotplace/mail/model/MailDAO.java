@@ -9,6 +9,7 @@ public interface MailDAO {
 	int insertOK(MailVO vo);
 	int deleteOK(MailVO vo);
 	int readOK(MailVO vo);
+	int newMailCnt(int recipient_num);
 	
 	
 }

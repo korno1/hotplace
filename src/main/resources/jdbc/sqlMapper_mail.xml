@@ -84,6 +84,10 @@
 		Mail(mail_num,title,content,sender_num,recipient_num)
 		VALUES(mai_sequence.nextval,#{title},#{content},#{sender_num},#{recipient_num})
 	</insert>
+	<insert id="MAI_NEW_CNT"
+		parameterType="project.com.hotplace.mail.model.MailVO">
+	  	SELECT COUNT(*) FROM mail WHERE read_flag=1 AND recipient_num = #{recipient_num}
+	</insert>
 	<update id="READOK"
 		parameterType="project.com.hotplace.mail.model.MailVO">
 		update Mail set read_flag=1 where mail_num = #{mail_num}

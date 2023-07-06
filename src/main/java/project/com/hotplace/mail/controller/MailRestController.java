@@ -54,6 +54,19 @@ public class MailRestController {
 	    
 	    return response;
 	}
+	@RequestMapping(value = "/mail/json/newMailCnt.do", method = RequestMethod.GET)
+	@ResponseBody
+	public String newMailCnt(int recipient_num) {
+		
+		int result = service.newMailCnt(recipient_num);
+		log.info("newMailCnt...{}", result);
+		
+		if (result == 1) {
+			return "{\"result\":\"OK\"}";
+		} else {
+			return "{\"result\":\"NotOK\"}";
+		}
+	}
 	@RequestMapping(value = "/mail/json/selectAll_admin.do", method = RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> selectAll_admin(String searchKey, String searchWord, int page) {
@@ -108,7 +121,6 @@ public class MailRestController {
 			}
 			
 	}
-	
 	
 	@RequestMapping(value = "/mail/json/deleteOK.do", method = RequestMethod.POST)
 	@ResponseBody

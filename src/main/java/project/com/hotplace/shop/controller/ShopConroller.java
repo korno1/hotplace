@@ -149,4 +149,10 @@ public class ShopConroller {
 	    return "shop/selectOne.tiles";
 	}
 	
+	@RequestMapping(value = "/test.do", method = RequestMethod.GET)
+	public String test() {
+
+		return "shop/test";
+	}
+	
 }

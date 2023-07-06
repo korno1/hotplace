@@ -3,7 +3,7 @@
 <html>
 <head>
     <script>
-function handleSubmit(event) {
+	function handleSubmit(event) {
     event.preventDefault(); // 기본 제출 동작 막기
 
     // form 요소 찾기
@@ -14,7 +14,7 @@ function handleSubmit(event) {
 
     // AJAX 요청 보내기
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "insertOK.do");
+    xhr.open("POST", "updateOK.do");
     xhr.onload = function() {
         // 요청이 완료되었을 때 처리할 로직 작성
         if (xhr.status === 200) {
@@ -27,16 +27,6 @@ function handleSubmit(event) {
 
     // 작업 완료 후 창 닫기
 }
-function showImagePreview(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            var imagePreview = document.getElementById("imagePreview");
-            imagePreview.src = e.target.result;
-        };
-        reader.readAsDataURL(input.files[0]);
-    }
-}
 </script>
     <meta charset="UTF-8">
     <title>Insert title here</title>
@@ -45,28 +35,26 @@ function showImagePreview(input) {
     <form id="reviewForm" enctype="multipart/form-data">
    		<div>
             <label for="image">Image:</label>
-            <input type="file" name="multipartFile" accept="image/*" onchange="showImagePreview(this)">
-        </div>
-        <div>
-            <img id="imagePreview" src="#" alt="Image Preview" style="max-width: 200px; max-height: 200px;">
+            <img id="reviewImg" src="../../resources/ShopReviewImage/${vo.saveName}" width=100px>
         </div>
         <div>
             <label for="content">Content:</label>
-            <textarea id="content" name="content" rows="4" cols="50"></textarea>
+             <textarea id="content" name="content" rows="4" cols="50">${vo.content}</textarea>
         </div>
         <div>
             <label for="rate">Rate:</label>
             <select id="rated" name="rated">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
+                <option value="1" ${vo.rated == 1 ? 'selected' : ''}>1</option>
+                <option value="2" ${vo.rated == 2 ? 'selected' : ''}>2</option>
+                <option value="3" ${vo.rated == 3 ? 'selected' : ''}>3</option>
+                <option value="4" ${vo.rated == 4 ? 'selected' : ''}>4</option>
+                <option value="5" ${vo.rated == 5 ? 'selected' : ''}>5</option>
             </select>
         </div>
          <div>
             <input type="hidden" name="writerName" value="${param.nickName}">
-            <input type="hidden" name="shopNum" value="${param.num}">
+            <input type="hidden" name="num" value="${vo.num}">
+            <input type="hidden" name="shopNum" value="${vo.shopNum}">
         </div>
         <div>
             <input type="submit" value="확인" onclick="handleSubmit(event)">

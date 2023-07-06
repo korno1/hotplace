@@ -26,6 +26,13 @@ public class ShopReviewDAOimpl implements ShopReviewDAO {
 
 		return sqlSession.selectList("SRE_SELECT_ALL", vo);
 	}
+	
+	@Override
+	public ShopReviewVO selectOne(ShopReviewVO vo) {
+		log.info("selectOne()...");
+		
+		return sqlSession.selectOne("SRE_SELECT_ONE", vo);
+	}
 
 	@Override
 	public int insert(ShopReviewVO vo) {
@@ -42,10 +49,10 @@ public class ShopReviewDAOimpl implements ShopReviewDAO {
 	}
 
 	@Override
-	public int delete(ShopReviewVO vo) {
+	public int delete(int num) {
 		log.info("delete()...");
 		
-		return sqlSession.delete("SRE_DELETE", vo);
+		return sqlSession.delete("SRE_DELETE", num);
 	}
 
 }

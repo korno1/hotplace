@@ -64,7 +64,7 @@ $(function() {
                             <div class="mailList__itemSendDate itemSendDate">\${new Date(result.vos[i].send_date).toLocaleString()}</div>
                             <div class="mailList__itemReadFlag itemReadFlag">\${result.vos[i].read_flag === 0 ? '읽지 않음' : '읽음'}</div>
                 			<div class="mailList__itemDeleteBtn itemDeleteBtn">
-                			<button onclick="deleteOK(\${result.vos[i].mail_num})">삭제</button>
+                			<button class="DeleteBtn" onclick="deleteOK(\${result.vos[i].mail_num})">삭제</button>
 							</div>
                         </div>
                         <div class="mailList__itemLine--hide itemLine--hide">

@@ -9,77 +9,103 @@
 <title>공지사항</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <link rel="stylesheet" href="../resources/css/notice/button.css">
+<link rel="stylesheet" href="../resources/css/notice/list.css">
 <script type="text/javascript"> 
-	$(function(){
-		 history.replaceState({}, null, location.pathname); 
-	})
+// 	$(function(){
+// 		 history.replaceState({}, null, location.pathname); 
+// 	})
+	function listView(searchKey, searchWord, page){
+	    let f = document.createElement('form');
+	    
+	    let sKey;
+	    sKey = document.createElement('input');
+	    sKey.setAttribute('type', 'hidden');
+	    sKey.setAttribute('name', 'searchKey');
+	    sKey.setAttribute('value', searchKey);
+	    
+	    let sWord;
+	    sWord = document.createElement('input');
+	    sWord.setAttribute('type', 'hidden');
+	    sWord.setAttribute('name', 'searchWord');
+	    sWord.setAttribute('value', searchWord);
+	    
+	    let pg;
+	    pg = document.createElement('input');
+	    pg.setAttribute('type', 'hidden');
+	    pg.setAttribute('name', 'page');
+	    pg.setAttribute('value', page);
+	    
+	    f.appendChild(sKey);
+	    f.appendChild(sWord);
+	    f.appendChild(pg);
+	    f.setAttribute('method', 'post');
+	    f.setAttribute('action', 'searchList.do');
+	    document.body.appendChild(f);
+	    f.submit();
+	}
+
+
   
 </script> 
 </head>
 <body>
 	<h1>공지사항</h1>
-<%-- 	<jsp:include page="../top_menujm.jsp"></jsp:include> --%>
-	<table border="1" style="border-collapse: collapse">
-		<thead>
-			<tr>
-				<th>제목</th>
-				<th>작성자</th>
-				<th>작성일</th>
-				<th>조회수</th>
-			</tr>
-		</thead>
-			
-		<tbody>
-			<c:forEach var="vo" items="${vos}">
+
+	<div class="not_body">
+		<div class="not_header">
+			<div class="not_title">제목</div>
+			<div class="not_writer">작성자</div>
+			<div class="not_wdate">작성일</div>
+			<div class="not_vcount">조회수</div>
+		</div>
+		<div class="not_content">
+			<c:forEach var="vo" items="${vos}"> 
 				<fmt:parseDate var="dateFmt" value="${vo.wdate}"  pattern="yyyy-MM-dd HH:mm:ss.SSS" />
 				<fmt:formatDate var="fmtwdate" value="${dateFmt}" pattern="yyyy-MM-dd" />
 				
-				<tr onclick="location.href='selectOne.do?num=${vo.num}'" style="cursor:pointer">
-					<td>${vo.title}</td>
-					<td>${vo.writer}</td>
-					<td>${fmtwdate}</td>
-					<td>${vo.viewCount}</td>
-				</tr>
+				<div class="not_selectOne" onclick="location.href='selectOne.do?num=${vo.num}'" style="cursor:pointer">
+					<div class="not_content_title">${vo.title}</div>
+					<div class="not_content_writer">${vo.writer}</div>
+					<div class="not_content_wdate">${fmtwdate}</div>
+					<div class="not_content_vcount">${vo.viewCount}</div>
+				</div>
 			</c:forEach>
-		</tbody>
+		</div>
+	</div>
+	
+	<div class="not_footer">
+		<div class="not_search">
+			<form action="searchList.do" method="post">
+				<select name="searchKey">
+					<option value="title" <c:if test="${searchKey == 'title'}"> selected </c:if>>제목</option>
+					<option value="content" <c:if test="${searchKey =='content'}"> selected </c:if>>내용</option>
+				</select>
+				<input type="text" name="searchWord" id="searchWord" value="${searchWord}">
+				<input type="hidden" name="page" value=1>
+				<input type="submit" value="검색">
+			</form>
+		</div>
 		
-		<tfoot>
-		</tfoot>
-	</table>
-	
-	<div style="width:30%; display:inline-block">
-		<form action="selectAll.do">
-			<select name="searchKey">
-				<option value="title" <c:if test="${searchKey == 'title'}"> selected </c:if>>제목</option>
-				<option value="content" <c:if test="${searchKey =='content'}"> selected </c:if>>내용</option>
-			</select>
-			<input type="text" name="searchWord" id="searchWord" value="${searchWord}">
-			<input type="hidden" name="page" value=1>
-			<input type="submit" value="검색">
-		</form>
+		<div class="change_page">
+				<a href="javascript:listView('${searchKey}', '${searchWord}', ${page-1})" id="pre_page">이전</a>
+				<a class="next_page" href="javascript:listView('${searchKey}', '${searchWord}', ${page+1})" id="next_page">다음</a>
+				<a href="insert.do">글작성</a>
+		</div>
 	</div>
-	
-	<div style="width:45%; display:inline">
-		<a href="insert.do">글작성</a>
-	</div>
-	
-	<div>
-		<a href="selectAll.do?searchKey=${searchKey}&searchWord=${searchWord}&page=${page-1}" id="pre_page">이전</a>
-		<a href="selectAll.do?searchKey=${searchKey}&searchWord=${searchWord}&page=${page+1}" id="next_page">다음</a>
-	</div>
-	
 	
 	
 	<script type="text/javascript">
 		if(${page}==1){
 // 			$('#pre_page').hide();
 			$('#pre_page').click(function(){
+				alert('첫번째 페이지입니다.');
 				return false;
 			});
 		}
 		if((${page}*5) >= ${cnt}){
 // 			$('#next_page').hide();
 			$('#next_page').click(function(){
+				alert('마지막 페이지입니다.');
 				return false;
 			});
 		}

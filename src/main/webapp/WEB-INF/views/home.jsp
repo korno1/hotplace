@@ -68,20 +68,20 @@
         <div>집 주변에 이런게 있어요</div>
         <div class="shop-container">
             <div class="arrow left-arrow" onclick="slideLeft()">
-                <img id="prevArrow" width="30px" src="../resources/ArrowSource/Left.png">
+                <img id="prevArrow" width="30px" src="resources/ArrowSource/Left.png">
             </div>
             <div class="shop-items">
                 <c:forEach var="vo" items="${vos}" varStatus="loop">
                     <div class="shop-item" onClick="selectOne('${vo.num}')">
                         <div>
-                            <img id="symbol" width="200px" src="../resource/ShopSymbol/${vo.symbol}">
+                            <img id="symbol" width="200px" src="resources/ShopSymbol/${vo.symbol}">
                         </div>
                         <div>${vo.name}</div>
                     </div>
                 </c:forEach>
             </div>
             <div class="arrow right-arrow" onclick="slideRight()">
-                <img id="nextArrow" width="30px" src="../resource/ArrowSource/Right.png">
+                <img id="nextArrow" width="30px" src="resources/ArrowSource/Right.png">
             </div>
         </div>
     </div>

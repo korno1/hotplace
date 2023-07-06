@@ -6,10 +6,11 @@ public interface ShopReviewDAO {
 	
 	List<ShopReviewVO> selectAll(ShopReviewVO vo);
 	
+	ShopReviewVO selectOne(ShopReviewVO vo);
 	
 	int insert(ShopReviewVO vo);
 
 	int update(ShopReviewVO vo);
 
-	int delete(ShopReviewVO vo);
+	int delete(int num);
 }

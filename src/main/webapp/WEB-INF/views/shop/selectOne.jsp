@@ -11,14 +11,52 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script>
-    function openReviewForm() {
-        window.open('review/insert.do', 'test', 'width=1000, height=1000');
+	function openReviewInsertForm() {
+	  // 사용자 nickname 가져오기
+	  var nickName = '<%= session.getAttribute("nick_name") %>';
+
+	  // shoVO의 num 값 가져오기
+	  var num = '${shoVO.num}';
+	  
+	  if (nickName) {
+	        // 새 창 열기
+	        window.open('review/insert.do?nickName=' + nickName + '&shopNum=' + num, 'test', 'width=1000, height=1000');
+	    } else {
+	        // 로그인되지 않은 경우 처리 (예: 경고 메시지 표시)
+	        alert("로그인이 필요합니다.");
+	    }
+	}
+	
+	function openReviewUpdateForm(num, content, rated) {
+    	// 사용자 nickname 가져오기
+	    var nickName = '<%= session.getAttribute("nick_name") %>';
+
+	    // 새 창 열기
+    	window.open('review/update.do?nickName=' + nickName + '&num=' + num, 'test', 'width=1000, height=1000');
+	}
+	
+	function confirmDelete(num) {
+        var confirmation = confirm("정말로 삭제하시겠습니까?");
+
+        if (confirmation) {
+            deleteReview(num);
+        }
     }
-    
-    function refreshPage() {
-        setTimeout(function() {
-            location.reload();
-        }, 1000); // 1초 후에 페이지 새로고침
+
+    function deleteReview(num) {
+        $.ajax({
+            url: "review/json/delete.do",
+            type: "POST",
+            data: { num: num },
+            success: function(response) {
+                // 삭제 성공 시
+                window.location.reload();
+            },
+            error: function(xhr, status, error) {
+                // 삭제 실패 시
+                alert("삭제에 실패했습니다. 다시 시도해주세요.");
+            }
+        });
     }
 </script>
 
@@ -49,11 +87,14 @@
 <div>
 	<div>
 		<div>후기</div>
-		<div><input type="button" value="후기작성" onclick="openReviewForm()"></div>
+    	<c:if test="${not empty sessionScope.nick_name}">
+        	<!-- 로그인된 경우 -->
+        	<div><input type="button" value="후기작성" onclick="openReviewInsertForm()"></div>
+    	</c:if>
 	</div>
 	<c:forEach var="vo" items="${sreVOS}">
 		<div class="large">
-			<div>그림예정</div>
+			<div><img id="reviewImg" src="../resources/ShopReviewImage/${vo.saveName}"></div>
 			<div>
 				<div>
 					<div>${vo.content}</div>
@@ -61,13 +102,18 @@
 				</div>
 				<div>
 					<div>${vo.rated}</div>
-					<div>${vo.writerName}</div>
+					<div>
+                    	<c:choose>
+                        	<c:when test="${sessionScope.nick_name eq vo.writerName}">
+                            	<a href="#" onclick="openReviewUpdateForm('${vo.num}', '${vo.content}', '${vo.rated}')">수정</a>
+	                             <a href="#" onclick="confirmDelete(${vo.num})">삭제</a>
+    	                    </c:when>
+        	                <c:otherwise>
+            	                ${vo.writerName}
+                	        </c:otherwise>
+                    	</c:choose>
+	                </div>
 				</div>
-				<div>
-                <!-- 수정, 삭제 링크 -->
-                <!-- <a href="update.do?num=${vo.num}" id="update">수정</a> -->
-                <!-- <a href="delete.do?num=${vo.num}" id="delete">삭제</a> -->
-           		</div>
 			</div>
 		</div>
 	</c:forEach>

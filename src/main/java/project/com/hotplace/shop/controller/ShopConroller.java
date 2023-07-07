@@ -31,24 +31,14 @@ public class ShopConroller {
 	ServletContext sContext;
 
 	@RequestMapping(value = "/selectAll.do", method = RequestMethod.GET)
-	public String selectAll(Model model, String searchKey, int pageNum, String searchWord) {
-		log.info("/searchList.do");
-		log.info("searchKey:{}",searchKey);
-		log.info("searchWord:{}",searchWord);
-		
-		List<ShopVO> vos = service.searchList(searchKey,searchWord, pageNum);
-		
-		List<ShopVO> nextVos = service.searchList(searchKey,searchWord,pageNum+1);
-		long cnt = nextVos.stream().count();
-		
-		model.addAttribute("vos", vos);
-		model.addAttribute("cnt", cnt);
+	public String selectAll() {
+		log.info("/selectAll.do");
 		
 		return "shop/selectAll.tiles";
 	}
-	
+/*	
 	@RequestMapping(value = "/searchList.do", method = RequestMethod.GET)
-	public String searchList(Model model, String searchKey, String searchWord, int pageNum) {
+	public String searchList() {
 		log.info("/searchList.do");
 		log.info("searchKey:{}",searchKey);
 		log.info("searchWord:{}",searchWord);
@@ -63,7 +53,7 @@ public class ShopConroller {
 		
 		return "shop/selectAll.tiles";
 	}
-	
+	*/
 	@RequestMapping(value = "/searchLocation.do", method = RequestMethod.GET)
 	public String searchLocation() {
 		log.info("/shop/searchLocation.do");

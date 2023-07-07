@@ -8,12 +8,10 @@ public interface ShopDAO {
 	public int update(ShopVO vo);
 
 	public int delete(ShopVO vo);
-
-	public List<ShopVO> selectAll();
 	
 	public List<ShopVO> selectAllHome();
 
 	public ShopVO selectOne(ShopVO vo);
 
-	public List<ShopVO> searchList(String searchKey, String searchWord, int pageNum);
+	public List<ShopVO> selectAll(String searchKey, String searchWord, int pageNum);
 }

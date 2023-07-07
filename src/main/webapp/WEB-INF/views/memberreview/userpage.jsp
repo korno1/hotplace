@@ -50,9 +50,47 @@ $(function(){
 						</div>
 					`;
 				}
-				
 			}); // end for-each
+			
+			let pr_nx = `
+					<button id="back_page">이전</button>
+					<button id="next_page">다음</button>
+				`;
+			
+// 			let count = 1;
+// 			if(page===1){
+// 				$('#back_page').hide();
+// 					return false;
+// 			}
+				
+// 			if((page*6) >= count){
+// 				 $('#next_page').hide();
+// 					return false;
+// 			}
+// 			$(document).on('click', '#back_page', function(e) {
+// 		    e.preventDefault(); // 기본 링크 동작(페이지 다시로드)을 막습니다.
+// 		    // 이전 페이지 번호 계산
+// 		    let previousPage = parseInt(page) - 1;
+// 		    page = previousPage;
+// 		    let searchKey = $('#searchKey').val();
+// 		    // 업데이트된 페이지 파라미터로 AJAX 요청 수행
+// 		    loadPage(previousPage);
+// 		  });
+		 
+// 			$(document).on('click', '#next_page', function(e) {
+// 				 e.preventDefault(); // 기본 링크 동작(페이지 다시로드)을 막습니다.
+// 				    // 다음 페이지 번호 계산
+// 			    let nextPage = parseInt(page) + 1;
+// 				page = nextPage;
+				
+// 				let searchKey = $('#searchKey').val();
+// 				    // 업데이트된 페이지 파라미터로 AJAX 요청 수행
+// 			    loadPage(nextPage);
+// 			  });
+				
 			$('#par_vos').html(tag_vos);
+			$('#par_page').html(pr_nx);
+			
 			
 		}, // end success
 		
@@ -63,6 +101,7 @@ $(function(){
 	
 	  $('#par_vos').show();
 	  $('#memberreview_list').hide();
+	  document.getElementById("formContainer").style.display = "none";
 
 }); // end onload	
 
@@ -82,6 +121,7 @@ $(function(){
 		
 		$('#par_vos').hide(); // 모임리스트 요소를 숨기도록 설정
 		$('#memberreview_list').show();
+		document.getElementById("formContainer").style.display = "block";
 		
 		$('#insertButton').show();
 		$.ajax({
@@ -187,45 +227,38 @@ $(function(){
 		});
 	}// end mre_selectAll
 	
+	
+	
+	
+	
+	
+	
+	
+	
 	let isFormInserted = false;
 
 	function insert() {
 	    if (!isFormInserted) {
+			$('#par_vos').hide();
+			$('#memberreview_list').hide();
+	    	
 	        // 폼을 감싸는 부모 요소 생성
 	        var formContainer = $('<div id="formContainer"></div>');
 
-	        var form = $('<form></form>');
-
-	        var starRating = $('<ul class="star-rating">' +
-	            '<li class="star fa fa-star" data-rating="1"></li>' +
-	            '<li class="star fa fa-star" data-rating="2"></li>' +
-	            '<li class="star fa fa-star" data-rating="3"></li>' +
-	            '<li class="star fa fa-star" data-rating="4"></li>' +
-	            '<li class="star fa fa-star" data-rating="5"></li>' +
-	            '</ul>');
-	        
-	        
-	        
-	        
-	        var input1 = $('<input>');
-	        input1.attr('type', 'text');
-	        input1.attr('name', 'content');
-	        input1.attr('id', 'mre_content');
-
-	        var input2 = $('<input>');
-	        input2.attr('type', 'hidden'); // 숨김 필드로 변경
-	        input2.attr('name', 'rated');
-	        input2.attr('id', 'mre_rated');
-
-
-	        var button = $('<button></button>');
-	        button.attr('onclick', "insertOK()");
-	        button.text('작성완료');
-
-	        form.append(input1);
-	        form.append(input2);
-	        form.append(starRating);
-	        form.append(button);
+	        var form = $(`
+	        		  <form class="insert-form">
+	        		    <ul class="star-rating">
+	        		      <li class="star fa fa-star" data-rating="1"></li>
+	        		      <li class="star fa fa-star" data-rating="2"></li>
+	        		      <li class="star fa fa-star" data-rating="3"></li>
+	        		      <li class="star fa fa-star" data-rating="4"></li>
+	        		      <li class="star fa fa-star" data-rating="5"></li>
+	        		    </ul>
+	        		    <input type="text" name="content" id="mre_content">
+	        		    <input type="hidden" name="rated" id="mre_rated">
+	        		    <button onclick="insertOK()">작성완료</button>
+	        		  </form>
+	        		`);
 
 	        formContainer.append(form);
 	        formContainer.addClass('show-star-rating');
@@ -244,9 +277,77 @@ $(function(){
 	          });
 
 	        isFormInserted = true;
+	    }else {
+	    	// 초기화 작업 수행
+	    	$('#formContainer').replaceWith(formContainer);
+	        $('#par_vos').show();
+	        $('#memberreview_list').show();
+	        $('.insert-form').remove();
+	        isFormInserted = false;
 	    }
 	}//end insert
 
+
+// 	let isFormInserted = false;
+
+// 	function insert() {
+// 	    if (!isFormInserted) {
+// 			$('#par_vos').hide();
+// 			$('#memberreview_list').hide();
+	    	
+// 	        // 폼을 감싸는 부모 요소 생성
+// 	        var formContainer = $('<div id="formContainer"></div>');
+
+// 	        var form = $('<form></form>');
+// 	        form.attr('class', 'insert-from');
+
+// 	        var starRating = $('<ul class="star-rating">' +
+// 	            '<li class="star fa fa-star" data-rating="1"></li>' +
+// 	            '<li class="star fa fa-star" data-rating="2"></li>' +
+// 	            '<li class="star fa fa-star" data-rating="3"></li>' +
+// 	            '<li class="star fa fa-star" data-rating="4"></li>' +
+// 	            '<li class="star fa fa-star" data-rating="5"></li>' +
+// 	            '</ul>');
+	        
+// 	        var input1 = $('<input>');
+// 	        input1.attr('type', 'text');
+// 	        input1.attr('name', 'content');
+// 	        input1.attr('id', 'mre_content');
+
+// 	        var input2 = $('<input>');
+// 	        input2.attr('type', 'hidden'); // 숨김 필드로 변경
+// 	        input2.attr('name', 'rated');
+// 	        input2.attr('id', 'mre_rated');
+
+
+// 	        var button = $('<button></button>');
+// 	        button.attr('onclick', "insertOK()");
+// 	        button.text('작성완료');
+
+// 	        form.append(input1);
+// 	        form.append(input2);
+// 	        form.append(starRating);
+// 	        form.append(button);
+
+// 	        formContainer.append(form);
+// 	        formContainer.addClass('show-star-rating');
+
+// 	        // 기존 폼을 제거하고 새로운 폼으로 교체
+// 	        $('#formContainer').replaceWith(formContainer);
+	        
+// 	        $(document).ready(function() {
+// 	            $('.star-rating .star').click(function() {
+// 	              var rating = $(this).attr('data-rating');
+// 	              $('.star-rating .star').removeClass('active');
+// 	              $(this).prevAll().addBack().addClass('active');
+// 	              console.log('별점: ' + rating);
+// 	              $('#mre_rated').val(rating); // input2 폼에 선택한 별점 값 설
+// 	            });
+// 	          });
+
+// 	        isFormInserted = true;
+// 	    }
+// 	}//end insert
 
 	function insertOK() {
 	    if (isFormInserted) {
@@ -291,6 +392,7 @@ $(function(){
 	    }
 	}//end insertOK
 
+
 	
 	
 	function updateOK(memberreview_num=0){
@@ -328,7 +430,7 @@ $(function(){
 				data:{
 					memberreview_num:memberreview_num
 				},
-				method:'POST',
+				method:'GET',
 				dataType:'json',
 				success : function(obj) {
 					console.log('ajax...success:', obj);
@@ -345,6 +447,7 @@ $(function(){
 	function par_selectAll(){
 		$('#par_vos').show(); // 모임리스트 요소를 보이도록 설정
 		$('#memberreview_list').hide();
+		document.getElementById("formContainer").style.display = "none";
 		
 		$(function() {
 			console.log('onload...');
@@ -451,12 +554,14 @@ $(function(){
 	
 	
 	<div id="par_vos"></div>
+	<div id="par_page"></div>
 	
 	<div id="memberreview_list"></div>
 	
+	
 	<div id="formContainer"><button onclick="insert()">작성</button></div>
-
 	<hr>
+	
 	
 </body>
 </html>

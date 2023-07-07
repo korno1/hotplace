@@ -33,35 +33,35 @@ public class MemberController {
 	@Autowired
     EmailSender emailSender;
 	
-	@RequestMapping(value = {"member/selectAll.do"}, method = RequestMethod.GET)
+	@RequestMapping(value = "/member/selectAll.do", method = RequestMethod.GET)
 	public String selectAll() {
 		log.info("member/selectAll.do...");
 		
 		return "member/selectAll.tilesLeft";
 	}
 	
-	@RequestMapping(value = {"account/insert.do"}, method = RequestMethod.GET)
+	@RequestMapping(value = "/account/insert.do", method = RequestMethod.GET)
 	public String insert() {
 		log.info("insert.do...");
 		
 		return ".account/insert";
 	}
 	
-	@RequestMapping(value = {"account/findId.do"}, method = RequestMethod.GET)
+	@RequestMapping(value = "/account/findId.do", method = RequestMethod.GET)
 	public String findId() {
 		log.info("findId.do...");
 		
 		return ".account/findId";
 		
 	}
-	@RequestMapping(value = {"account/findPw.do"}, method = RequestMethod.GET)
+	@RequestMapping(value = "/account/findPw.do", method = RequestMethod.GET)
 	public String findPw() {
 		log.info("findPw.do...");
 		
 		return ".account/findPw";
 		
 	}
-	@RequestMapping(value = {"member/mypage.do"}, method = RequestMethod.GET)
+	@RequestMapping(value = "/member/mypage.do", method = RequestMethod.GET)
 	public String mypage(HttpSession session) {
 		log.info("mypage.do...");
 		int num = (int) session.getAttribute("num");
@@ -70,7 +70,7 @@ public class MemberController {
 		
 	}
 	
-	@RequestMapping(value = {"member/selectOne.do"}, method = RequestMethod.GET)
+	@RequestMapping(value = "/member/selectOne.do", method = RequestMethod.GET)
 	public String selectOne(MemberVO vo, Model model) {
 		log.info("member/selectOne.do...");
 		
@@ -82,13 +82,13 @@ public class MemberController {
 		return "member/selectOne.tilesLeft";
 	}
 	
-	@RequestMapping(value = {"account/login.do"}, method = RequestMethod.GET)
+	@RequestMapping(value = "/account/login.do", method = RequestMethod.GET)
 	public String login(MemberVO vo) {
 		log.info("login.do...");
 			return ".account/login";
 		
 	}
-	@RequestMapping(value = {"account/logout.do"}, method = RequestMethod.GET)
+	@RequestMapping(value = "/account/logout.do", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
 		log.info("logout.do...");
 		
@@ -100,7 +100,7 @@ public class MemberController {
 		
 	}
 
-	@RequestMapping(value = "account/idAuth.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/account/idAuth.do", method = RequestMethod.POST)
 	public ModelAndView idAuth(MemberVO vo,HttpSession session, HttpServletRequest request) throws IOException {
 	    vo.setNick_name(request.getParameter("nick_name"));
 
@@ -149,7 +149,7 @@ public class MemberController {
 			return mv;
 		}
 	}
-	@RequestMapping(value = "account/pwAuth.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/account/pwAuth.do", method = RequestMethod.POST)
 	public ModelAndView pwAuth(MemberVO vo,HttpSession session, HttpServletRequest request) throws IOException {
 		vo.setNick_name(request.getParameter("nick_name"));
 		vo.setEmail(request.getParameter("email"));

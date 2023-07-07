@@ -9,113 +9,16 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <link rel="stylesheet" href="../resources/css/faq/list.css">
 <script type="text/javascript">
-// 	let urlStr = window.location.search;
-// 	let urlParams = new URLSearchParams(urlStr);
-	
-// 	let searchKey = "${param.searchKey}";
-// 	let searchWord = "${param.searchWord}";
-// 	$(function(){
-// 		let page;
-// 		if(urlParams.get("page")==null){
-// 			page=1;
-// 		}
-// 		else{
-// 			page = urlParams.get("page");
-// 		}
-		
-// 		$('#searchWord').val("${param.searchWord}");
-// 		$.ajax({
-// 			url: "json/searchList.do",
-// 			data:{
-// 				searchKey: "${param.searchKey}",
-// 				searchWord: "${param.searchWord}",
-// 				page: page,
-// 			},
-// 			method: 'GET',
-// 			dataType: 'json',
-// 			success: function(arr){
-// 				console.log('ajax...',arr);
-// 				let tag_vos = `
-// 					<div>
-// 						<div class="faq_title">
-// 							<span>제목</span>
-// 						</div>
-// 					</div>
-// 				`;
-				
-// 				$.each(arr, function(index, vo){
-// 					tag_vos +=`
-// 						<div style="width:100%">
-// 							<div class="faq_header" onclick="clickPlain(\${vo.num})">
-// 								<span>\${vo.title}</span>
-// 							</div>
-// 							<div id="clickNum\${vo.num}" style="display:none;">
-// 								\${vo.content}
-// 							</div>
-// 							<div class="faq_content" id="atagNum\${vo.num}" style="display:none; text-align:right">
-// 								<a href="update.do?num=\${vo.num}">수정</a>
-// 								<a href="javascript:void(0);" onclick="deleteOK(\${vo.num})">삭제</a>
-// 							</div>
-// 						</div>
-// 					`;
-					
-// 				}); // end for-each
-				
-// 				let pr_nx = `
-// 					<a href="selectAll.do?searchKey=\${searchKey}&searchWord=\${searchWord}&page=\${page-1}" id="faq_pre_page">이전</a>
-// 					<a href="selectAll.do?searchKey=\${searchKey}&searchWord=\${searchWord}&page=\${parseInt(page)+1}" id="faq_next_page">다음</a>
-// 				`;
-// 				$('#faq_div').html(tag_vos);
-// 				$('#faq_pre_next').html(pr_nx);
 
-// 			}, // end success
-			
-// 			error:function(xhr,status,error){
-// 				console.log('xhr.status:', xhr.status);
-// 			} // end error
-// 		}); // end searchList ajax;
-
-// 		$.ajax({
-// 			url: "json/selectAll.do",
-// 			data:{
-// 				searchKey: "${param.searchKey}",
-// 				searchWord: "${param.searchWord}",
-// 			},
-// 			method: 'GET',
-// 			dataType: 'json',
-// 			success: function(cnt){
-// 				console.log('ajax...',cnt);
-// 				if(page==1){
-// 	//	 			$('#pre_page').hide();
-// 					$('#faq_pre_page').click(function(){
-// 						alert('첫번째 페이지입니다.');
-// 						return false;
-// 					});
-// 				}
-// 				if((page*5) >= cnt){
-// 	//	 			$('#next_page').hide();
-// 					$('#faq_next_page').click(function(){
-// 						alert('마지막 페이지입니다.');
-// 						return false;
-// 					});
-// 				}
-	
-// 			}, // end success
-			
-// 			error:function(xhr,status,error){
-// 				console.log('xhr.status:', xhr.status);
-				
-// 			} // end error
-// 		}); // end selectAll ajax;	
-
-		let page = 1;
-		let count;
-		let isSearchPerformed = false;
-		let searchWord = '';
-		let searchKey = '';
+	let page = 1; // 초기화면을 위한 초기화
+	let count; // 게시글 개수
+	let searchWord = ''; // 초기화면을 위한 초기화
+	let searchKey = 'title'; // 초기화면을 위한 초기화
 		
 	$(function(){		
 		function loadPage(page){
+			$('#searchKey').val(searchKey);
+			$('#searchWord').val(searchWord);
 			$.ajax({
 				url: "json/searchList.do",
 	 			data:{
@@ -154,7 +57,8 @@
 	 				
 	 				let pr_nx = `
 	 					<button id="faq_pre_page">이전</button>
-	 					<button id="faq_next_page">다음</button>
+	 					<button class="faq_next_button" id="faq_next_page">다음</button>
+	 					<a href="insert.do">글작성</a>
 	 				`;
 					
 	 				$('#faq_div').html(tag_vos);
@@ -169,9 +73,9 @@
 			}); // end ajax
 		} // end loadPage
 		
-		loadPage(page);
+		loadPage(page); // selectAll.do에 처음화면 로드
 	
-		function countPost(){
+		function countPost(){ // 게시글 개수 계산
 		$.ajax({
 			url: "json/selectAll.do",
 			data:{
@@ -195,23 +99,24 @@
 		}
 		countPost();
 		
-		$(document).on('click', '#faq_pre_page', function(e) {
-		    e.preventDefault(); // 기본 링크 동작(페이지 다시로드)을 막습니다.
-			if(page==1){
+		$(document).on('click', '#faq_pre_page', function(e) { // 이전 버튼 클릭 시 동작
+		    e.preventDefault(); // 기본 링크 동작(페이지 다시로드)을 막음.
+			if(page==1){ // 첫번째 페이지에서 팝업 경고창
 				alert('첫번째 페이지입니다.');
 					return false;
 			}
 		    // 이전 페이지 번호 계산
 		    let previousPage = parseInt(page) - 1;
 		    page = previousPage;
-		    let searchKey = $('#searchKey').val();
-		    // 업데이트된 페이지 파라미터로 AJAX 요청 수행
+		    let searchKey = $('#searchKey').val(); // 페이지-1 로드될 때 현재 searchKey값을 유지 
+		    
+		 	// parameter 수정 후 페이지 다시 로드
 		    loadPage(previousPage);
 		  });
 		 
 		$(document).on('click', '#faq_next_page', function(e) {
-			 e.preventDefault(); // 기본 링크 동작(페이지 다시로드)을 막습니다.
-			 if((page*5) >= count){
+			 e.preventDefault(); // 기본 링크 동작(페이지 다시로드)을 막음.
+			 if((page*5) >= count){ // 마지막 페이지에서 팝업 경고창
 				alert('마지막 페이지입니다.');
 					return false;
 			 }
@@ -219,35 +124,30 @@
 		    let nextPage = parseInt(page) + 1;
 			page = nextPage;
 			
-			let searchKey = $('#searchKey').val();
-			    // 업데이트된 페이지 파라미터로 AJAX 요청 수행
+			let searchKey = $('#searchKey').val(); // 페이지+1 로드될 때 현재 searchKey값을 유지 
+			
+			// parameter 수정 후 페이지 다시 로드
 		    loadPage(nextPage);
 		  });
 			
-		$('#searchForm').submit(function(e) {
-		    e.preventDefault(); // 폼의 기본 동작(페이지 다시로드)을 막습니다.
-		    searchKey = $('#searchKey').val();
-		    searchWord = $('#searchWord').val();
-			countPost(searchKey);
-		    // 업데이트된 검색어로 AJAX 요청 수행
+		// *중요 아래 코드가 없으면 검색어만 바꾸고 검색을 누르지 않고 이전 다음페이지로 넘어가면 searchWord가 검색창에 있는걸로 바뀜 *
+		$('#searchForm').submit(function(e) { // 검색을 눌렀을 때 수행
+		    e.preventDefault(); // 폼의 기본 동작(페이지 다시로드)을 막음.
+		    searchKey = $('#searchKey').val(); // 현재 searchKey값을 가져와서 저장
+		    searchWord = $('#searchWord').val(); // 현재 searchWord값을 가져와서 저장
 		    
+		 	// 검색어에 대한 게시글 개수 계산
+			countPost(searchKey);
+		    
+			// 페이지 1로 초기화하여 첫 번째 페이지를 로드
 		    page = 1;
-		    loadPage(page); // 페이지 1로 초기화하여 첫 번째 페이지를 로드합니다.
-		    isSearchPerformed = true;
+		    loadPage(page); 
 		  });
 	
 	}); // end onload
 	
 	
-	
-// 	function searchList(){
-// 		let sKey = $('#searchKey').val();
-// 		let sWord = $('#searchWord').val();
-// 		console.log('skey:', sKey);
-// 		console.log('sWord:', sWord);
-// 		let url = 'selectAll.do?searchKey=' + sKey + "&searchWord=" + sWord + "&page=1";
-// 		location.replace(url);
-// 	}; // end searchList
+
 	
 	function deleteOK(wnum){
 		console.log('wnum:', wnum);
@@ -273,19 +173,11 @@
 		}); // end ajax;
 	}
 
-	
+	// 게시글을 부드럽게 내려오게 만듬
 	function clickPlain(num){
 		let name = '#clickNum' + num;
 		let tag = '#atagNum' + num;
 		console.log(name);
-// 		if($(name).css("display") == 'none'){
-// 			$(name).css("display", '');
-// 			$(tag).css("display", '');
-// 		}
-// 		else{
-// 			$(name).css("display", 'none');
-// 			$(tag).css("display", 'none');
-// 		}
 		$(name).slideToggle();
 		$(tag).slideToggle();
 	};
@@ -313,21 +205,11 @@
 		</form>
 	</div>
 	
-	<div class="faq_pre_next" id="faq_pre_next">
+	<div class="faq_change_page" id="faq_pre_next">
 	</div>
-	
-	<div class="faq_insert">
-		<a href="insert.do">글작성</a>
-	</div>
-	
-	
-	
 	
 	
 
-	
-	
-		
 	
 </body>
 </html>

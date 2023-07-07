@@ -26,7 +26,11 @@
 	text-align: right;
 }
 
-.faq_pre_next {
-	width: 30%;
-	display: inline;
+.faq_change_page {
+	display: flex;
+}
+
+.faq_next_button{
+	margin-left: 5px;
+	margin-right: auto;
 }

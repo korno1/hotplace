@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import lombok.extern.slf4j.Slf4j;
 import project.com.hotplace.applicants.model.ApplicantsVO;
 import project.com.hotplace.applicants.service.ApplicantsService;
-import project.com.hotplace.faq.model.FaqVO;
-import project.com.hotplace.faq.service.FaqService;
+import project.com.hotplace.party.model.PartyVO;
+import project.com.hotplace.party.service.PartyService;
 
 /**
  * Handles requests for the application home page.
@@ -24,11 +24,9 @@ public class ApplicantsRestController {
 	@Autowired
 	ApplicantsService service;
 	
-	/** 
-	 * Simply selects the home view to render by returning its name.
-	 */
+	@Autowired
+	PartyService service2;
 
-	
 	@RequestMapping(value = "/party/json/AppselectAll.do", method = RequestMethod.GET)
 	@ResponseBody
 	public List<ApplicantsVO> selectAll(ApplicantsVO vo) {
@@ -41,9 +39,9 @@ public class ApplicantsRestController {
 		return vos;
 	}
 	
-	@RequestMapping(value = "/party/json/AppinsertOK.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/party/json/AppinsertOK.do", method = RequestMethod.POST)
 	@ResponseBody
-	public int insertOK(ApplicantsVO vo) {
+	public String insertOK(ApplicantsVO vo) {
 		log.info("/party/json/AppinsertOK.do...{}", vo);
 		// partyNum = parameter
 		// userNum = session
@@ -51,29 +49,69 @@ public class ApplicantsRestController {
 
 		int result = service.insert(vo);
 		
-		return result;
+		String msg = "";
+		
+		if(result==1) {
+			msg = "{\"result\" : 1}";
+		}
+		else msg = "{\"result\" : 0}";
+		
+		
+		return msg;
 	}
 	
-	@RequestMapping(value = "/party/json/AppapproveOK.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/party/json/AppapproveOK.do", method = RequestMethod.POST)
 	@ResponseBody
-	public int approveOK(ApplicantsVO vo) {
-		log.info("/party/json/AppapproveOK.do...{}", vo);
+	public String approveOK(ApplicantsVO vo) {
+		log.info("/party/json/AppapproveOK.do...{}");
 		// applicantsNum = view
 
 		int result = service.approve(vo);
+		String msg = "";
 		
-		return result;
+		if(result==1) {
+			msg = "{\"result\" : 1}"; // {"result" : 1}
+		}
+		else msg = "{\"result\" : 0}";
+		
+		
+		return msg;
 	}
 	
-	@RequestMapping(value = "/party/json/ApprejectOK.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/party/json/ApprejectOK.do", method = RequestMethod.POST)
 	@ResponseBody
-	public int rejectOK(ApplicantsVO vo) {
+	public String rejectOK(ApplicantsVO vo) {
 		log.info("/party/json/ApprejectOK.do...{}", vo);
 		// applicantsNum = view
 
 		int result = service.reject(vo);
 		
-		return result;
+		String msg = "";
+		
+		if(result==1) {
+			msg = "{\"result\" : 1}"; // {"result" : 1}
+		}
+		else msg = "{\"result\" : 0}";
+		
+		
+		return msg;
+	}
+	
+	@RequestMapping(value = "/party/json/deleteOK.do", method = RequestMethod.GET)
+	@ResponseBody
+	public String deleteOK(ApplicantsVO vo) {
+		log.info("/party/json/deleteOK.do...{}", vo);
+		
+		int result = service.delete(vo);
+		
+		String msg = "";
+
+		if (result == 1) {
+			msg = "{\"result\" : 1}";
+		} else
+			msg = "{\"result\" : 0}";
+
+		return msg;
 	}
 	
 	

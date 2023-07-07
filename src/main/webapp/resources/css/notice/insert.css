@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+.not_title_insert{
+	border: 0 solid black;
+	outline: none;
+	width: 800px;
+    height: 30px;
+    font-size: 28px;
+}

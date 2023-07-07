@@ -11,6 +11,14 @@
 <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
 <link rel="stylesheet" href="../resources/css/notice/button.css">
 
+<style>
+  .ck-editor__editable { height: 400px; 
+  						width:800px;
+  						word-wrap: break-word;
+  }
+  .ck-editor__editable p {margin: 0}
+</style>
+
 <script type="text/javascript">
 	
 	$(function(){

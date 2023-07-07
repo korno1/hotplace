@@ -90,5 +90,11 @@ public class PartyDAOimpl implements PartyDAO {
 		sqlSession.update("par_views", vo);
 	}
 
+
+	@Override
+	public int approveOK(PartyVO vo) {
+		return sqlSession.update("par_approveOK", vo);		
+	}
+
 }
  

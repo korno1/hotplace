@@ -52,6 +52,11 @@
 		update party set title=#{title}, max=#{max}, time_limit = TO_DATE(#{timeLimit},'YYYY-MM-DD HH24:MI:SS'), place=#{place}, content=#{content}, dead_line = TO_DATE(#{deadLine},'YYYY-MM-DD HH24:MI:SS')
 		where party_num = #{partyNum}
 	</update>
+
+	<update id="par_approveOK" parameterType="project.com.hotplace.party.model.PartyVO">
+		update party set applicants = applicants + 1
+		where party_num = #{partyNum}
+	</update>
 	
 	<delete id="par_delete">
 		delete from party where party_num = #{partyNum}

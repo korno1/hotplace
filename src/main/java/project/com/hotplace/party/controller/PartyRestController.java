@@ -45,19 +45,4 @@ public class PartyRestController {
 		
 		return vos;
 	}
-	
-//	@RequestMapping(value = "/party/json/selectOne.do", method = RequestMethod.GET)
-//	@ResponseBody
-//	public String selectOne(PartyVO vo, Model model) {
-//		log.info("/par_selectOne.do...");
-//		
-//		service.vCountUp(vo);
-//		
-//		PartyVO vo2 = service.selectOne(vo);
-//		log.info("vo2: {}", vo2);
-//		
-//		model.addAttribute("vo2", vo2);
-//		
-//		return "party/selectOne";
-//	}	
 } 

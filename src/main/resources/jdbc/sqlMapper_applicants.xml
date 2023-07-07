@@ -9,13 +9,13 @@
 		m.num as userNum 
 		from applicants a join member m
 		on (a.user_num = m.num)
-		where a.party_num=#{partyNum} and a.status=#{status}
+		where a.party_num=#{partyNum}
 	</select>
 	
 	
 	<insert id="APP_INSERT" parameterType="project.com.hotplace.applicants.model.ApplicantsVO">
-		insert into applicants(applicants_num, party_num, user_num, comments, status) 
-		values(app_sequence.nextval, #{partyNum}, #{userNum}, #{comments}, #{status})
+		insert into applicants(applicants_num, party_num, user_num, comments) 
+		values(app_sequence.nextval, #{partyNum}, #{userNum}, #{comments})
 	</insert>
 	
 	<update id="APP_APPROVE" parameterType="project.com.hotplace.applicants.model.ApplicantsVO">
@@ -27,8 +27,10 @@
 		update applicants set status=2
 		where applicants_num = #{applicantsNum}
 	</update>
-	
-	
 
+	<delete id="APP_DELETE">
+		delete from applicants where applicants_num = #{applicantsNum}
+	</delete> 
+	
 	
 </mapper>

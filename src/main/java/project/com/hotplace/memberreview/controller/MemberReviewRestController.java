@@ -67,7 +67,7 @@ public class MemberReviewRestController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = {"/memberreview/json/deleteOK.do"}, method = RequestMethod.POST)
+	@RequestMapping(value = {"/memberreview/json/deleteOK.do"}, method = RequestMethod.GET)
 	public Map<String, String> deleteOK(MemberReviewVO vo) {
 		log.info("insertOK.do...{}", vo);
 		

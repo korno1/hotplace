@@ -101,7 +101,7 @@ public class MemberController {
 	}
 
 	@RequestMapping(value = "account/idAuth.do", method = RequestMethod.POST)
-	public ModelAndView idAuth(MemberVO vo,HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public ModelAndView idAuth(MemberVO vo,HttpSession session, HttpServletRequest request) throws IOException {
 	    vo.setNick_name(request.getParameter("nick_name"));
 
 	    MemberVO vo2 = service.idAuth(vo);
@@ -150,7 +150,7 @@ public class MemberController {
 		}
 	}
 	@RequestMapping(value = "account/pwAuth.do", method = RequestMethod.POST)
-	public ModelAndView pwAuth(MemberVO vo,HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public ModelAndView pwAuth(MemberVO vo,HttpSession session, HttpServletRequest request) throws IOException {
 		vo.setNick_name(request.getParameter("nick_name"));
 		vo.setEmail(request.getParameter("email"));
 		

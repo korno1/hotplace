@@ -35,7 +35,7 @@ public class MailController {
 	}
 	
 	@RequestMapping(value = {"mail/selectAll_admin.do"}, method = RequestMethod.GET)
-	public String selectAll_admin() {
+	public String selectAllAdmin() {
 		log.info("mail/selectAll_admin.do...");
 		
 		return "mail/selectAll_admin.tilesLeft";

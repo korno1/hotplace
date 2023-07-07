@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	          link = '/hotplace/party/selectAll.do';
 	          break;
 	        case 'partyAll':
-	          link = '모임_정보_링크';
+	          link = '/hotplace/party/selectAll.do';
 	          break;
 	        case 'memberInfo':
 	          link = '/hotplace/member/selectOne.do?num='+${num};
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	          link = '/hotplace/mail/selectAll.do';
 	          break;
 	        case 'mailAll':
-	          link = '/hotplace/mail/selectAll_admin.do';
+	          link = '/hotplace/mail/selectAllAdmin.do';
 	          break;
 	        default:
 	          link = '/hotplace/member/mypage.do'; // 기본 링크

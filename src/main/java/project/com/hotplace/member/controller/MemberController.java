@@ -28,6 +28,9 @@ import project.com.hotplace.member.service.MemberService;
 public class MemberController {
 	
 	@Autowired
+	HttpSession session;
+	
+	@Autowired
 	MemberService service;
 	
 	@Autowired
@@ -73,7 +76,10 @@ public class MemberController {
 	@RequestMapping(value = "/member/selectOne.do", method = RequestMethod.GET)
 	public String selectOne(MemberVO vo, Model model) {
 		log.info("member/selectOne.do...");
-		
+		Object grade= session.getAttribute("grade");
+		if(grade == null || !grade.equals(1)) {
+		vo.setNum((int)session.getAttribute("num"));
+		}
 		MemberVO vo2 = service.selectOne(vo);
 		log.info("vo2 outinfo...{}",vo2);
 		
@@ -101,7 +107,7 @@ public class MemberController {
 	}
 
 	@RequestMapping(value = "/account/idAuth.do", method = RequestMethod.POST)
-	public ModelAndView idAuth(MemberVO vo,HttpSession session, HttpServletRequest request) throws IOException {
+	public ModelAndView idAuth(MemberVO vo,HttpServletRequest request) throws IOException {
 	    vo.setNick_name(request.getParameter("nick_name"));
 
 	    MemberVO vo2 = service.idAuth(vo);
@@ -150,7 +156,7 @@ public class MemberController {
 		}
 	}
 	@RequestMapping(value = "/account/pwAuth.do", method = RequestMethod.POST)
-	public ModelAndView pwAuth(MemberVO vo,HttpSession session, HttpServletRequest request) throws IOException {
+	public ModelAndView pwAuth(MemberVO vo, HttpServletRequest request) throws IOException {
 		vo.setNick_name(request.getParameter("nick_name"));
 		vo.setEmail(request.getParameter("email"));
 		

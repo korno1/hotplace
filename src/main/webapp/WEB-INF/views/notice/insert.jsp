@@ -14,10 +14,11 @@
 
 <style>
   .ck-editor__editable { height: 400px; 
-  						width:800px;
+/*     						width:800px; */
   						word-wrap: break-word;
   }
   .ck-editor__editable p {margin: 0}
+
 </style>
 
 <script type="text/javascript">
@@ -64,20 +65,22 @@
 <body>
 	<h1>공지사항</h1>
 	<form action="insertOK.do" method="post" enctype="multipart/form-data">
-	<div>
+	<div class="not_write_body">
 		<div>
-			<input class="not_title_insert" type="text" name="title" id="title" onkeyup="titleCheckByte(this, 100)">
+			<input class="not_title_insert" type="text" name="title" id="title" placeholder="제목" onfocus="this.placeholder=''" onblur="this.placeholder='제목'" onkeyup="titleCheckByte(this, 100)">
 		</div>
-		<hr>
-		<div>
-			<textarea name="content" id="content" rows="10" cols="22" placeholder="내용 입력" onfocus="this.placeholder=''" onblur="this.placeholder='내용 입력'" style="border:0 solid black; outline: none"></textarea>
+		<div class="not_textArea">
+			<textarea name="content" id="content" rows="10" cols="22" placeholder="내용 입력" onfocus="this.placeholder=''" onblur="this.placeholder='내용 입력'"></textarea>
+			<span id="checkby">0</span>/4000byte
 		</div>
 		
-		<div>
-			<input type="file" id="file" name="file">
-		</div>
-		<div>
-			<input type="submit" value="작성" class="myButton">
+		<div class="not_write_footer">
+			<div class="not_fileupload">
+				<input type="file" id="file" name="file">
+			</div>
+			<div class="not_insert_button">
+				<input type="submit" value="작성">
+			</div>
 		</div>
 	</div>
 	</form>
@@ -93,7 +96,7 @@
 	             // 키 이벤트 발생 시 실행될 함수
 	            var str = content.getData();
 	     	    var str_len = str.length;
-	     	    var maxByte = 100;
+	     	    var maxByte = 4000;
 
 	     	    var rbyte = 0;
 	     	    var rlen = 0;

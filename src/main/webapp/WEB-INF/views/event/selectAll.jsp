@@ -9,6 +9,7 @@
 <title>이벤트</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <link rel="stylesheet" href="../resources/css/event/list.css">
+<link rel="stylesheet" href="../resources/css/event/button.css">
 
 <script type="text/javascript">
 	let page = 1; // 초기화면을 위한 초기화
@@ -204,16 +205,16 @@
 			<div class="eve_p_n_button" id="eve_pre_next"></div>
 			
 			<div id="eve_go_insert">
-				<a href="insert.do" id="event_insert">글작성</a>
+				<button onclick="location.href='insert.do'" id="event_insert" class="eve_grade_button">작성</button>
 			</div>
 		</div>
 		
 	</div>
 	
 	<script type="text/javascript">
-		if("${grade}" == null || "${grade}" != 1 || "${grade}" == ""){
-			$('#event_insert').hide();
-		}
+	if(${grade}==1){
+		$('.eve_grade_button').css("display", "block");
+	}
 	</script>
 
 	

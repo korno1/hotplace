@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-.not_body {
+.eve_body {
 	border: 1px solid #ccced1;
 	width: 800px;
 	min-height : 400px;
@@ -9,22 +9,23 @@
 	flex-direction: column;
 }
 
-
-.not_title_one{
+.eve_title_info{
 	margin-left: 5px;
+}
+
+.eve_title_one{
 	font-weight: bold;
 	font-size: 28px;
 	
 }
 
-.not_info_one {
-	margin-left: 5px;
+.eve_info_one {
 	border-bottom: 1px solid #ccced1;
 	padding-bottom: 5px;
 	font-size: 14px;
 }
 
-.not_content_img {
+.eve_content_img {
 	margin-left: 5px;
 	
 }

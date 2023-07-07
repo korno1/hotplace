@@ -64,29 +64,17 @@
 		
 		<div class="up_del_button">
 			<div>
-				<button type="button" onclick="location.href='update.do?num=${param.num}'">수정</button>
-				<button type="button" id="delButton">삭제</button>
+				<button type="button" class="not_grade_button" onclick="location.href='update.do?num=${param.num}'">수정</button>
+				<button type="button" class="not_grade_button" id="delButton">삭제</button>
 			</div>
 		</div>
 	</div>
-<!-- 		<div> -->
-<!-- 			<ul style="list-style:none"> -->
-<!-- 				<li> -->
-<!-- 					<div style="display:table-cell"> -->
-<!-- 						<span>제목</span> -->
-<!-- 					</div> -->
-<!-- 					<div style="display:table-cell"> -->
-<!-- 						<span>작성자</span> -->
-<!-- 					</div> -->
-<!-- 					<div style="display:table-cell"> -->
-<!-- 						<span>작성일</span> -->
-<!-- 					</div> -->
-<!-- 					<div style="display:table-cell"> -->
-<!-- 						<span>조회수</span> -->
-<!-- 					</div> -->
-<!-- 				</li> -->
-<!-- 			</ul> -->
-<!-- 		</div> -->
+
+	<script type="text/javascript">
+	if(${grade}==1){
+		$('.not_grade_button').css("display", "inline-block");
+	}
+	</script>
 	
 </body>
 </html>

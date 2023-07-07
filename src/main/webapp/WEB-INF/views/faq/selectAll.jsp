@@ -8,14 +8,16 @@
 <title>FAQ</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <link rel="stylesheet" href="../resources/css/faq/list.css">
+<link rel="stylesheet" href="../resources/css/faq/button.css">
 <script type="text/javascript">
 
 	let page = 1; // 초기화면을 위한 초기화
 	let count; // 게시글 개수
 	let searchWord = ''; // 초기화면을 위한 초기화
 	let searchKey = 'title'; // 초기화면을 위한 초기화
-		
+	
 	$(function(){		
+		
 		function loadPage(page){
 			$('#searchKey').val(searchKey);
 			$('#searchWord').val(searchWord);
@@ -40,29 +42,33 @@
 					
 	 				$.each(arr, function(index, vo){
 	 					tag_vos +=`
-	 						<div style="width:100%">
+	 						<div class="faq_header_size">
 	 							<div class="faq_header" onclick="clickPlain(\${vo.num})">
 	 								<span>\${vo.title}</span>
 	 							</div>
-	 							<div id="clickNum\${vo.num}" style="display:none;">
+	 							<div class="faq_con" id="clickNum\${vo.num}">
 	 								\${vo.content}
 	 							</div>
-	 							<div class="faq_content" id="atagNum\${vo.num}" style="display:none; text-align:right">
-	 								<a href="update.do?num=\${vo.num}">수정</a>
-	 								<a href="javascript:void(0);" onclick="deleteOK(\${vo.num})">삭제</a>
+	 							<div class="faq_content" id="atagNum\${vo.num}">
+	 								<button class="faq_grade_button" onclick="location.href='update.do?num=\${vo.num}'">수정</button>
+	 								<button class="faq_grade_button" onclick="deleteOK(\${vo.num})">삭제</button>
 	 							</div>
 	 						</div>
 	 					`;
 	 				});
 	 				
-	 				let pr_nx = `
-	 					<button id="faq_pre_page">이전</button>
-	 					<button class="faq_next_button" id="faq_next_page">다음</button>
-	 					<a href="insert.do">글작성</a>
-	 				`;
+	 				
 					
 	 				$('#faq_div').html(tag_vos);
-					$('#faq_pre_next').html(pr_nx);
+
+// 	 				if("${grade}"=="1"){
+// 	 					$('.faq_grade_button').css("display", "inline-block");
+// 	 				}
+					let grade = '<%= session.getAttribute("grade") %>';
+			        // grade 값이 "1"인 경우 버튼을 표시
+			        if (grade && grade === "1") {
+			          $('.faq_grade_button').css("display", "inline-block");
+			        }
 					
 		
 	 			}, // end success
@@ -182,6 +188,7 @@
 		$(tag).slideToggle();
 	};
 	
+	
 </script>
 </head>
 <body>
@@ -206,9 +213,16 @@
 	</div>
 	
 	<div class="faq_change_page" id="faq_pre_next">
+		<button id="faq_pre_page">이전</button>
+	 	<button class="faq_next_button" id="faq_next_page">다음</button>
+	 	<button class="faq_grade_button" onclick="location.href='insert.do'">작성</button>
 	</div>
 	
-	
+	<script type="text/javascript">
+		if("${grade}"=="1"){
+			$('.faq_grade_button').css("display", "block");
+		}
+	</script>
 
 	
 </body>

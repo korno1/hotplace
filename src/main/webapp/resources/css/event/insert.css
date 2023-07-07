@@ -1,0 +1,29 @@
+@charset "UTF-8";
+
+.eve_title_insert{
+	border: 1px solid #ccced1;
+	outline: none;
+	width: 823px;
+    height: 35px;
+    font-size: 26px;
+    margin: 10px 0 5px 0;
+}
+
+.eve_title_div {
+	width:823px;	
+	margin-bottom: 5px;
+}
+
+.eve_update_button{
+	margin-top: 5px;
+}
+
+
+.eve_write_footer {
+	display: flex;
+	margin-top: 3px;
+}
+
+.eve_fileupload{
+	margin-right: auto;
+}

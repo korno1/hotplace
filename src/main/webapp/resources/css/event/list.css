@@ -70,6 +70,7 @@
   font-size: 9px;
   color: #959595;
   width: 30px;
+  min-width: 30px;
 }
 
 .vo_title {

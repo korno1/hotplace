@@ -9,6 +9,7 @@
 <title>공지사항</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <link rel="stylesheet" href="../resources/css/notice/button.css">
+<link rel="stylesheet" href="../resources/css/notice/post.css">
 <style type="text/css">
 	#contentArea p{
 		margin: 0;
@@ -33,48 +34,41 @@
 </head>
 <body>
 	<h1>공지사항</h1>
-<%-- 	<jsp:include page="../top_menujm.jsp"></jsp:include> --%>
-
 	
-	
-	<table border="1" style="border-collapse: collapse">
+	<div class="not_body">
 		<fmt:parseDate var="dateFmt" value="${vo2.wdate}"  pattern="yyyy-MM-dd HH:mm:ss.SSS" />
 		<fmt:formatDate var="fmtwdate" value="${dateFmt}" pattern="yyyy-MM-dd HH:mm" />
-		<thead>
-			<tr>
-				<td colspan="3">${vo2.title}</td>
-			</tr>
-			<tr>
-				<td>${vo2.writer}</td>
-				<td>${fmtwdate}</td>
-				<td>조회 ${vo2.viewCount}</td>
-			</tr>
-		</thead>
+		<div class="not_title_info">
+			<div class="not_title_one">
+				${vo2.title}
+			</div>
+			<div class="not_info_one">
+				<span>${vo2.writer}</span>
+				<span>${fmtwdate}</span>
+				<span>조회 ${vo2.viewCount}</span>
+			</div>
+		</div>
 			
-		<tbody>
-			<tr>
-				<td id="contentArea" colspan="3">${vo2.content}</td>
-			</tr>
+		<div class="not_content_img">
+			<div>
+				${vo2.content}
+			</div>
 			
 			<c:if test="${vo2.saveName != null}">
-			<tr>
-				<td colspan="3">
-					<img src="../resources/PostImage/${vo2.saveName}">
-				</td>
-			</tr>
+			<div>
+				<img src="../resources/PostImage/${vo2.saveName}">
+			</div>
 			</c:if>
-		</tbody>
+		</div>
 		
 		
-		<tfoot>
-			<tr>
-				<td colspan="3">
-					<button type="button" onclick="location.href='update.do?num=${param.num}'">수정</button>
-					<button type="button" id="delButton">삭제</button>
-				</td>
-			</tr>
-		</tfoot>
-	</table>
+		<div class="up_del_button">
+			<div>
+				<button type="button" onclick="location.href='update.do?num=${param.num}'">수정</button>
+				<button type="button" id="delButton">삭제</button>
+			</div>
+		</div>
+	</div>
 <!-- 		<div> -->
 <!-- 			<ul style="list-style:none"> -->
 <!-- 				<li> -->

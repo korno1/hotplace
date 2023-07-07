@@ -14,6 +14,8 @@
 // 	$(function(){
 // 		 history.replaceState({}, null, location.pathname); 
 // 	})
+
+	// a 태그로 이동 시 post 전송
 	function listView(searchKey, searchWord, page){
 	    let f = document.createElement('form');
 	    
@@ -25,7 +27,7 @@
 	    
 	    let sWord;
 	    sWord = document.createElement('input');
-	    sWord.setAttribute('type', 'hidden');
+	    sWord.setAttribute('type', 'hidden'); 
 	    sWord.setAttribute('name', 'searchWord');
 	    sWord.setAttribute('value', searchWord);
 	    
@@ -38,7 +40,7 @@
 	    f.appendChild(sKey);
 	    f.appendChild(sWord);
 	    f.appendChild(pg);
-	    f.setAttribute('method', 'post');
+	    f.setAttribute('method', 'post'); // post 전송
 	    f.setAttribute('action', 'searchList.do');
 	    document.body.appendChild(f);
 	    f.submit();

@@ -24,26 +24,28 @@ public class Interceptor extends HandlerInterceptorAdapter {
 		log.info("preHandle()...");
 		// 멤버 접속 허용 url 관리
 		String memberAllowedPatterns = "/memberreview/json/selectAll\\.do|/memberreview/json/insertOK\\.do|/memberreview/json/updateOK\\.do|/memberreview/json/deleteOK\\.do|/party/selectAll\\.do|/party/selectOne\\.do|/party/insert\\.do|/party/insertOK\\.do|/party/update\\.do|/party/updateOK\\.do|/party/deleteOK\\.do|/shop/review/insert\\.do|/shop/insert\\.do|/shop/review/update\\.do|/shop/review/delete\\.do|/shop/update\\.do|/shop/delete\\.do|/member/json/selectOne\\.do|/member/json/updateOK\\.do|/member/json/deleteOK\\.do|/member/mypage\\.do|/member/selectOne\\.do|/mail/selectAll\\.do|/mail/insert\\.do|/mail/json/selectAll\\.do|/mail/json/newMailCnt\\.do|/mail/json/insertOK\\.do|/mail/json/readOK\\.do";		
-		String managerAllowedPatterns = "/notice/insert\\.do|/notice/insertOK\\.do|/notice/update\\.do|/notice/updateOK\\.do|/notice/deleteOK\\.do|/faq/update\\.do|/faq/json/insertOK\\.do|/faq/json/updateOK\\.do|/faq/json/deleteOK\\.do|/faq/insert\\.do|/event/insert\\.do|/event/update\\.do|/event/json/insertOK\\.do|/event/json/updateOK\\.do|/event/json/deleteOK\\.do|/mail/selectAll_admin\\.do|/member/json/selectAll\\.do|/member/json/upgradeOK\\.do|/mail/json/selectAll_admin\\.do|/mail/json/deleteOK\\.do";
+		String managerAllowedPatterns = "/notice/insert\\.do|/notice/insertOK\\.do|/notice/update\\.do|/notice/updateOK\\.do|/notice/deleteOK\\.do|/faq/update\\.do|/faq/json/insertOK\\.do|/faq/json/updateOK\\.do|/faq/json/deleteOK\\.do|/faq/insert\\.do|/event/insert\\.do|/event/update\\.do|/event/json/insertOK\\.do|/event/json/updateOK\\.do|/event/json/deleteOK\\.do|/mail/selectAllAdmin\\.do|/member/json/selectAll\\.do|/member/json/upgradeOK\\.do|/mail/json/selectAll_admin\\.do|/mail/json/deleteOK\\.do";
 
 		String sPath=request.getServletPath();
 		log.info("preHandle-ServletPath...{}",sPath);
 		boolean memberAllowed = Pattern.matches(memberAllowedPatterns, sPath);
 		boolean managerAllowed = Pattern.matches(managerAllowedPatterns, sPath);
 		// Session의 num값 할당
-		String num = (String)session.getAttribute("num");
+		Object num = session.getAttribute("num");
 		log.info("preHandle()-isMemberNum...{}",num);
 		// Session의 grade값 할당(0 : 일반, 1 관리자 , 2:점주)
-		String grade=(String) session.getAttribute("grade");
+		Object grade= session.getAttribute("grade");
 		log.info("preHandle()-isMemberGrade...{}",grade);
 
 		if (memberAllowed) {
 		    if (num == null) {
+		    	log.info("Not member");
 		        response.sendRedirect("/hotplace/account/login.do");
 		        return false;
 		    }
 		} else if(managerAllowed) {
-			if(grade == null || !grade.equals("1")) {
+			if(grade == null || !grade.equals(1)) {
+				log.info("Not admin");
 				response.sendRedirect("/hotplace/home");
 				return false;
 			}

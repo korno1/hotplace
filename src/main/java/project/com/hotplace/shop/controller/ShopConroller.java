@@ -36,24 +36,7 @@ public class ShopConroller {
 		
 		return "shop/selectAll.tiles";
 	}
-/*	
-	@RequestMapping(value = "/searchList.do", method = RequestMethod.GET)
-	public String searchList() {
-		log.info("/searchList.do");
-		log.info("searchKey:{}",searchKey);
-		log.info("searchWord:{}",searchWord);
-		
-		List<ShopVO> vos = service.searchList(searchKey,searchWord,pageNum);
-		
-		List<ShopVO> nextVos = service.searchList(searchKey,searchWord,pageNum+1);
-		long cnt = nextVos.stream().count();
-		
-		model.addAttribute("vos", vos);
-		model.addAttribute("cnt", cnt);
-		
-		return "shop/selectAll.tiles";
-	}
-	*/
+
 	@RequestMapping(value = "/searchLocation.do", method = RequestMethod.GET)
 	public String searchLocation() {
 		log.info("/shop/searchLocation.do");

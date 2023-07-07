@@ -30,7 +30,6 @@ public class ShopRestController {
 	
 	@Autowired
 	ServletContext sContext;
-
 	
 	@RequestMapping(value = "shop/json/selectAll.do", method = RequestMethod.GET)
 	@ResponseBody
@@ -38,6 +37,7 @@ public class ShopRestController {
 		log.info("/selectAll.do");
 		log.info("searchKey:{}",searchKey);
 		log.info("searchWord:{}",searchWord);
+		
 		
 		List<ShopVO> vos = service.selectAll(searchKey,searchWord, pageNum);
 		

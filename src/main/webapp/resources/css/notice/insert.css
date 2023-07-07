@@ -1,9 +1,24 @@
 @charset "UTF-8";
 
 .not_title_insert{
-	border: 0 solid black;
+	border: 1px solid #ccced1;
 	outline: none;
-	width: 800px;
-    height: 30px;
-    font-size: 28px;
+	width: 821px;
+    height: 35px;
+    font-size: 26px;
+    margin: 10px 0 10px 0;
+}
+
+
+.not_write_footer {
+	margin-top: 3px;
+	display: flex;
+}
+
+.not_fileupload{
+	margin-right: auto;
+}
+
+.not_textArea{
+	width: 823px;
 }

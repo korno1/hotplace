@@ -15,9 +15,19 @@
 	text-align: center;
 }
 
+.faq_header_size{
+	width: 100%;
+}
+
+.faq_con{
+	margin-left: 10px;
+	display: none;
+}
+
 .faq_content {
 	border-bottom: 1px solid gray;
 	text-align: right;
+	display:none;
 }
 
 .faq_insert {
@@ -33,4 +43,8 @@
 .faq_next_button{
 	margin-left: 5px;
 	margin-right: auto;
+}
+
+.faq_hr_tc {
+	margin: 5px 0 5px 0;
 }

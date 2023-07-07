@@ -8,8 +8,8 @@
 <meta charset="UTF-8">
 <title>공지사항</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<link rel="stylesheet" href="../resources/css/notice/button.css">
 <link rel="stylesheet" href="../resources/css/notice/list.css">
+<link rel="stylesheet" href="../resources/css/notice/button.css">
 <script type="text/javascript"> 
 // 	$(function(){
 // 		 history.replaceState({}, null, location.pathname); 
@@ -89,27 +89,48 @@
 		</div>
 		
 		<div class="change_page">
-				<a href="javascript:listView('${searchKey}', '${searchWord}', ${page-1})" id="pre_page">이전</a>
-				<a class="next_page" href="javascript:listView('${searchKey}', '${searchWord}', ${page+1})" id="next_page">다음</a>
-				<a href="insert.do">글작성</a>
+<%-- 				<a href="javascript:listView('${searchKey}', '${searchWord}', ${page-1})" id="pre_page">이전</a> --%>
+<%-- 				<a class="next_page" href="javascript:listView('${searchKey}', '${searchWord}', ${page+1})" id="next_page">다음</a> --%>
+<%-- 				<button onclick="listView('${searchKey}', '${searchWord}', ${page-1})" id="pre_page">이전</button> --%>
+<%-- 				<button class="next_page" onclick="listView('${searchKey}', '${searchWord}', ${page+1})" id="next_page">다음</button> --%>
+				<button id="pre_page">이전</button>
+				<button class="next_page" id="next_page">다음</button>
+				<button onclick="location.href='insert.do'" class="not_grade_button">작성</button>
+<!-- 				<a href="insert.do">글작성</a> -->
 		</div>
 	</div>
 	
 	
 	<script type="text/javascript">
 		if(${page}==1){
-// 			$('#pre_page').hide();
 			$('#pre_page').click(function(){
 				alert('첫번째 페이지입니다.');
 				return false;
 			});
+			$('#next_page').click(function(){
+				listView('${searchKey}', '${searchWord}', ${page+1});
+			});
 		}
-		if((${page}*5) >= ${cnt}){
-// 			$('#next_page').hide();
+		else if((${page}*5) >= ${cnt}){
 			$('#next_page').click(function(){
 				alert('마지막 페이지입니다.');
 				return false;
 			});
+			$('#pre_page').click(function(){
+				listView('${searchKey}', '${searchWord}', ${page-1})
+			});
+		}
+		else{
+			$('#next_page').click(function(){
+				listView('${searchKey}', '${searchWord}', ${page+1});
+			});
+			$('#pre_page').click(function(){
+				listView('${searchKey}', '${searchWord}', ${page-1})
+			});
+		}
+		
+		if(${grade}==1){
+			$('.not_grade_button').css("display", "block");
 		}
 	</script>
 	

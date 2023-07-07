@@ -34,13 +34,7 @@ public class NoticeController {
 	/** 
 	 * Simply selects the home view to render by returning its name.
 	 */
-	@RequestMapping(value = "/jm.do", method = RequestMethod.GET)
-	public String jm() {
-		log.info("/jm.do...");
-		
-		
-		return "jm";
-	}
+
 	
 	@RequestMapping(value = "/notice/selectAll.do", method = RequestMethod.GET)
 	public String selectAll(Model model) {
@@ -161,7 +155,7 @@ public class NoticeController {
 		log.info("result: {}", result);
 		
 				
-		return "redirect:selectAll.do?searchKey=title&searchWord=&page=1";
+		return "redirect:selectAll.do";
 	}
 	
 	@RequestMapping(value = "/notice/update.do", method = RequestMethod.GET)
@@ -216,7 +210,7 @@ public class NoticeController {
 		int result = service.delete(vo);
 		log.info("result: {}", result);
 		
-		return "redirect:selectAll.do?searchKey=title&searchWord=&page=1";
+		return "redirect:selectAll.do";
 	}
 	
 }

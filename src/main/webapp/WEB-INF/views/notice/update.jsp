@@ -8,14 +8,13 @@
 <meta charset="UTF-8">
 <title>공지사항</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<link rel="stylesheet" href="../resources/css/notice/button.css">
 <link rel="stylesheet" href="../resources/css/notice/insert.css">
 <script src="https://cdn.ckeditor.com/ckeditor5/38.1.0/classic/ckeditor.js"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
 
 <style>
   .ck-editor__editable { height: 400px; 
-  						width:800px;
+/*   						width:800px; */
   						word-wrap: break-word;
   					}
   .ck-editor__editable p {margin: 0}
@@ -72,26 +71,24 @@
 	<div>
 		<div>
 			<input class="not_title_insert" type="text" name="title" id="title" value="${vo2.title}" onkeyup="titleCheckByte(this, 100)">
+		</div>
+		
+		<div class="not_textArea">
+			<textarea name="content" id="content" rows="10" cols="22">${vo2.content}</textarea>
+			<span id=checkby>0</span>/4000
+		</div>
+		
+		<div class="not_write_footer">
+			<div class="not_fileupload">
+				<input type="file" id="file" name="file">
+				<input type="hidden" id="saveName" name="saveName" value="${vo2.saveName}">
+			</div>
 			<div>
-				<span style="font-size:10px">${vo2.writer}</span>
-				<span style="font-size:10px">${fmtwdate}</span>
-				<span style="font-size:10px">조회 ${vo2.viewCount}</span>
+				<input type="submit" value="수정">
 			</div>
 		</div>
-		<hr>
-		<div>
-			<textarea name="content" id="content" rows="10" cols="22">${vo2.content}</textarea>
-			<span id=checkby>0</span>
-		</div>
 		
-		<div>
-			<input type="file" id="file" name="file"">
-			<input type="hidden" id="saveName" name="saveName" value="${vo2.saveName}">
-		</div>
 		
-		<div>
-			<input type="submit" value="작성" class="myButton">
-		</div>
 	</div>
 	</form>
 	
@@ -181,7 +178,7 @@
 // 	            }
 // 	        });
 // 	    });
-<!-- 	</script> -->
+		</script>
 	
 </body>
 </html>

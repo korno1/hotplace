@@ -8,12 +8,15 @@
 <meta charset="UTF-8">
 <title>이벤트</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<link rel="stylesheet" href="../resources/css/notice/button.css">
+<link rel="stylesheet" href="../resources/css/event/post.css">
+<link rel="stylesheet" href="../resources/css/event/button.css">
+
 <style type="text/css">
 	#contentArea p{
 		margin: 0;
 	}
 </style>
+
 <script type="text/javascript">
 
 	$(function(){
@@ -29,29 +32,29 @@
 				let nwdate = vo2.wdate.substring(0,16);
 				let deadline = vo2.deadline.substring(0,16);
 				let hvo = `
-					<tr>
-						<td colspan="4">\${vo2.title}</td>
-					</tr>
-					<tr>
-						<td>\${vo2.writer}</td>
-						<td>\${nwdate}</td>
-						<td>\${deadline}</td>
-						<td>조회 \${vo2.viewCount}</td>
-					</tr>
+					<div class="eve_title_one">
+						<div>\${vo2.title}</div>
+					</div>
+					<div class="eve_info_one">
+						<span>\${vo2.writer}</span>
+						<span>\${nwdate} ~</span>
+						<span>\${deadline}</span>
+						<span>조회 \${vo2.viewCount}</span>
+					</div>
 				`;
 				let bvo = `
-					<tr>
-						<td id="contentArea" colspan="4">\${vo2.content}</td>
-					</tr>	
+					<div>
+						<div>\${vo2.content}</div>
+					</div>	
 				`;
 				
 				if(vo2.saveName != null){
 					bvo += `
-					<tr>
-						<td colspan="4">
+					<div>
+						<div>
 							<img src="../resources/PostImage/\${vo2.saveName}">
-						</td>
-					</tr>
+						</div>
+					</div>
 					`;
 				}
 				
@@ -104,42 +107,30 @@
 
 	
 	
-	<table border="1" style="border-collapse: collapse">
-		<thead id="vo_head">
+	<div class="eve_body">
+		<div class="not_title_info" id="vo_head">
 			
-		</thead>
+		</div>
 			
-		<tbody id="vo_body">
+		<div class="not_content_img" id="vo_body">
 			
-		</tbody>
+		</div>
 		
-		<tfoot>
-			<tr>
-				<td colspan="4">
-					<button type="button" onclick="location.href='update.do?num=${param.num}'">수정</button>
-					<button type="button" id="delButton">삭제</button>
-				</td>
-			</tr>
-		</tfoot>
-	</table>
-<!-- 		<div> -->
-<!-- 			<ul style="list-style:none"> -->
-<!-- 				<li> -->
-<!-- 					<div style="display:table-cell"> -->
-<!-- 						<span>제목</span> -->
-<!-- 					</div> -->
-<!-- 					<div style="display:table-cell"> -->
-<!-- 						<span>작성자</span> -->
-<!-- 					</div> -->
-<!-- 					<div style="display:table-cell"> -->
-<!-- 						<span>작성일</span> -->
-<!-- 					</div> -->
-<!-- 					<div style="display:table-cell"> -->
-<!-- 						<span>조회수</span> -->
-<!-- 					</div> -->
-<!-- 				</li> -->
-<!-- 			</ul> -->
-<!-- 		</div> -->
+		<div class="up_del_button">
+			<div>
+				<button type="button" class="eve_grade_button" onclick="location.href='update.do?num=${param.num}'">수정</button>
+				<button type="button" class="eve_grade_button" id="delButton">삭제</button>
+			</div>
+		</div>
+		
+	</div>
+	
+	<script type="text/javascript">
+	if(${grade}==1){
+		$('.eve_grade_button').css("display", "inline-block");
+	}
+	</script>
+
 	
 </body>
 </html>

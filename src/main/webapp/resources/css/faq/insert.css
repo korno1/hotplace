@@ -1,0 +1,20 @@
+@charset "UTF-8";
+
+.faq_title_insert{
+	border: 1px solid #ccced1;
+	outline: none;
+	width: 821px;
+    height: 35px;
+    font-size: 26px;
+    margin: 10px 0 5px 0;
+}
+
+.faq_title_div {
+	width:823px;	
+	margin-bottom: 5px;
+}
+
+.faq_insert_button{
+	float: right;
+	margin-top: 3px;
+}

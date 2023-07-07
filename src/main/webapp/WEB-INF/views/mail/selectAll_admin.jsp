@@ -74,7 +74,7 @@ $(function() {
                     `;
                 }
                 $(".mailBoxWrap").html(msg);
-                
+         
                 // 다음 페이지에 데이터가 없으면 클래스 'next'의 display 속성을 none으로 처리
 				if (result.isLast===true) {
 				    $(".next").css("display", "none");

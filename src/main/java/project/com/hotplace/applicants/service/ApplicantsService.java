@@ -26,4 +26,8 @@ public class ApplicantsService {
 	public int reject(ApplicantsVO vo) {
 		return dao.reject(vo);
 	}
+
+	public int delete(ApplicantsVO vo) {
+		return dao.delete(vo);
+	}
 }

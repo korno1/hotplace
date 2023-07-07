@@ -42,4 +42,10 @@ public class ApplicantsDAOimpl implements ApplicantsDAO {
 		log.info("reject()...{}", vo);
 		return sqlSession.delete("APP_REJECT", vo);
 	}
+
+	@Override
+	public int delete(ApplicantsVO vo) {
+		log.info("delete()...{}", vo);
+		return sqlSession.delete("APP_DELETE", vo);
+	}
 }

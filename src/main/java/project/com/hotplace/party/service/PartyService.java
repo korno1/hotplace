@@ -48,4 +48,8 @@ public class PartyService {
 	public void vCountUp(PartyVO vo) {
 		dao.vCountUp(vo);
 	}
+
+	public int approveOK(PartyVO vo) {
+		return dao.approveOK(vo);
+	}
 }

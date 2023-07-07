@@ -17,5 +17,7 @@ public interface PartyDAO {
 	public int delete(PartyVO vo);
 	
 	public void vCountUp(PartyVO vo);
+
+	public int approveOK(PartyVO vo);
 	
 }

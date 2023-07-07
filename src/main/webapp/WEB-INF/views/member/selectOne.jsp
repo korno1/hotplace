@@ -320,6 +320,34 @@ function authNumCheck() {
 	    }
 	  });
 	}
+function textlimit(category, obj) {
+	let cateogry = category;
+	let str = obj.value;
+	let pattern = "";
+
+	if (cateogry === "nickName") {
+	    pattern = /^[a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ]{2,12}$/;
+	    	if (str !== "" && !pattern.test(str)) {
+	        	alert("닉네임은 알파벳, 한글로 조합된 2~12글자로 설정할 수 있습니다.");
+	        	$("#nickName").val('');
+			}
+	}else if(cateogry==="email"){
+		pattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{5,33}$/;
+			if (str !== "" && !pattern.test(str)) {
+				alert("유효하지 않은 이메일 형식입니다");
+			}
+	}else if(cateogry==="pw"){
+		pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/;
+			if (str !== "" && !pattern.test(str)) {
+		        alert("비밀번호는 숫자,소문자,대문자 각각 최소 1개씩 포함된 8~16자리로 설정해야합니다");
+			}
+	}else if(cateogry==="address"){
+		pattern = /^.{0,70}$/;
+			if (str !== "" && !pattern.test(str)) {
+		        alert("거주 지역은 최대 70글자까지 입력이 가능합니다.");
+	  		}
+		}
+	}
 </script>
 </head>
 <body>
@@ -341,8 +369,7 @@ function authNumCheck() {
 			<div class="memberInfo__tr1 memberInfo__tr">
 				<div class="memberInfo__nickNameTitle myTitle">닉네임</div>
 				<div class="memberInfo__nickName__content myContent">
-					<input type="text" id="nickName" name="nickName"
-						value="${vo2.nick_name}">
+					<input type="text" id="nickName" name="nickName" value="${vo2.nick_name}" onchange="textlimit('nickName',this)">
 					<button type="button" onclick="NickNameCheck()" class="myButton">중복확인</button>
 					<span id="nickNameCheck"></span>
 				</div>
@@ -350,7 +377,7 @@ function authNumCheck() {
 			<div class="memberInfo__trSpan memberInfo__tr">
 				<div class="memberInfo__nickNameTitle myTitle">아이디(이메일)</div>
 				<div class="memberInfo__email__content myContent">
-					<input type="email" id="email" name="email" value="${vo2.email}">
+					<input type="email" id="email" name="email" value="${vo2.email}"  onchange="textlimit('email',this)">
 					<button type="button" onclick="EmailCheck()" class="emailBtn myButton">이메일 인증</button>
 				</div>
 			</div>
@@ -365,22 +392,21 @@ function authNumCheck() {
 			<div class="memberInfo__tr3 memberInfo__tr">
 				<div class="memberInfo__nickNameTitle myTitle">비밀번호</div>
 				<div class="memberInfo__pw__content myContent">
-					<input type="password" id="pw" name="pw" value="${vo2.pw}">
+					<input type="password" id="pw" name="pw" value="${vo2.pw}" onchange="textlimit('pw',this)">
 				</div>
 			</div>
 			<div class="memberInfo__tr4 memberInfo__tr">
 				<div class="memberInfo__pwCheckTitle myTitle">비밀번호 확인</div>
 				<div class="memberInfo__pwCheck__content myContent">
 					<input type="password" id="pwCheck" name="pwCheck"
-						oninput="checkPassword()" value="${vo2.pw}">
+						oninput="checkPassword()" value="${vo2.pw}"  onchange="textlimit('pw',this)">
 					<span id="pwWorng"></span>	
 				</div>
 			</div>
 			<div class="memberInfo__tr5 memberInfo__tr">
-				<div class="memberInfo__pwCheckTitle myTitle">주소지</div>
+				<div class="memberInfo__pwCheckTitle myTitle">거주지역</div>
 				<div class="memberInfo__address__content myContent">
-				<input type="text" id="address" name="address"
-					value="${vo2.address}">
+				<input type="text" id="address" name="address" value="${vo2.address}"  onchange="textlimit('address',this)">
 				</div>
 			</div>
 			<div class="memberInfo__tr6 memberInfo__tr">

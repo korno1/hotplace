@@ -10,14 +10,16 @@
 	font-size:28;
 	font-weight:bold;
 }
-input{
-	width:540px;
-	height:40px;
+input, textarea{
+	padding:15px;
+	width:480px;
+	height:20px;
 	border:1px solid #DBDBDB;
-	border-radius:2px;
+	border-radius:15px;
+	resize: none;
 }
 .mailInsert{
-	widht:70px;
+	width:650px;
 	height:60px;
 	border-top:1px solid #DBDBDB;
 	display:flex;
@@ -27,22 +29,29 @@ input{
 	border:none;
 }
 .mailInsertLeft{
-	width:120px;
-	padding:20px;
+	width:100px;
+	padding-left:20px;
 	font-size:18;
 	font-weight:bold;
 }
 .mailInsertContent{
 	height:270px;
 }
+.ContentWrap{
+	display:flex;
+	flex-direction: column;
+}
 #Content{
-	height:250px;
-	border-radius:15px;
+	height:200px;
 }
 .mailInsert__bottomWrap{
 	display:flex;
 	justify-content: flex-end;
 	border-top:1px solid #DBDBDB;
+}
+.byteCnt{
+	display:flex;
+	justify-content: flex-end;
 }
 .InsertBtn{
 	margin-top:13px;

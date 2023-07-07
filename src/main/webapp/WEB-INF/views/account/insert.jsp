@@ -231,6 +231,35 @@
 		    }
 		  });
 		}
+	
+function textlimit(category, obj) {
+	let cateogry = category;
+	let str = obj.value;
+	let pattern = "";
+
+	if (cateogry === "nickName") {
+	    pattern = /^[a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ]{2,12}$/;
+	    	if (str !== "" && !pattern.test(str)) {
+	        	alert("닉네임은 알파벳, 한글로 조합된 2~12글자로 설정할 수 있습니다.");
+	        	$("#nickName").val('');
+			}
+	}else if(cateogry==="email"){
+		pattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{5,33}$/;
+			if (str !== "" && !pattern.test(str)) {
+				alert("유효하지 않은 이메일 형식입니다");
+			}
+	}else if(cateogry==="pw"){
+		pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/;
+			if (str !== "" && !pattern.test(str)) {
+		        alert("비밀번호는 숫자,소문자,대문자 각각 최소 1개씩 포함된 8~16자리로 설정해야합니다");
+			}
+	}else if(cateogry==="address"){
+		pattern = /^.{0,70}$/;
+			if (str !== "" && !pattern.test(str)) {
+		        alert("거주 지역은 최대 70글자까지 입력이 가능합니다.");
+	  		}
+		}
+	}
 </script>
 </head>
 <body>
@@ -239,14 +268,14 @@
 			<div class="nickNameWrap">	
 				<div class="nickNameTitle signTitle">(*필수)닉네임</div>
 				<div class="nickNameContent signContent">
-				<input type="text" id="nickName" name="nickName" placeholder="닉네임 입력" pattern=".{2,12}" required title="닉네임은 2~12글자로 설정할 수 있습니다.">
+				<input type="text" id="nickName" name="nickName" placeholder="닉네임 입력" onchange="textlimit('nickName',this)">
 				<button type="button" onclick="NickNameCheck()" class="nickNameBtn signButton">중복확인</button><br>
 				</div>
 				<span id="nickNameCheck"></span>
 			</div>
 			<div class="emailWrap">	
 				<div class="emailTitle signTitle">(*필수)이메일 (로그인시 아이디로 사용)</div>
-				<input type="email" id="email" name="email" placeholder="이메일 입력" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="유효하지 않은 이메일 형식입니다.">
+				<input type="email" id="email" name="email" placeholder="이메일 입력" onchange="textlimit('email',this)">
 				<div class="emailAuthWrap">
 					<input type="text" id="authNum" name="authNum" placeholder="인증번호 입력">
 					<span id="authTime"></span>	
@@ -257,13 +286,13 @@
 			</div>
 			<div class="pwWrap">	
 				<div class="pwTitle signTitle">(*필수)비밀번호</div>
-				<input type="password" id="pw" name="pw" placeholder="비밀번호 입력" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}" title="비밀번호는 숫자,소문자,대문자 각각 최소 1개씩 포함된 8~16자리로 설정해야합니다.">
-				<input type="password" id="pwCheck" name="pwCheck" onchange="checkPassword()" placeholder="비밀번호 재확인" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}" title="비밀번호는 숫자,소문자,대문자 각각 최소 1개씩 포함된 8~16자리로 설정해야합니다.">
+				<input type="password" id="pw" name="pw" placeholder="비밀번호 입력" onchange="textlimit('pw',this)">
+				<input type="password" id="pwCheck" name="pwCheck" onchange="checkPassword()" placeholder="비밀번호 재확인" onchange="textlimit('pw',this)">
 				<span id="pwWorng"></span>	
 			</div>
 			<div class="addressWrap">
 				<div class="addressTitle signTitle">(*필수)거주지역</div>
-				<input type="text" id="address" name="address" value="(예시)서울특별시 강남구" pattern=".{,70}" title="거주 지역은 최대 70글자까지 입력이 가능합니다.">
+				<input type="text" id="address" name="address" value="(예시)서울특별시 강남구" onchange="textlimit('address',this)">
 			</div>
 			<div class="genderWrap">
 				<div class="genderTitle signTitle">성별</div>

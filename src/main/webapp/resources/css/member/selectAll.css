@@ -63,17 +63,43 @@
 .gradeBtn:hover {
   background-color: #45a049;
 }
-
-/* 확인 버튼 스타일 */
+.memberTableWrap{
+	width:990px;
+	display:flex;
+	flex-direction: column;
+}
+.memberTableHead{
+	border-top:1px solid #807F87;
+	border-bottom:1px solid #807F87;
+	height:50px;
+	display:flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.memberTableItem{
+	border-bottom:1px solid #807F87;
+	height:50px;
+	display:flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.memberNickName:hover{
+	font-weight:bold;
+	cursor:pointer;
+}
 #confirmBtn {
-  background-color: #4CAF50;
-  color: white;
-  padding: 8px 12px;
-  border: none;
-  cursor: pointer;
-  margin-top: 10px;
+	background-color: #4CAF50;
+	color: white;
+	padding: 8px 12px;
+	border: none;
+	cursor: pointer;
+	margin-top: 10px;
 }
 
 #confirmBtn:hover {
-  background-color: #45a049;
+	background-color: #45a049;
+}
+button:hover{
+	font-weight:bold;
+	cursor:pointer;
 }

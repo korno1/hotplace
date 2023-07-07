@@ -84,7 +84,49 @@ function insertOK() {
 	    });
 	  }
 	}
+function textlimit(obj) {
+	let str = obj.value;
+	let pattern = /^.{2,33}$/;
 
+	if (str !== "" && !pattern.test(str)) {
+		alert("제목은 최대 33글자까지 입력할 수 있습니다.");
+		}
+	}
+	
+function titleCheckByte(obj){
+	let str = obj.value;
+	let str_len = str.length;
+	let maxByte = 1000
+
+	let rbyte = 0;
+	let rlen = 0;
+	let one_char = "";
+	let str2 = "";
+
+
+    for(let i=0; i<str_len; i++)
+    {
+        one_char = str.charAt(i);
+        if(escape(one_char).length > 4) {
+            rbyte += 3;                                         //한글3Byte
+        }else{
+            rbyte++;                                            //영문 등 나머지 1Byte
+        }
+        if(rbyte <= maxByte){
+            rlen = i+1;                                          //return할 문자열 갯수
+        }
+     }
+     if(rbyte > maxByte)
+     {
+        alert("입력할 수 있는 글자수를 초과하였습니다.")
+        str2 = str.substr(0,rlen);                                  //문자열 자르기
+        obj.value = str2;
+        titlecheckByte(obj, maxByte);
+     }
+     else{
+    	 $('#checkby').html(rbyte);
+     }
+}
 </script>
 </head>
 <body>
@@ -92,7 +134,7 @@ function insertOK() {
 		<div class="mailInsertHead">쪽지 보내기</div>
 		<div class="mailInsertTitle mailInsert">
 			<div class="mailInsertLeft"> 제목</div>
-			<input type="text" id="title" name="title" placeholder="쪽지 제목">
+			<input type="text" id="title" name="title" placeholder="쪽지 제목" onchange="textlimit(this)">
 		</div>
 		<div class="mailInsertRecipientName mailInsert">
 			<div class="mailInsertLeft"> 받는 사람</div>
@@ -100,7 +142,10 @@ function insertOK() {
 		</div>
 		<div class="mailInsertContent mailInsert">
 			<div class="mailInsertLeft"> 내용</div>
-			<input type="text" id="Content" name="Content" placeholder="내용">
+			<div class="ContentWrap">
+				<textarea id="Content" placeholder="내용" onkeyup="titleCheckByte(this)"></textarea>
+				<div class="byteCnt"><span id="checkby">0</span>/1000</div>
+			</div>
 		</div>
 		<div class="mailInsert__bottomWrap">
 			<div class="mailInsertBtn InsertBtn" onclick="insertOK()">전송</div>

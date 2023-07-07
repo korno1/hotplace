@@ -35,11 +35,11 @@ let authResult=0;
 				<div class="pwWrap">
 				<input type="hidden" id="num" name="num" value="${vo2Num}">
 	            <label for="pw">비밀번호</label>
-	            <input type="password" class="input-field" id="pw" name="pw">
+	            <input type="password" class="input-field" id="pw" name="pw" onchange="textlimit('pw',this)">
 	            </div>
 	            <div class="pwCheckWrap">
 	            <label for="pwCheck">비밀번호 확인</label>
-	            <input type="password" id="pwCheck" name="pwCheck" class="input-field" oninput="checkPassword()">
+	            <input type="password" id="pwCheck" name="pwCheck" class="input-field" oninput="checkPassword()" onchange="textlimit('pw',this)">
 	            </div>
 	            <span class="pwReset__text">특수문자(예: !@#$ 등) 1자 이상을 포함한 10~16 글자의 비밀번호로 설정해주세요.</span><br>
 	            <div class="pwReset__btnWrap">
@@ -71,6 +71,18 @@ let authResult=0;
 		    }
 		  });
 		}
+		function textlimit(category, obj) {
+			let cateogry = category;
+			let str = obj.value;
+			let pattern = "";
+
+			if(cateogry==="pw"){
+				pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/;
+					if (str !== "" && !pattern.test(str)) {
+				        alert("비밀번호는 숫자,소문자,대문자 각각 최소 1개씩 포함된 8~16자리로 설정해야합니다");
+					}
+			}
+		} 
 	}
 
 	function checkPassword() {

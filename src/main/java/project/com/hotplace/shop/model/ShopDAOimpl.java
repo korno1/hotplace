@@ -38,18 +38,6 @@ public class ShopDAOimpl implements ShopDAO {
 		log.info("delete()....{}", vo);
 		return sqlSession.delete("SHO_DELETE",vo);
 	}
-
-	@Override
-	public List<ShopVO> selectAll() {
-		log.info("selectAll()....");
-		
-		Map<String, Object> param = new HashMap<String, Object>();
-		
-		param.put("end", 10);
-		param.put("start", 1);
-		
-		return sqlSession.selectList("SHO_SELECT_ALL", param);
-	}
 	
 	public List<ShopVO> selectAllHome() {
 		log.info("selectAllHome()...");
@@ -64,7 +52,7 @@ public class ShopDAOimpl implements ShopDAO {
 	}
 
 	@Override
-	public List<ShopVO> searchList(String searchKey, String searchWord, int pageNum) {
+	public List<ShopVO> selectAll(String searchKey, String searchWord, int pageNum) {
 		log.info("searchList()....searchKey:{}",searchKey);
 		log.info("searchList()....searchWord:{}",searchWord);
 		log.info("searchList()....pageNum:{}", pageNum);

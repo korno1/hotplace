@@ -32,20 +32,15 @@ public class ShopService {
 		return dao.update(vo);
 	}
 	
-	public List<ShopVO> selectAll() {
-		return dao.selectAll();
-	}
-	
 	public List<ShopVO> selectAllHome() {
 		return dao.selectAllHome();
 	}
 	
 	public ShopVO selectOne(ShopVO vo) {
-		log.info("{}",vo);
 		return dao.selectOne(vo);
 	}
 	
-	public List<ShopVO> searchList(String searchKey, String searchWord, int pageNum) {
-		return dao.searchList(searchKey, searchWord, pageNum);
+	public List<ShopVO> selectAll(String searchKey, String searchWord, int pageNum) {
+		return dao.selectAll(searchKey, searchWord, pageNum);
 	}
 }

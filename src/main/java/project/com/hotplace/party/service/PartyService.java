@@ -20,16 +20,16 @@ public class PartyService {
 		log.info("PartyService()...");
 	}
 	
-	public List<PartyVO> selectAll(String searchKey, String searchWord){
-		return dao.selectAll(searchKey, searchWord);
+	public List<PartyVO> selectAll(String searchKey, String searchWord, int status){
+		return dao.selectAll(searchKey, searchWord, status);
 	}
 	
 	public PartyVO selectOne(PartyVO vo) {
 		return dao.selectOne(vo);
 	}
 	
-	public List<PartyVO> searchList(String searchKey, String searchWord, int page){
-		return dao.searchList(searchKey, searchWord, page);
+	public List<PartyVO> searchList(String searchKey, String searchWord, int page, int status){
+		return dao.searchList(searchKey, searchWord, page, status);
 	}
 	
 	public int insert(PartyVO vo) {

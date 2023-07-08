@@ -17,7 +17,7 @@ $(function(){
 			location.href="deleteOK.do?partyNum=${param.partyNum}"
 		}
 	}); // end click
-});
+}); 
 
 function app_selectAll(applicantsNum=0){
 	console.log('app_selectAll()....');

@@ -37,7 +37,7 @@ public class ShopRestController {
 	
 	@RequestMapping(value = "shop/json/selectAll.do", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> selectAll(Model model, String searchKey, int pageNum, String searchWord) {
+	public Map<String, Object> selectAll(Model model, String searchKey, String searchWord, int pageNum) {
 		log.info("/selectAll.do");
 		log.info("searchKey:{}",searchKey);
 		log.info("searchWord:{}",searchWord);

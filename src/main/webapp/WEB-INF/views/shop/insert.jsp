@@ -13,6 +13,10 @@
     function openSearchLocation() {
         window.open('searchLocation.do', 'test', 'width=1000, height=1000');
     }
+    function handleItemInfo(itemInfo) {
+        // 부모 페이지에서 아이템 정보를 처리하는 로직을 작성합니다.
+        console.log(itemInfo);
+    }
 </script>
 </head>
 <body>

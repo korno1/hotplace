@@ -56,20 +56,18 @@
 			        console.log('ajax...success:', arr);
 			        let msg = "";
 			        for (let i = 0; i < arr.vos.length; i++) {
-			          msg += `
-			            <tr>
-			              <td><a href="selectOne.do?num=\${arr.vos[i].num}">\${arr.vos[i].num}</a></td>
-			              <td>\${arr.vos[i].nick_name}</td>
-			              <td>\${arr.vos[i].email}</td>
-			              <td>\${arr.vos[i].address}</td>
-			              <td>\${arr.vos[i].pw}</td>
-			              <td>\${arr.vos[i].grade === 0 ? '회원' : arr.vos[i].grade === 1 ? '관리자' : arr.vos[i].grade === 2 ?'점주':''}</td>
-			              <td>\${arr.vos[i].gender=== 0 ? '남자' : arr.vos[i].gender === 1 ?'여자': arr.vos[i].gender === 2 ?'비공개':''}</td>
-			              <td>\${arr.vos[i].food_like}</td>
-			              <td><button class="gradeBtn\${arr.vos[i].num}" onclick="openModal(this)">등급 변경</button></td>
-			              <td><button class="deleteBtn\${arr.vos[i].num}" onclick="byeOK(this)">강제탈퇴</button></td>
-			              <td><button class="insertMailBtn\${arr.vos[i].num}" onclick="insertMail(this)">쪽지발송</button></td>
-			            </tr>`;
+			          msg += `<div class="memberTableItem">
+			          	  <div class="memberNum">\${arr.vos[i].num}</a></div>
+			              <div class="memberNickName" onclick="window.location.href = 'selectOne.do?num=\${arr.vos[i].num}';">\${arr.vos[i].nick_name}</div>
+			              <div class="memberEmail">\${arr.vos[i].email}</div>
+			              <div class="memberAddress">\${arr.vos[i].address}</div>
+			              <div class="memberGrade">\${arr.vos[i].grade === 0 ? '회원' : arr.vos[i].grade === 1 ? '관리자' : arr.vos[i].grade === 2 ?'점주':''}</div>
+			              <div class="memberGender">\${arr.vos[i].gender=== 0 ? '남자' : arr.vos[i].gender === 1 ?'여자': arr.vos[i].gender === 2 ?'비공개':''}</div>
+			              <div class="memberFoodLike">\${arr.vos[i].food_like}</div>
+			              <div class="memberGradeBtn"><button class="gradeBtn\${arr.vos[i].num}" onclick="openModal(this)">등급 변경</button></div>
+			              <div class="memberDeleteBtn"><button class="deleteBtn\${arr.vos[i].num}" onclick="byeOK(this)">강제탈퇴</button></div>
+			              <div class="memberMailBtn"><button class="insertMailBtn\${arr.vos[i].num}" onclick="insertMail(this)">쪽지발송</button></div>
+			            </div>`;
 			        }
 			        $("#vos").html(msg);
 
@@ -154,26 +152,22 @@ function byeOK(button) {
 	<input type="text" name="searchWord" id="searchWord">
 	<button id="searchButton">검색</button>
 
-	<table border="1">
-		<thead>
-			<tr>
-				<th>num</th>
-				<th>nick_name</th>
-				<th>email</th>
-				<th>address</th>
-				<th>pw</th>
-				<th>grade</th>
-				<th>gender</th>
-				<th>foodlike</th>
-				<th>등업</th>
-				<th>강탈</th>
-				<th>쪽지</th>
-			</tr>
-		</thead>
-		<tbody id="vos">
-
-		</tbody>
-	</table>
+	<div class="memberTableWrap">
+		<div class="memberTableHead">
+			<div class="memberNum">OID</div>
+			<div class="memberNickName">닉네임</div>
+			<div class="memberEmail">이메일</div>
+			<div class="memberAddress">주소</div>
+			<div class="memberGrade">회원등급</div>
+			<div class="memberGender">성별</div>
+			<div class="memberFoodLike">음식선호</div>
+			<div class="memberGradeBtn">등급변경</div>
+			<div class="memberDeleteBtn">강제탈퇴</div>
+			<div class="memberMailBtn">쪽지보내기</div>
+		</div>
+		<div id="vos" class="memberTableList">
+		</div>
+	</div>
 	<div class="pagegation block">
 		<div class="pagegation__prev prev" onclick="changePage(this)">이전</div>
 		<div class="pagegation__next next" onclick="changePage(this)">다음</div>

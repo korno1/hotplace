@@ -14,5 +14,4 @@ public class MemberReviewVO {
 	private String wdate;
 	private int rated;
 	private int wlike;
-	private String save_name;
 }

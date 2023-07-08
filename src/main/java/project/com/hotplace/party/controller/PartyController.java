@@ -28,11 +28,15 @@ public class PartyController {
 	}
 	
 	@RequestMapping(value = "/party/selectAll.do", method = RequestMethod.GET)
-	public String selectAll(String searchKey, String searchWord, Integer page, Model model) {
+	public String selectAll(String searchKey, String searchWord, Integer page, Integer status, Model model) {
 		log.info("/par_selectAll.do...");
 		
 		if(page == null) {
 			page = 1;
+		}
+
+		if(status == null) {
+			status = 0;
 		}
 		
 		if(searchKey == null) {
@@ -42,12 +46,13 @@ public class PartyController {
 		if(searchWord == null) {
 			searchWord = "";
 		}
+		log.info("status:{}", status);
 		
 		
-		List<PartyVO> vos = service.searchList(searchKey, searchWord, page);
+		List<PartyVO> vos = service.searchList(searchKey, searchWord, page, status);
 		log.info("vos: {}", vos);
 		
-		int cnt = service.selectAll(searchKey, searchWord).size();
+		int cnt = service.selectAll(searchKey, searchWord, status).size();
 		log.info("cnt: {}", cnt);
 	
 		model.addAttribute("vos", vos);
@@ -136,15 +141,4 @@ public class PartyController {
 		
 		return "redirect:selectAll.do?searchKey=title&searchWord=&page=1";
 	}
-
-	@RequestMapping(value = "/party/approveOK.do", method = RequestMethod.POST)
-	public String approveOK(PartyVO vo) {
-		log.info("/approveOK.do...{}", vo);
-		
-		int result = service.approveOK(vo);
-		log.info("result: {}", result);
-		
-		return "redirect:selectAll.do?searchKey=title&searchWord=&page=1";
-	}
-	
 } 

@@ -1,3 +1,16 @@
+.par-body {
+	width: calc(100% - 20px);
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	padding: 10px;
+	margin-bottom: 20px;
+	margin-right: 20px;
+	box-sizing: border-box;
+	display: inline-block;
+	vertical-align: top;
+}
+
+
 .container {
 	width: 100%;
 	margin: 0 auto;
@@ -21,7 +34,7 @@
 
 .post {
 	width: calc(30% - 20px);
-/* 	height: 200px; */
+/* 	height: 10px; */
 	cursor: pointer;
 	border: 1px solid #ccc;
 	border-radius: 5px;

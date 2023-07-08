@@ -45,4 +45,22 @@ public class PartyRestController {
 		
 		return vos;
 	}
+	
+	@RequestMapping(value = "/party/json/approveOK.do", method = RequestMethod.POST)
+	public String approveOK(PartyVO vo) {
+		log.info("/approveOK.do...{}", vo);
+		
+		int result = service.approveOK(vo);
+		log.info("result: {}", result);
+		
+		String msg = "";
+
+		if (result == 1) {
+			msg = "{\"result\" : 1}";
+		} else
+			msg = "{\"result\" : 0}";
+
+		return msg;
+	}
+	
 } 

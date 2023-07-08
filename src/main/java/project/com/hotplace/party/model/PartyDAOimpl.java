@@ -23,15 +23,22 @@ public class PartyDAOimpl implements PartyDAO {
 	
 	
 	@Override
-	public List<PartyVO> selectAll(String searchKey, String searchWord) {
+	public List<PartyVO> selectAll(String searchKey, String searchWord, int status) {
 		log.info("selectAll()...");
 		log.info("searchKey: {}", searchKey);
 		log.info("searchWord: {}", searchWord);
 		
 		Map<String, String> map = new HashMap<String, String>();
-		
-		String key = "par_selectAll";
-		
+		String key = "";
+		if(status==0) {
+			key = "par_selectAll";
+		}
+		else if(status==1) {
+			key = "par_selectAll_recruiting";
+		}
+		else {
+			key = "par_selectAll_completion";
+		}
 		map.put("searchKey", searchKey);
 		map.put("searchWord", "%" + searchWord + "%");
 	
@@ -46,7 +53,7 @@ public class PartyDAOimpl implements PartyDAO {
 	}
 
 	@Override
-	public List<PartyVO> searchList(String searchKey, String searchWord, int page) {
+	public List<PartyVO> searchList(String searchKey, String searchWord, int page, int status) {
 		log.info("searchList()...");
 		
 		log.info("searchKey: {}", searchKey);
@@ -54,7 +61,16 @@ public class PartyDAOimpl implements PartyDAO {
 		log.info("page: {}", page);
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		String key = "par_searchList";
+		String key = "";
+		if(status==0) {
+			key = "par_searchList";
+		}
+		else if(status==1) {
+			key = "par_searchList_recruiting";
+		}
+		else {
+			key = "par_searchList_completion";
+		}
 		
 		map.put("searchKey", searchKey);
 		map.put("searchWord", "%" + searchWord + "%");

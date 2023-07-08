@@ -136,15 +136,4 @@ public class PartyController {
 		
 		return "redirect:selectAll.do?searchKey=title&searchWord=&page=1";
 	}
-
-	@RequestMapping(value = "/party/approveOK.do", method = RequestMethod.POST)
-	public String approveOK(PartyVO vo) {
-		log.info("/approveOK.do...{}", vo);
-		
-		int result = service.approveOK(vo);
-		log.info("result: {}", result);
-		
-		return "redirect:selectAll.do?searchKey=title&searchWord=&page=1";
-	}
-	
 } 

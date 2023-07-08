@@ -37,7 +37,7 @@ $(function(){
 			let tag_vos = '';
 			
 			$.each(arr, function(index, vo){
-				if (vo.writerNum === 3) { // user_id
+				if (vo.writerNum === ${vo2.num}) { // user_id
 					tag_vos +=`
 						<div onclick="location.href='party/selectOne.do?partyNum=\${vo.partyNum}'" class="post">
 							<div>\${vo.applicants}/\${vo.max}</div>
@@ -115,7 +115,7 @@ $(function(){
 // 		location.replace(url);
 // 	}; // end searchList
 
-	function mre_selectAll(user_num=3, memberreview_num=0){ // ${param.memberreview_num}
+	function mre_selectAll(user_num=0, memberreview_num=0){ // ${param.memberreview_num}
 		console.log('mer_selectAll()....user_num:',user_num);
 		console.log('mer_selectAll()....memverreview_num:',memberreview_num);
 		
@@ -127,7 +127,7 @@ $(function(){
 		$.ajax({
 			url : "memberreview/json/selectAll.do",
 			data:{
-				user_num:3 // ${param.user_num}
+				user_num:${vo2.num} // ${param.user_num}
 			},
 			method:'GET',
 			dataType:'json',
@@ -142,6 +142,7 @@ $(function(){
 					
 					let ratedValue = parseInt(vo.rated);
 					console.log('vo.rated:', vo.rated);
+					console.log('vo.partynum:', vo.party_num);
 
 					let tag_rated = `
 				        <div id="starRating" class="board-cell">
@@ -182,7 +183,7 @@ $(function(){
 					
 					
 					let tag_div = ``;
-					if(6==vo.writer_num){ //'${user_id}'===vo.writer_num
+					if(${num}==vo.writer_num){ //'${user_id}'===vo.writer_num
 						tag_div = `<div>
 							<button onclick="mre_selectAll(\${vo.user_num},\${vo.memberreview_num})">수정</button>
 							<button type="button" onclick="deleteOK(\${vo.memberreview_num})">삭제</button>
@@ -190,12 +191,11 @@ $(function(){
 
 					}
 
-// 							<img width="20px" src="../resources/ProfileImage/\${vo.writer_num}"
-// 							onerror="this.src='../resources/ProfileImage/default.png'">
 					tag_txt += `
 						<div class="board">
 							<div class="board-row">
-								<div class="board-cell">\${vo.writer_num}</div>
+								<img id="preview" width="100px" src="${pageContext.request.contextPath}/resources/ProfileImage/\${vo.writer_num}.png"
+								onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/resources/ProfileImage/default.png';">
 								<div class="board-cell">\${vo.writer_name}</div>
 								\${tag_rated}
 								<div class="board-cell">\${vo.wdate}</div>
@@ -360,9 +360,9 @@ $(function(){
 	        $.ajax({
 	            url: "memberreview/json/insertOK.do",
 	            data: {
-	                party_num: 9,
-	                user_num: 3,
-	                writer_num: 6,
+	                party_num: 9,//9 ${vo.party_num}
+	                user_num: ${vo2.num}, //
+	                writer_num: ${num},
 	                rated: $('#mre_rated').val(),
 	                content: $('#mre_content').val()
 	            },
@@ -473,16 +473,18 @@ $(function(){
 					let tag_vos = '';
 					
 					$.each(arr, function(index, vo){
-						if (vo.writerNum === 3) { // user_id
+						if (vo.writerNum === ${vo2.num}) { // user_id
 							tag_vos +=`
-								<div onclick="location.href='party/selectOne.do?partyNum=\${vo.partyNum}'" class="post">
-									<div>\${vo.applicants}/\${vo.max}</div>
-									<hr>
-									<div>마감일 : \${vo.deadLine}</div>
-									<div>[\${vo.place}] \${vo.title}</div>
-									<div>조회수: \${vo.views}</div>
-									<hr>
-									<div>작성자 : ${vo.writerName}</div>
+								<div class="par-body">
+									<div onclick="location.href='party/selectOne.do?partyNum=\${vo.partyNum}'" class="post">
+										<div>\${vo.applicants}/\${vo.max}</div>
+										<hr>
+										<div>마감일 : \${vo.deadLine}</div>
+										<div>[\${vo.place}] \${vo.title}</div>
+										<div>조회수: \${vo.views}</div>
+										<hr>
+										<div>작성자 : ${vo.writerName}</div>
+									</div>
 								</div>
 							`;
 						}
@@ -537,13 +539,19 @@ $(function(){
 </script>
 </head>
 <body>
-	
-	<ul>
-		<li><a href="my.do">HOME</a></li>
-	</ul>
-<!-- 	<div> -->
-<!-- 		<img width="20px" src="hotplace/resources/ProfileImage/default.png" onerror="this.src='../resources/ProfileImage/default.png'"> -->
-<!-- 	</div> -->
+
+	<div>
+		<img id="preview" width="100px" src="${pageContext.request.contextPath}/resources/ProfileImage/${vo2.num}.png"
+					onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/resources/ProfileImage/default.png';">
+		<div>
+			<a href="http://localhost:8088/hotplace/userpage.do?num=${vo2.num}">${vo2.nick_name}</a>
+		</div>
+	</div>
+
+
+<!-- 	<ul> -->
+<!-- 		<li><a href="my.do">HOME</a></li> -->
+<!-- 	</ul> -->
 	
 	
 	<a href="#" onclick="par_selectAll()">모임리스트</a>

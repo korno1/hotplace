@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>모임정보</title>
+<link rel="stylesheet" href="/hotplace/resources/css/party/selectOne.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
 <script type="text/javascript">
@@ -38,7 +39,7 @@ function app_selectAll(applicantsNum=0){
 			$.each(arr, function(index, vo){
 				console.log('vo...',vo);
 				console.log('status...',vo.status);
-				if (vo.status===1) { // user_id
+				if (vo.status===1) {
 // 				<img width="100px" src="../resources/ProfileImage/${vo2.writerNum}"
 // 							onerror="this.src='../resources/ProfileImage/default.png'">
 					tag_OK +=`
@@ -54,13 +55,13 @@ function app_selectAll(applicantsNum=0){
 // 							onerror="this.src='../resources/ProfileImage/default.png'">
 
 					let tag_div = ``;
-// 					if(3==vo.userNum){ //'${user_id}'===vo.userNum
-// 						tag_div = `<div>
-// 							<button type="button" onclick="deleteOK(\${vo.applicantsNum})">신청취소</button>
-// 						</div>`;
-// 					}
+					if(${num}==vo.userNum){ //'${user_id}'===vo.userNum
+						tag_div = `<div>
+							<button type="button" onclick="deleteOK(\${vo.applicantsNum})">신청취소</button>
+						</div>`;
+					}
 
-					if(10===${vo2.writerNum}){ //'${user_id}'===vo.userNum
+					if(${num}===${vo2.writerNum}){ //'${user_id}'===vo.userNum
 						tag_div = `<div>
 							<button type="button" onclick="approveOK(\${vo.applicantsNum})">승인</button>
 							<button type="button" onclick="rejectOK(\${vo.applicantsNum})">거절</button>
@@ -98,7 +99,7 @@ function insertOK() {
 	           url: "json/AppinsertOK.do",
 	           data: {
 	        		partyNum : ${param.partyNum},
-	        		userNum : 3,// ${param.userNum}
+	        		userNum : ${num},// ${param.userNum}
 	               comments: $('#comments').val()
 	           },
 	           method: 'POST',
@@ -165,7 +166,7 @@ function approveOK(applicantsNum=0) {
 			dataType:'json',
 			success : function(obj) {
 				console.log('ajax...success:', obj);
-				if(obj.result==1) par_approveOK(applicantsNum='\${vo.applicantsNum}')
+				if(obj.result==1) par_approveOK(partyNum='${param.partyNum}')
 			},
 			error:function(xhr,status,error){
 				console.log('xhr.status:', xhr.status);
@@ -176,13 +177,13 @@ function approveOK(applicantsNum=0) {
 	  }
 }//end approveOK
 
-function par_approveOK(applicantsNum=0) {
-	console.log('par_approveOK()....',applicantsNum);
+function par_approveOK(partyNum=0) {
+	console.log('par_approveOK()....',partyNum);
 	
 	$.ajax({
-		url : "approveOK.do",
+		url : "json/approveOK.do",
 		data:{
-			applicantsNum:applicantsNum
+			partyNum:partyNum
 		},
 		method:'POST',
 		dataType:'json',
@@ -228,12 +229,13 @@ function rejectOK(applicantsNum=0) {
 
 
 
-
 </script>
 </head>
 <body onload="app_selectAll()">
 	<h1>모임정보</h1>
-
+	
+	<div class="application">
+		<div>${num}</div>
 		<div>(status)</div>
 		
 		<div>${vo2.title}(제목)</div>
@@ -241,7 +243,7 @@ function rejectOK(applicantsNum=0) {
 		<div>
 			<img width="100px" src="../resources/ProfileImage/${vo2.writerNum}"
 						onerror="this.src='../resources/ProfileImage/default.png'">
-			<div>${vo2.writerName}(작성자)</div>
+			<div><a href="http://localhost:8088/hotplace/userpage.do?num=${vo2.writerNum}">${vo2.writerName}(작성자)</a></div>
 		</div>
 
 		
@@ -255,20 +257,23 @@ function rejectOK(applicantsNum=0) {
 			<div>식당 : ${vo2.place}</div>
 			<div>모집날짜 : ${vo2.timeLimit}</div>
 		</div>
-		
 		<div>${vo2.content}(내용)</div>
-	<div>
-		<button type="button"
-			onclick="location.href='update.do?partyNum=${param.partyNum}'">수정</button>
-		<button type="button" id="delButton">삭제</button>
+		<div class="par_button">
+			<button type="button"
+				onclick="location.href='update.do?partyNum=${param.partyNum}'">수정</button>
+			<button type="button" id="delButton">삭제</button>
+		</div>
 	</div>
 	
-	<div id="app_OK">승인된 구성원</div>
 	<hr>
-	<div id="app_NotOK">대기중인 구성원</div>
+	<div class="app_title">승인된 구성원</div>
+	<div id="app_OK"></div>
+	<hr>
+	<div class="app_title">대기중인 구성원</div>
+	<div id="app_NotOK"></div>
 	
 	<div>
-		<div id="insert_form">
+		<div class="insert_form">
 			<textarea name="comments" id="comments" placeholder="간단한 자기소개를 해주세요 (필수)"
 			onfocus="this.placeholder=''" onblur="this.placeholder='간단한 자기소개를 해주세요 (필수)'" 
 			style="resize: none; width: 80%; height: 100px;"></textarea>
@@ -277,6 +282,14 @@ function rejectOK(applicantsNum=0) {
 	</div>
 	
 	
-	
+	<script type="text/javascript">
+		if("${vo2.writerNum}"=="${num}"){
+			$('.insert_form').css("display", "none");
+		}
+
+		if("${vo2.writerNum}"!="${num}"){
+			$('.par_button').css("display", "none");
+		}
+	</script>
 </body>
 </html>

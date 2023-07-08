@@ -22,19 +22,27 @@
 			<div><input type="text" id="name" name="name" value="name1"></div>
 		</div>
 		<div>
-			<div>분류</div>
 			<div>
-			<select name="cate", id="cate">
-				<option value="한식">한식</option>
-				<option value="중식">중식</option>
-				<option value="일식">일식</option>
-				<option value="양식">양식</option>
-				<option value="카페">카페</option>
-				<option value="햄버거">햄버거</option>
-				<option value="치킨">치킨</option>
-				<option value="피자">피자</option>
-			</select>
-			</div>
+        	    <label><input type="checkbox" name="cate" value="패스트푸드"> 패스트푸드</label>
+	            <label><input type="checkbox" name="cate" value="피자"> 피자</label>
+    	        <label><input type="checkbox" name="cate" value="분식"> 분식</label>
+        	    <label><input type="checkbox" name="cate" value="디저트"> 디저트</label>
+            	<label><input type="checkbox" name="cate" value="술집"> 술집</label>
+        	</div>
+        	<div>
+	            <label><input type="checkbox" name="cate" value="해산물"> 해산물</label>
+    	        <label><input type="checkbox" name="cate" value="샌드위치"> 샌드위치</label>
+        	    <label><input type="checkbox" name="cate" value="샐러드"> 샐러드</label>
+            	<label><input type="checkbox" name="cate" value="스테이크"> 스테이크</label>
+	            <label><input type="checkbox" name="cate" value="베이커리"> 베이커리</label>
+        	</div>
+        	<div>
+    	        <label><input type="checkbox" name="cate" value="햄버거"> 햄버거</label>
+        	    <label><input type="checkbox" name="cate" value="국밥"> 국밥</label>
+            	<label><input type="checkbox" name="cate" value="카레"> 카레</label>
+		    	<label><input type="checkbox" name="cate" value="스시"> 스시</label>
+			    <label><input type="checkbox" name="cate" value="디저트"> 디저트</label>
+        	</div>
 		</div>
 		<div>
 			<div>전화번호</div>

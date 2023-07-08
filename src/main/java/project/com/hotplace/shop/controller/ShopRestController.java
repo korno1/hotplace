@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,13 +32,15 @@ public class ShopRestController {
 	@Autowired
 	ServletContext sContext;
 	
+	@Autowired
+	HttpSession session;
+	
 	@RequestMapping(value = "shop/json/selectAll.do", method = RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> selectAll(Model model, String searchKey, int pageNum, String searchWord) {
 		log.info("/selectAll.do");
 		log.info("searchKey:{}",searchKey);
 		log.info("searchWord:{}",searchWord);
-		
 		
 		List<ShopVO> vos = service.selectAll(searchKey,searchWord, pageNum);
 		

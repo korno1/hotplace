@@ -3,6 +3,7 @@ package project.com.hotplace.shop.controller;
 import java.util.List;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +20,7 @@ import project.com.hotplace.shopreview.service.ShopReviewService;
 @Slf4j
 @Controller
 @RequestMapping("/shop")
-public class ShopConroller {
+public class ShopController {
 
 	@Autowired
 	ShopService service;
@@ -29,10 +30,20 @@ public class ShopConroller {
 	
 	@Autowired
 	ServletContext sContext;
+	
+	@Autowired
+    HttpSession session;
 
 	@RequestMapping(value = "/selectAll.do", method = RequestMethod.GET)
-	public String selectAll() {
+	public String selectAll(Model model) {
 		log.info("/selectAll.do");
+		
+        Object grade = session.getAttribute("grade");
+        if(grade != null)
+        {
+        	boolean showAddButton = (grade.equals(1) || grade.equals(2));
+            model.addAttribute("showAddButton", showAddButton);
+        }
 		
 		return "shop/selectAll.tiles";
 	}

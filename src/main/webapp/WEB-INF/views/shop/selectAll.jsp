@@ -136,6 +136,10 @@
 			<input type="text" name="searchWord" id="searchWord" value="${param.searchWord}">
 			<input type="hidden" name="pageNum" id="pageNum" value=1>
 			<input type="submit" value="검색">
+			
+			<c:if test="${showAddButton}">
+                <a href="insert.do">매장 추가</a>
+            </c:if>
 		</form>
 	</div>
 

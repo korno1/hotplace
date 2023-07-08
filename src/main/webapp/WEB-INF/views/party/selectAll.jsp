@@ -17,9 +17,9 @@ $(function(){
 <body>
 	<h1>모임리스트</h1>
 	<hr>
-	<button onclick="location.href='selectAll.do?searchKey=title&searchWord=&page=1'">전체</button>
-	<button onclick="">모집중</button>
-	<button onclick="">모집완료</button>
+	<button onclick="location.href='selectAll.do?searchKey=${searchKey}&searchWord=${searchWord}&page=1&status=0'">전체</button>
+	<button onclick="location.href='selectAll.do?searchKey=${searchKey}&searchWord=${searchWord}&page=1&status=1'">모집중</button>
+	<button onclick="location.href='selectAll.do?searchKey=${searchKey}&searchWord=${searchWord}&page=1&status=2'">모집완료</button>
 
 
 	<div class="container">
@@ -57,8 +57,8 @@ $(function(){
 
 		<div class="pagination">
 			<div class="pagination-links">
-				<a href="selectAll.do?searchKey=${searchKey}&searchWord=${searchWord}&page=${page-1}" id="pre_page">이전</a>
-				<a href="selectAll.do?searchKey=${searchKey}&searchWord=${searchWord}&page=${page+1}" id="next_page">다음</a>
+				<a href="selectAll.do?searchKey=${searchKey}&searchWord=${searchWord}&page=${page-1}&status=${param.status}" id="pre_page">이전</a>
+				<a href="selectAll.do?searchKey=${searchKey}&searchWord=${searchWord}&page=${page+1}&status=${param.status}" id="next_page">다음</a>
 			</div>
 		</div>
 	</div>

@@ -4,11 +4,11 @@ import java.util.List;
 
 public interface PartyDAO {
 
-	public List<PartyVO> selectAll(String searchKey, String searchWord);
+	public List<PartyVO> selectAll(String searchKey, String searchWord, int status);
 	
 	public PartyVO selectOne(PartyVO vo);
 	
-	public List<PartyVO> searchList(String searchKey, String searchWord, int page);
+	public List<PartyVO> searchList(String searchKey, String searchWord, int page, int status);
 	
 	public int insert(PartyVO vo);
 	

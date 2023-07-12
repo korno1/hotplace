@@ -42,7 +42,7 @@
 	
 	<select id="par_searchList" resultType="project.com.hotplace.party.model.PartyVO">
 		select *
-			from (select rownum rn, v_not.*
+			from (select rownum rn, v_par.*
     		from (select p.party_num as partyNum, m.nick_name as writerName, p.title, p.views, p.content, p.applicants, p.max, p.place, p.time_limit as timeLimit, p.wdate, p.dead_line as deadLine, p.writer_num as writerNum
         		from party p join member m on (p.writer_num = m.num)
         		where 
@@ -52,13 +52,13 @@
 					<if test="searchKey == 'place'">
 						p.place like #{searchWord}
 					</if>
-        		order by p.party_num desc) v_not)
+        		order by p.party_num desc) v_par)
 		where rn between #{st} and #{en}
 	</select>
 	
 	<select id="par_searchList_recruiting" resultType="project.com.hotplace.party.model.PartyVO">
 		select *
-			from (select rownum rn, v_not.*
+			from (select rownum rn, v_par.*
     		from (select p.party_num as partyNum, m.nick_name as writerName, p.title, p.views, p.content, p.applicants, p.max, p.place, p.time_limit as timeLimit, p.wdate, p.dead_line as deadLine, p.writer_num as writerNum
         		from party p join member m on (p.writer_num = m.num)
         		where 
@@ -68,13 +68,13 @@
 					<if test="searchKey == 'place'">
 						p.place like #{searchWord}
 					</if> and p.applicants <![CDATA[<]]> p.max and p.dead_line <![CDATA[>]]> sysdate
-        		order by p.party_num desc) v_not)
+        		order by p.party_num desc) v_par)
 		where rn between #{st} and #{en}
 	</select>
 	
 	<select id="par_searchList_completion" resultType="project.com.hotplace.party.model.PartyVO">
 		select *
-			from (select rownum rn, v_not.*
+			from (select rownum rn, v_par.*
     		from (select p.party_num as partyNum, m.nick_name as writerName, p.title, p.views, p.content, p.applicants, p.max, p.place, p.time_limit as timeLimit, p.wdate, p.dead_line as deadLine, p.writer_num as writerNum
         		from party p join member m on (p.writer_num = m.num)
         		where 
@@ -84,7 +84,7 @@
 					<if test="searchKey == 'place'">
 						p.place like #{searchWord}
 					</if> and (p.applicants = p.max or p.dead_line <![CDATA[<]]> sysdate)
-        		order by p.party_num desc) v_not)
+        		order by p.party_num desc) v_par)
 		where rn between #{st} and #{en}
 	</select>
 	
@@ -118,4 +118,18 @@
 		delete from party where party_num = #{partyNum}
 	</delete> 
 	
+	<select id="par_myParty" resultType="project.com.hotplace.party.model.PartyVO" parameterType="HashMap">
+		select *
+			from (select rownum rn, v_par.*
+    		from (select p.party_num as partyNum, m.nick_name as writerName, p.title, p.views, p.content, p.applicants, p.max, p.place, p.time_limit as timeLimit, p.wdate, p.dead_line as deadLine, p.writer_num as writerNum
+        		from party p join member m on (p.writer_num = m.num)
+        		where p.writer_num=#{writerNum}
+        		order by p.party_num desc) v_par)
+		where rn between #{st} and #{en}
+	</select>
+
+	<select id="totalCount" resultType="int">
+		select count(*) from party
+		where writer_num=#{writerNum}
+	</select>
 </mapper>

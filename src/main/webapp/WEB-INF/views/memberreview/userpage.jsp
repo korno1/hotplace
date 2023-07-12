@@ -13,22 +13,17 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
 
+let page =1;
+let count; // 게시글 개수
 
 $(function(){
 	console.log('onload...');
-	let searchKey = 'title';
-	let page = 1;
 	
-	console.log(page);
-	console.log(searchKey);
-	
-	$('#searchWord').val("${param.searchWord}");
 	$.ajax({
-		url: "party/json/searchList.do",
+		url: "party/json/selectAll.do",
 		data:{
-			searchKey: "title", // ${param.searchKey}
-			searchWord: "${param.searchWord}",
-			page: 1, //${param.page}
+			writerNum : ${param.num},
+			page: page, //${param.page}
 		},
 		method: 'GET',
 		dataType: 'json',
@@ -50,182 +45,193 @@ $(function(){
 						</div>
 					`;
 				}
+				
 			}); // end for-each
-			
-			let pr_nx = `
-					<button id="back_page">이전</button>
-					<button id="next_page">다음</button>
-				`;
-			
-// 			let count = 1;
-// 			if(page===1){
-// 				$('#back_page').hide();
-// 					return false;
-// 			}
-				
-// 			if((page*6) >= count){
-// 				 $('#next_page').hide();
-// 					return false;
-// 			}
-// 			$(document).on('click', '#back_page', function(e) {
-// 		    e.preventDefault(); // 기본 링크 동작(페이지 다시로드)을 막습니다.
-// 		    // 이전 페이지 번호 계산
-// 		    let previousPage = parseInt(page) - 1;
-// 		    page = previousPage;
-// 		    let searchKey = $('#searchKey').val();
-// 		    // 업데이트된 페이지 파라미터로 AJAX 요청 수행
-// 		    loadPage(previousPage);
-// 		  });
-		 
-// 			$(document).on('click', '#next_page', function(e) {
-// 				 e.preventDefault(); // 기본 링크 동작(페이지 다시로드)을 막습니다.
-// 				    // 다음 페이지 번호 계산
-// 			    let nextPage = parseInt(page) + 1;
-// 				page = nextPage;
-				
-// 				let searchKey = $('#searchKey').val();
-// 				    // 업데이트된 페이지 파라미터로 AJAX 요청 수행
-// 			    loadPage(nextPage);
-// 			  });
-				
+
 			$('#par_vos').html(tag_vos);
-			$('#par_page').html(pr_nx);
-			
-			
 		}, // end success
 		
 		error:function(xhr,status,error){
 			console.log('xhr.status:', xhr.status);
 		} // end error
-	}); // end searchList ajax;
+	}); // end ajax;
+	par_selectAll(page);
+	  
+	function totalCount(){ // 게시글 개수 계산
+		console.log('totalCount...');
+		$.ajax({
+			url: "party/json/totalCount.do",
+			data:{
+				writerNum : ${param.num}
+			},
+			method: 'GET',
+			dataType: 'json',
+			success: function(cnt){
+				console.log('cnt...',cnt);
+	            count = cnt;
+	            
+	            let pr_nx = `
+					<button id="back_page">이전</button>
+					<button id="next_page">다음</button>
+					`;
+					
+	            $('#par_page').html(pr_nx);
+			}, // end success
+			
+			error:function(xhr,status,error){
+				console.log('xhr.status:', xhr.status);
+				
+			} // end error
+		}) // end ajax;	
+	};
+	totalCount();
 	
-	  $('#par_vos').show();
-	  $('#memberreview_list').hide();
-	  document.getElementById("formContainer").style.display = "none";
+	$(document).on('click', '#back_page', function(e) { // 이전 버튼 클릭 시 동작
+	    e.preventDefault(); // 기본 링크 동작(페이지 다시로드)을 막음.
+		if(page==1){ // 첫번째 페이지에서 팝업 경고창
+			alert('첫 페이지입니다.');
+			return false;
+		}
+	    // 이전 페이지 번호 계산
+	    let previousPage = parseInt(page) - 1;
+	    page = previousPage;
+		console.log('count',count);
+	    
+	 	// parameter 수정 후 페이지 다시 로드
+	    par_selectAll(previousPage);
+	});
+ 
+	$(document).on('click', '#next_page', function(e) {
+// 		console.log('page...',page);
+		console.log('count',count);
+		e.preventDefault(); // 기본 링크 동작(페이지 다시로드)을 막음.
+		if((page*6) >= count){ // 마지막 페이지에서 팝업 경고창
+			alert('마지막 페이지입니다.');
+			return false;
+		}
+		// 다음 페이지 번호 계산
+	    let nextPage = parseInt(page) + 1;
+		page = nextPage;
+		console.log('page...',page);
+		
+		// parameter 수정 후 페이지 다시 로드
+	    par_selectAll(nextPage);
+	});	
 
 }); // end onload	
 
-	
-// 	function searchList(){
-// 		let sKey = $('#searchKey').val();
-// 		let sWord = $('#searchWord').val();
-// 		console.log('skey:', sKey);
-// 		console.log('sWord:', sWord);
-// 		let url = 'selectAll.do?searchKey=' + sKey + "&searchWord=" + sWord + "&page=1";
-// 		location.replace(url);
-// 	}; // end searchList
 
-	function mre_selectAll(user_num=0, memberreview_num=0){ // ${param.memberreview_num}
-		console.log('mer_selectAll()....user_num:',user_num);
-		console.log('mer_selectAll()....memverreview_num:',memberreview_num);
-		
-		$('#par_vos').hide(); // 모임리스트 요소를 숨기도록 설정
-		$('#memberreview_list').show();
-		document.getElementById("formContainer").style.display = "block";
-		
-		$('#insertButton').show();
-		$.ajax({
-			url : "memberreview/json/selectAll.do",
-			data:{
-				user_num:${vo2.num} // ${param.user_num}
-			},
-			method:'GET',
-			dataType:'json',
-			success : function(vos) {
-// 				console.log('ajax...success:', vos);
+function mre_selectAll(user_num=0, memberreview_num=0){ // ${param.memberreview_num}
+	console.log('mer_selectAll()....user_num:',user_num);
+	console.log('mer_selectAll()....memverreview_num:',memberreview_num);
 	
-				let tag_txt = '';
+	$('#par_vos').hide(); // 모임리스트 요소를 숨기도록 설정
+	$('#memberreview_list').show();
+	document.getElementById("formContainer").style.display = "block";
+	
+	$('#insertButton').show();
+	$.ajax({
+		url : "memberreview/json/selectAll.do",
+		data:{
+			user_num:${vo2.num} // ${param.user_num}
+		},
+		method:'GET',
+		dataType:'json',
+		success : function(vos) {
+			console.log('ajax...success:', vos);
+
+			let tag_txt = '';
+			
+			$.each(vos,function(index,vo){
+				console.log('ajax...success:', vo);
+				let tag_td = `<div class="board-cell">\${vo.content}</div>`;
 				
-				$.each(vos,function(index,vo){
-					console.log('ajax...success:', vo);
-					let tag_td = `<div class="board-cell">\${vo.content}</div>`;
-					
-					let ratedValue = parseInt(vo.rated);
-					console.log('vo.rated:', vo.rated);
-					console.log('vo.partynum:', vo.party_num);
+				let ratedValue = parseInt(vo.rated);
+				console.log('vo.rated:', vo.rated);
+				console.log('vo.partynum:', vo.party_num);
 
-					let tag_rated = `
-				        <div id="starRating" class="board-cell">
+				let tag_rated = `
+			        <div id="starRating" class="board-cell">
+		            <ul class="star-rating"  data-rating="\${ratedValue}">
+		                <li class="star fa fa-star"></li>
+		                <li class="star fa fa-star"></li>
+		                <li class="star fa fa-star"></li>
+		                <li class="star fa fa-star"></li>
+		                <li class="star fa fa-star"></li>
+		            </ul>
+		        </div>`;
+		       
+				// user_num==vo.user_num
+				if(memberreview_num==vo.memberreview_num) {
+					tag_td = `<div class="board-cell"><input type="text" value="\${vo.content}" id="input_content"><button onclick="updateOK(\${vo.memberreview_num})">수정완료</button></div>`;
+					tag_rated = `
+				        <div id="starRating">
 			            <ul class="star-rating"  data-rating="\${ratedValue}">
-			                <li class="star fa fa-star"></li>
-			                <li class="star fa fa-star"></li>
-			                <li class="star fa fa-star"></li>
-			                <li class="star fa fa-star"></li>
-			                <li class="star fa fa-star"></li>
+			                <li class="star fa fa-star" data-rating="1"></li>
+			                <li class="star fa fa-star" data-rating="2"></li>
+			                <li class="star fa fa-star" data-rating="3"></li>
+			                <li class="star fa fa-star" data-rating="4"></li>
+			                <li class="star fa fa-star" data-rating="5"></li>
 			            </ul>
 			        </div>`;
-			       
-					// user_num==vo.user_num
-					if(memberreview_num==vo.memberreview_num) {
-						tag_td = `<div class="board-cell"><input type="text" value="\${vo.content}" id="input_content"><button onclick="updateOK(\${vo.memberreview_num})">수정완료</button></div>`;
-						tag_rated = `
-					        <div id="starRating">
-				            <ul class="star-rating"  data-rating="\${ratedValue}">
-				                <li class="star fa fa-star" data-rating="1"></li>
-				                <li class="star fa fa-star" data-rating="2"></li>
-				                <li class="star fa fa-star" data-rating="3"></li>
-				                <li class="star fa fa-star" data-rating="4"></li>
-				                <li class="star fa fa-star" data-rating="5"></li>
-				            </ul>
-				        </div>`;
-						$(document).ready(function() {
-				            $('.star-rating .star').click(function() {
-				              var rating = $(this).attr('data-rating');
-				              $('.star-rating .star').removeClass('active');
-				              $(this).prevAll().addBack().addClass('active');
-				              console.log('별점: ' + rating);
-				              $('#mre_rated').val(rating); // input2 폼에 선택한 별점 값 설
-				            });
-				          });
+					$(document).ready(function() {
+			            $('.star-rating .star').click(function() {
+			              var rating = $(this).attr('data-rating');
+			              $('.star-rating .star').removeClass('active');
+			              $(this).prevAll().addBack().addClass('active');
+			              console.log('별점: ' + rating);
+			              $('#mre_rated').val(rating); // input2 폼에 선택한 별점 값 설
+			            });
+			          });
 
-				        isFormInserted = true;
-					}
-					
-					
-					let tag_div = ``;
-					if(${num}==vo.writer_num){ //'${user_id}'===vo.writer_num
-						tag_div = `<div>
-							<button onclick="mre_selectAll(\${vo.user_num},\${vo.memberreview_num})">수정</button>
-							<button type="button" onclick="deleteOK(\${vo.memberreview_num})">삭제</button>
-						</div>`;
+			        isFormInserted = true;
+				}
+				
+				
+				let tag_div = ``;
+				if(${num}==vo.writer_num){ //'${user_id}'===vo.writer_num
+					tag_div = `<div>
+						<button onclick="mre_selectAll(\${vo.user_num},\${vo.memberreview_num})">수정</button>
+						<button type="button" onclick="deleteOK(\${vo.memberreview_num})">삭제</button>
+					</div>`;
 
-					}
+				}
 
-					tag_txt += `
-						<div class="board">
-							<div class="board-row">
-								<img id="preview" width="100px" src="${pageContext.request.contextPath}/resources/ProfileImage/\${vo.writer_num}.png"
-								onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/resources/ProfileImage/default.png';">
-								<div class="board-cell">\${vo.writer_name}</div>
-								\${tag_rated}
-								<div class="board-cell">\${vo.wdate}</div>
-							</div>
-							<div class="board-content">
-								\${tag_td}
-								<div colspan="3" class="board-content-cell">\${tag_div}</div>
-							</div>
+				tag_txt += `
+					<div class="board">
+						<div class="board-row">
+							<img id="preview" width="100px" src="${pageContext.request.contextPath}/resources/ProfileImage/\${vo.writer_num}.png"
+							onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/resources/ProfileImage/default.png';">
+							<div class="board-cell">\${vo.writer_name}</div>
+							\${tag_rated}
+							<div class="board-cell">\${vo.wdate}</div>
 						</div>
-					`;
-				});//end ajax
-				
-				$('#memberreview_list').html(tag_txt);
-				$('#insertButton').show();
-				
-// 				// 별점 채우기
-				$('.star-rating').each(function() {
-				  var ratedValue = parseInt($(this).data('rating'));
-				  var stars = $(this).find('.star');
-				  for (var i = 0; i < ratedValue; i++) {
-				    $(stars[i]).addClass('active');
-				  }
-				});
-				
-			},
-			error:function(xhr,status,error){
-				console.log('xhr.status:', xhr.status);
-			}
-		});
-	}// end mre_selectAll
+						<div class="board-content">
+							\${tag_td}
+							<div colspan="3" class="board-content-cell">\${tag_div}</div>
+						</div>
+					</div>
+				`;
+			});//end ajax
+			
+			$('#memberreview_list').html(tag_txt);
+			$('#insertButton').show();
+			
+			// 별점 채우기
+			$('.star-rating').each(function() {
+			  var ratedValue = parseInt($(this).data('rating'));
+			  var stars = $(this).find('.star');
+			  for (var i = 0; i < ratedValue; i++) {
+			    $(stars[i]).addClass('active');
+			  }
+			});
+			
+		},
+		error:function(xhr,status,error){
+			console.log('xhr.status:', xhr.status);
+		}
+	});
+}// end mre_selectAll
 	
 	
 	
@@ -444,96 +450,57 @@ $(function(){
 		  }
 	}//end deleteOK
 	
-	function par_selectAll(){
-		$('#par_vos').show(); // 모임리스트 요소를 보이도록 설정
-		$('#memberreview_list').hide();
-		document.getElementById("formContainer").style.display = "none";
-		
-		$(function() {
-			console.log('onload...');
+function par_selectAll(page){
+	$('#par_vos').show(); // 모임리스트 요소를 보이도록 설정
+	$('#memberreview_list').hide();
+	document.getElementById("formContainer").style.display = "none";
+	
+	console.log('onload...');
+	
+	$.ajax({
+		url: "party/json/selectAll.do",
+		data:{
+			writerNum : ${param.num},
+			page: page, //${param.page}
+		},
+		method: 'GET',
+		dataType: 'json',
+		success: function(arr){
+			console.log('ajax...',arr);
+			let tag_vos = '';
 			
-			let searchKey = 'title';
-			let page = 1;
-			
-			console.log(page);
-			console.log(searchKey);
-			
-			$('#searchWord').val("${param.searchWord}");
-			$.ajax({
-				url: "party/json/searchList.do",
-				data:{
-					searchKey: "title", // ${param.searchKey}
-					searchWord: "${param.searchWord}",
-					page: 1, //${param.page}
-				},
-				method: 'GET',
-				dataType: 'json',
-				success: function(arr){
-					console.log('ajax...',arr);
-					let tag_vos = '';
-					
-					$.each(arr, function(index, vo){
-						if (vo.writerNum === ${vo2.num}) { // user_id
-							tag_vos +=`
-								<div class="par-body">
-									<div onclick="location.href='party/selectOne.do?partyNum=\${vo.partyNum}'" class="post">
-										<div>\${vo.applicants}/\${vo.max}</div>
-										<hr>
-										<div>마감일 : \${vo.deadLine}</div>
-										<div>[\${vo.place}] \${vo.title}</div>
-										<div>조회수: \${vo.views}</div>
-										<hr>
-										<div>작성자 : ${vo.writerName}</div>
-									</div>
-								</div>
-							`;
-						}
-						
-					}); // end for-each
-					$('#par_vos').html(tag_vos);
-					
-				}, // end success
+			$.each(arr, function(index, vo){
+				if (vo.writerNum === ${vo2.num}) { // user_id
+					tag_vos +=`
+						<div onclick="location.href='party/selectOne.do?partyNum=\${vo.partyNum}'" class="post">
+							<div>\${vo.applicants}/\${vo.max}</div>
+							<hr>
+							<div>마감일 : \${vo.deadLine}</div>
+							<div>[\${vo.place}] \${vo.title}</div>
+							<div>조회수: \${vo.views}</div>
+							<hr>
+							<div>작성자 : ${vo.writerName}</div>
+						</div>
+					`;
+				}
 				
-				error:function(xhr,status,error){
-					console.log('xhr.status:', xhr.status);
-				} // end error
-			}); // end searchList ajax;
-			
-//		 	$.ajax({
-//	 		url: "party/json/selectAll.do",
-//	 		data:{
-//	 			searchKey: "${param.searchKey}",
-//	 			searchWord: "${param.searchWord}",
-//	 		},
-//	 		method: 'GET',
-//	 		dataType: 'json',
-//	 		success: function(cnt){
-//	 			console.log('ajax...',cnt);
-//	 			if(${param.page}==1){
-	// //	 			$('#pre_page').hide();
-//	 				$('#pre_page').click(function(){
-//	 					alert('첫번째 페이지입니다.');
-//	 					return false;
-//	 				});
-//	 			}
-//	 			if((${param.page}*5) >= cnt){
-	// //	 			$('#next_page').hide();
-//	 				$('#next_page').click(function(){
-//	 					alert('마지막 페이지입니다.');
-//	 					return false;
-//	 				});
-//	 			}
+			}); // end for-each
 
-//	 		}, // end success
+			let pr_nx = `
+				<button id="back_page">이전</button>
+				<button id="next_page">다음</button>
+				`;
 			
-//	 		error:function(xhr,status,error){
-//	 			console.log('xhr.status:', xhr.status);
-				
-//	 		} // end error
-//	 	}); // end selectAll ajax;
-			
-		  });
-	}
+// 			totalCount();	
+			$('#par_vos').html(tag_vos);
+			$('#par_page').html(pr_nx);
+		}, // end success
+		
+		error:function(xhr,status,error){
+			console.log('xhr.status:', xhr.status);
+		} // end error
+	}); // end ajax;
+}
 	
 	
 </script>
@@ -558,7 +525,8 @@ $(function(){
 	<a href="#" onclick="mre_selectAll()" id="reviewLink">후기목록</a>
 		
 	<hr>	
-<!-- 	<button onclick="myParty">내 모임 확인</button> -->
+	<button onclick="location.href='party/myParty.do?writerNum=${writerNum}&page=${page-1}">내모임 확인</button>
+	<button onclick="myParty">내 모임 확인</button>
 	
 	
 	<div id="par_vos"></div>

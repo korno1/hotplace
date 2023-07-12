@@ -112,5 +112,28 @@ public class PartyDAOimpl implements PartyDAO {
 		return sqlSession.update("par_approveOK", vo);		
 	}
 
+	@Override
+	public List<PartyVO> myParty(PartyVO vo, Integer page) {
+		
+		log.info("myParty()...{}", vo);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		String key = "par_myParty";
+		
+		map.put("writerNum", vo.getWriterNum());
+		map.put("st", (page-1)*6+1);
+		map.put("en", page*6);
+	
+		return sqlSession.selectList(key, map);
+	}
+
+
+	@Override
+	public int totalCount(PartyVO vo) {
+		log.info("totalCount()...{}", vo);
+		
+		return sqlSession.selectOne("totalCount", vo);
+	}
+
 }
  

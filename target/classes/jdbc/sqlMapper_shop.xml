@@ -53,8 +53,8 @@
 	</select>
 	
 	<insert id="SHO_INSERT" parameterType="project.com.hotplace.shop.model.ShopVO">
-		insert into shop(num,name,cate,tel) 
-		values(sho_sequence.nextval,#{name},#{cate},#{tel})
+		insert into shop(num,name,cate,tel,loc_x,loc_y,symbol,address) 
+		values(sho_sequence.nextval,#{name},#{cate},#{tel},#{locX},#{locY},#{symbol},#{address})
 	</insert>
 	
 	

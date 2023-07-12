@@ -38,6 +38,26 @@
             justify-content: center;
             cursor:pointer;
         }
+        .modal {
+    		position: fixed;
+    		top: 0;
+		    left: 0;
+		    width: 100%;
+		    height: 100%;
+		    background-color: rgba(0, 0, 0, 0.5);
+		    display: flex;
+		    align-items: center;
+		    justify-content: center;
+		    z-index: 9999;
+		}
+
+		.modal iframe {
+		    width: 840px; /* 필요에 따라 너비와 높이를 조정합니다 */
+		    height: 890px;
+		    border: none;
+		    background-color: white;
+		    border-radius:25px;
+		}
     </style>
     <script>
    		var isDragging = false;
@@ -72,6 +92,33 @@
 
         function endDrag() {
             isDragging = false;
+        }
+        
+        function openModal() {
+            // 모달 요소 생성
+            var modal = document.createElement('div');
+            modal.className = 'modal';
+            
+         // Close button
+            var closeButton = document.createElement('span');
+    		closeButton.className = 'close-button';
+    		closeButton.innerHTML = 'X';
+		    closeButton.onclick = closeModal;
+    		modal.appendChild(closeButton);
+
+            // insert.jsp 페이지를 모달에 로드합니다
+            modal.innerHTML = '<iframe src="shop/insert.do" frameborder="0" width="100%" height="100%"></iframe>';
+
+            // 모달을 body에 추가합니다
+            document.body.appendChild(modal);
+        }
+
+        function closeModal() {
+            // 모달을 body에서 제거합니다
+            var modal = document.querySelector('.modal');
+            if (modal) {
+                modal.parentNode.removeChild(modal);
+            }
         }
     </script>
 </head>
@@ -108,6 +155,9 @@
         		<img id="nextArrow" width="30px" src="resources/ArrowSource/Right.png">
     		</div>
 		</div>
+    </div>
+    <div>
+    	<div onclick="openModal()">가게 추가</div>
     </div>
 </div>
 </body>

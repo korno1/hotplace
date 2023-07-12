@@ -1,5 +1,14 @@
 @charset "UTF-8";
 
+.eve_top{
+	display: flex;
+	margin-bottom: 20px;
+}
+.event_h3{
+	margin-right: auto;
+}
+
+
 .eve_body {
   text-align: center;
   /* 	display: flex; */
@@ -7,29 +16,32 @@
 
 .eve_header {
   display: flex;
-  border-top: 1px solid gray;
+  border-top: 1px solid black;
+  padding: 10px 0 10px 0;
 }
 
 .eve_content {
   display: flex;
   flex-direction: column;
-  border-top: 1px solid gray;
+  border-top: 1px solid black;
 }
 
 .eve_selectOne {
   display: flex;
-  border-bottom: 1px solid gray;
+  border-bottom: 1px solid #a0a0a0;
   align-items: center;
+  padding: 10px 0 10px 0;
 }
 
 .eve_title,
 .eve_content_title {
-  width: 300px;
+  width: 500px;
 }
 
 .eve_writer,
 .eve_content_writer {
   width: 100px;
+  margin-right: 25px;
 }
 .eve_wdate,
 .eve_content_wdate {
@@ -38,10 +50,13 @@
 .eve_deadline,
 .eve_content_deadline {
   width: 100px;
+  margin-right: 25px;
+  
 }
 .eve_vcount,
 .eve_content_vcount {
-  width: 50px;
+  width: 75px;
+
 }
 
 .eve_content_title {
@@ -58,13 +73,11 @@
 .eve_change_page {
   display: flex;
   margin-top: 10px;
+  justify-content: center;
 }
 
 
 
-.eve_p_n_button {
-	margin-right: auto;
-}
 
 .event_check {
   font-size: 9px;
@@ -75,4 +88,35 @@
 
 .vo_title {
   margin-left: 10px;
+  text-align: left;
+}
+
+.eve_searchkey{
+	background-color: white;
+	padding-right: 30px;
+	height: 35px;
+}
+
+.eve_searchword{
+	outline: none;
+	height: 33px;;
+	width: 300px;
+	border-width: 1px;
+	padding-left: 5px;
+}
+
+.eve_searchBtn{
+	background-color: white;
+	border-width: 1px;
+	height: 35px;
+	width: 50px;
+	line-height: 3px;
+	cursor: pointer;
+}
+
+.eve_pre_button, .eve_next_button {
+	border-radius: 20px;
+	padding: 10px 40px;
+	border: 1px solid gray;
+	cursor: pointer;
 }

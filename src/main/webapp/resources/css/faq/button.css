@@ -1,4 +1,26 @@
 @charset "UTF-8";
 .faq_grade_button{
 	display: none;
+	background-color: white;
+    border-radius: 20px;
+    border: 1px solid black;
+    padding: 10px 50px;
+    cursor: pointer;
+}
+
+
+.faq_grade_button2{
+	display: none;
+	background-color: white;
+    border-radius: 20px;
+    border: 1px solid black;
+    padding: 5px 25px;
+    cursor: pointer;
+}
+
+.faq_pre_button, .faq_next_button {
+	border-radius: 20px;
+	padding: 10px 40px;
+	border: 1px solid gray;
+	cursor: pointer;
 }

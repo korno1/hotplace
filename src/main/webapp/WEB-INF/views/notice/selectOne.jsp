@@ -33,7 +33,7 @@
 </script>
 </head>
 <body>
-	<h1>공지사항</h1>
+	<h3>공지사항</h3>
 	
 	<div class="not_body">
 		<fmt:parseDate var="dateFmt" value="${vo2.wdate}"  pattern="yyyy-MM-dd HH:mm:ss.SSS" />
@@ -43,20 +43,20 @@
 				${vo2.title}
 			</div>
 			<div class="not_info_one">
-				<span>${vo2.writer}</span>
+				<span class="not_one_writer">${vo2.writer}</span>
 				<span>${fmtwdate}</span>
-				<span>조회 ${vo2.viewCount}</span>
+				<span class="not_one_vcount">조회 ${vo2.viewCount}</span>
 			</div>
 		</div>
 			
 		<div class="not_content_img">
-			<div>
+			<div class="not_content_div">
 				${vo2.content}
 			</div>
 			
 			<c:if test="${vo2.saveName != null}">
-			<div>
-				<img src="../resources/PostImage/${vo2.saveName}">
+			<div class="not_img_div">
+				<img src="../resources/PostImage/${vo2.saveName}" class="not_img">
 			</div>
 			</c:if>
 		</div>

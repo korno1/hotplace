@@ -46,12 +46,14 @@
 	 							<div class="faq_header" onclick="clickPlain(\${vo.num})">
 	 								<span>\${vo.title}</span>
 	 							</div>
-	 							<div class="faq_con" id="clickNum\${vo.num}">
-	 								\${vo.content}
-	 							</div>
-	 							<div class="faq_content" id="atagNum\${vo.num}">
-	 								<button class="faq_grade_button" onclick="location.href='update.do?num=\${vo.num}'">수정</button>
-	 								<button class="faq_grade_button" onclick="deleteOK(\${vo.num})">삭제</button>
+	 							<div class="faq_content_background" id="content_bg\${vo.num}">
+		 							<div class="faq_con" id="clickNum\${vo.num}">
+		 								\${vo.content}
+		 							</div>
+		 							<div class="faq_content" id="atagNum\${vo.num}">
+		 								<button class="faq_grade_button2" onclick="location.href='update.do?num=\${vo.num}'">수정</button>
+		 								<button class="faq_grade_button2" onclick="deleteOK(\${vo.num})">삭제</button>
+		 							</div>
 	 							</div>
 	 						</div>
 	 					`;
@@ -67,7 +69,7 @@
 					let grade = '<%= session.getAttribute("grade") %>';
 			        // grade 값이 "1"인 경우 버튼을 표시
 			        if (grade && grade === "1") {
-			          $('.faq_grade_button').css("display", "inline-block");
+			          $('.faq_grade_button2').css("display", "inline-block");
 			        }
 					
 		
@@ -122,7 +124,7 @@
 		 
 		$(document).on('click', '#faq_next_page', function(e) {
 			 e.preventDefault(); // 기본 링크 동작(페이지 다시로드)을 막음.
-			 if((page*5) >= count){ // 마지막 페이지에서 팝업 경고창
+			 if((page*10) >= count){ // 마지막 페이지에서 팝업 경고창
 				alert('마지막 페이지입니다.');
 					return false;
 			 }
@@ -183,39 +185,48 @@
 	function clickPlain(num){
 		let name = '#clickNum' + num;
 		let tag = '#atagNum' + num;
+		let pp = '#content_bg' + num;
 		console.log(name);
-		$(name).slideToggle();
-		$(tag).slideToggle();
+// 		let minHeight = $(name).css('min-height');
+// 		$(name).css('min-height', 0).slideToggle('slow', function(){
+// 			$(this).css('min-height', minHeight);
+// 		});
+		
+// 		$(name).slideToggle();
+// 		$(tag).slideToggle();
+		$(pp).slideToggle();
 	};
 	
 	
 </script>
 </head>
 <body>
-	<h1>FAQ</h1>
 
-	
+	<div class="faq_top">
+		<h3 class="faq_h3">FAQ</h3>
+		<button class="faq_grade_button" onclick="location.href='insert.do'" class="faq_grade_button">글작성</button>
+	</div>
 	
 	<div class="faq_div" id="faq_div">
 		
 	</div>
 	
-	<div style="width:100%; display:inline-block; text-align: center">
+	<div class="faq_search">
 		<form id="searchForm">
-		<select id="searchKey" name="searchKey">
+		<select class="faq_searchkey" id="searchKey" name="searchKey">
 			<option value="title" <c:if test="${param.searchKey == 'title'}"> selected </c:if>>제목</option>
 			<option value="content" <c:if test="${param.searchKey =='content'}"> selected </c:if>>내용</option>
 		</select>
-		<input type="text" name="searchWord" id="searchWord" value="${param.searchWord}">
+		<input type="text" class="faq_searchword" name="searchWord" id="searchWord" value="${param.searchWord}">
 		<input type="hidden" name="page" value=1>
-		<button type="submit">검색</button>
+		<button type="submit" class="faq_searchBtn">검색</button>
 		</form>
 	</div>
 	
 	<div class="faq_change_page" id="faq_pre_next">
-		<button id="faq_pre_page">이전</button>
+		<button class="faq_pre_button" id="faq_pre_page">이전</button>
 	 	<button class="faq_next_button" id="faq_next_page">다음</button>
-	 	<button class="faq_grade_button" onclick="location.href='insert.do'">작성</button>
+	 	
 	</div>
 	
 	<script type="text/javascript">

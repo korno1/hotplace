@@ -8,8 +8,8 @@
 <meta charset="UTF-8">
 <title>공지사항</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<link rel="stylesheet" href="../resources/css/notice/list.css">
-<link rel="stylesheet" href="../resources/css/notice/button.css">
+<link rel="stylesheet" href="../resources/css/notice/list.css?after">
+<link rel="stylesheet" href="../resources/css/notice/button.css?after">
 <script type="text/javascript"> 
 // 	$(function(){
 // 		 history.replaceState({}, null, location.pathname); 
@@ -51,13 +51,16 @@
 </script> 
 </head>
 <body>
-	<h1>공지사항</h1>
 
+	<div class="not_top">
+		<h3 class="notice_h3">공지사항</h3>
+		<button onclick="location.href='insert.do'" class="not_grade_button">글작성</button>
+	</div>
 	<div class="not_body">
 		<div class="not_header">
+			<div class="not_wdate">작성일</div>
 			<div class="not_title">제목</div>
 			<div class="not_writer">작성자</div>
-			<div class="not_wdate">작성일</div>
 			<div class="not_vcount">조회수</div>
 		</div>
 		<div class="not_content">
@@ -66,9 +69,9 @@
 				<fmt:formatDate var="fmtwdate" value="${dateFmt}" pattern="yyyy-MM-dd" />
 				
 				<div class="not_selectOne" onclick="location.href='selectOne.do?num=${vo.num}'" style="cursor:pointer">
+					<div class="not_content_wdate">${fmtwdate}</div>
 					<div class="not_content_title">${vo.title}</div>
 					<div class="not_content_writer">${vo.writer}</div>
-					<div class="not_content_wdate">${fmtwdate}</div>
 					<div class="not_content_vcount">${vo.viewCount}</div>
 				</div>
 			</c:forEach>
@@ -78,24 +81,20 @@
 	<div class="not_footer">
 		<div class="not_search">
 			<form action="searchList.do" method="post">
-				<select name="searchKey">
+				<select name="searchKey" class="not_searchkey">
 					<option value="title" <c:if test="${searchKey == 'title'}"> selected </c:if>>제목</option>
 					<option value="content" <c:if test="${searchKey =='content'}"> selected </c:if>>내용</option>
 				</select>
-				<input type="text" name="searchWord" id="searchWord" value="${searchWord}">
+				<input type="text" class="not_searchword" name="searchWord" id="searchWord" value="${searchWord}">
 				<input type="hidden" name="page" value=1>
-				<input type="submit" value="검색">
+				<input type="submit" value="검색" class="not_searchBtn">
 			</form>
 		</div>
 		
 		<div class="change_page">
-<%-- 				<a href="javascript:listView('${searchKey}', '${searchWord}', ${page-1})" id="pre_page">이전</a> --%>
-<%-- 				<a class="next_page" href="javascript:listView('${searchKey}', '${searchWord}', ${page+1})" id="next_page">다음</a> --%>
-<%-- 				<button onclick="listView('${searchKey}', '${searchWord}', ${page-1})" id="pre_page">이전</button> --%>
-<%-- 				<button class="next_page" onclick="listView('${searchKey}', '${searchWord}', ${page+1})" id="next_page">다음</button> --%>
-				<button id="pre_page">이전</button>
+				<button class="pre_page" id="pre_page">이전</button>
 				<button class="next_page" id="next_page">다음</button>
-				<button onclick="location.href='insert.do'" class="not_grade_button">작성</button>
+				
 <!-- 				<a href="insert.do">글작성</a> -->
 		</div>
 	</div>
@@ -111,7 +110,7 @@
 				listView('${searchKey}', '${searchWord}', ${page+1});
 			});
 		}
-		else if((${page}*5) >= ${cnt}){
+		else if((${page}*10) >= ${cnt}){
 			$('#next_page').click(function(){
 				alert('마지막 페이지입니다.');
 				return false;
@@ -129,7 +128,7 @@
 			});
 		}
 		
-		if(${grade}==1){
+		if("${grade}"=="1"){
 			$('.not_grade_button').css("display", "block");
 		}
 	</script>

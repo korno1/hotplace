@@ -19,5 +19,9 @@ public interface PartyDAO {
 	public void vCountUp(PartyVO vo);
 
 	public int approveOK(PartyVO vo);
+
+	public List<PartyVO> myParty(PartyVO vo, Integer page);
+
+	public int totalCount(PartyVO vo);
 	
 }

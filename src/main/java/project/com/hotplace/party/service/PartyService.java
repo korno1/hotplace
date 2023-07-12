@@ -52,4 +52,13 @@ public class PartyService {
 	public int approveOK(PartyVO vo) {
 		return dao.approveOK(vo);
 	}
+
+	public List<PartyVO> myParty(PartyVO vo, int page) {
+		return dao.myParty(vo, page);
+	}
+
+	public int totalCount(PartyVO vo) {
+		return dao.totalCount(vo);
+	}
+
 }

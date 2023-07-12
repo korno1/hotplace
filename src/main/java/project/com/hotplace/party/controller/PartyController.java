@@ -141,4 +141,26 @@ public class PartyController {
 		
 		return "redirect:selectAll.do?searchKey=title&searchWord=&page=1";
 	}
+	
+	@RequestMapping(value = "/party/myParty.do", method = RequestMethod.GET)
+	public String myParty(PartyVO vo, Integer page, Model model) {
+		log.info("/myParty.do...{}", vo);
+		
+		if(page == null) {
+			page = 1;
+		}
+		
+		List<PartyVO> vos = service.myParty(vo, page);
+		log.info("vos: {}", vos.toString());
+		log.info("vos: {}", vos.size());
+	
+		model.addAttribute("vos", vos);
+		model.addAttribute("page", page);
+		
+		return "party/myParty.tilesLeft";
+	}
+	
+	
+	
+	
 } 

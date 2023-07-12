@@ -12,6 +12,7 @@ public class ShopVO {
 	private String tel;
 	private float locX;
 	private float locY;
+	private String address;
 	private double avgRated;
 	private String symbol;
 	private MultipartFile multipartFile;

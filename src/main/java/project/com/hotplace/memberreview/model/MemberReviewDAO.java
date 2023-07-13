@@ -12,4 +12,6 @@ public interface MemberReviewDAO {
 
 	public int delete(MemberReviewVO vo);
 
+	int totalCount(MemberReviewVO vo);
+
 }

@@ -6,7 +6,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import lombok.extern.slf4j.Slf4j;
 import project.com.hotplace.memberreview.model.MemberReviewVO;
 import project.com.hotplace.memberreview.service.MemberReviewService;
-import project.com.hotplace.party.model.PartyVO;
 
 @Controller
 @Slf4j
@@ -85,6 +83,18 @@ public class MemberReviewRestController {
 		map.put("result", msg);
 		
 		return map;
+	}
+	
+	@RequestMapping(value = "/memberreview/json/mre_totalCount.do", method = RequestMethod.GET)
+	@ResponseBody
+	public int totalCount(MemberReviewVO vo) {
+		log.info("/mre_totalCount.do...{}", vo);
+		
+		int totalCount = service.totalCount(vo);
+		
+		log.info("totalCount: {}", totalCount);
+		
+	    return totalCount;
 	}
 
 	

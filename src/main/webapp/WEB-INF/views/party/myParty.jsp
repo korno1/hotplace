@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>내 모임 정보</title>
+<title>내 신청 정보</title>
 <link rel="stylesheet" href="/hotplace/resources/css/party/myParty.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js">
 $(function(){
@@ -15,11 +15,11 @@ $(function(){
 </script>
 </head>
 <body>
-	<h1>내 모임 정보</h1>
+	<h1>내 신청정보</h1>
 	<div>
 		<img width="100px" src="../resources/ProfileImage/${num}"
 					onerror="this.src='../resources/ProfileImage/default.png'">
-		<div><a href="http://localhost:8088/hotplace/userpage.do?num=${num}">${userNum}</a></div>
+		<button onclick="location.href='/hotplace/userpage.do?num=${num}'">내모임 확인</button>
 	</div>
 
 	<div>

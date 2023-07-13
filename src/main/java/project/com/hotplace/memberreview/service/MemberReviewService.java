@@ -20,8 +20,8 @@ public class MemberReviewService {
 		log.info("MemberReviewService()...");
 	}
 
-	public List<MemberReviewVO> selectAll(MemberReviewVO vo) {
-		return dao.selectAll(vo);
+	public List<MemberReviewVO> selectAll(MemberReviewVO vo, Integer page) {
+		return dao.selectAll(vo, page);
 	}
 
 	public int insert(MemberReviewVO vo) {

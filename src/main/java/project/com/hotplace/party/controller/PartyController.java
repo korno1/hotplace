@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.extern.slf4j.Slf4j;
 import project.com.hotplace.party.model.PartyVO;
@@ -150,17 +151,17 @@ public class PartyController {
 			page = 1;
 		}
 		
-		List<PartyVO> vos = service.myParty(vo, page);
+		List<PartyVO> vos = service.myAppcants(vo, page);
 		log.info("vos: {}", vos.toString());
 		log.info("vos: {}", vos.size());
+		
+		int myPartyCount = service.myPartyCount(vo);
 	
 		model.addAttribute("vos", vos);
 		model.addAttribute("page", page);
+		model.addAttribute("userNum", vo.getUserNum());
+		model.addAttribute("myPartyCount", myPartyCount);
 		
 		return "party/myParty.tilesLeft";
 	}
-	
-	
-	
-	
 } 

@@ -1,0 +1,70 @@
+.board {
+	width: calc(100% - 20px);
+	border-top: 1px solid #ccc;
+	border-radius: 5px;
+	padding: 10px;
+	margin-top: 10px;
+	margin-right: 20px;
+	box-sizing: border-box;
+	display: inline-block;
+	vertical-align: top;
+	cursor: pointer;
+}
+
+.pagination {
+	margin-top: 20px;
+	text-align: center;
+}
+
+.pagination-links {
+	display: inline-block;
+}
+
+.pagination a {
+	margin-right: 10px;
+	text-decoration: none;
+	color: #000;
+}
+
+.pagination a:hover {
+	color: blue;
+}
+
+.board-row {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center; 
+	margin-bottom: 5px;
+}
+
+.board-cell {
+	flex: 1;
+	padding: 5px;
+}
+
+.board-title {
+	font-weight: bold;
+}
+
+.board-content {
+	margin-top: 10px;
+	border-top: 1px solid #ccc;
+	padding-top: 10px;
+}
+
+.board-content-cell {
+	padding: 5px;
+}
+
+insert-from {
+	width: calc(100% - 20px);
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	padding: 10px;
+	margin-bottom: 20px;
+	margin-right: 20px;
+	box-sizing: border-box;
+	display: inline-block;
+	vertical-align: top;
+}

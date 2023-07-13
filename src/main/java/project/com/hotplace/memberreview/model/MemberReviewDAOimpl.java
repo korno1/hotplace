@@ -1,6 +1,8 @@
 package project.com.hotplace.memberreview.model;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +18,17 @@ public class MemberReviewDAOimpl implements MemberReviewDAO {
 	SqlSession sqlSession;
 
 	@Override
-	public List<MemberReviewVO> selectAll(MemberReviewVO vo) {
+	public List<MemberReviewVO> selectAll(MemberReviewVO vo, Integer page) {
 		log.info("selectAll()...vo{}", vo);
 		
-		List<MemberReviewVO> vos = sqlSession.selectList("mre_selectAll", vo);
+		Map<String, Object> map = new HashMap<String, Object>();
+		String key = "mre_selectAll";
 		
-		return vos;
+		map.put("userNum", vo.getUserNum());
+		map.put("st", (page-1)*6+1);
+		map.put("en", page*6);
+		
+		return sqlSession.selectList(key, map);
 	}
 
 	@Override

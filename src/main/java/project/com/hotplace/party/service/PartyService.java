@@ -61,4 +61,12 @@ public class PartyService {
 		return dao.totalCount(vo);
 	}
 
+	public List<PartyVO> myAppcants(PartyVO vo, int page) {
+		return dao.myAppcants(vo, page);
+	}
+
+	public int myPartyCount(PartyVO vo) {
+		return dao.myPartyCount(vo);
+	}
+
 }

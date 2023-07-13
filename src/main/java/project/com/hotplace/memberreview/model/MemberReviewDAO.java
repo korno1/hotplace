@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface MemberReviewDAO {
 
-	public List<MemberReviewVO> selectAll(MemberReviewVO vo);
+	public List<MemberReviewVO> selectAll(MemberReviewVO vo, Integer page);
 
 	public int insert(MemberReviewVO vo);
 

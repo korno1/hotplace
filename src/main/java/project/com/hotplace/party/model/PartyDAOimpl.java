@@ -113,7 +113,7 @@ public class PartyDAOimpl implements PartyDAO {
 	}
 
 	@Override
-	public List<PartyVO> myParty(PartyVO vo, Integer page) {
+	public List<PartyVO> myParty(PartyVO vo, int page) {
 		
 		log.info("myParty()...{}", vo);
 		
@@ -133,6 +133,29 @@ public class PartyDAOimpl implements PartyDAO {
 		log.info("totalCount()...{}", vo);
 		
 		return sqlSession.selectOne("totalCount", vo);
+	}
+
+	@Override
+	public List<PartyVO> myAppcants(PartyVO vo, int page) {
+		log.info("myAppcants()...{}", vo);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		String key = "par_myAppilcants";
+		
+		map.put("userNum", vo.getUserNum());
+		map.put("status", vo.getStatus());
+		map.put("st", (page-1)*5+1);
+		map.put("en", page*5);
+	
+		return sqlSession.selectList(key, map);
+	}
+
+
+	@Override
+	public int myPartyCount(PartyVO vo) {
+		log.info("myPartyCount()...{}", vo);
+		
+		return sqlSession.selectOne("myPartyCount", vo);
 	}
 
 }

@@ -67,12 +67,14 @@ $(function(){
 		if(${param.page}==1){
 // 			$('#pre_page').hide();
 			$('#pre_page').click(function(){
+				alert('첫 페이지입니다.');
 				return false;
 			});
 		}
 		if((${param.page}*6) >= ${cnt}){
 // 			$('#next_page').hide();
 			$('#next_page').click(function(){
+				alert('마지막 페이지입니다.');
 				return false;
 			});
 		}

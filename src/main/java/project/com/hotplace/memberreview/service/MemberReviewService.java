@@ -36,5 +36,9 @@ public class MemberReviewService {
 		return dao.delete(vo);
 	}
 	
+	public int totalCount(MemberReviewVO vo) {
+		return dao.totalCount(vo);
+	}
+	
 	
 }

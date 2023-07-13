@@ -25,8 +25,8 @@ public class MemberReviewDAOimpl implements MemberReviewDAO {
 		String key = "mre_selectAll";
 		
 		map.put("userNum", vo.getUserNum());
-		map.put("st", (page-1)*6+1);
-		map.put("en", page*6);
+		map.put("st", (page-1)*5+1);
+		map.put("en", page*5);
 		
 		return sqlSession.selectList(key, map);
 	}
@@ -71,6 +71,13 @@ public class MemberReviewDAOimpl implements MemberReviewDAO {
 			e.printStackTrace();
 		}
 		return flag;
+	}
+	
+	@Override
+	public int totalCount(MemberReviewVO vo) {
+		log.info("totalCount()...{}", vo);
+		
+		return sqlSession.selectOne("mre_totalCount", vo);
 	}
 
 }

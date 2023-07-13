@@ -14,6 +14,7 @@
 <script type="text/javascript">
 
 let page =1;
+let mrePage = 1;
 let par_count; // 게시글 개수
 let mer_count; // 게시글 개수
 
@@ -49,6 +50,7 @@ $(function(){
 				
 			}); // end for-each
 
+			$(".mre_paging").css("display", "none");
 			$('#par_vos').html(tag_vos);
 		}, // end success
 		
@@ -58,7 +60,7 @@ $(function(){
 	}); // end ajax;
 	  
 	function par_totalCount(){ // 게시글 개수 계산
-		console.log('totalCount...');
+		console.log('par_totalCount...');
 		$.ajax({
 			url: "party/json/par_totalCount.do",
 			data:{
@@ -68,7 +70,7 @@ $(function(){
 			dataType: 'json',
 			success: function(cnt){
 				console.log('cnt...',cnt);
-	            count = cnt;
+	            par_count = cnt;
 			}, // end success
 			
 			error:function(xhr,status,error){
@@ -79,7 +81,7 @@ $(function(){
 	};
 	par_totalCount();
 	
-	$(document).on('click', '#back_page', function(e) { // 이전 버튼 클릭 시 동작
+	$(document).on('click', '#par_back_page', function(e) { // 이전 버튼 클릭 시 동작
 	    e.preventDefault(); // 기본 링크 동작(페이지 다시로드)을 막음.
 		if(page==1){ // 첫번째 페이지에서 팝업 경고창
 			alert('첫 페이지입니다.');
@@ -88,17 +90,17 @@ $(function(){
 	    // 이전 페이지 번호 계산
 	    let previousPage = parseInt(page) - 1;
 	    page = previousPage;
-		console.log('count',count);
+		console.log('par_count',par_count);
 	    
 	 	// parameter 수정 후 페이지 다시 로드
 	    par_selectAll(previousPage);
 	});
  
-	$(document).on('click', '#next_page', function(e) {
+	$(document).on('click', '#par_next_page', function(e) {
 // 		console.log('page...',page);
-		console.log('count',count);
+		console.log('par_count',par_count);
 		e.preventDefault(); // 기본 링크 동작(페이지 다시로드)을 막음.
-		if((page*6) >= count){ // 마지막 페이지에서 팝업 경고창
+		if((page*6) >= par_count){ // 마지막 페이지에서 팝업 경고창
 			alert('마지막 페이지입니다.');
 			return false;
 		}
@@ -114,21 +116,19 @@ $(function(){
 }); // end onload	
 
 
-function mre_selectAll(userNum=0, memberreviewNum=0, page){ // ${param.memberreviewNum}
-	console.log('mer_selectAll()....userNum:',userNum);
-	console.log('mer_selectAll()....memverreviewNum:',memberreviewNum);
+function mre_selectAll(memberreviewNum=0, mrePage){ // ${param.memberreviewNum} 
+// 	console.log('mer_selectAll()....userNum:',userNum);
+// 	console.log('mer_selectAll()....memverreviewNum:',memberreviewNum);
 	
 	$('#par_vos').hide(); // 모임리스트 요소를 숨기도록 설정
 	$('#memberreview_list').show();
 	$('#insertButton').show();
-	document.getElementById("formContainer").style.display = "block";
-	
-	
+
 	$.ajax({
 		url : "memberreview/json/selectAll.do",
 		data:{
 			userNum:${vo2.num}, // ${param.userNum}
-			page: page, //${param.page}
+			page: mrePage, //${param.page}
 		},
 		method:'GET',
 		dataType:'json',
@@ -138,12 +138,12 @@ function mre_selectAll(userNum=0, memberreviewNum=0, page){ // ${param.memberrev
 			let tag_txt = '';
 			
 			$.each(vos,function(index,vo){
-				console.log('ajax...success:', vo);
+// 				console.log('ajax...success:', vo);
 				let tag_td = `<div class="board-cell">\${vo.content}</div>`;
 				
 				let ratedValue = parseInt(vo.rated);
-				console.log('vo.rated:', vo.rated);
-				console.log('vo.partynum:', vo.partyNum);
+// 				console.log('vo.rated:', vo.rated);
+// 				console.log('vo.partynum:', vo.partyNum);
 
 				let tag_rated = `
 			        <div id="starRating" class="board-cell">
@@ -209,6 +209,9 @@ function mre_selectAll(userNum=0, memberreviewNum=0, page){ // ${param.memberrev
 			$('#memberreview_list').html(tag_txt);
 			$('#insertButton').show();
 			
+			$(".par_paging").css("display", "none");
+			$(".mre_paging").css("display", "block");
+			
 			// 별점 채우기
 			$('.star-rating').each(function() {
 			  var ratedValue = parseInt($(this).data('rating'));
@@ -218,15 +221,69 @@ function mre_selectAll(userNum=0, memberreviewNum=0, page){ // ${param.memberrev
 			  }
 			});
 			
+// 			mre_totalCount();
 		},
 		error:function(xhr,status,error){
 			console.log('xhr.status:', xhr.status);
 		}
 	});
 }// end mre_selectAll
+
+function mre_totalCount(){ // 게시글 개수 계산
+	console.log('mre_totalCount...');
+	$.ajax({
+		url: "memberreview/json/mre_totalCount.do",
+		data:{
+			userNum:${vo2.num}
+		},
+		method: 'GET',
+		dataType: 'json',
+		success: function(cnt){
+			console.log('cnt...',cnt);
+            mre_count = cnt;
+		}, // end success
+		
+		error:function(xhr,status,error){
+			console.log('xhr.status:', xhr.status);
+			
+		} // end error
+	}) // end ajax;	
+};
+mre_totalCount();
+
+$(document).on('click', '#mre_back_page', function(e) { // 이전 버튼 클릭 시 동작
+    e.preventDefault(); // 기본 링크 동작(페이지 다시로드)을 막음.
+	if(mrePage==1){ // 첫번째 페이지에서 팝업 경고창
+		alert('첫 페이지입니다.');
+		return false;
+	}
+    // 이전 페이지 번호 계산
+    let previousPage = parseInt(mrePage) - 1;
+    mrePage = previousPage;
+	console.log('mre_count',mre_count);
+    
+ 	// parameter 수정 후 페이지 다시 로드
+	mre_selectAll(memberreviewNum=0, mrePage)
+});
+
+$(document).on('click', '#mre_next_page', function(e) {
+//		console.log('page...',page);
+	console.log('mre_count',mre_count);
+	e.preventDefault(); // 기본 링크 동작(페이지 다시로드)을 막음.
+	if((mrePage*5) >= mre_count){ // 마지막 페이지에서 팝업 경고창
+		alert('마지막 페이지입니다.');
+		return false;
+	}
+	// 다음 페이지 번호 계산
+    let nextPage = parseInt(mrePage) + 1;
+    mrePage = nextPage;
+	console.log('mrePage...',mrePage);
 	
+	// parameter 수정 후 페이지 다시 로드
+    mre_selectAll(memberreviewNum=0, mrePage)
+});
 	
-	
+
 let isFormInserted = false;
 
 function insert() {
@@ -440,8 +497,7 @@ function par_selectAll(page){
 	$('#par_vos').show(); // 모임리스트 요소를 보이도록 설정
 	$('#memberreview_list').hide();
 	document.getElementById("formContainer").style.display = "none";
-	
-	console.log('onload...');
+// 	console.log('par_selectAll...');
 	
 	$.ajax({
 		url: "party/json/selectAll.do",
@@ -472,14 +528,9 @@ function par_selectAll(page){
 				
 			}); // end for-each
 
-// 			let prNx = `
-// 				<button id="back_page">이전</button>
-// 				<button id="next_page">다음</button>
-// 				`;
-			
-// 			totalCount();	
 			$('#par_vos').html(tag_vos);
-// 			$('#par_page').html(prNx);
+			$(".par_paging").css("display", "block");
+			$(".mre_paging").css("display", "none");
 		}, // end success
 		
 		error:function(xhr,status,error){
@@ -512,7 +563,7 @@ function par_selectAll(page){
 	
 		
 	<hr>
-	<button onclick="location.href='party/myParty.do?userNum=${num}'">내모임 확인</button>
+	<button onclick="location.href='party/myParty.do?userNum=${num}'">내 신청확인</button>
 <!-- 	<button onclick="myParty">내 모임 확인</button> -->
 	
 	
@@ -521,14 +572,17 @@ function par_selectAll(page){
 	
 	<div id="memberreview_list"></div>
 	
-	
-	<div class="paging" id="paging">
-		<button id="back_page">이전</button>
-		<button id="next_page">다음</button>
-<!-- 	 	<button class="faq_grade_button" onclick="location.href='insert.do'">작성</button> -->
+	<div class="par_paging" id="par_paging">
+		<button id="par_back_page">모임이전</button>
+		<button id="par_next_page">모임다음</button>
 	</div>
-	
-	
+
+	<div class="mre_paging" id="mre_paging">
+		<button id="mre_back_page">후기이전</button>
+		<button id="mre_next_page">후기다음</button>
+	</div>
+	 
+	 
 	<div id="formContainer"><button onclick="insert()">작성</button></div>
 	<hr>
 <!-- 		<button onclick="location.href='memberreview/insert.do'">작성</button> -->

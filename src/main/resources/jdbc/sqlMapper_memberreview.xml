@@ -29,5 +29,10 @@
 	<delete id="mre_delete">
 		delete from memberreview where memberreview_num=#{memberreviewNum}
 	</delete>
+	
+	<select id="mre_totalCount" resultType="int">
+		select count(*) from memberreview
+		where user_num = #{userNum}
+	</select>
 
 </mapper>

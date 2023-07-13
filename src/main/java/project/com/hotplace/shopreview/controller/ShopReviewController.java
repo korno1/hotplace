@@ -10,9 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.extern.slf4j.Slf4j;
 import project.com.hotplace.member.model.MemberVO;
 import project.com.hotplace.member.service.MemberService;
+import project.com.hotplace.shop.model.ShopVO;
+import project.com.hotplace.shop.service.ShopService;
 import project.com.hotplace.shopreview.model.ShopReviewVO;
 import project.com.hotplace.shopreview.service.ShopReviewService;
 
@@ -27,14 +31,24 @@ public class ShopReviewController {
 	ShopReviewService service;
 	
 	@Autowired
+	ShopService shoService;
+	
+	@Autowired
 	MemberService memService;
 	
 	@RequestMapping(value = "/shop/review/insert.do", method = RequestMethod.GET)
 	public String insertReview(Model model, String nickName, int shopNum) {
 		log.info("/ShopReviewInsert.do");
 		
+		ShopVO vo = new ShopVO();
+		vo.setNum(shopNum);
+		
+		vo = shoService.selectOne(vo);
+		log.info("{}", vo);
+		
 		model.addAttribute("nickName", nickName);
 		model.addAttribute("shopNum", shopNum);
+		model.addAttribute("shopVO", vo);
 		
 		return "shop/review/insert";
 	}
@@ -70,15 +84,13 @@ public class ShopReviewController {
 		log.info("memVO:{}",memVO);
 		
 		vo.setWriter(memVO.getNum());
+		
+		MultipartFile file = vo.getMultipartFile();
 	    
-	    String getOriginalFilename = vo.getMultipartFile().getOriginalFilename();
-	    int fileNameLength = vo.getMultipartFile().getOriginalFilename().length();
-	    log.info("getOriginalFilename:{}",getOriginalFilename);
-		log.info("fileNameLength:{}",fileNameLength);
-			
-		if(getOriginalFilename.length()==0) {
+		if(file == null) {
 			vo.setSaveName("default.png");
 		} else {
+			String getOriginalFilename = vo.getMultipartFile().getOriginalFilename();
 			vo.setSaveName(getOriginalFilename);
 			String realPath = sContext.getRealPath("resources/ShopReviewImage");
 			log.info("realPath : {}",realPath);

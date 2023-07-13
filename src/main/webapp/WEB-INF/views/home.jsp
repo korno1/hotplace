@@ -98,13 +98,6 @@
             // 모달 요소 생성
             var modal = document.createElement('div');
             modal.className = 'modal';
-            
-         // Close button
-            var closeButton = document.createElement('span');
-    		closeButton.className = 'close-button';
-    		closeButton.innerHTML = 'X';
-		    closeButton.onclick = closeModal;
-    		modal.appendChild(closeButton);
 
             // insert.jsp 페이지를 모달에 로드합니다
             modal.innerHTML = '<iframe src="shop/insert.do" frameborder="0" width="100%" height="100%"></iframe>';

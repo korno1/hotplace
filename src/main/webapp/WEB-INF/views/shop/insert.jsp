@@ -82,8 +82,11 @@
     	      // 요청이 성공적으로 처리되었을 때의 동작을 작성합니다.
     	      console.log('Insert successful');
     	      
-    	      // 모달 창을 닫습니다.
-    	      closeModal();
+    	      alert("가게가 등록되었습니다!");
+    	      
+    	      window.parent.location.reload();
+           	
+           	  window.close();
     	    },
     	    error: function(xhr, status, error) {
     	      // 요청이 실패했을 때의 동작을 작성합니다.

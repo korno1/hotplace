@@ -5,6 +5,39 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        // 세션의 "num" 값 가져오기
+        var sessionNum = "${sessionScope.num}";
+
+        // 세션의 "num" 값이 존재할 때만 Ajax 통신 동작
+        if (sessionNum) {
+            $.ajax({
+                url: "${pageContext.request.contextPath}/mail/json/newMailCnt.do",
+                method: "GET",
+                dataType: "json",
+                data: {
+                	recipient_num: sessionNum
+                },
+                success: function(result) {
+                    console.log(result);
+                    if(result!='0'){
+                    	$('#newMail').text(result);
+                    	$('.newMail').css("display","block");
+                    	$('#newMail').click(function() {
+                            window.location.href = '${pageContext.request.contextPath}/mail/selectAll.do';
+                    })
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log("Error:", error);
+                }
+            });
+        }
+    });
+
+    </script>
 </head>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/layouts/header.css">
@@ -23,9 +56,11 @@
 		<div class="top_menu_member headerWrap">
 			<div id="signUp" class="sign_up_menu headerMenu">회원가입</div>
 			<div id="login" class="login_menu headerMenu">로그인</div>
-			<div id="myPage" class="mypage_menu headerMenu">${nick_name}님</div>
+				<div id="newMail"class="newMail"></div>
+				<div id="myPage" class="mypage_menu headerMenu">
+				<span>${nick_name}님</span>
+			</div>
 			<div id="logout" class="logout_menu headerMenu">로그아웃</div>
-<!-- 			<div id="newMail"class="newMail">N</div> -->
 		</div>
 	</div>
 <script type="text/javascript">
@@ -80,38 +115,17 @@
     window.location.href = link;
   });
 });
-// document.addEventListener('DOMContentLoaded', function() {
-// 	$.ajax({
-// 	      url: "/mail/json/newMailCnt.do",
-// 	      data: {
-<%-- 	        recipient_num:'<%= session.getAttribute("num") %>'; --%>
-// 	      },
-// 	      method: 'GET',
-// 	      dataType: 'json',
-// 	      success: function(result) {
-// 	        console.log('ajax...success:', result);
-// 	        if(result.reslut==="OK"){
-// 			document.getElementById("newMail").style.display = "block";
-// 	        }else{
-// 			document.getElementById("newMail").style.display = "none";
-// 	        }
-// 	      },
-// 	      error: function(xhr, status, error) {
-// 	        console.log('xhr.status:', xhr.status);
-// 	      }
-// 	    });
-// 	  }
 let nickName = '<%= session.getAttribute("nick_name") %>';
 	if (nickName == 'null' || nickName == "") {
 	    // 비로그인 상태인 경우
 	    document.getElementById("myPage").style.display = "none";
 	    document.getElementById("logout").style.display = "none";
-	    document.getElementById("signUp").style.display = "block";
-	    document.getElementById("login").style.display = "block";
+	    document.getElementById("signUp").style.display = "";
+	    document.getElementById("login").style.display = "";
 	} else {
 	    // 로그인 상태인 경우
-	    document.getElementById("myPage").style.display = "block";
-	    document.getElementById("logout").style.display = "block";
+	    document.getElementById("myPage").style.display = "";
+	    document.getElementById("logout").style.display = "";
 	    document.getElementById("signUp").style.display = "none";
 	    document.getElementById("login").style.display = "none";
 	}

@@ -20,8 +20,12 @@ public interface PartyDAO {
 
 	public int approveOK(PartyVO vo);
 
-	public List<PartyVO> myParty(PartyVO vo, Integer page);
+	public List<PartyVO> myParty(PartyVO vo, int page);
 
 	public int totalCount(PartyVO vo);
+
+	public List<PartyVO> myAppcants(PartyVO vo, int page);
+
+	public int myPartyCount(PartyVO vo);
 	
 }

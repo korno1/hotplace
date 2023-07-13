@@ -64,7 +64,7 @@
 </head>
 <body>
 	<h1>공지사항</h1>
-	<form action="insertOK.do" method="post" enctype="multipart/form-data">
+	<form action="insertOK.do" method="post" enctype="multipart/form-data" id="not_insertOK">
 	<div class="not_write_body">
 		<div>
 			<input class="not_title_insert" type="text" name="title" id="title" placeholder="제목" onfocus="this.placeholder=''" onblur="this.placeholder='제목'" onkeyup="titleCheckByte(this, 100)">
@@ -79,7 +79,7 @@
 				<input type="file" id="file" name="file">
 			</div>
 			<div class="not_insert_button">
-				<input type="submit" value="작성">
+				<input id="not_click_submit" type="button" value="작성">
 			</div>
 		</div>
 	</div>
@@ -92,6 +92,20 @@
  	    	
 	    })
 	    .then(content => {
+	    	$('#not_click_submit').click(function(){
+				if($('#title').val()==''){
+					alert("제목을 입력해주세요.");
+					return false;
+				}
+				
+				if(content.getData()==''){
+					alert("내용을 입력해주세요.");
+					return false;
+				}
+				
+				$('#not_insertOK').submit();
+			});
+	    	
 	    	 content.editing.view.document.on( 'keyup', () => {
 	             // 키 이벤트 발생 시 실행될 함수
 	            var str = content.getData();

@@ -6,7 +6,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,10 +23,14 @@ public class MemberReviewRestController {
 	
 	@ResponseBody
 	@RequestMapping(value = {"/memberreview/json/selectAll.do"}, method = RequestMethod.GET)
-	public List<MemberReviewVO> selectAll(MemberReviewVO vo) {
+	public List<MemberReviewVO> selectAll(MemberReviewVO vo, Integer page) {
 		log.info("selectAll.do...{}", vo);
 		
-		List<MemberReviewVO> vos = service.selectAll(vo);
+		if(page == null) {
+			page = 1;
+		}
+		
+		List<MemberReviewVO> vos = service.selectAll(vo, page);
 		log.info("vos..{}", vos.toString());
 		log.info("vos.size():{}", vos.size());
 		
@@ -80,6 +83,18 @@ public class MemberReviewRestController {
 		map.put("result", msg);
 		
 		return map;
+	}
+	
+	@RequestMapping(value = "/memberreview/json/mre_totalCount.do", method = RequestMethod.GET)
+	@ResponseBody
+	public int totalCount(MemberReviewVO vo) {
+		log.info("/mre_totalCount.do...{}", vo);
+		
+		int totalCount = service.totalCount(vo);
+		
+		log.info("totalCount: {}", totalCount);
+		
+	    return totalCount;
 	}
 
 	

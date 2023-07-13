@@ -64,7 +64,7 @@
 <body>
 	<h1>공지사항</h1>
 <%-- 	<jsp:include page="../top_menujm.jsp"></jsp:include> --%>
-	<form action="updateOK.do" method="post" enctype="multipart/form-data">
+	<form action="updateOK.do" method="post" enctype="multipart/form-data" id="not_updateOK">
 	<input type="hidden" name="num" value="${param.num}">
 	<fmt:parseDate var="dateFmt" value="${vo2.wdate}"  pattern="yyyy-MM-dd HH:mm:ss.SSS" />
 	<fmt:formatDate var="fmtwdate" value="${dateFmt}" pattern="yyyy-MM-dd HH:mm" />
@@ -84,7 +84,7 @@
 				<input type="hidden" id="saveName" name="saveName" value="${vo2.saveName}">
 			</div>
 			<div>
-				<input type="submit" value="수정">
+				<input id="not_click_submit" type="button" value="수정">
 			</div>
 		</div>
 		
@@ -99,6 +99,20 @@
  	    	
 	    })
 	    .then(content => {
+	    	$('#not_click_submit').click(function(){
+				if($('#title').val()==''){
+					alert("제목을 입력해주세요.");
+					return false;
+				}
+				
+				if(content.getData()==''){
+					alert("내용을 입력해주세요.");
+					return false;
+				}
+				
+				$('#not_updateOK').submit();
+			});
+	    	
 	    	 content.editing.view.document.on( 'keyup', () => {
 	             // 키 이벤트 발생 시 실행될 함수
 	            var str = content.getData();

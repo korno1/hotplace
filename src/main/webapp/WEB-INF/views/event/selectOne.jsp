@@ -36,25 +36,23 @@
 						<div>\${vo2.title}</div>
 					</div>
 					<div class="eve_info_one">
-						<span>\${vo2.writer}</span>
-						<span>\${nwdate} ~</span>
-						<span>\${deadline}</span>
-						<span>조회 \${vo2.viewCount}</span>
+						<span class="eve_one_writer">\${vo2.writer}</span>
+						<span>작성일: \${nwdate}</span>
+						<span class="eve_one_deadline">종료일: \${deadline}</span>
+						<span class="eve_one_vcount">조회 \${vo2.viewCount}</span>
 					</div>
 				`;
 				let bvo = `
-					<div>
+					<div class="eve_content_div">
 						<div>\${vo2.content}</div>
 					</div>	
 				`;
 				
 				if(vo2.saveName != null){
 					bvo += `
-					<div>
-						<div>
-							<img src="../resources/PostImage/\${vo2.saveName}">
+						<div class="eve_img_div"> 
+							<img src="../resources/PostImage/\${vo2.saveName}" class="eve_img">
 						</div>
-					</div>
 					`;
 				}
 				
@@ -102,20 +100,21 @@
 </script>
 </head>
 <body>
-	<h1>이벤트</h1>
+	<h3>이벤트</h3>
 <%-- 	<jsp:include page="../top_menujm.jsp"></jsp:include> --%>
 
 	
 	
 	<div class="eve_body">
-		<div class="not_title_info" id="vo_head">
+		<div class="eve_title_info" id="vo_head">
 			
 		</div>
 			
-		<div class="not_content_img" id="vo_body">
+		<div class="eve_content_img" id="vo_body">
 			
 		</div>
-		
+
+
 		<div class="up_del_button">
 			<div>
 				<button type="button" class="eve_grade_button" onclick="location.href='update.do?num=${param.num}'">수정</button>

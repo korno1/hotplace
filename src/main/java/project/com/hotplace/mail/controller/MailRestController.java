@@ -9,6 +9,7 @@ import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -107,20 +108,20 @@ public class MailRestController {
 		}
 	}
 
-	@RequestMapping(value = "/mail/json/readOK.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/mail/json/readOK.do", method = RequestMethod.GET)
 	@ResponseBody
-	public String readOK(MailVO vo) throws IllegalStateException, IOException {
-		log.info("readOK...{}", vo);
-
-			int result = service.readOK(vo);
-			log.info("result:{}", result);
-			if (result == 1) {
-				return "{\"result\":\"OK\"}";
-			} else {
-				return "{\"result\":\"NotOK\"}";
-			}
-			
+	public String readOK(MailVO vo) {
+	    // 핸들러 메서드의 내용은 이전과 동일합니다
+	    log.info("readOK...{}", vo);
+	    int result = service.readOK(vo);
+	    log.info("result:{}", result);
+	    if (result == 1) {
+	        return "{\"result\":\"OK\"}";
+	    } else {
+	        return "{\"result\":\"NotOK\"}";
+	    }
 	}
+
 	
 	@RequestMapping(value = "/mail/json/deleteOK.do", method = RequestMethod.POST)
 	@ResponseBody

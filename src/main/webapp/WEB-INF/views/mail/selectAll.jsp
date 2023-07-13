@@ -77,6 +77,7 @@ $(function() {
                     msg += `
                     	<div class="mailList__item mailList__item">
                         <div class="mailList__itemLine itemLine">
+                        	<div style="display: none;" class="mailList__itemRead readFlag" data-read-flag="\${result.vos[i].read_flag}"></div>
                             <div style="display:none;" class="mailList__itemNum itemNum">\${result.vos[i].mail_num}</div>
                             <div class="mailList__itemTitle itemTitle">\${result.vos[i].title}</div>
                             <div class="mailList__itemSender itemSender">\${result.vos[i].sender_name}</div>
@@ -91,8 +92,11 @@ $(function() {
                     </div>
                     `;
                 }
-                $(".mailBoxWrap").html(msg);
-                
+				$(".mailBoxWrap").html(msg);
+                if (mailBoxFilter === "receive") {
+                    $('.readFlag[data-read-flag="0"]').parent().find('.itemTitle').css('font-weight', 'bold');
+                }
+
                 // 다음 페이지에 데이터가 없으면 클래스 'next'의 display 속성을 none으로 처리
 				if (result.isLast===true) {
 				    $(".next").css("display", "none");
@@ -136,13 +140,42 @@ function insertMail(button) {
 
 $(document).on('click', '.itemLine', function() {
     $(this).toggleClass('active').siblings('.itemLine--hide').slideToggle();
+    
+    // 받은 쪽지함에서 눌렀을 때만 읽음 처리를 위한 분기 처리
+    let readOnRecieve = $(".receiveBox").attr('class').split(' ')[2];
+    if (readOnRecieve == 'boxSelect') {
+        let mail_num = $(this).children('.itemNum').text();
+        console.log('mail_num', mail_num);
+        let data = {
+            mail_num: mail_num
+        };
+        
+        // 'this' 변수에 저장
+        let self = this;
+        
+        $.ajax({
+            url: "json/readOK.do",
+            data: data,
+            method: 'GET',
+            dataType: 'json',
+            success: function(result) {
+                console.log('ajax...success:', result);
+                
+                // 'self' 변수를 사용하여 요소 선택
+                $(self).children('.itemTitle').css('font-weight', 'normal');
+            },
+            error: function(xhr, status, error) {
+                console.log('xhr.status:', xhr.status);
+            }
+        });
+    }
 });
 </script>
 </head>
 <body>
 	<h1 class="mailBoxName">쪽지함</h1>
 	<div class="mailFilterWrap block">
-		<div class="mail__receBox receiveBox" onclick="changeBox(this)">받은 쪽지함</div>
+		<div class="mail__receBox receiveBox boxSelect" onclick="changeBox(this)">받은 쪽지함</div>
 		<div class="mail__sendBox sendBox boxNotSelect" onclick="changeBox(this)">보낸 쪽지함</div>
 	</div>
 	<div class="mailBoxTitle block">

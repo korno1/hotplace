@@ -243,7 +243,7 @@ function rejectOK(applicantsNum=0) {
 		<div>
 			<img width="100px" src="../resources/ProfileImage/${vo2.writerNum}"
 						onerror="this.src='../resources/ProfileImage/default.png'">
-			<div><a href="http://localhost:8088/hotplace/userpage.do?num=${vo2.writerNum}">${vo2.writerName}(작성자)</a></div>
+			<div><a href="/hotplace/userpage.do?num=${vo2.writerNum}">${vo2.writerName}(작성자)</a></div>
 		</div>
 
 		

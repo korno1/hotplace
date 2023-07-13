@@ -4,12 +4,12 @@ import lombok.Data;
 
 @Data
 public class MemberReviewVO {
-	private int memberreview_num;
-	private int party_num;
-	private String user_name;
-	private int user_num;
-	private String writer_name;
-	private int writer_num;
+	private int memberreviewNum;
+	private int partyNum;
+	private String userName;
+	private int userNum;
+	private String writerName;
+	private int writerNum;
 	private String content;
 	private String wdate;
 	private int rated;

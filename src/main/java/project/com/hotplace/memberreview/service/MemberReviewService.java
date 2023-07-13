@@ -20,8 +20,8 @@ public class MemberReviewService {
 		log.info("MemberReviewService()...");
 	}
 
-	public List<MemberReviewVO> selectAll(MemberReviewVO vo) {
-		return dao.selectAll(vo);
+	public List<MemberReviewVO> selectAll(MemberReviewVO vo, Integer page) {
+		return dao.selectAll(vo, page);
 	}
 
 	public int insert(MemberReviewVO vo) {
@@ -34,6 +34,10 @@ public class MemberReviewService {
 
 	public int delete(MemberReviewVO vo) {
 		return dao.delete(vo);
+	}
+	
+	public int totalCount(MemberReviewVO vo) {
+		return dao.totalCount(vo);
 	}
 	
 	

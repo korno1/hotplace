@@ -72,7 +72,7 @@
 	 				}); // end for-each
 	 				
 	 				let pr_nx = `
-	 					<button id="eve_pre_page">이전</button>
+	 					<button id="eve_pre_page" class="eve_pre_button">이전</button>
 	 					<button id="eve_next_page" class="eve_next_button">다음</button>
 	 					
 	 				`;
@@ -132,7 +132,7 @@
 		 
 		$(document).on('click', '#eve_next_page', function(e) {
 			 e.preventDefault(); // 기본 링크 동작(페이지 다시로드)을 막음.
-			 if((page*5) >= count){ // 마지막 페이지에서 팝업 경고창
+			 if((page*10) >= count){ // 마지막 페이지에서 팝업 경고창
 				alert('마지막 페이지입니다.');
 					return false;
 			 }
@@ -171,10 +171,15 @@
 </script>
 </head>
 <body>
-	<h1>이벤트</h1>
+
+	<div class="eve_top">
+		<h3 class="event_h3">이벤트</h3>
+		<button onclick="location.href='insert.do'" id="event_insert" class="eve_grade_button">글작성</button>
+	</div>
 
 	<div class="eve_body">
 		<div class="eve_header">
+			
 			<div class="eve_title">제목</div>
 			<div class="eve_writer">작성자</div>
 			<div class="eve_wdate">작성일</div>
@@ -191,22 +196,20 @@
 	<div class="eve_footer">
 		<div class="eve_search">
 			<form id="searchForm">
-				<select id="searchKey" name="searchKey">
+				<select class="eve_searchkey" id="searchKey" name="searchKey">
 					<option value="title" <c:if test="${param.searchKey == 'title'}"> selected </c:if>>제목</option>
 					<option value="content" <c:if test="${param.searchKey =='content'}"> selected </c:if>>내용</option>
 				</select>
-				<input type="text" name="searchWord" id="searchWord" value="${param.searchWord}">
+				<input class="eve_searchword" type="text" name="searchWord" id="searchWord" value="${param.searchWord}">
 				<input type="hidden" name="page" value=1>
-				<button type="submit">검색</button>
+				<button class="eve_searchBtn" type="submit">검색</button>
 			</form>
 		</div>
 		
 		<div class="eve_change_page">
 			<div class="eve_p_n_button" id="eve_pre_next"></div>
 			
-			<div id="eve_go_insert">
-				<button onclick="location.href='insert.do'" id="event_insert" class="eve_grade_button">작성</button>
-			</div>
+			
 		</div>
 		
 	</div>

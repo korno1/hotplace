@@ -61,8 +61,8 @@ public class NoticeDAOimpl implements NoticeDAO {
 		map.put("searchKey", searchKey);
 		map.put("searchWord", "%" + searchWord + "%");
 	
-		map.put("st", (page-1)*5+1);
-		map.put("en", page*5);
+		map.put("st", (page-1)*10+1);
+		map.put("en", page*10);
 		
 		
 		return sqlSession.selectList(key, map);

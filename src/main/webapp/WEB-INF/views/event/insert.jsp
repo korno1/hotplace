@@ -71,6 +71,15 @@
 // 	} // end insertOK
 	
 	function insertOK(){
+		if($('#title').val()==''){
+			alert("제목을 입력해주세요.");
+			return false;
+		}
+		
+		if(eve_content.getData()==''){
+			alert("내용을 입력해주세요.");
+			return false;
+		}
 		
 		let formData = new FormData();
 // 		alert(eve_content.getData());

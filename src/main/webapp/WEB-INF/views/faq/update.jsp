@@ -42,6 +42,16 @@
 	}); // end onload
 	
 	function updateOK(){
+		if($('#title').val()==''){
+			alert("제목을 입력해주세요.");
+			return false;
+		}
+		
+		if(eve_content.getData()==''){
+			alert("내용을 입력해주세요.");
+			return false;
+		}
+		
 		$.ajax({
 			url: "json/updateOK.do",
 			data: {

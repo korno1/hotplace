@@ -4,137 +4,20 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="../resources/css/shop/insert.css">
 <title>Insert title here</title>
-<style>
-
-.map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
-.map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
-.map_wrap {
-	position:relative;
-	width:729px;
-	height:340px;
-	padding-top: 35px;
-}
-#menu_wrap {
-	position:absolute;
-	top:0;
-	left:0;
-	bottom:0;
-	width:250px;
-	margin:40px 0 30px 10px;
-	padding-top:20px;
-	overflow-y:auto;
-	background:rgba(255, 255, 255, 0.7);
-	z-index: 1;
-	font-size:12px;
-	border-radius: 10px;
-}
-.bg_white {
-	background:#fff;
-}
-#menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
-#menu_wrap .option{text-align: center;}
-#menu_wrap .option p {margin:10px 0;}  
-#menu_wrap .option button {margin-left:5px;}
-#placesList li {list-style: none;}
-#placesList .item {position:relative;border-bottom:1px solid #888;overflow: hidden;cursor: pointer;min-height: 65px;}
-#placesList .item span {display: block;margin-top:4px;}
-#placesList .item h5, #placesList .item .info {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
-#placesList .item .info{padding:10px 0 10px 55px;}
-#placesList .info .gray {color:#8a8a8a;}
-#placesList .info .jibun {padding-left:26px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;}
-#placesList .info .tel {color:#009900;}
-#placesList .item .markerbg {float:left;position:absolute;width:36px; height:37px;margin:10px 0 0 10px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;}
-#placesList .item .marker_1 {background-position: 0 -10px;}
-#placesList .item .marker_2 {background-position: 0 -56px;}
-#placesList .item .marker_3 {background-position: 0 -102px}
-#placesList .item .marker_4 {background-position: 0 -148px;}
-#placesList .item .marker_5 {background-position: 0 -194px;}
-#placesList .item .marker_6 {background-position: 0 -240px;}
-#placesList .item .marker_7 {background-position: 0 -286px;}
-#placesList .item .marker_8 {background-position: 0 -332px;}
-#placesList .item .marker_9 {background-position: 0 -378px;}
-#placesList .item .marker_10 {background-position: 0 -423px;}
-#placesList .item .marker_11 {background-position: 0 -470px;}
-#placesList .item .marker_12 {background-position: 0 -516px;}
-#placesList .item .marker_13 {background-position: 0 -562px;}
-#placesList .item .marker_14 {background-position: 0 -608px;}
-#placesList .item .marker_15 {background-position: 0 -654px;}
-#pagination {margin:10px auto;text-align: center;}
-#pagination a {display:inline-block;margin-right:10px;}
-#pagination .on {font-weight: bold; cursor: default;color:#777;}
-.close-button {
-    position: absolute;
-    top: 45px;
-    right: 57px;
-    width: 18px;
-    height: 18px;
-    font-size: 18px;
-    background-color: white;
-    text-align: center;
-    cursor: pointer;
-}
-.form-row .tagName {
-    /* UI Properties */
-	text-align: left;
-	width: 80px;
-	font: normal normal bold 18px/21px Pretendard;
-	letter-spacing: -0.45px;
-	margin-right: 108px;
-	margin-left: 0;
-	color: #323232;
-	opacity: 1;
-}
-.form-row .inputInformation {
-	border: 1px solid var(---c7c7c7-표테두리);
-	border: 1px solid #C7C7C7;
-	display: inline-block;
-	width: 433px;
-    height: 40px;
-    font: normal normal normal 18px/21px Pretendard;
-	opacity: 1;
-}
-
-.form-row {
-	display: flex;
-	align-items: center;
-	padding-top: 13px;
-	padding-bottom: 13px;
-	border-top: 1px solid #ccc;
-}
-
-.big-form {
-	margin: 100px 50px 100px 50px
-}
-
-.form-row:last-child {
-	border-bottom: 1px solid #ccc;
-}
-
-.form-row .tagName {
-  display: inline-block;
-  width: 80px;
-  text-align: right;
-  margin-right: 10px;
-  vertical-align: middle;
-}
-
-.form-row input {
-  vertical-align: middle;
-}
-.searchImage {
-	margin-left: 15px;
-}
-</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script>
     function handleItemInfo(itemInfo) {
     	console.log(itemInfo);
+    	
         document.getElementById('name').value = itemInfo.placeName;
         document.getElementById('tel').value = itemInfo.phone;
         document.getElementById('keyword').value = itemInfo.address;
         var cateValue = itemInfo.cate.replace(/\s*>\s*/g, ',');
         document.getElementById('cate').value = cateValue;
+        document.getElementById('locX').value = itemInfo.locX;
+        document.getElementById('locY').value = itemInfo.locY;
     }
     
     function closeModal() {
@@ -170,42 +53,92 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
+    
+    function executeInsert() {
+    	  // 여기에 json/insertOK.do 실행하는 코드를 작성합니다.
+    	  // 예시로는 AJAX를 사용하여 비동기적으로 서버에 요청하는 코드를 작성했습니다.
+
+    	  var formData = new FormData();
+    	  var fileInput = $('input[type=file]')[0];
+    	  if (fileInput.files.length > 0) {
+    	      formData.append('multipartFile', fileInput.files[0]); // 파일 데이터 추가
+    	  }// 파일 데이터 추가
+    	  formData.append('name', document.getElementById('name').value);
+    	  formData.append('cate', document.getElementById('cate').value);
+    	  formData.append('tel', document.getElementById('tel').value);
+    	  formData.append('locX', document.getElementById('locX').value);
+    	  formData.append('locY', document.getElementById('locY').value);
+    	  formData.append('address', document.getElementById('keyword').value);
+    	  
+    	  // AJAX 요청을 보내고 응답을 처리합니다.
+    	  $.ajax({
+    	    url: 'json/insertOK.do',
+    	    data: formData,
+    	    method: 'POST',
+    	    dataType: 'json',
+    	    processData: false,
+            contentType: false,
+    	    success: function(response) {
+    	      // 요청이 성공적으로 처리되었을 때의 동작을 작성합니다.
+    	      console.log('Insert successful');
+    	      
+    	      // 모달 창을 닫습니다.
+    	      closeModal();
+    	    },
+    	    error: function(xhr, status, error) {
+    	      // 요청이 실패했을 때의 동작을 작성합니다.
+    	      console.error('Insert failed:', error);
+    	    }
+    	  });
+    	}
+
+    	// closeModal() 함수는 이미 예제 코드에서 정의되어 있는 함수입니다.
+    	// 모달 창을 닫는 역할을 합니다.
+    	function closeModal() {
+    	  // Close the modal by sending a message to the parent window
+    	  window.parent.closeModal();
+    	}
+    
 </script>
 </head>
 <body>
 	<div class="close-button" onclick="closeModal()">X</div>
 		<div class="big-form">
-			<div class="form-img">
-				<div>
-    				<label for="image">Image:</label>
-    				<input type="file" name="multipartFile" accept="image/*" onchange="showImagePreview(this)">
+			<div class="center-form">
+				<div class="form-img">
+					<div>
+						<img id="imagePreview" src="../resources/ShopSymbol/default.png" alt="Image Preview" style="width:160px;height:160px;object-fit:cover;object-position:center;">
+						<input type="file" name="multipartFile" accept="image/*" onchange="showImagePreview(this)">
+					</div>
 				</div>
-				<div>
-    				<img id="imagePreview" src="#" alt="Image Preview" style="max-width: 200px; max-height: 200px;">
+				<div class="form-data">
+					<div class="form-row">
+						<div class="tagName">가게명</div>
+						<div><input type="text" id="name" name="name" class="inputInformation"></div>
+					</div>
+					<div class="form-row">
+						<div class="tagName">분류</div>
+						<div><input type="text" id="cate" name="cate" class="inputInformation"></div>
+					</div>
+					<div class="form-row">
+						<div class="tagName">전화번호</div>
+						<div><input type="text" id="tel" name="tel" class="inputInformation"></div>
+					</div>
+					<div style="display: none;">
+    					<input type="text" id="locX" name="locX">
+    					<input type="text" id="locY" name="locY">
+					</div>
+					<form id="searchForm" onsubmit="searchPlaces(); return false;">
+						<div class="form-row">
+    						<div class="tagName">위치</div>
+		    				<div><input type="text" id="keyword" value="맛집" size="15" class="inputInformation"></div>
+	    					<div><button type="submit" style="display: none;"></button></div>
+    		    			<div><img src="../resources/ArrowSource/search-normal.svg" alt="Search" id="searchImage" class="searchImage"></div>
+        				</div>
+					</form>
 				</div>
 			</div>
-			<div class="form-date">
-			<div class="form-row">
-				<div class="tagName">가게명</div>
-				<div><input type="text" id="name" name="name" class="inputInformation"></div>
-			</div>
-			<div class="form-row">
-				<div class="tagName">분류</div>
-				<div><input type="text" id="cate" name="cate" class="inputInformation"></div>
-			</div>
-			<div class="form-row">
-				<div class="tagName">전화번호</div>
-				<div><input type="text" id="tel" name="tel" class="inputInformation"></div>
-			</div>
-			<form id="searchForm" onsubmit="searchPlaces(); return false;">
-				<div class="form-row">
-    				<div class="tagName">위치</div>
-		    		<div><input type="text" id="keyword" value="맛집" size="15" class="inputInformation"></div>
-	    			<div><button type="submit" style="display: none;"></button></div>
-    		    	<div><img src="../resources/ArrowSource/search-normal.svg" alt="Search" id="searchImage" class="searchImage"></div>
-        		</div>
-			</form>
-			</div>>
+			
 			<div class="map_wrap">
     			<div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
 
@@ -215,6 +148,7 @@
         			<div id="pagination"></div>
    				</div>
 			</div>
+			<button type="button" id="addButton" class="add-button" onclick="executeInsert()">추가하기</button>
 		</div>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d326b067d6341afa0b918f0c45297208&libraries=services,clusterer"></script>
  <script>

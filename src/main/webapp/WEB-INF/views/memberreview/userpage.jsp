@@ -14,7 +14,8 @@
 <script type="text/javascript">
 
 let page =1;
-let count; // 게시글 개수
+let par_count; // 게시글 개수
+let mer_count; // 게시글 개수
 
 $(function(){
 	console.log('onload...');
@@ -55,12 +56,11 @@ $(function(){
 			console.log('xhr.status:', xhr.status);
 		} // end error
 	}); // end ajax;
-	par_selectAll(page);
 	  
-	function totalCount(){ // 게시글 개수 계산
+	function par_totalCount(){ // 게시글 개수 계산
 		console.log('totalCount...');
 		$.ajax({
-			url: "party/json/totalCount.do",
+			url: "party/json/par_totalCount.do",
 			data:{
 				writerNum : ${param.num}
 			},
@@ -69,13 +69,6 @@ $(function(){
 			success: function(cnt){
 				console.log('cnt...',cnt);
 	            count = cnt;
-	            
-	            let pr_nx = `
-					<button id="back_page">이전</button>
-					<button id="next_page">다음</button>
-					`;
-					
-	            $('#par_page').html(pr_nx);
 			}, // end success
 			
 			error:function(xhr,status,error){
@@ -84,7 +77,7 @@ $(function(){
 			} // end error
 		}) // end ajax;	
 	};
-	totalCount();
+	par_totalCount();
 	
 	$(document).on('click', '#back_page', function(e) { // 이전 버튼 클릭 시 동작
 	    e.preventDefault(); // 기본 링크 동작(페이지 다시로드)을 막음.
@@ -121,19 +114,21 @@ $(function(){
 }); // end onload	
 
 
-function mre_selectAll(user_num=0, memberreview_num=0){ // ${param.memberreview_num}
-	console.log('mer_selectAll()....user_num:',user_num);
-	console.log('mer_selectAll()....memverreview_num:',memberreview_num);
+function mre_selectAll(userNum=0, memberreviewNum=0, page){ // ${param.memberreviewNum}
+	console.log('mer_selectAll()....userNum:',userNum);
+	console.log('mer_selectAll()....memverreviewNum:',memberreviewNum);
 	
 	$('#par_vos').hide(); // 모임리스트 요소를 숨기도록 설정
 	$('#memberreview_list').show();
+	$('#insertButton').show();
 	document.getElementById("formContainer").style.display = "block";
 	
-	$('#insertButton').show();
+	
 	$.ajax({
 		url : "memberreview/json/selectAll.do",
 		data:{
-			user_num:${vo2.num} // ${param.user_num}
+			userNum:${vo2.num}, // ${param.userNum}
+			page: page, //${param.page}
 		},
 		method:'GET',
 		dataType:'json',
@@ -148,7 +143,7 @@ function mre_selectAll(user_num=0, memberreview_num=0){ // ${param.memberreview_
 				
 				let ratedValue = parseInt(vo.rated);
 				console.log('vo.rated:', vo.rated);
-				console.log('vo.partynum:', vo.party_num);
+				console.log('vo.partynum:', vo.partyNum);
 
 				let tag_rated = `
 			        <div id="starRating" class="board-cell">
@@ -161,9 +156,9 @@ function mre_selectAll(user_num=0, memberreview_num=0){ // ${param.memberreview_
 		            </ul>
 		        </div>`;
 		       
-				// user_num==vo.user_num
-				if(memberreview_num==vo.memberreview_num) {
-					tag_td = `<div class="board-cell"><input type="text" value="\${vo.content}" id="input_content"><button onclick="updateOK(\${vo.memberreview_num})">수정완료</button></div>`;
+				// userNum==vo.userNum
+				if(memberreviewNum==vo.memberreviewNum) {
+					tag_td = `<div class="board-cell"><input type="text" value="\${vo.content}" id="input_content"><button onclick="updateOK(\${vo.memberreviewNum})">수정완료</button></div>`;
 					tag_rated = `
 				        <div id="starRating">
 			            <ul class="star-rating"  data-rating="\${ratedValue}">
@@ -183,26 +178,23 @@ function mre_selectAll(user_num=0, memberreview_num=0){ // ${param.memberreview_
 			              $('#mre_rated').val(rating); // input2 폼에 선택한 별점 값 설
 			            });
 			          });
-
 			        isFormInserted = true;
 				}
 				
-				
 				let tag_div = ``;
-				if(${num}==vo.writer_num){ //'${user_id}'===vo.writer_num
+				if(vo.writerNum==${num}){ //'${user_id}'===vo.writerNum
 					tag_div = `<div>
-						<button onclick="mre_selectAll(\${vo.user_num},\${vo.memberreview_num})">수정</button>
-						<button type="button" onclick="deleteOK(\${vo.memberreview_num})">삭제</button>
+						<button onclick="mre_selectAll(\${vo.userNum},\${vo.memberreviewNum})">수정</button>
+						<button type="button" onclick="deleteOK(\${vo.memberreviewNum})">삭제</button>
 					</div>`;
-
 				}
 
 				tag_txt += `
 					<div class="board">
 						<div class="board-row">
-							<img id="preview" width="100px" src="${pageContext.request.contextPath}/resources/ProfileImage/\${vo.writer_num}.png"
+							<img id="preview" width="50px" src="${pageContext.request.contextPath}/resources/ProfileImage/\${vo.writerNum}.png"
 							onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/resources/ProfileImage/default.png';">
-							<div class="board-cell">\${vo.writer_name}</div>
+							<div class="board-cell">\${vo.writerName}</div>
 							\${tag_rated}
 							<div class="board-cell">\${vo.wdate}</div>
 						</div>
@@ -235,63 +227,57 @@ function mre_selectAll(user_num=0, memberreview_num=0){ // ${param.memberreview_
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	let isFormInserted = false;
+let isFormInserted = false;
 
-	function insert() {
-	    if (!isFormInserted) {
-			$('#par_vos').hide();
-			$('#memberreview_list').hide();
-	    	
-	        // 폼을 감싸는 부모 요소 생성
-	        var formContainer = $('<div id="formContainer"></div>');
+function insert() {
+    if (!isFormInserted) {
+		$('#par_vos').hide();
+		$('#memberreview_list').hide();
+    	
+        // 폼을 감싸는 부모 요소 생성
+        var formContainer = $('<div id="formContainer"></div>');
 
-	        var form = $(`
-	        		  <form class="insert-form">
-	        		    <ul class="star-rating">
-	        		      <li class="star fa fa-star" data-rating="1"></li>
-	        		      <li class="star fa fa-star" data-rating="2"></li>
-	        		      <li class="star fa fa-star" data-rating="3"></li>
-	        		      <li class="star fa fa-star" data-rating="4"></li>
-	        		      <li class="star fa fa-star" data-rating="5"></li>
-	        		    </ul>
-	        		    <input type="text" name="content" id="mre_content">
-	        		    <input type="hidden" name="rated" id="mre_rated">
-	        		    <button onclick="insertOK()">작성완료</button>
-	        		  </form>
-	        		`);
+        var form = $(`
+        		  <form class="insert-form">
+        		    <ul class="star-rating">
+        		      <li class="star fa fa-star" data-rating="1"></li>
+        		      <li class="star fa fa-star" data-rating="2"></li>
+        		      <li class="star fa fa-star" data-rating="3"></li>
+        		      <li class="star fa fa-star" data-rating="4"></li>
+        		      <li class="star fa fa-star" data-rating="5"></li>
+        		    </ul>
+        		    <input type="text" name="content" id="mre_content">
+        		    <input type="hidden" name="rated" id="mre_rated">
+        		    <button onclick="insertOK()">작성완료</button>
+        		  </form>
+        		`);
 
-	        formContainer.append(form);
-	        formContainer.addClass('show-star-rating');
+        formContainer.append(form);
+        formContainer.addClass('show-star-rating');
 
-	        // 기존 폼을 제거하고 새로운 폼으로 교체
-	        $('#formContainer').replaceWith(formContainer);
-	        
-	        $(document).ready(function() {
-	            $('.star-rating .star').click(function() {
-	              var rating = $(this).attr('data-rating');
-	              $('.star-rating .star').removeClass('active');
-	              $(this).prevAll().addBack().addClass('active');
-	              console.log('별점: ' + rating);
-	              $('#mre_rated').val(rating); // input2 폼에 선택한 별점 값 설
-	            });
-	          });
+        // 기존 폼을 제거하고 새로운 폼으로 교체
+        $('#formContainer').replaceWith(formContainer);
+        
+        $(document).ready(function() {
+            $('.star-rating .star').click(function() {
+              var rating = $(this).attr('data-rating');
+              $('.star-rating .star').removeClass('active');
+              $(this).prevAll().addBack().addClass('active');
+              console.log('별점: ' + rating);
+              $('#mre_rated').val(rating); // input2 폼에 선택한 별점 값 설
+            });
+          });
 
-	        isFormInserted = true;
-	    }else {
-	    	// 초기화 작업 수행
-	    	$('#formContainer').replaceWith(formContainer);
-	        $('#par_vos').show();
-	        $('#memberreview_list').show();
-	        $('.insert-form').remove();
-	        isFormInserted = false;
-	    }
-	}//end insert
+        isFormInserted = true;
+    }else {
+    	// 초기화 작업 수행
+    	$('#formContainer').replaceWith(formContainer);
+        $('#par_vos').show();
+        $('#memberreview_list').show();
+        $('.insert-form').remove();
+        isFormInserted = false;
+    }
+}//end insert
 
 
 // 	let isFormInserted = false;
@@ -355,54 +341,54 @@ function mre_selectAll(user_num=0, memberreview_num=0){ // ${param.memberreview_
 // 	    }
 // 	}//end insert
 
-	function insertOK() {
-	    if (isFormInserted) {
-	        $('form').on('submit', function(event) {
-	            event.preventDefault();
-	        });
+function insertOK() {
+    if (isFormInserted) {
+        $('form').on('submit', function(event) {
+            event.preventDefault();
+        });
 
-	        console.log('insertOK()....');
-	        console.log($('#mre_content').val());
-	        $.ajax({
-	            url: "memberreview/json/insertOK.do",
-	            data: {
-	                party_num: 9,//9 ${vo.party_num}
-	                user_num: ${vo2.num}, //
-	                writer_num: ${num},
-	                rated: $('#mre_rated').val(),
-	                content: $('#mre_content').val()
-	            },
-	            method: 'POST',
-	            dataType: 'json',
-	            success: function(obj) {
-	                console.log('ajax...success:', obj);
-	                if (obj.result == 1) {
-	                    mre_selectAll(user_num='\${vo.user_num}');
-	                    isFormInserted = false; // 폼이 초기화되면 false로 설정하여 다시 작성 버튼이 나타날 수 있도록 함
-	                    $('#formContainer').replaceWith('<div id="formContainer"></div>');
-	                    // 기존 폼으로 돌아감
-	                    var insertButton = $('<button></button>');
-	                    insertButton.attr('onclick', "insert()");
-	                    insertButton.text('작성');
-	                    $('#formContainer').append(insertButton);
-	                }
-	            },
-	            error: function(xhr, status, error) {
-	                console.log('xhr.status:', xhr.status);
-	            }
-	        });
-	        
-		    $('#mre_content').val(''); // input 폼 초기화
-		    $('#mre_rated').val(''); // input 폼 초기화
-		    
-	    }
-	}//end insertOK
+        console.log('insertOK()....');
+        console.log($('#mre_content').val());
+        $.ajax({
+            url: "memberreview/json/insertOK.do",
+            data: {
+                partyNum: 9,//9 ${vo.partyNum}
+                userNum: ${vo2.num}, //
+                writerNum: ${num},
+                rated: $('#mre_rated').val(),
+                content: $('#mre_content').val()
+            },
+            method: 'POST',
+            dataType: 'json',
+            success: function(obj) {
+                console.log('ajax...success:', obj);
+                if (obj.result == 1) {
+                    mre_selectAll(userNum='\${vo.userNum}');
+                    isFormInserted = false; // 폼이 초기화되면 false로 설정하여 다시 작성 버튼이 나타날 수 있도록 함
+                    $('#formContainer').replaceWith('<div id="formContainer"></div>');
+                    // 기존 폼으로 돌아감
+                    var insertButton = $('<button></button>');
+                    insertButton.attr('onclick', "insert()");
+                    insertButton.text('작성');
+                    $('#formContainer').append(insertButton);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log('xhr.status:', xhr.status);
+            }
+        });
+        
+	    $('#mre_content').val(''); // input 폼 초기화
+	    $('#mre_rated').val(''); // input 폼 초기화
+	    
+    }
+}//end insertOK
 
 
 	
 	
-	function updateOK(memberreview_num=0){
-		console.log('updateOK()....',memberreview_num);
+	function updateOK(memberreviewNum=0){
+		console.log('updateOK()....',memberreviewNum);
 		console.log($('#starRating').val());
 		
 		let rated = $('.star-rating .star.active').last().data('rating');
@@ -410,7 +396,7 @@ function mre_selectAll(user_num=0, memberreview_num=0){ // ${param.memberreview_
 		$.ajax({
 			url : "memberreview/json/updateOK.do",
 			data:{
-				memberreview_num:memberreview_num,
+				memberreviewNum:memberreviewNum,
 				content: $('#input_content').val(),
 				rated: rated
 			},
@@ -418,7 +404,7 @@ function mre_selectAll(user_num=0, memberreview_num=0){ // ${param.memberreview_
 			dataType:'json',
 			success : function(obj) {
 				console.log('ajax...success:', obj);
-				if(obj.result==1) mre_selectAll(user_num='\${vo.user_num}');
+				if(obj.result==1) mre_selectAll(userNum='\${vo.userNum}');
 			},
 			error:function(xhr,status,error){
 				console.log('xhr.status:', xhr.status);
@@ -427,20 +413,20 @@ function mre_selectAll(user_num=0, memberreview_num=0){ // ${param.memberreview_
 		
 	}//end updateOK
 	
-	function deleteOK(memberreview_num=0){
-		console.log('deleteOK()....',memberreview_num);
+	function deleteOK(memberreviewNum=0){
+		console.log('deleteOK()....',memberreviewNum);
 		
 	  if (confirm("글을 삭제하시겠습니까?")) {
 		  $.ajax({
 				url : "memberreview/json/deleteOK.do",
 				data:{
-					memberreview_num:memberreview_num
+					memberreviewNum:memberreviewNum
 				},
 				method:'GET',
 				dataType:'json',
 				success : function(obj) {
 					console.log('ajax...success:', obj);
-					if(obj.result==1) mre_selectAll(user_num='\${vo.user_num}');
+					if(obj.result==1) mre_selectAll(userNum='\${vo.userNum}');
 				},
 				error:function(xhr,status,error){
 					console.log('xhr.status:', xhr.status);
@@ -486,14 +472,14 @@ function par_selectAll(page){
 				
 			}); // end for-each
 
-			let pr_nx = `
-				<button id="back_page">이전</button>
-				<button id="next_page">다음</button>
-				`;
+// 			let prNx = `
+// 				<button id="back_page">이전</button>
+// 				<button id="next_page">다음</button>
+// 				`;
 			
 // 			totalCount();	
 			$('#par_vos').html(tag_vos);
-			$('#par_page').html(pr_nx);
+// 			$('#par_page').html(prNx);
 		}, // end success
 		
 		error:function(xhr,status,error){
@@ -523,10 +509,11 @@ function par_selectAll(page){
 	
 	<a href="#" onclick="par_selectAll()">모임리스트</a>
 	<a href="#" onclick="mre_selectAll()" id="reviewLink">후기목록</a>
+	
 		
-	<hr>	
-	<button onclick="location.href='party/myParty.do?writerNum=${writerNum}&page=${page-1}">내모임 확인</button>
-	<button onclick="myParty">내 모임 확인</button>
+	<hr>
+	<button onclick="location.href='party/myParty.do?userNum=${num}'">내모임 확인</button>
+<!-- 	<button onclick="myParty">내 모임 확인</button> -->
 	
 	
 	<div id="par_vos"></div>
@@ -535,8 +522,17 @@ function par_selectAll(page){
 	<div id="memberreview_list"></div>
 	
 	
+	<div class="paging" id="paging">
+		<button id="back_page">이전</button>
+		<button id="next_page">다음</button>
+<!-- 	 	<button class="faq_grade_button" onclick="location.href='insert.do'">작성</button> -->
+	</div>
+	
+	
 	<div id="formContainer"><button onclick="insert()">작성</button></div>
 	<hr>
+<!-- 		<button onclick="location.href='memberreview/insert.do'">작성</button> -->
+<%-- 		<a href="memberreview/insert.do?userNum=${param.num}">후기작성</a> --%>
 	
 	
 </body>

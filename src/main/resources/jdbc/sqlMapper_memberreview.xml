@@ -6,26 +6,28 @@
 <mapper namespace="project.com.hotplace.memberreview">
 
 	<select id="mre_selectAll" resultType="project.com.hotplace.memberreview.model.MemberReviewVO">
-		select r.memberreview_num, r.party_num, r.user_num, r.writer_num, r.content, r.wdate, r.rated, m.num, m.nick_name as writer_name, mm.nick_name as user_name
-		from memberreview r
-		join member m on r.writer_num = m.num
-		join member mm on r.user_num = mm.num
-		where r.user_num = #{user_num}
-		order by r.memberreview_num desc
+		select *
+			from (select rownum rn, v_mre.*
+    		from (select r.memberreview_num as memberreviewNum, r.party_num as partyNum, r.user_num as userNum, r.writer_num as writerNum, 
+    			r.content, r.wdate, r.rated, m.num, m.nick_name as writerName, mm.nick_name as userName
+				from memberreview r join member m on (r.writer_num = m.num) join member mm on (r.user_num = mm.num)
+        		where r.user_num = #{userNum}
+        		order by r.memberreview_num desc) v_mre)
+		where rn between #{st} and #{en}
 	</select>
 	
 	<insert id="mre_insert">
 		insert into memberreview(memberreview_num, party_num, user_num, writer_num, content, rated)
-		values(mre_sequence.nextval, #{party_num}, #{user_num}, #{writer_num}, #{content}, #{rated})
+		values(mre_sequence.nextval, #{partyNum}, #{userNum}, #{writerNum}, #{content}, #{rated})
 	</insert>
 	
 	<update id="mre_update">
 		update memberreview set content=#{content}, rated=#{rated}, wdate=sysdate    
-		where memberreview_num=#{memberreview_num}
+		where memberreview_num=#{memberreviewNum}
 	</update>
 	
 	<delete id="mre_delete">
-		delete from memberreview where memberreview_num=#{memberreview_num}
+		delete from memberreview where memberreview_num=#{memberreviewNum}
 	</delete>
 
 </mapper>

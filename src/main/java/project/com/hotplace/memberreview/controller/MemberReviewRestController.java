@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import lombok.extern.slf4j.Slf4j;
 import project.com.hotplace.memberreview.model.MemberReviewVO;
 import project.com.hotplace.memberreview.service.MemberReviewService;
+import project.com.hotplace.party.model.PartyVO;
 
 @Controller
 @Slf4j
@@ -24,10 +25,14 @@ public class MemberReviewRestController {
 	
 	@ResponseBody
 	@RequestMapping(value = {"/memberreview/json/selectAll.do"}, method = RequestMethod.GET)
-	public List<MemberReviewVO> selectAll(MemberReviewVO vo) {
+	public List<MemberReviewVO> selectAll(MemberReviewVO vo, Integer page) {
 		log.info("selectAll.do...{}", vo);
 		
-		List<MemberReviewVO> vos = service.selectAll(vo);
+		if(page == null) {
+			page = 1;
+		}
+		
+		List<MemberReviewVO> vos = service.selectAll(vo, page);
 		log.info("vos..{}", vos.toString());
 		log.info("vos.size():{}", vos.size());
 		

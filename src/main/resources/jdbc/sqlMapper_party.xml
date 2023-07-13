@@ -121,11 +121,28 @@
 	<select id="par_myParty" resultType="project.com.hotplace.party.model.PartyVO" parameterType="HashMap">
 		select *
 			from (select rownum rn, v_par.*
-    		from (select p.party_num as partyNum, m.nick_name as writerName, p.title, p.views, p.content, p.applicants, p.max, p.place, p.time_limit as timeLimit, p.wdate, p.dead_line as deadLine, p.writer_num as writerNum
+    		from (select p.party_num as partyNum, m.nick_name as writerName, p.title, p.views, p.content, p.applicants, p.max, p.place, 
+    			p.time_limit as timeLimit, p.wdate, p.dead_line as deadLine, p.writer_num as writerNum
         		from party p join member m on (p.writer_num = m.num)
         		where p.writer_num=#{writerNum}
         		order by p.party_num desc) v_par)
 		where rn between #{st} and #{en}
+	</select>
+
+	<select id="par_myAppilcants" resultType="project.com.hotplace.party.model.PartyVO" parameterType="HashMap">
+		select *
+			from (select rownum rn, v_par.*
+    		from (select p.party_num as partyNum, m.nick_name as writerName, p.title, p.views, p.content, p.applicants, p.max, p.place, 
+    			p.time_limit as timeLimit, p.wdate, p.dead_line as deadLine, p.writer_num as writerNum, a.status, a.user_num as userNum
+        		from party p join member m on (p.writer_num = m.num) join applicants a on (p.party_num = a.party_num)
+        		where a.user_num=#{userNum}
+        		order by p.party_num desc) v_par)
+		where rn between #{st} and #{en}
+	</select>
+
+	<select id="myPartyCount" resultType="int">
+		select count(*) from party p join applicants a on (p.party_num = a.party_num)
+		where a.user_num=#{userNum}
 	</select>
 
 	<select id="totalCount" resultType="int">

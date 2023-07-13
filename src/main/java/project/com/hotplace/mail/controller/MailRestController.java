@@ -1,15 +1,14 @@
 package project.com.hotplace.mail.controller;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -57,16 +56,12 @@ public class MailRestController {
 	}
 	@RequestMapping(value = "/mail/json/newMailCnt.do", method = RequestMethod.GET)
 	@ResponseBody
-	public String newMailCnt(int recipient_num) {
+	public int newMailCnt(MailVO vo) {
 		
-		int result = service.newMailCnt(recipient_num);
+		int result = service.newMailCnt(vo);
 		log.info("newMailCnt...{}", result);
 		
-		if (result == 1) {
-			return "{\"result\":\"OK\"}";
-		} else {
-			return "{\"result\":\"NotOK\"}";
-		}
+		return result;
 	}
 	@RequestMapping(value = "/mail/json/selectAll_admin.do", method = RequestMethod.GET)
 	@ResponseBody

@@ -69,23 +69,45 @@
 	<fmt:parseDate var="dateFmt" value="${vo2.wdate}"  pattern="yyyy-MM-dd HH:mm:ss.SSS" />
 	<fmt:formatDate var="fmtwdate" value="${dateFmt}" pattern="yyyy-MM-dd HH:mm" />
 	<div>
-		<div>
-			<input class="not_title_insert" type="text" name="title" id="title" value="${vo2.title}" onkeyup="titleCheckByte(this, 100)">
+		<div class="not_writer_div">
+			<div class="not_writer_left">
+				작성자
+			</div>
+			<div  class="not_writer_right">
+				<input class="not_title_insert" type="hidden" name="writer" id="writer" value="${nick_name}">
+				<span>${nick_name}</span>
+			</div>
+		</div>	
+	
+		<div class="not_title_div">
+			<div class="not_title_left">제목</div>
+			<div class="not_title_right">
+				<input class="not_title_input" type="text" name="title" id="title" placeholder="제목" onfocus="this.placeholder=''" onblur="this.placeholder='제목'" onkeyup="titleCheckByte(this, 100)" value="${vo2.title}">
+			</div>
 		</div>
 		
 		<div class="not_textArea">
-			<textarea name="content" id="content" rows="10" cols="22">${vo2.content}</textarea>
-			<span id=checkby>0</span>/4000
+			<div class="not_content_left">내용</div>
+			<div class="not_content_right">
+				<textarea name="content" id="content" rows="10" cols="22">${vo2.content}</textarea>
+			</div>
 		</div>
 		
-		<div class="not_write_footer">
-			<div class="not_fileupload">
+		<div class="not_check_byte">
+			<div class="not_byte_left"></div>
+			<div class="not_byte_right" id="checkby">0</div>/4000byte
+		</div>
+		
+		<div class="not_upload_div">
+			<div class="not_upload_left">첨부파일</div>
+			<div class="not_upload_right">
 				<input type="file" id="file" name="file">
 				<input type="hidden" id="saveName" name="saveName" value="${vo2.saveName}">
 			</div>
-			<div>
-				<input id="not_click_submit" type="button" value="수정">
-			</div>
+		</div>
+		
+		<div class="not_insert_div">
+			<input class="not_button" id="not_click_submit" type="button" value="작성">
 		</div>
 		
 		

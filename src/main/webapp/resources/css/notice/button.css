@@ -8,4 +8,12 @@
     cursor: pointer;
 }
 
+.not_button{
+	border-radius: 20px;
+	padding: 10px 40px;
+	border: 1px solid gray;
+	cursor: pointer;
+	background-color: white;
+}
+
 

@@ -10,6 +10,7 @@
 <script src="https://cdn.ckeditor.com/ckeditor5/38.1.0/classic/ckeditor.js"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
 <link rel="stylesheet" href="../resources/css/event/insert.css">
+<link rel="stylesheet" href="../resources/css/event/button.css">
 
 <style>
   .ck-editor__editable { height: 400px; 
@@ -35,9 +36,6 @@
 			dataType: 'json',
 			success: function(vo){
 				$('#title').val(vo.title);
-// 				$('#content').html(vo.content);
-// 				$('#content').val(vo.content);
-// 				$('#content').html(vo.content);
 				$('#deadline').val(vo.deadline);
 				$('#saveName').val(vo.saveName);
 				
@@ -139,24 +137,52 @@
 	<h1>이벤트</h1>
 
 	<div>
-		<div class="eve_title_div">
-			<input class="eve_title_insert" type="text" name="title" id="title" placeholder="제목" onfocus="this.placeholder=''" onblur="this.placeholder='제목'" onkeyup="titleCheckByte(this, 100)">
-			<span>종료일자</span>
-			<span><input type="datetime-local" name="deadline" id="deadline"></span>
-		</div>
-		<div>
-			<textarea name="content" id="content" rows="10" cols="22" placeholder="내용 입력" onfocus="this.placeholder=''" onblur="this.placeholder='내용 입력'"></textarea>
-			<span id="checkby">0</span>/4000
+		<div class="eve_writer_div">
+			<div class="eve_writer_left">
+				작성자
+			</div>
+			<div  class="eve_writer_right">
+				<input class="eve_title_insert" type="hidden" name="writer" id="writer" value="${nick_name}">
+				<span>${nick_name}</span>
+			</div>
 		</div>
 		
-		<div class="eve_write_footer">
-			<div class="eve_fileupload">
+		<div class="eve_title_div">
+			<div class="eve_title_left">제목</div>
+			<div class="eve_title_right">
+				<input class="eve_title_input" type="text" name="title" id="title" placeholder="제목" onfocus="this.placeholder=''" onblur="this.placeholder='제목'" onkeyup="titleCheckByte(this, 100)">
+			</div>
+		</div>
+	
+		<div class="eve_deadline_div">
+			<div class="eve_deadline_left">종료일자</div>
+			<div class="eve_deadline_right">
+				<input type="datetime-local" name="deadline" id="deadline" onchange="setMin()">
+			</div>
+		</div>
+		
+		<div class="eve_textArea">
+			<div class="eve_content_left">내용</div>
+			<div class="eve_content_right">
+				<textarea name="content" id="content" rows="10" cols="22" placeholder="내용 입력" onfocus="this.placeholder=''" onblur="this.placeholder='내용 입력'"></textarea>
+			</div>
+		</div>
+		
+		<div class="eve_check_byte">
+			<div class="eve_byte_left"></div>
+			<div class="eve_byte_right" id="checkby">0</div>/4000byte
+		</div>
+		
+		<div class="eve_upload_div">
+			<div class="eve_upload_left">첨부파일</div>
+			<div class="eve_upload_right">
 				<input type="file" id="file" name="file">
 				<input type="hidden" id="saveName" name="saveName" value="">  
 			</div>
-			<div>
-				<button onclick="updateOK()">수정</button>
-			</div>
+		</div>
+		
+		<div class="eve_insert_div">
+			<button class="eve_button" onclick="updateOK()">수정</button>
 		</div>
 		
 		

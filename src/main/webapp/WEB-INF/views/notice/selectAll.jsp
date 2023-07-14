@@ -45,6 +45,22 @@
 	    document.body.appendChild(f);
 	    f.submit();
 	}
+	
+	function selectOneForm(num) {
+	    var form = document.createElement("form");
+	    form.setAttribute("method", "post");
+	    form.setAttribute("action", "selectOne.do");
+
+	    var numInput = document.createElement("input");
+	    numInput.setAttribute("type", "hidden");
+	    numInput.setAttribute("name", "num");
+	    numInput.setAttribute("value", num);
+
+	    form.appendChild(numInput);
+
+	    document.body.appendChild(form);
+	    form.submit();
+	  }
 
 
   
@@ -68,7 +84,8 @@
 				<fmt:parseDate var="dateFmt" value="${vo.wdate}"  pattern="yyyy-MM-dd HH:mm:ss.SSS" />
 				<fmt:formatDate var="fmtwdate" value="${dateFmt}" pattern="yyyy-MM-dd" />
 				
-				<div class="not_selectOne" onclick="location.href='selectOne.do?num=${vo.num}'" style="cursor:pointer">
+<%-- 				<div class="not_selectOne" onclick="location.href='selectOne.do?num=${vo.num}'" style="cursor:pointer"> --%>
+				<div class="not_selectOne" onclick="selectOneForm(${vo.num})" style="cursor:pointer">
 					<div class="not_content_wdate">${fmtwdate}</div>
 					<div class="not_content_title">${vo.title}</div>
 					<div class="not_content_writer">${vo.writer}</div>

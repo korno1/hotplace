@@ -2,6 +2,8 @@ package project.com.hotplace.notice.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.extern.slf4j.Slf4j;
 import project.com.hotplace.notice.model.NoticeVO;
@@ -95,9 +98,10 @@ public class NoticeController {
 
 
 	
-	@RequestMapping(value = "/notice/selectOne.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/notice/selectOne.do", method = {RequestMethod.GET, RequestMethod.POST})
 	public String selectOne(NoticeVO vo, Model model) {
 		log.info("/not_selectAll.do...");
+		
 		
 		service.vCountUp(vo);
 		
@@ -158,7 +162,7 @@ public class NoticeController {
 		return "redirect:selectAll.do";
 	}
 	
-	@RequestMapping(value = "/notice/update.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/notice/update.do", method = RequestMethod.POST)
 	public String update(NoticeVO vo, Model model) {
 		log.info("/not_update.do...");
 		
@@ -171,7 +175,7 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value = "/notice/updateOK.do", method = RequestMethod.POST)
-	public String updateOK(NoticeVO vo) throws IllegalStateException, IOException {
+	public String updateOK(NoticeVO vo, RedirectAttributes redirectAttributes) throws IllegalStateException, IOException {
 		log.info("/not_updateOK.do...{}", vo);
 		
 		String getOriginalFilename = vo.getFile().getOriginalFilename();

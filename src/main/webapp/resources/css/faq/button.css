@@ -3,9 +3,11 @@
 	display: none;
 	background-color: white;
     border-radius: 20px;
-    border: 1px solid black;
+    border: 1px solid rgb(105, 126, 149);
     padding: 10px 50px;
     cursor: pointer;
+    color: rgb(23, 57, 92);
+    font-weight: bold;
 }
 
 
@@ -13,14 +15,32 @@
 	display: none;
 	background-color: white;
     border-radius: 20px;
-    border: 1px solid black;
+    border: 1px solid rgb(105, 126, 149);
     padding: 5px 25px;
     cursor: pointer;
+    color: rgb(23, 57, 92);
+    font-weight: bold;
 }
 
 .faq_pre_button, .faq_next_button {
 	border-radius: 20px;
 	padding: 10px 40px;
-	border: 1px solid gray;
+	border: 1px solid rgb(105, 126, 149);
 	cursor: pointer;
+	background-color: white;
+	color: rgb(23, 57, 92);
+    font-weight: bold;
+}
+.faq_next_button{
+	margin-left: 5px;
+}
+
+.faq_button{
+	border-radius: 20px;
+	padding: 10px 40px;
+	border: 1px solid rgb(105, 126, 149);
+	cursor: pointer;
+	background-color: white;
+	color: rgb(23, 57, 92);
+    font-weight: bold;
 }

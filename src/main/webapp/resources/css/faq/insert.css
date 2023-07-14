@@ -1,20 +1,74 @@
 @charset "UTF-8";
 
-.faq_title_insert{
-	border: 1px solid #ccced1;
+
+.faq_title_div{
+	display: flex;
+	align-items: center;
+	border-top: 1px solid rgb(172, 172, 177);
+	border-bottom: 1px solid rgb(219, 219, 219);
+	height: 45px;
+}
+.faq_title_left{
+	width: 100px;
+	height: 100%;
+    background-color: rgb(243, 243, 243);
+    padding-left:20px;
+    line-height: 45px;
+}
+.faq_title_right{
+	padding-left: 20px;
+}
+.faq_title_input{
+	border: 1px solid rgb(219, 219, 219);
 	outline: none;
-	width: 821px;
-    height: 35px;
-    font-size: 26px;
-    margin: 10px 0 5px 0;
+	width: 350px;
+    height: 25px;
+    font-size: 16px;
+    padding-left: 10px;
 }
 
-.faq_title_div {
-	width:823px;	
-	margin-bottom: 5px;
+
+
+.faq_textArea{
+	width: 823px;
+	height: 460px;
+	display: flex;
+	align-items: center;
+	
+}
+.faq_content_left{
+	width: 100px;
+	height: 100%;
+	line-height: 460px;
+    background-color: rgb(243, 243, 243);
+    padding-left:20px;
+}
+.faq_content_right{
+	padding-left: 20px;
 }
 
-.faq_insert_button{
+
+
+
+.faq_check_byte{
+	border-bottom: 1px solid rgb(172, 172, 177);
+	height: 35px;
+	display: flex;
+}
+.faq_byte_left{
+	width: 100px;
+	height: 100%;
+    background-color: rgb(243, 243, 243);
+    padding-left:20px;
+}
+.faq_byte_right{
+	padding-left: 20px;
+}
+
+
+
+.faq_insert_div{
+	margin-top: 10px;
 	float: right;
-	margin-top: 3px;
 }
+

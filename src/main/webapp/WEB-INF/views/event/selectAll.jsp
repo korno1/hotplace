@@ -16,7 +16,25 @@
 	let count; // 게시글 개수
 	let searchWord = ''; // 초기화면을 위한 초기화
 	let searchKey = 'title';  // 초기화면을 위한 초기화
+	
+	function selectOneForm(num) {
+	    var form = document.createElement("form");
+	    form.setAttribute("method", "post");
+	    form.setAttribute("action", "selectOne.do");
+
+	    var numInput = document.createElement("input");
+	    numInput.setAttribute("type", "hidden");
+	    numInput.setAttribute("name", "num");
+	    numInput.setAttribute("value", num);
+
+	    form.appendChild(numInput);
+
+	    document.body.appendChild(form);
+	    form.submit();
+	  }
+	
 	$(function(){
+		
 		function loadPage(page){
 			$('#searchKey').val(searchKey);
 			$('#searchWord').val(searchWord);
@@ -43,7 +61,7 @@
 	 					
 	 					if(new Date(vo.deadline) < today){ // 마감일 < 현재시간 => 종료
 	 						tag_vos += `
-	 							<div class="eve_selectOne" onclick="location.href='selectOne.do?num=\${vo.num}'" style="cursor:pointer">
+	 							<div class="eve_selectOne" onclick="selectOneForm(\${vo.num})" style="cursor:pointer">
 	 							<div class="eve_content_title">
 	 								<span class="event_check">종료</span>
 	 								<span class="vo_title">\${vo.title}</span>
@@ -52,7 +70,7 @@
 	 					}
 	 					else{ // 마감일 >= 현재시간 => 진행중
 	 						tag_vos += `
-	 							<div class="eve_selectOne" onclick="location.href='selectOne.do?num=\${vo.num}'" style="cursor:pointer">
+	 							<div class="eve_selectOne" onclick="selectOneForm(\${vo.num})" style="cursor:pointer">
 	 							<div class="eve_content_title">
 	 								<span class="event_check">진행중</span>
 	 								<span class="vo_title">\${vo.title}</span>
@@ -90,6 +108,8 @@
 		} // end loadPage
 		
 		loadPage(page); // selectAll.do에 처음화면 로드
+		
+		
 		
 		function countPost(){ // 게시글 개수 계산
 			console.log($('#searchWord').val());

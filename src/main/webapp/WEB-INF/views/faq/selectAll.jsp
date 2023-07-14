@@ -52,7 +52,7 @@
 		 							</div>
 		 							<div class="faq_content" id="atagNum\${vo.num}">
 		 								<button class="faq_grade_button2" onclick="location.href='update.do?num=\${vo.num}'">수정</button>
-		 								<button class="faq_grade_button2" onclick="deleteOK(\${vo.num})">삭제</button>
+		 								<button class="faq_grade_button2" id="delButton" onclick="deletePost(\${vo.num})">삭제</button>
 		 							</div>
 	 							</div>
 	 						</div>
@@ -151,10 +151,18 @@
 		    page = 1;
 		    loadPage(page); 
 		  });
+		
+		
+	
+		
 	
 	}); // end onload
 	
-	
+	function deletePost(wnum){
+		if(confirm("글을 삭제하시겠습니까?")){
+			deleteOK(wnum);
+		}
+	}
 
 	
 	function deleteOK(wnum){

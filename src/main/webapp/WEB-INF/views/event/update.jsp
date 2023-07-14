@@ -14,7 +14,7 @@
 
 <style>
   .ck-editor__editable { height: 400px; 
-/*   						width:800px; */
+   						width:635px; 
   						word-wrap: break-word;
   }
   .ck-editor__editable p {margin: 0}
@@ -157,7 +157,7 @@
 		<div class="eve_deadline_div">
 			<div class="eve_deadline_left">종료일자</div>
 			<div class="eve_deadline_right">
-				<input type="datetime-local" name="deadline" id="deadline" onchange="setMin()">
+				<input class="eve_deadline_time" type="datetime-local" name="deadline" id="deadline" onchange="setMin()">
 			</div>
 		</div>
 		
@@ -201,7 +201,7 @@
 				ClassicEditor
 			    .create(document.querySelector('#content'), {
 			    	language: "ko",
-		 	    	
+			    	toolbar: [ , 'undo', 'redo', '|', 'heading', '|', 'bold', 'italic', 'link'],
 			    })
 			    .then(content => {
 			    	eve_content = content;

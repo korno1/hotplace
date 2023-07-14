@@ -10,9 +10,10 @@
 <script src="https://cdn.ckeditor.com/ckeditor5/38.1.0/classic/ckeditor.js"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
 <link rel="stylesheet" href="../resources/css/faq/insert.css">
+<link rel="stylesheet" href="../resources/css/faq/button.css">
 <style>
   .ck-editor__editable { height: 400px; 
-/*   						width:800px; */
+   						width:635px;  
   						word-wrap: break-word;
   }
   .ck-editor__editable p {margin: 0}
@@ -98,29 +99,40 @@
 </head>
 
 <body>
-	<h1>FAQ</h1>
+	<h3>FAQ 작성</h3>
 
-	<div class="faq_title_div">
-		<div >
-			<input class="faq_title_insert" type="text" name="title" id="title" placeholder="제목" onfocus="this.placeholder=''" onblur="this.placeholder='제목'" onkeyup="titleCheckByte(this, 100)">
+	<div>
+		<div class="faq_title_div">
+			<div class="faq_title_left">제목</div>
+			<div class="faq_title_right">
+				<input class="faq_title_input" type="text" name="title" id="title" placeholder="제목" onfocus="this.placeholder=''" onblur="this.placeholder='제목'" onkeyup="titleCheckByte(this, 100)">
+			</div>		
 		</div>
 		
-		<div>
-			<textarea name="content" id="content" rows="10" cols="22" placeholder="내용 입력" onfocus="this.placeholder=''" onblur="this.placeholder='내용 입력'"></textarea>
+		<div class="faq_textArea">
+			<div class="faq_content_left">내용</div>
+			<div class="faq_content_right">
+				<textarea name="content" id="content" rows="10" cols="22" placeholder="내용 입력" onfocus="this.placeholder=''" onblur="this.placeholder='내용 입력'"></textarea>
+			</div>
+		</div>
+		
+		<div class="faq_check_byte">
+			<div class="faq_byte_left"></div>
+			<div class="faq_byte_right" id="checkby">0</div>/4000byte
 		</div>
 		
 		
-		<div class="faq_insert_button">
-			<button onclick="insertOK()">작성</button>
+		<div class="faq_insert_div">
+			<button class="faq_button" onclick="insertOK()">작성</button>
 		</div>
 	</div>
 	
 	<script type="text/javascript">
-		
 		ClassicEditor
 	    .create(document.querySelector('#content'), {
 	    	language: "ko",
- 	    	
+	    	toolbar: [ , 'undo', 'redo', '|', 'heading', '|', 'bold', 'italic', 'link'],
+	    	
 	    })
 	    .then(content => {
 	    	faq_content = content;

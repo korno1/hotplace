@@ -14,7 +14,7 @@
 
 <style>
   .ck-editor__editable { height: 400px; 
-/*     						width:800px; */
+    						width:635px; 
   						word-wrap: break-word;
   }
   .ck-editor__editable p {margin: 0}
@@ -112,7 +112,7 @@
 		ClassicEditor
 	    .create(document.querySelector('#content'), {
 	    	language: "ko",
- 	    	
+	    	toolbar: [ , 'undo', 'redo', '|', 'heading', '|', 'bold', 'italic', 'link'],
 	    })
 	    .then(content => {
 	    	$('#not_click_submit').click(function(){

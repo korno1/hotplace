@@ -16,21 +16,25 @@
 
 .eve_header {
   display: flex;
-  border-top: 1px solid black;
+  border-top: 1px solid rgb(172, 172, 177);
   padding: 10px 0 10px 0;
+  font-weight: bold;
 }
 
 .eve_content {
   display: flex;
   flex-direction: column;
-  border-top: 1px solid black;
+  border-top: 1px solid rgb(172, 172, 177);
 }
 
 .eve_selectOne {
   display: flex;
-  border-bottom: 1px solid #a0a0a0;
+  border-bottom: 1px solid rgb(219, 219, 219);
   align-items: center;
   padding: 10px 0 10px 0;
+}
+.eve_selectOne:last-child{
+	border-bottom: 2px solid rgb(216, 216, 219);
 }
 
 .eve_title,
@@ -95,14 +99,19 @@
 	background-color: white;
 	padding-right: 30px;
 	height: 35px;
+	border: 1px solid rgb(105, 126, 149);
+	color: rgb(23, 57, 92);
+    font-weight: bold;
 }
 
 .eve_searchword{
 	outline: none;
 	height: 33px;;
 	width: 300px;
-	border-width: 1px;
 	padding-left: 5px;
+	border: 1px solid rgb(105, 126, 149);
+	color: rgb(23, 57, 92);
+    font-weight: bold;
 }
 
 .eve_searchBtn{
@@ -112,11 +121,9 @@
 	width: 50px;
 	line-height: 3px;
 	cursor: pointer;
+	border: 1px solid rgb(105, 126, 149);
+	color: rgb(23, 57, 92);
+    font-weight: bold;
 }
 
-.eve_pre_button, .eve_next_button {
-	border-radius: 20px;
-	padding: 10px 40px;
-	border: 1px solid gray;
-	cursor: pointer;
-}
+

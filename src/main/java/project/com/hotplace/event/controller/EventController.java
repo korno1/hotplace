@@ -27,7 +27,7 @@ public class EventController {
 		return "event/selectAll.tiles";
 	}
 	
-	@RequestMapping(value = "/event/selectOne.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/event/selectOne.do", method = RequestMethod.POST)
 	public String selectOne() {
 		log.info("/event/selectOne.do...");
 		

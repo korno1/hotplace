@@ -3,8 +3,8 @@
 .not_writer_div{
 	display: flex;
 	align-items: center;
-	border-top: 1px solid gray;
-	border-bottom: 1px solid #ccced1;
+	border-top: 1px solid rgb(172, 172, 177);
+	border-bottom: 1px solid rgb(219, 219, 219);
 	height: 35px;
 }
 .not_writer_left{
@@ -21,7 +21,7 @@
 .not_title_div{
 	display: flex;
 	align-items: center;
-	border-bottom: 1px solid #ccced1;
+	border-bottom: 1px solid rgb(219, 219, 219);
 }
 .not_title_left{
 	width: 100px;
@@ -34,7 +34,7 @@
 	padding-left: 20px;
 }
 .not_title_input{
-	border: 1px solid #ccced1;
+	border: 1px solid rgb(219, 219, 219);
 	outline: none;
 	width: 350px;
     height: 25px;
@@ -63,7 +63,7 @@
 
 
 .not_check_byte{
-	border-bottom: 1px solid #ccced1;
+	border-bottom: 1px solid rgb(219, 219, 219);
 	height: 35px;
 	display: flex;
 }
@@ -82,7 +82,7 @@
 .not_upload_div {
 	display: flex;
 	align-items: center;
-	border-bottom: 1px solid gray;
+	border-bottom: 1px solid rgb(172, 172, 177);
 }
 .not_upload_left{
 	width: 100px;

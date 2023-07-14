@@ -14,17 +14,19 @@
 }
 
 .faq_title{
-	border-top: 1px solid black;
-	border-bottom: 1px solid black;
+	border-top: 1px solid rgb(172, 172, 177);
+	border-bottom: 1px solid rgb(172, 172, 177);
+	text-align: center;
+	padding: 10px 0;
+	font-weight: bold;
+}
+
+.faq_header {
+	border-bottom: 1px solid rgb(219, 219, 219);
 	text-align: center;
 	padding: 10px 0;
 }
 
-.faq_header {
-	border-bottom: 1px solid #a0a0a0;
-	text-align: center;
-	padding: 10px 0;
-}
 
 .faq_header_size{
 	width: 100%;
@@ -36,7 +38,7 @@
 }
 
 .faq_content {
-	border-bottom: 1px solid gray;
+	border-bottom: 1px solid rgb(219, 219, 219);
 	text-align: right;
 	padding-bottom: 5px;
 }
@@ -46,7 +48,7 @@
 
 
 .faq_content_background{
-	background-color: #ffeaea;
+	background-color: rgb(243, 243, 243);
 	display: none;
 }
 
@@ -64,7 +66,7 @@
 }
 
 .faq_next_button{
-	margin-left: 5px;
+	margin-left: 10px;
 }
 
 .faq_hr_tc {
@@ -82,13 +84,16 @@
 	background-color: white;
 	padding-right: 30px;
 	height: 35px;
+	border: 1px solid rgb(105, 126, 149);
+	color: rgb(23, 57, 92);
+    font-weight: bold;
 }
 
 .faq_searchword{
 	outline: none;
 	height: 33px;;
 	width: 300px;
-	border-width: 1px;
+	border: 1px solid rgb(105, 126, 149);
 	padding-left: 5px;
 }
 
@@ -99,4 +104,7 @@
 	width: 50px;
 	line-height: 3px;
 	cursor: pointer;
+	border-color: rgb(105, 126, 149);
+	color: rgb(23, 57, 92);
+    font-weight: bold;
 }

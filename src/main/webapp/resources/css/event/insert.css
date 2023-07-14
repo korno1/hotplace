@@ -3,8 +3,8 @@
 .eve_writer_div{
 	display: flex;
 	align-items: center;
-	border-top: 1px solid gray;
-	border-bottom: 1px solid #ccced1;
+	border-top: 1px solid rgb(172, 172, 177);
+	border-bottom: 1px solid rgb(219, 219, 219);
 	height: 35px;
 }
 .eve_writer_left{
@@ -21,7 +21,7 @@
 .eve_title_div{
 	display: flex;
 	align-items: center;
-	border-bottom: 1px solid #ccced1;
+	border-bottom: 1px solid rgb(219, 219, 219);
 }
 .eve_title_left{
 	width: 100px;
@@ -34,7 +34,7 @@
 	padding-left: 20px;
 }
 .eve_title_input{
-	border: 1px solid #ccced1;
+	border: 1px solid rgb(219, 219, 219);
 	outline: none;
 	width: 350px;
     height: 25px;
@@ -45,7 +45,7 @@
 .eve_deadline_div{
 	display: flex;
 	align-items: center;
-	border-bottom: 1px solid #ccced1;
+	border-bottom: 1px solid rgb(219, 219, 219);
 }
 .eve_deadline_left{
 	width: 100px;
@@ -56,6 +56,10 @@
 }
 .eve_deadline_right{
 	padding-left: 20px;
+}
+.eve_deadline_time{
+	border: 1px solid rgb(219, 219, 219);
+    padding: 3px 3px;
 }
 
 .eve_textArea{
@@ -79,7 +83,7 @@
 
 
 .eve_check_byte{
-	border-bottom: 1px solid #ccced1;
+	border-bottom: 1px solid rgb(219, 219, 219);
 	height: 35px;
 	display: flex;
 }
@@ -98,7 +102,7 @@
 .eve_upload_div {
 	display: flex;
 	align-items: center;
-	border-bottom: 1px solid gray;
+	border-bottom: 1px solid rgb(172, 172, 177);
 }
 .eve_upload_left{
 	width: 100px;

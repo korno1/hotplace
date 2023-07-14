@@ -9,12 +9,13 @@
 <title>공지사항</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <link rel="stylesheet" href="../resources/css/notice/insert.css">
+<link rel="stylesheet" href="../resources/css/notice/button.css">
 <script src="https://cdn.ckeditor.com/ckeditor5/38.1.0/classic/ckeditor.js"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
 
 <style>
   .ck-editor__editable { height: 400px; 
-/*   						width:800px; */
+   						width:635px; 
   						word-wrap: break-word;
   					}
   .ck-editor__editable p {margin: 0}
@@ -118,7 +119,7 @@
 		ClassicEditor
 	    .create(document.querySelector('#content'), {
 	    	language: "ko",
- 	    	
+	    	toolbar: [ , 'undo', 'redo', '|', 'heading', '|', 'bold', 'italic', 'link'],
 	    })
 	    .then(content => {
 	    	$('#not_click_submit').click(function(){

@@ -17,7 +17,6 @@
 }
 .headerMenu{
 	margin-right: 10px;
-	white-spcae: nowrap;
 }
 .headerMenu:hover{
 	color:black;
@@ -27,4 +26,20 @@
 .selected{
 	color:black;
 	font-weight:bold;
+}
+.mypage_menu{
+	display:flex;
+}
+.newMail{
+	width:15px;
+	height:15px;
+	border-radius:10px;
+	background-color:red;
+	color:white;
+	text-align:center;
+	font-size:12px;
+	display:none;
+}
+.newMail:hover{
+	cursor:pointer;
 }

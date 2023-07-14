@@ -15,8 +15,8 @@
             margin-bottom: 10px;
         }
     </style>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d326b067d6341afa0b918f0c45297208&libraries=services,clusterer"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script type="text/javascript">
     function selectOne(num) {
@@ -27,12 +27,52 @@
     
     $(function() {
         console.log('onload...');
+        
+        getCurrentAddress();
 
         var page = 1; // 초기 페이지 번호
 
         // 페이지 로드 시 매장 목록을 가져와 화면에 표시
         searchList();
 
+        function getCurrentAddress() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        var lat = position.coords.latitude;
+                        var lng = position.coords.longitude;
+                        
+                        console.log("현재 위치의 위도: " + lat);
+                        console.log("현재 위치의 경도: " + lng);
+
+                        // 좌표를 주소로 변환하는 지오코딩 API 요청
+                        var geocoder = new kakao.maps.services.Geocoder();
+                        geocoder.coord2Address(lng, lat, function(result, status) {
+                            if (status === kakao.maps.services.Status.OK) {
+                                var address = result[0].address.address_name;
+                                var processedAddress = getAddressWithoutDetailedInfo(address);
+                                $("#currentAddress").text(processedAddress);
+                            } else {
+                                console.log("Failed to get the current address.");
+                            }
+                        });
+                    },
+                    function(error) {
+                        console.log("Error getting current position: ", error);
+                    }
+                );
+            } else {
+                console.log("Geolocation is not supported by this browser.");
+            }
+        }
+
+        function getAddressWithoutDetailedInfo(address) {
+            // 주소를 구분자(공백, 쉼표 등)를 기준으로 분리하여 첫 번째 요소만 사용
+            var splitAddress = address.split(" ");
+            var processedAddress = splitAddress[0] + " " + splitAddress[1] + " " + splitAddress[2] + " " + splitAddress[3];
+            return processedAddress;
+        }
+        
         function searchList() {
             console.log('searchList()...');
             $.ajax({
@@ -136,7 +176,10 @@
 			<input type="text" name="searchWord" id="searchWord" value="${param.searchWord}">
 			<input type="hidden" name="pageNum" id="pageNum" value=1>
 			<input type="submit" value="검색">
-			
+			<div id="addressContainer">
+    			<h2>현재 주소</h2>
+    			<p id="currentAddress"></p>
+			</div>
 			<c:if test="${showAddButton}">
                 <a href="insert.do">매장 추가</a>
             </c:if>

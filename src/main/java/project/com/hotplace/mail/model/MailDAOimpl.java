@@ -51,9 +51,9 @@ public class MailDAOimpl implements MailDAO {
 	
 
 	@Override
-	public int newMailCnt(int recipient_num) {
+	public int newMailCnt(MailVO vo) {
 		
-		return sqlSession.selectOne("MAI_NEW_CNT", recipient_num);
+		return sqlSession.selectOne("MAI_NEW_CNT", vo);
 	}
 
 	@Override

@@ -8,29 +8,31 @@
 		resultType="project.com.hotplace.mail.model.MailVO">
 		SELECT *
 		FROM (
-		SELECT mail_num, title, content, sender_num,
-		(SELECT
-		nick_name FROM member WHERE num = sender_num) AS sender_name,
-		recipient_num,
-		(SELECT nick_name FROM member WHERE num = recipient_num)
-		AS recipient_name,
-		send_date, read_flag,
-		ROWNUM AS row_num
-		FROM mail
-		WHERE
-		<choose>
-			<when test="searchKey == 'recipient_num'">
-				recipient_num
-			</when>
-			<when test="searchKey == 'sender_num'">
-				sender_num
-			</when>
-		</choose>
-		= #{user_num, jdbcType=BIGINT}
-		ORDER BY send_date DESC
+		  SELECT
+		    mail_num,
+		    title,
+		    content,
+		    sender_num,
+		    (SELECT nick_name FROM member WHERE num = sender_num) AS sender_name,
+		    recipient_num,
+		    (SELECT nick_name FROM member WHERE num = recipient_num) AS recipient_name,
+		    send_date,
+		    read_flag,
+		    ROW_NUMBER() OVER (ORDER BY send_date DESC) AS row_num
+		  FROM mail
+		  WHERE
+		    <choose>
+		      <when test="searchKey == 'recipient_num'">
+		        recipient_num
+		      </when>
+		      <when test="searchKey == 'sender_num'">
+		        sender_num
+		      </when>
+		    </choose>
+		    = #{user_num, jdbcType=BIGINT}
 		) t
-		WHERE row_num BETWEEN #{start, jdbcType=BIGINT} AND #{end,
-		jdbcType=BIGINT}
+		WHERE row_num BETWEEN #{start, jdbcType=BIGINT} AND #{end, jdbcType=BIGINT}
+		ORDER BY row_num
 	</select>
 	<select id="MAI_SEARCHLIST_ADMIN" parameterType="java.util.Map"
 		resultType="project.com.hotplace.mail.model.MailVO">
@@ -88,12 +90,12 @@
 		Mail(mail_num,title,content,sender_num,recipient_num)
 		VALUES(mai_sequence.nextval,#{title},#{content},#{sender_num},#{recipient_num})
 	</insert>
-	<insert id="MAI_NEW_CNT"
-		parameterType="project.com.hotplace.mail.model.MailVO">
-		SELECT COUNT(*) FROM mail WHERE read_flag=1 AND
+	<select id="MAI_NEW_CNT"
+		parameterType="project.com.hotplace.mail.model.MailVO" resultType="int">
+		SELECT COUNT(*) FROM mail WHERE read_flag=0 AND
 		recipient_num =
 		#{recipient_num}
-	</insert>
+	</select>
 	<update id="READOK"
 		parameterType="project.com.hotplace.mail.model.MailVO">
 		update Mail set read_flag=1 where mail_num = #{mail_num}

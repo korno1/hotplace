@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import lombok.extern.slf4j.Slf4j;
 import project.com.hotplace.member.model.MemberVO;
 import project.com.hotplace.member.service.MemberService;
-import project.com.hotplace.memberreview.model.MemberReviewVO;
-import project.com.hotplace.memberreview.service.MemberReviewService;
 
 
 @Slf4j
@@ -19,10 +17,6 @@ public class MemberReviewController {
 	
 	@Autowired
 	MemberService mem_service;
-	
-	@Autowired
-	MemberReviewService mar_service;
-	
 
 	@RequestMapping(value = {"/userpage.do"}, method = RequestMethod.GET)
 	public String userpage(MemberVO vo, Model model) {

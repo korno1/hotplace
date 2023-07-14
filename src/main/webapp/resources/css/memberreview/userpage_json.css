@@ -1,0 +1,79 @@
+.board-container {
+	border: 1px solid #ccc;
+	padding: 10px;
+	margin-bottom: 10px;
+}
+
+.board {
+	width: 821px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	padding: 10px;
+	margin-bottom: 20px;
+	margin-right: 20px;
+	box-sizing: border-box;
+	display: inline-block;
+	vertical-align: top;
+}
+
+.board-row {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center; 
+	margin-bottom: 5px;
+}
+
+.board-cell {
+	flex: 1;
+	padding: 5px;
+}
+
+.board-title {
+	font-weight: bold;
+}
+
+.board-content {
+	margin-top: 10px;
+	border-top: 1px solid #ccc;
+	padding-top: 10px;
+}
+
+.board-content-cell {
+	padding: 5px;
+}
+
+insert-from {
+	width: calc(100% - 20px);
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	padding: 10px;
+	margin-bottom: 20px;
+	margin-right: 20px;
+	box-sizing: border-box;
+	display: inline-block;
+	vertical-align: top;
+}
+
+.star-rating {
+  display: inline-block;
+}
+
+.star {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  color: #ccc;
+  cursor: pointer;
+}
+
+.star.active {
+  color: gold;
+}
+
+
+.star-rating .star.selected {
+    color: gold; /* 별점이 선택된 경우의 스타일 */
+}
+
+

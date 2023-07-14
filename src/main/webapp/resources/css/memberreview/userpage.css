@@ -1,8 +1,20 @@
+.userPage-body {
+	width: 1000px;
+	border: 0px solid gray;
+	align-items: center;
+	overflow: hidden;
+}
+
+.userPage-data {
+	width: 1100px;
+	border: 0px solid gray;
+}
+
 .userImpo {
+	width: 960px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	width: 821px;
 	padding: 10px 20px;
 	border-bottom: 1px solid gray;
 	margin-bottom: 20px;
@@ -11,6 +23,7 @@
 
 .myPartyBt {
 	margin-left: auto;
+	padding: 5px 30px 5px 30px;
 	border-radius: 20px;
 	border: 1px solid #192B53;
 	background-color: #192B53;
@@ -30,6 +43,7 @@
 }
 
 .selectAll {
+	border-bottom: 1px solid gray;
 	display: flex;
 	align-items: center;
 	color: gray;
@@ -37,16 +51,24 @@
 
 .par-selectAll, .mre-selectAll {
 	margin-left: 10px;
-	border-bottom: 1px solid gray;
+	margin-bottom: 10px;
 	cursor: pointer;
 }
 
+.mre-selectAll {
+	border-left: 1px solid gray;
+	padding-left: 10px;
+}
+
 .par_paging, .mre_paging {
-	width: 821px;
 	text-align: center;
+	display: flex;
+	justify-content: space-between;
+	margin-top: 10px;
 }
 
 .par_back_page, .par_next_page, .mre_back_page, .mre_next_page {
+	margin-right: 10px;
 	border-radius: 20px;
 	padding: 10px 20px;
 	border: 1px solid #192B53;
@@ -55,10 +77,8 @@
 	background-color: transparent;
 }
 
-.par_back_page:hover,
-.par_next_page:hover,
-.mre_back_page:hover,
-.mre_next_page:hover {
+.par_back_page:hover, .par_next_page:hover, .mre_back_page:hover,
+	.mre_next_page:hover {
 	background-color: #192B53;
 	color: #FFFFFF;
 }

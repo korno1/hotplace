@@ -6,9 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>유저페이지</title>
-<link rel="stylesheet" href="/hotplace//resources/css/memberreview/userpage.css" />
-<link rel="stylesheet" href="/hotplace/resources/css/memberreview/userpage_json.css" />
-<link rel="stylesheet" href="/hotplace/resources/css/party/selectAll.css" />
+<link rel="stylesheet" href="/hotplace//resources/css/memberreview/userpage.css?after" >
+<link rel="stylesheet" href="/hotplace//resources/css/memberreview/userpage_json.css?after" >
+<link rel="stylesheet" href="/hotplace//resources/css/party/selectAll.css?after" >
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -34,23 +34,34 @@ $(function(){
 			console.log('ajax...',arr);
 			let tag_vos = '';
 			
+			
 			$.each(arr, function(index, vo){
+
 				if (vo.writerNum === ${vo2.num}) { // user_id
 					tag_vos +=`
-						<div onclick="location.href='party/selectOne.do?partyNum=\${vo.partyNum}'" class="post">
-							<div>\${vo.applicants}/\${vo.max}</div>
-							<hr>
-							<div>마감일 : \${vo.deadLine}</div>
-							<div>[\${vo.place}] \${vo.title}</div>
-							<div>조회수: \${vo.views}</div>
-							<hr>
-							<div>작성자 : ${vo.writerName}</div>
+						<div class="par-post">
+							<div class="par-status">\${vo.applicants}/\${vo.max}</div>
+							<div class="par-title">[\${vo.place}] \${vo.title}</div>
+							<div class="par-container">
+								<div class="par-list">
+									<div>마감일</div>
+									<div>약속일</div>
+									<div>주최자</div>
+								</div>
+								<div class="par-data">
+									<div>\${vo.deadLine}</div>
+									<div>\${vo.timeLimit}</div>
+									<div>\${vo.writerName}</div>
+								</div>
+							</div>
+							<button class="par-bt" onclick="location.href='party/selectOne.do?partyNum=\${vo.partyNum}'">MORE VIEW</button>
 						</div>
 					`;
 				}
 				
 			}); // end for-each
 
+			$(".par-selectAll").css('color', '#F47420');
 			$(".par_paging").css("display", "block");
 			$(".mre_paging").css("display", "none");
 			$('#par_vos').html(tag_vos);
@@ -73,6 +84,7 @@ $(function(){
 			success: function(cnt){
 				console.log('cnt...',cnt);
 	            par_count = cnt;
+	            $('#par_count').text(par_count);
 			}, // end success
 			
 			error:function(xhr,status,error){
@@ -243,6 +255,7 @@ function mre_totalCount(){ // 게시글 개수 계산
 		success: function(cnt){
 			console.log('cnt...',cnt);
             mre_count = cnt;
+            $('#mre_count').text(mre_count);
 		}, // end success
 		
 		error:function(xhr,status,error){
@@ -453,14 +466,22 @@ function par_selectAll(page){
 			$.each(arr, function(index, vo){
 				if (vo.writerNum === ${vo2.num}) { // user_id
 					tag_vos +=`
-						<div onclick="location.href='party/selectOne.do?partyNum=\${vo.partyNum}'" class="post">
-							<div>\${vo.applicants}/\${vo.max}</div>
-							<hr>
-							<div>마감일 : \${vo.deadLine}</div>
-							<div>[\${vo.place}] \${vo.title}</div>
-							<div>조회수: \${vo.views}</div>
-							<hr>
-							<div>작성자 : ${vo.writerName}</div>
+						<div class="par-post">
+							<div class="par-status">\${vo.applicants}/\${vo.max}</div>
+							<div class="par-title">[\${vo.place}] \${vo.title}</div>
+							<div class="par-container">
+								<div class="par-list">
+									<div>마감일</div>
+									<div>약속일</div>
+									<div>주최자</div>
+								</div>
+								<div class="par-data">
+									<div>\${vo.deadLine}</div>
+									<div>\${vo.timeLimit}</div>
+									<div>\${vo.writerName}</div>
+								</div>
+							</div>
+							<button class="par-bt" onclick="location.href='party/selectOne.do?partyNum=\${vo.partyNum}'">MORE VIEW</button>
 						</div>
 					`;
 				}
@@ -482,37 +503,52 @@ function par_selectAll(page){
 </script>
 </head>
 <body>
-	<div class="userImpo">
-		<img id="preview" width="80px" src="${pageContext.request.contextPath}/resources/ProfileImage/${vo2.num}.png"
-					onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/resources/ProfileImage/default.png';">
-		<div class="userName">
-			<a href="http://localhost:8088/hotplace/userpage.do?num=${vo2.num}">${vo2.nick_name}</a>
-		</div>
-		<button class="myPartyBt" onclick="location.href='party/myParty.do?userNum=${num}'">내 신청확인</button>
-	</div>
-	
-	<div class="selectAll">
-		<div class="par-selectAll" onclick="par_selectAll()">모임리스트</div>
-		<div class="mre-selectAll" onclick="mre_selectAll()" id="reviewLink">후기목록 ${mreCount}</div>
-	</div>
-<!-- 	<a href="#"  onclick="par_selectAll()">모임리스트</a> -->
-<!-- 	<a href="#" onclick="mre_selectAll()" id="reviewLink">후기목록</a> -->
-	
-	<div id="par_vos"></div>
-	<div id="par_page"></div>
-	
-	<div id="memberreview_list"></div>
-	
-	<div class="par_paging" id="par_paging">
-		<button class="par_back_page" id="par_back_page">모임이전</button>
-		<button class="par_next_page" id="par_next_page">모임다음</button>
-	</div>
 
-	<div class="mre_paging" id="mre_paging">
-		<button class="mre_back_page" id="mre_back_page">이전</button>
-		<button class="mre_next_page" id="mre_next_page">다음</button>
-		<button class="formContainer" onclick="insert()">작성</button>
+	<div class="userPage-body">
+		<div class="userImpo">
+			<img id="preview" width="80px" src="${pageContext.request.contextPath}/resources/ProfileImage/${vo2.num}.png"
+						onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/resources/ProfileImage/default.png';">
+			<div class="userName">
+				<a href="http://localhost:8088/hotplace/userpage.do?num=${vo2.num}">${vo2.nick_name}</a>
+			</div>
+			<button class="myPartyBt" onclick="location.href='party/myParty.do?userNum=${num}'">내 신청확인</button>
+		</div>
+		
+		<div class="selectAll">
+			<div class="par-selectAll" onclick="par_selectAll()">모임리스트 (<span id="par_count"></span>)</div>
+			<div class="mre-selectAll" onclick="mre_selectAll()" id="reviewLink">후기목록 (<span id="mre_count"></span>)</div>
+		</div>
+		
+		<div class="userPage-data">
+			<div id="par_vos"></div>
+			<div id="memberreview_list"></div>
+		</div>
+		
+		
+		<div class="par_paging" id="par_paging">
+			<button class="par_back_page" id="par_back_page">모임이전</button>
+			<button class="par_next_page" id="par_next_page">모임다음</button>
+		</div>
+	
+		<div class="mre_paging" id="mre_paging">
+			<button class="mre_back_page" id="mre_back_page">이전</button>
+			<button class="mre_next_page" id="mre_next_page">다음</button>
+			<button class="formContainer" onclick="insert()">작성</button>
+		</div>
 	</div>
+	
+<script type="text/javascript">
+$('.par-selectAll').on('click', function() {
+	  $(this).css('color', '#F47420');
+	  $(".mre-selectAll").css("color", "gray");
+	});
+
+$('.mre-selectAll').on('click', function() {
+	  $(this).css('color', '#F47420');
+	  $(".par-selectAll").css("color", "gray");
+	});
+
+</script>
 	
 </body>
 </html>

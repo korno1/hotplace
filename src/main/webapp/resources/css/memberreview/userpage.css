@@ -1,77 +1,78 @@
-.board-container {
-	border: 1px solid #ccc;
-	padding: 10px;
-	margin-bottom: 10px;
-}
-
-.board {
-	width: calc(100% - 20px);
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	padding: 10px;
-	margin-bottom: 20px;
-	margin-right: 20px;
-	box-sizing: border-box;
-	display: inline-block;
-	vertical-align: top;
-}
-
-.board-row {
+.userImpo {
 	display: flex;
-	flex-direction: row;
+	align-items: center;
 	justify-content: space-between;
-	align-items: center; 
-	margin-bottom: 5px;
-}
-
-.board-cell {
-	flex: 1;
-	padding: 5px;
-}
-
-.board-title {
-	font-weight: bold;
-}
-
-.board-content {
-	margin-top: 10px;
-	border-top: 1px solid #ccc;
-	padding-top: 10px;
-}
-
-.board-content-cell {
-	padding: 5px;
-}
-
-insert-from {
-	width: calc(100% - 20px);
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	padding: 10px;
+	width: 821px;
+	padding: 10px 20px;
+	border-bottom: 1px solid gray;
 	margin-bottom: 20px;
-	margin-right: 20px;
-	box-sizing: border-box;
-	display: inline-block;
-	vertical-align: top;
+	background-color: transparent;
 }
 
-.star-rating {
-  display: inline-block;
+.myPartyBt {
+	margin-left: auto;
+	border-radius: 20px;
+	border: 1px solid #192B53;
+	background-color: #192B53;
+	cursor: pointer;
+	color: #FFFFFF;
 }
 
-.star {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  color: #ccc;
-  cursor: pointer;
+.userName {
+	margin-left: 16px;
+	margin-bottom: 20px;
+	font-size: 20px;
 }
 
-.star.active {
-  color: gold;
+.userName a {
+	text-decoration: none;
+	color: #000;
 }
 
+.selectAll {
+	display: flex;
+	align-items: center;
+	color: gray;
+}
 
-.star-rating .star.selected {
-    color: gold; /* 별점이 선택된 경우의 스타일 */
+.par-selectAll, .mre-selectAll {
+	margin-left: 10px;
+	border-bottom: 1px solid gray;
+	cursor: pointer;
+}
+
+.par_paging, .mre_paging {
+	width: 821px;
+	text-align: center;
+}
+
+.par_back_page, .par_next_page, .mre_back_page, .mre_next_page {
+	border-radius: 20px;
+	padding: 10px 20px;
+	border: 1px solid #192B53;
+	color: #192B53;
+	cursor: pointer;
+	background-color: transparent;
+}
+
+.par_back_page:hover,
+.par_next_page:hover,
+.mre_back_page:hover,
+.mre_next_page:hover {
+	background-color: #192B53;
+	color: #FFFFFF;
+}
+
+.formContainer {
+	border-radius: 20px;
+	padding: 10px 20px;
+	border: 1px solid #192B53;
+	margin-left: auto;
+	color: #192B53;
+	cursor: pointer;
+	background-color: transparent;
+}
+
+.formContainer:hover {
+	background-color: #192B53;
 }

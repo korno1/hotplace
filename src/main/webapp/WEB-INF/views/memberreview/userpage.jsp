@@ -6,7 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>유저페이지</title>
-<link rel="stylesheet" href="/hotplace/resources/css/memberreview/userpage.css"/>
+<link rel="stylesheet" href="/hotplace//resources/css/memberreview/userpage.css" />
+<link rel="stylesheet" href="/hotplace/resources/css/memberreview/userpage_json.css" />
 <link rel="stylesheet" href="/hotplace/resources/css/party/selectAll.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 <script
@@ -50,6 +51,7 @@ $(function(){
 				
 			}); // end for-each
 
+			$(".par_paging").css("display", "block");
 			$(".mre_paging").css("display", "none");
 			$('#par_vos').html(tag_vos);
 		}, // end success
@@ -336,68 +338,6 @@ function insert() {
     }
 }//end insert
 
-
-// 	let isFormInserted = false;
-
-// 	function insert() {
-// 	    if (!isFormInserted) {
-// 			$('#par_vos').hide();
-// 			$('#memberreview_list').hide();
-	    	
-// 	        // 폼을 감싸는 부모 요소 생성
-// 	        var formContainer = $('<div id="formContainer"></div>');
-
-// 	        var form = $('<form></form>');
-// 	        form.attr('class', 'insert-from');
-
-// 	        var starRating = $('<ul class="star-rating">' +
-// 	            '<li class="star fa fa-star" data-rating="1"></li>' +
-// 	            '<li class="star fa fa-star" data-rating="2"></li>' +
-// 	            '<li class="star fa fa-star" data-rating="3"></li>' +
-// 	            '<li class="star fa fa-star" data-rating="4"></li>' +
-// 	            '<li class="star fa fa-star" data-rating="5"></li>' +
-// 	            '</ul>');
-	        
-// 	        var input1 = $('<input>');
-// 	        input1.attr('type', 'text');
-// 	        input1.attr('name', 'content');
-// 	        input1.attr('id', 'mre_content');
-
-// 	        var input2 = $('<input>');
-// 	        input2.attr('type', 'hidden'); // 숨김 필드로 변경
-// 	        input2.attr('name', 'rated');
-// 	        input2.attr('id', 'mre_rated');
-
-
-// 	        var button = $('<button></button>');
-// 	        button.attr('onclick', "insertOK()");
-// 	        button.text('작성완료');
-
-// 	        form.append(input1);
-// 	        form.append(input2);
-// 	        form.append(starRating);
-// 	        form.append(button);
-
-// 	        formContainer.append(form);
-// 	        formContainer.addClass('show-star-rating');
-
-// 	        // 기존 폼을 제거하고 새로운 폼으로 교체
-// 	        $('#formContainer').replaceWith(formContainer);
-	        
-// 	        $(document).ready(function() {
-// 	            $('.star-rating .star').click(function() {
-// 	              var rating = $(this).attr('data-rating');
-// 	              $('.star-rating .star').removeClass('active');
-// 	              $(this).prevAll().addBack().addClass('active');
-// 	              console.log('별점: ' + rating);
-// 	              $('#mre_rated').val(rating); // input2 폼에 선택한 별점 값 설
-// 	            });
-// 	          });
-
-// 	        isFormInserted = true;
-// 	    }
-// 	}//end insert
-
 function insertOK() {
     if (isFormInserted) {
         $('form').on('submit', function(event) {
@@ -496,7 +436,6 @@ function insertOK() {
 function par_selectAll(page){
 	$('#par_vos').show(); // 모임리스트 요소를 보이도록 설정
 	$('#memberreview_list').hide();
-	document.getElementById("formContainer").style.display = "none";
 // 	console.log('par_selectAll...');
 	
 	$.ajax({
@@ -543,29 +482,21 @@ function par_selectAll(page){
 </script>
 </head>
 <body>
-
-	<div>
-		<img id="preview" width="100px" src="${pageContext.request.contextPath}/resources/ProfileImage/${vo2.num}.png"
+	<div class="userImpo">
+		<img id="preview" width="80px" src="${pageContext.request.contextPath}/resources/ProfileImage/${vo2.num}.png"
 					onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/resources/ProfileImage/default.png';">
-		<div>
+		<div class="userName">
 			<a href="http://localhost:8088/hotplace/userpage.do?num=${vo2.num}">${vo2.nick_name}</a>
 		</div>
+		<button class="myPartyBt" onclick="location.href='party/myParty.do?userNum=${num}'">내 신청확인</button>
 	</div>
-
-
-<!-- 	<ul> -->
-<!-- 		<li><a href="my.do">HOME</a></li> -->
-<!-- 	</ul> -->
 	
-	
-	<a href="#" onclick="par_selectAll()">모임리스트</a>
-	<a href="#" onclick="mre_selectAll()" id="reviewLink">후기목록</a>
-	
-		
-	<hr>
-	<button onclick="location.href='party/myParty.do?userNum=${num}'">내 신청확인</button>
-<!-- 	<button onclick="myParty">내 모임 확인</button> -->
-	
+	<div class="selectAll">
+		<div class="par-selectAll" onclick="par_selectAll()">모임리스트</div>
+		<div class="mre-selectAll" onclick="mre_selectAll()" id="reviewLink">후기목록 ${mreCount}</div>
+	</div>
+<!-- 	<a href="#"  onclick="par_selectAll()">모임리스트</a> -->
+<!-- 	<a href="#" onclick="mre_selectAll()" id="reviewLink">후기목록</a> -->
 	
 	<div id="par_vos"></div>
 	<div id="par_page"></div>
@@ -573,21 +504,15 @@ function par_selectAll(page){
 	<div id="memberreview_list"></div>
 	
 	<div class="par_paging" id="par_paging">
-		<button id="par_back_page">모임이전</button>
-		<button id="par_next_page">모임다음</button>
+		<button class="par_back_page" id="par_back_page">모임이전</button>
+		<button class="par_next_page" id="par_next_page">모임다음</button>
 	</div>
 
 	<div class="mre_paging" id="mre_paging">
-		<button id="mre_back_page">후기이전</button>
-		<button id="mre_next_page">후기다음</button>
+		<button class="mre_back_page" id="mre_back_page">이전</button>
+		<button class="mre_next_page" id="mre_next_page">다음</button>
+		<button class="formContainer" onclick="insert()">작성</button>
 	</div>
-	 
-	 
-	<div id="formContainer"><button onclick="insert()">작성</button></div>
-	<hr>
-<!-- 		<button onclick="location.href='memberreview/insert.do'">작성</button> -->
-<%-- 		<a href="memberreview/insert.do?userNum=${param.num}">후기작성</a> --%>
-	
 	
 </body>
 </html>

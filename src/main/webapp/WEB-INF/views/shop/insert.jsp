@@ -16,8 +16,8 @@
         document.getElementById('keyword').value = itemInfo.address;
         var cateValue = itemInfo.cate.replace(/\s*>\s*/g, ',');
         document.getElementById('cate').value = cateValue;
-        document.getElementById('locX').value = itemInfo.locX;
-        document.getElementById('locY').value = itemInfo.locY;
+        document.getElementById('loc_x').value = itemInfo.loc_x;
+        document.getElementById('loc_y').value = itemInfo.loc_y;
     }
     
     function closeModal() {
@@ -66,8 +66,8 @@
     	  formData.append('name', document.getElementById('name').value);
     	  formData.append('cate', document.getElementById('cate').value);
     	  formData.append('tel', document.getElementById('tel').value);
-    	  formData.append('locX', document.getElementById('locX').value);
-    	  formData.append('locY', document.getElementById('locY').value);
+    	  formData.append('loc_x', document.getElementById('loc_x').value);
+    	  formData.append('loc_y', document.getElementById('loc_y').value);
     	  formData.append('address', document.getElementById('keyword').value);
     	  
     	  // AJAX 요청을 보내고 응답을 처리합니다.
@@ -128,10 +128,10 @@
 						<div><input type="text" id="tel" name="tel" class="inputInformation"></div>
 					</div>
 					<div style="display: none;">
-    					<input type="text" id="locX" name="locX">
-    					<input type="text" id="locY" name="locY">
+    					<input type="text" id="loc_x" name="loc_x">
+    					<input type="text" id="loc_y" name="loc_y">
 					</div>
-					<form id="searchForm" onsubmit="searchPlaces(); return false;">
+					<form id="searchForm">
 						<div class="form-row">
     						<div class="tagName">위치</div>
 		    				<div><input type="text" id="keyword" value="맛집" size="15" class="inputInformation"></div>
@@ -183,7 +183,7 @@ function searchPlaces() {
 
     if (!keyword.replace(/^\s+|\s+$/g, '')) {
         alert('키워드를 입력해주세요!');
-        return false;
+        return;
     }
 
     // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
@@ -279,8 +279,8 @@ function displayPlaces(places) {
                         address: selectedPlace.address_name,
                         phone: selectedPlace.phone,
                         cate: selectedPlace.category_name,
-                        locX: selectedPlace.x,
-                        locY: selectedPlace.y
+                        loc_x: selectedPlace.x,
+                        loc_y: selectedPlace.y
                     };
                     handleItemInfo(itemInfo);
                 }

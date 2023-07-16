@@ -1,11 +1,14 @@
 package project.com.hotplace.shop.controller;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
@@ -61,22 +64,28 @@ public class ShopRestController {
 	@RequestMapping(value = "shop/json/insertOK.do", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, String> insertOK(ShopVO vo) throws IllegalStateException, IOException {
+		vo.setNum(service.countNum() + 1);
 		
 		log.info("/insertOK.do...{}", vo);
 		
 		MultipartFile file = vo.getMultipartFile();
 				
-		if(file == null) {
-			vo.setSymbol("default.png");
-		} else {
-			String getOriginalFilename = vo.getMultipartFile().getOriginalFilename();
-			vo.setSymbol(getOriginalFilename);
+		if(file != null) {
 			String realPath = sContext.getRealPath("/resources/ShopSymbol");
 			log.info("realPath : {}",realPath);
 			
-			File f = new File(realPath+"\\"+vo.getSymbol());
+			File f = new File(realPath+"\\"+ vo.getNum() + ".png");
 			
 			vo.getMultipartFile().transferTo(f);
+			
+			BufferedImage originalBufferedImage = ImageIO.read(f);
+			BufferedImage thumbnailBufferedImage = new BufferedImage(200, 200, BufferedImage.TYPE_3BYTE_BGR);
+			Graphics2D graphics = thumbnailBufferedImage.createGraphics();
+			graphics.drawImage(originalBufferedImage, 0, 0, 200, 200, null);
+
+			String thumbnailFilePath = realPath+"\\"+vo. getNum() + ".png";
+			File thumbnailFile = new File(thumbnailFilePath);
+			ImageIO.write(thumbnailBufferedImage, ".png", thumbnailFile);
 		}
 		
 		log.info("VO:{}", vo);

@@ -11,6 +11,8 @@ public interface ShopReviewDAO {
 	int insert(ShopReviewVO vo);
 
 	int update(ShopReviewVO vo);
+	
+	public int countNum();
 
 	int delete(int num);
 }

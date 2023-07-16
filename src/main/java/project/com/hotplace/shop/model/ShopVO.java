@@ -10,10 +10,9 @@ public class ShopVO {
 	private String name;
 	private String cate;
 	private String tel;
-	private float locX;
-	private float locY;
+	private float loc_x;
+	private float loc_y;
 	private String address;
 	private double avgRated;
-	private String symbol;
 	private MultipartFile multipartFile;
 }

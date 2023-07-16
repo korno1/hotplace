@@ -4,6 +4,10 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="project.com.hotplace.shop">
+	<select id="SRE_SEQ_NUM" resultType="int">
+        SELECT MAX(num) FROM shopreview
+    </select>	
+
 	<select id="SRE_SELECT_ALL" resultType="project.com.hotplace.shopreview.model.ShopReviewVO">
 		select sr.*, m.nick_name as writerName
     	from shopreview sr
@@ -18,14 +22,14 @@
 	
 	
 	<insert id="SRE_INSERT" parameterType="project.com.hotplace.shopreview.model.ShopReviewVO">
-		insert into shopreview(num,writer,content,shopnum,rated,saveName) 
-		values(sho_sequence.nextval,#{writer},#{content},#{shopNum},#{rated},#{saveName})
+		insert into shopreview(num,writer,content,shopnum,rated,anonymous) 
+		values(#{num},#{writer},#{content},#{shopNum},#{rated},#{anonymous})
 	</insert>
 	
 	
 	
 	<update id="SRE_UPDATE" parameterType="project.com.hotplace.shopreview.model.ShopReviewVO">
-		update shopreview set content=#{content} , rated=#{rated}
+		update shopreview set content=#{content} , rated=#{rated} , anonymous=#{anonymous}
 		where num = #{num}
 	</update>
 	

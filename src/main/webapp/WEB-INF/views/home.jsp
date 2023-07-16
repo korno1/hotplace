@@ -138,7 +138,7 @@
         		<c:forEach var="vo" items="${vos}" varStatus="loop">
             		<div class="shop-item" onClick="selectOne('${vo.num}')">
                 		<div>
-                    		<img id="symbol" width="200px" src="resources/ShopSymbol/${vo.symbol}" draggable="false">
+                    		<img id="symbol" width="200px" src="resources/ShopSymbol/${vo.num}.png" draggable="false">
                 		</div>
                 		<div>${vo.name}</div>
             		</div>

@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import lombok.extern.slf4j.Slf4j;
+import project.com.hotplace.member.service.MemberService;
+import project.com.hotplace.party.model.PartyVO;
+import project.com.hotplace.party.service.PartyService;
 import project.com.hotplace.shop.model.ShopVO;
 import project.com.hotplace.shop.service.ShopService;
 import project.com.hotplace.shopreview.model.ShopReviewVO;
@@ -29,6 +32,12 @@ public class ShopController {
 	ShopReviewService sreService;
 	
 	@Autowired
+	PartyService parService;
+	
+	@Autowired
+	MemberService memService;
+	
+	@Autowired
 	ServletContext sContext;
 	
 	@Autowired
@@ -37,13 +46,6 @@ public class ShopController {
 	@RequestMapping(value = "/selectAll.do", method = RequestMethod.GET)
 	public String selectAll(Model model) {
 		log.info("/selectAll.do");
-		
-        Object grade = session.getAttribute("grade");
-        if(grade != null)
-        {
-        	boolean showAddButton = (grade.equals(1) || grade.equals(2));
-            model.addAttribute("showAddButton", showAddButton);
-        }
 		
 		return "shop/selectAll.tiles";
 	}
@@ -71,17 +73,6 @@ public class ShopController {
 		
 		return "redirect:insert.do";
 		
-	}
-	
-	@RequestMapping(value = "/update.do", method = RequestMethod.GET)
-	public String update(ShopVO vo, Model model) {
-		log.info("/update.do...{}", vo);
-
-		ShopVO vo2 = service.selectOne(vo);
-
-		model.addAttribute("vo2", vo2);
-
-		return "shop/update";
 	}
 	
 	@RequestMapping(value = "/updateOK.do", method = RequestMethod.POST)
@@ -117,18 +108,43 @@ public class ShopController {
 	@RequestMapping(value = "/selectOne.do", method = RequestMethod.GET)
 	public String selectOne(ShopVO vo, Model model) {
 	    ShopVO shoVO = service.selectOne(vo);
-
+	    
+	    log.info("{}",vo);
+	    
 	    int num = shoVO.getNum();
 
 	    ShopReviewVO sreVO = new ShopReviewVO();
 	    sreVO.setShopNum(num);
 
 	    List<ShopReviewVO> sreVOS = sreService.selectAll(sreVO);
+	    
+	    double avgRate;
+	    
+	    if (sreVOS == null || sreVOS.isEmpty()) {
+            avgRate = 0;
+        }
+	    else
+	    {
+	    	double totalRate = 0.0;
+	    	for (ShopReviewVO review : sreVOS) {
+	    		totalRate += review.getRated();
+	    	}
 
+	    	avgRate = totalRate / sreVOS.size();
+	    }
+
+	    // 소수점 한자리만 남도록
+	    avgRate = Math.round(avgRate * 10) / 10;
+	    
+	    List<PartyVO> parVO = parService.selectAll("place", shoVO.getName(), 0);
+	    
 	    log.info("/sreList...{}", sreVOS);
+	    
+	    log.info("/partyList...{}", parVO);
 
 	    model.addAttribute("shoVO", shoVO);
 	    model.addAttribute("sreVOS", sreVOS);
+	    model.addAttribute("avgRate", avgRate);
 
 	    return "shop/selectOne.tiles";
 	}

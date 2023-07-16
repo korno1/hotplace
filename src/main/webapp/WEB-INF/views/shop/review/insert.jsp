@@ -17,6 +17,9 @@ function insertReview() {
     formData.append("content", content);
     formData.append("rated", rated);
     
+    var anonymous = document.getElementById("privateNickname").checked ? 1 : 0;
+    formData.append("anonymous", anonymous);
+    
     if (fileInput.files.length > 0) {
         formData.append("multipartFile", fileInput.files[0]);
     }

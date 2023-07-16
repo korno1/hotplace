@@ -29,6 +29,11 @@ public class ShopReviewService {
 	{
 		return dao.update(vo);
 	}
+	
+	public int countNum()
+	{
+		return dao.countNum();
+	}
 
 	public int delete(int num)
 	{

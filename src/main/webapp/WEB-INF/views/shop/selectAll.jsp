@@ -105,8 +105,8 @@
                     ')"></div>');
                 listItem.append(
                     '<div><img id="preview" width="100px" src="../resources/ShopSymbol/' +
-                    vo.symbol +
-                    '"></div>'
+                    vo.num +
+                    '.png"></div>'
                 );
                 listItem.append(
                     '<div><div>' +

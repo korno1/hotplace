@@ -44,6 +44,12 @@ public class ShopDAOimpl implements ShopDAO {
 		
 		return sqlSession.selectList("SHO_SELECT_ALL_HOME");
 	}
+	
+	public int countNum() {
+		log.info("countNum()...");
+		
+		return sqlSession.selectOne("SHO_SEQ_NUM");
+	}
 
 	@Override
 	public ShopVO selectOne(ShopVO vo) {

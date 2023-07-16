@@ -28,6 +28,13 @@ public class ShopReviewDAOimpl implements ShopReviewDAO {
 	}
 	
 	@Override
+	public int countNum() {
+		log.info("countNum()...");
+		
+		return sqlSession.selectOne("SRE_SEQ_NUM");
+	}
+	
+	@Override
 	public ShopReviewVO selectOne(ShopReviewVO vo) {
 		log.info("selectOne()...");
 		

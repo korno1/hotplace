@@ -1,8 +1,11 @@
 package project.com.hotplace.shopreview.controller;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,19 +57,25 @@ public class ShopReviewController {
 	}
 	
 	@RequestMapping(value = "/shop/review/update.do", method = RequestMethod.GET)
-	public String updateReview(Model model, String nickName, int num) {
-		log.info("/ShopReviewUpdate.do");
+	public String update(Model model, int num, int shopNum) {
+		log.info("/update.do...");
+
+		ShopVO shoVO = new ShopVO();
+		shoVO.setNum(shopNum);
 		
-		ShopReviewVO vo = new ShopReviewVO();
-		vo.setNum(num);
+		shoVO = shoService.selectOne(shoVO);
 		
-		vo = service.selectOne(vo);
+		ShopReviewVO sreVO = new ShopReviewVO();
+		sreVO.setNum(num);
 		
-		log.info("vo...{}",vo);
+		sreVO = service.selectOne(sreVO);
 		
-		model.addAttribute("nickName", nickName);
-	    model.addAttribute("vo", vo);
-		
+		log.info("shopVO:{}", shoVO);
+		log.info("shopReviewVO:{}", sreVO);
+
+		model.addAttribute("shoVO", shoVO);
+		model.addAttribute("sreVO", sreVO);
+
 		return "shop/review/update";
 	}
 	
@@ -87,17 +96,22 @@ public class ShopReviewController {
 		
 		MultipartFile file = vo.getMultipartFile();
 	    
-		if(file == null) {
-			vo.setSaveName("default.png");
-		} else {
-			String getOriginalFilename = vo.getMultipartFile().getOriginalFilename();
-			vo.setSaveName(getOriginalFilename);
-			String realPath = sContext.getRealPath("resources/ShopReviewImage");
+		if(file != null) {
+			String realPath = sContext.getRealPath("../resources/ShopReviewImage");
 			log.info("realPath : {}",realPath);
 			
-			File f = new File(realPath+"\\"+vo.getSaveName());
+			File f = new File(realPath+"\\"+vo.getWdate() + vo.getShopNum() + vo.getWriterName() + ".png");
 			
 			vo.getMultipartFile().transferTo(f);
+			
+			BufferedImage originalBufferedImage = ImageIO.read(f);
+			BufferedImage thumbnailBufferedImage = new BufferedImage(200, 200, BufferedImage.TYPE_3BYTE_BGR);
+			Graphics2D graphics = thumbnailBufferedImage.createGraphics();
+			graphics.drawImage(originalBufferedImage, 0, 0, 200, 200, null);
+
+			String thumbnailFilePath = realPath+"\\"+ vo.getWdate() + vo.getShopNum() + vo.getWriterName() + ".png";
+			File thumbnailFile = new File(thumbnailFilePath);
+			ImageIO.write(thumbnailBufferedImage, ".png", thumbnailFile);
 		}
 		
 		log.info("vo:{}", vo);
@@ -126,8 +140,6 @@ public class ShopReviewController {
 		
 		// 작성자 일치 여부 확인
 	    if (memVO.getNum() != sreVO.getWriter()) {
-	    	
-	    	log.info("?");
 	        // 작성자가 일치하지 않을 경우 처리
 	        return "redirect:/shop/selectOne.do?num=" + vo.getShopNum();
 	    }

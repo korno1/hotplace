@@ -10,6 +10,8 @@ public interface ShopDAO {
 	public int delete(ShopVO vo);
 	
 	public List<ShopVO> selectAllHome();
+	
+	public int countNum();
 
 	public ShopVO selectOne(ShopVO vo);
 

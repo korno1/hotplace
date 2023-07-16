@@ -20,6 +20,10 @@ public class ShopService {
 		log.info("ShopService...");
 	}
 	
+	public int countNum() {
+		return dao.countNum();
+	}
+	
 	public int insert(ShopVO vo) {
 		return dao.insert(vo);
 	}

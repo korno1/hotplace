@@ -16,6 +16,6 @@ public class ShopReviewVO {
 	private int rated;
 	private Timestamp wdate;
 	private String writerName;
-	private String saveName;
+	private int anonymous;
 	private MultipartFile multipartFile;
 }

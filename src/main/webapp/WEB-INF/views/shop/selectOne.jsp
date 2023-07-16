@@ -2,50 +2,21 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<link rel="stylesheet" href="../resources/css/shop/selectOne.css">
 <style>
-    .modal {
-        display: none;
-        position: fixed;
-        z-index: 9999;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.5);
-    }
-    
-    .modal-content {
-        background-color: #fefefe;
-        margin: 20% auto;
-        padding: 20px;
-        width: 840px;
-        height: 910px;
-        position: relative;
-    }
-    
-    .close {
-        position: absolute;
-        top: 45px;
-        right: 57px;
-        font-size: 30px;
-        cursor: pointer;
-    }
-    
-    iframe {
-    	border : none;
-    }
     
 </style>
 
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+	
 <script>
 	//모달 열기
 	function openModal() {
@@ -57,102 +28,108 @@
 	    document.getElementById("modal").style.display = "none";
 	}
 	
-	function openReviewUpdateForm(num, content, rated) {
+	function openReviewUpdateForm(num, shopNum, writerName) {
     	// 사용자 nickname 가져오기
 	    var nickName = '<%= session.getAttribute("nick_name") %>';
-
-	    // 새 창 열기
-    	window.open('review/update.do?nickName=' + nickName + '&num=' + num, 'test', 'width=1000, height=1000');
+		
+	    if (writerName !== nickName) {
+	        alert("작성자가 아닙니다.");
+	        return;
+	    }
+	    
+	    // 모달 열기
+	    openModal();
+	    
+	    // iframe에 update.jsp 로드하기
+	    var iframe = document.getElementById("modal-iframe");
+	    iframe.src = "review/update.do?nickName=" + nickName + "&shopNum=" + shopNum + "&num=" + num;
 	}
-	
-	function confirmDelete(num) {
-        var confirmation = confirm("정말로 삭제하시겠습니까?");
 
-        if (confirmation) {
-            deleteReview(num);
-        }
-    }
-
-    function deleteReview(num) {
-        $.ajax({
-            url: "review/json/delete.do",
-            type: "POST",
-            data: { num: num },
-            success: function(response) {
-                // 삭제 성공 시
-                window.location.reload();
-            },
-            error: function(xhr, status, error) {
-                // 삭제 실패 시
-                alert("삭제에 실패했습니다. 다시 시도해주세요.");
-            }
-        });
+    function deleteReview(num, writerName) {
+    	 var nickName = '<%= session.getAttribute("nick_name") %>';
+    	 
+    	 if (writerName !== nickName) {
+ 	        alert("작성자가 아닙니다.");
+ 	        return;
+ 	    }
+ 	    
+ 	   var confirmation = confirm("정말로 삭제하시겠습니까?");
+ 	    
+ 	    if (confirmation) {
+ 	        $.ajax({
+ 	            url: "review/json/delete.do",
+ 	            type: "POST",
+ 	            data: { num: num },
+ 	            success: function(response) {
+ 	                alert("리뷰가 삭제되었습니다.");
+ 	                // 삭제 성공 시
+ 	                window.location.reload();
+ 	            },
+ 	            error: function(xhr, status, error) {
+ 	                // 삭제 실패 시
+ 	                alert("삭제에 실패했습니다. 다시 시도해주세요.");
+ 	            }
+ 	        });
+ 	    }
     }
 </script>
 
-<style type="text/css">
-        .large {
-            border: 1px solid black;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-    </style>
-</head>
 <body>
-<div class="large">
-	<!-- <div><img width="35px" src="resources/uploading/shop_${vo.save_name}"></div> -->
-	<div>
-		<div>${shoVO.name}</div>
-		<div>cate:${shoVO.cate}</div>
-			<div>
-				<div>tel:${shoVO.tel}</div>
-				<div>rate:${avgRate}</div>
-			</div>
-		</div>
-	<div>
-		<div>위치 예정</div>
-		<div>지도 예정</div>
+<div class="page">
+<div class="upperForm">
+	<div><img width="420px" height="420px" class="img" src="../resources/ShopSymbol/${shoVO.num}.png"></div>
+	<div class="informForm">
+		<div class="title">${shoVO.name}</div>
+		<div class="inform">${shoVO.cate}</div>
+		<div class="inform">${shoVO.tel}</div>
+		<div class="rate">평점 ${avgRate}</div>
+		<div class="inform">${shoVO.address}</div>
 	</div>
+		
 </div>
-<div>
-	<div>
-		<div>후기</div>
+<div id="map" class="map"></div>
+<div class="reviewForm">
+	<div class="reviewTitle">
+		<div class="mainTitle">후기</div>
     	<c:if test="${not empty sessionScope.nick_name}">
         	<!-- 로그인된 경우 -->
-        	<div><input type="button" value="후기작성" onclick="openModal()"></div>
+        	<input type="button" value="후기등록" class="reviewButton" onclick="openModal()">
     	</c:if>
 	</div>
-	<c:forEach var="vo" items="${sreVOS}">
-		<div class="large">
-			<div><img id="reviewImg" src="../resources/ShopReviewImage/${vo.saveName}"></div>
-			<div>
-				<div>
-					<div>${vo.content}</div>
-					<div>${vo.wdate}</div>
-				</div>
-				<div>
-					<div>${vo.rated}</div>
-					<div>
-                    	<c:choose>
-                        	<c:when test="${sessionScope.nick_name eq vo.writerName}">
-                            	<a href="#" onclick="openReviewUpdateForm('${vo.num}', '${vo.content}', '${vo.rated}')">수정</a>
-	                             <a href="#" onclick="confirmDelete(${vo.num})">삭제</a>
-    	                    </c:when>
-        	                <c:otherwise>
-            	                ${vo.writerName}
-                	        </c:otherwise>
-                    	</c:choose>
-	                </div>
-				</div>
-			</div>
-		</div>
-	</c:forEach>
+    <c:forEach var="vo" items="${sreVOS}">
+        <div class="reviewContentForm">
+            <img id="symbol" class="symbol" src="../resources/ShopReviewImage/${vo.num}.png" onerror="this.src='../resources/ShopReviewImage/default.png';">
+            <div class="writerForm">
+            	<div class="writerInform">
+                	<img id="profile" width="70px" height="70px" src="../resources/ProfileImage/${vo.writer}.png">
+    	            <div class="writerReview">
+        	            <div class="writerName">
+        	            	<c:choose>
+                            	<c:when test="${vo.anonymous eq 1 && vo.writerName ne sessionScope.nick_name}">비공개</c:when>
+                            	<c:otherwise>${vo.writerName}</c:otherwise>
+                        	</c:choose>
+        	            </div>
+            	        <div class="writerRate">${vo.rated}</div>
+                	</div>
+                </div>
+            	<div class="writeContent">${vo.content}</div>     
+            </div>
+            <div class="rightContainer">
+            	<div class="writeDate"><fmt:formatDate value="${vo.wdate}" pattern="yyyy-MM-dd HH:mm:ss" /></div>
+            	<div class="buttonList">
+                	<input type="button" value="수정" class="update" onclick="openReviewUpdateForm(${vo.num}, ${shoVO.num}, '${vo.writerName}')">
+                	<input type="button" value="삭제" class="delete"  onclick="deleteReview(${vo.num}, '${vo.writerName}')">
+                </div>
+            </div>
+        </div>
+    </c:forEach>
+
 </div>
 
 
 <!-- 파티관련
 <div>
-	<div>관련 모임</div>
+	<div class="mainTitle">관련 모임</div>
 	<c:forEach var="vo" items="${partyList}">
 		<div>
 			<div>
@@ -172,9 +149,39 @@
 <div id="modal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>
-        <iframe src="review/insert.do?nickName=<%= session.getAttribute("nick_name") %>&shopNum=${shoVO.num}" width="100%" height="100%"></iframe>
+        <iframe id="modal-iframe" src="review/insert.do?nickName=<%= session.getAttribute("nick_name") %>&shopNum=${shoVO.num}" width="100%" height="100%"></iframe>
     </div>
 </div>
+</div>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d326b067d6341afa0b918f0c45297208&libraries=services,clusterer"></script>
+<script>
+
+const latitude = ${shoVO.loc_x};
+const longitude = ${shoVO.loc_y};
+
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    mapOption = { 
+        center: new kakao.maps.LatLng(longitude, latitude), // 지도의 중심좌표
+        level: 1 // 지도의 확대 레벨
+    };
+
+var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+// 마커가 표시될 위치입니다 
+var markerPosition  = new kakao.maps.LatLng(longitude, latitude); 
+
+// 마커를 생성합니다
+var marker = new kakao.maps.Marker({
+    position: markerPosition
+});
+
+// 마커가 지도 위에 표시되도록 설정합니다
+marker.setMap(map);
+
+// 아래 코드는 지도 위의 마커를 제거하는 코드입니다
+// marker.setMap(null);    
+</script>
 
 </body>
 </html>

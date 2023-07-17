@@ -1,68 +1,232 @@
-.par-body {
-	width: calc(100% - 20px);
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	padding: 10px;
-	margin-bottom: 20px;
-	margin-right: 20px;
-	box-sizing: border-box;
-	display: inline-block;
-	vertical-align: top;
-}
-
-
-.container {
-	width: 100%;
-	margin: 0 auto;
-	padding: 20px;
-}
-
-.header {
-	display: flex;
-	justify-content: space-between;
+.party-body {
+	width: 1000px;
+	border: 0px solid gray;
 	align-items: center;
-	margin-bottom: 20px;
+	overflow: hidden;
 }
 
 .search-form {
-	width: 30%;
+	border: 0px solid #192B53;
+	text-align: center;
+	display: flex;
+	justify-content: center;
 }
 
-.write-post {
-	text-align: right;
+.searchWord {
+	width: 300px;
+	height: 30px;
+	font-size: 16px;
+	margin-top: 2px;
+	border-radius: 10px;
+	border: 1px solid #192B53;
 }
 
-.post {
-	width: calc(30% - 20px);
-/* 	height: 10px; */
+.search-input {
+	border: 1px solid #ccc;
+	padding: 3px 15px;
+	border-radius: 20px;
 	cursor: pointer;
+}
+
+.search-input:hover {
+	background-color: #929292;
+}
+
+.par-searchKey {
+	border: 1px solid #192B53;
+	padding: 8px 25px;
+	border-radius: 20px;
+}
+
+.filter {
+	display: flex;
+	justify-content: flex-end;
+	border: 0px solid #192B53;
+}
+
+.title {
+	font-size: 18px;
+	border: 0px solid #192B53;
+	margin-right: 632px;
+}
+
+.filter-bt {
+	border-radius: 20px;
+	padding: 5px 20px;
+	border: 1px solid #192B53;
+	color: #192B53;
+	cursor: pointer;
+	background-color: transparent;
+	display: flex;
+	justify-content: flex-end;
+	margin-bottom: 10px;
+	margin-left: 10px;
+} 
+
+
+
+.par-selectAll {
+	width: 1100px;
+	border-top: 1px solid gray;
+}
+
+.par-post {
+	width: 300px;
+	height: 300px;
 	border: 1px solid #ccc;
 	border-radius: 5px;
 	padding: 10px;
-	margin-bottom: 20px;
-	margin-right: 20px;
+	margin: 10px 44px 20px 0px;
 	box-sizing: border-box;
 	display: inline-block;
 	vertical-align: top;
+	overflow: hidden;
 }
 
-.pagination {
+.par-bt {
+	width: 90%;
+	border-radius: 20px;
+	padding: 10px 30px;
+	border: 1px solid #192B53;
+	color: #192B53;
+	cursor: pointer;
+	background-color: transparent;
+	display: flex;
+	justify-content: center;
+	margin: 0 auto;
 	margin-top: 20px;
+}
+
+.par-bt:hover {
+	background-color: #192B53;
+	color: #FFFFFF;
+}
+
+}
+.par-title {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.par-container {
+	width: 280px;
+	padding: 20px 0px 50px 0px;
+	font-size: 16px;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	gap: 1px;
+}
+
+.par-list, .par-data {
+	font-size: 12px;
+	display: grid;
+	padding-top: 20px;
+	grid-template-rows: repeat(3, auto);
+	gap: 2px;
+}
+
+.par-list div {
+	font-weight: bold;
+	opacity: 0.8;
+}
+
+.par-data div {
+	width: 130px;
+	opacity: 0.5;
+}
+
+.par_paging {
 	text-align: center;
+	margin-top: 10px;
+	display: flex;
+	justify-content: flex-end;
+	border: 0px solid #192B53;
 }
 
-.pagination-links {
-	display: inline-block;
+.par_back_page, .par_next_page {
+	margin-left: 10px;
+	border-radius: 20px;
+	padding: 10px 20px;
+	border: 1px solid #192B53;
+	color: #192B53;
+	cursor: pointer;
+	background-color: transparent;
 }
 
-.pagination a {
+.par_back_page:hover, .par_next_page:hover {
+	background-color: #192B53;
+	color: #FFFFFF;
+}
+
+.par_insert {
+	margin-left: 300px;
 	margin-right: 10px;
-	text-decoration: none;
-	color: #000;
+	border-radius: 20px;
+	padding: 10px 20px;
+	border: 1px solid #192B53;
+	color: #192B53;
+	cursor: pointer;
+	background-color: transparent;
 }
 
-.pagination a:hover {
-	color: blue;
+.par_insert:hover {
+	background-color: #192B53;
+	color: #FFFFFF;
 }
 
-/* Additional styles can be added as per your requirements */
+/* .container { */
+/* 	width: 1000px; */
+/* 	margin: 0 auto; */
+/* 	padding: 20px; */
+/* } */
+
+/* .header { */
+/* 	display: flex; */
+/* 	justify-content: space-between; */
+/* 	align-items: center; */
+/* 	margin-bottom: 20px; */
+/* } */
+
+/* .search-form { */
+/* 	width: 500px; */
+/* } */
+
+/* .write-post { */
+/* 	text-align: right; */
+/* } */
+
+/* .post { */
+/* 	width: 300px; */
+/* 	height: 300px; */
+/* 	border : 1px solid #ccc; */
+/* 	border-radius: 5px; */
+/* 	padding: 10px; */
+/* 	margin: 10px 44px 20px 0px; */
+/* 	box-sizing: border-box; */
+/* 	display: inline-block; */
+/* 	vertical-align: top; */
+/* 	overflow: hidden; */
+/* } */
+
+/* .pagination { */
+/* 	margin-top: 20px; */
+/* 	text-align: center; */
+/* } */
+
+/* .pagination-links { */
+/* 	display: inline-block; */
+/* } */
+
+/* .pagination a { */
+/* 	margin-right: 10px; */
+/* 	text-decoration: none; */
+/* 	color: #000; */
+/* } */
+
+/* .pagination a:hover { */
+/* 	color: blue; */
+/* } */
+
+/* /* Additional styles can be added as per your requirements */
+*
+/

@@ -10,6 +10,10 @@
     font-weight: bold;
 }
 
+.not_grade_button:hover{
+	background-color: #eaeded;
+}
+
 .not_button{
 	border-radius: 20px;
 	padding: 10px 40px;
@@ -20,4 +24,7 @@
     font-weight: bold;
 }
 
+.not_button:hover{
+	background-color: #eaeded;
+}
 

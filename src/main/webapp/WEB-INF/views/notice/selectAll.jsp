@@ -69,14 +69,14 @@
 <body>
 
 	<div class="not_top">
-		<h3 class="notice_h3">공지사항</h3>
+		<h1 class="notice_h3">공지사항</h1>
 		<button onclick="location.href='insert.do'" class="not_grade_button">글작성</button>
 	</div>
 	<div class="not_body">
 		<div class="not_header">
-			<div class="not_wdate">작성일</div>
 			<div class="not_title">제목</div>
 			<div class="not_writer">작성자</div>
+			<div class="not_wdate">작성일</div>
 			<div class="not_vcount">조회수</div>
 		</div>
 		<div class="not_content">
@@ -86,9 +86,9 @@
 				
 <%-- 				<div class="not_selectOne" onclick="location.href='selectOne.do?num=${vo.num}'" style="cursor:pointer"> --%>
 				<div class="not_selectOne" onclick="selectOneForm(${vo.num})" style="cursor:pointer">
-					<div class="not_content_wdate">${fmtwdate}</div>
 					<div class="not_content_title">${vo.title}</div>
 					<div class="not_content_writer">${vo.writer}</div>
+					<div class="not_content_wdate">${fmtwdate}</div>
 					<div class="not_content_vcount">${vo.viewCount}</div>
 				</div>
 			</c:forEach>

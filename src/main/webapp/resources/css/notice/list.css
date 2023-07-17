@@ -51,8 +51,8 @@
 	
 }
 .not_content_title{
-	width: 790px;
-	padding-left: 30px;
+	width: 800px;
+	padding-left: 20px;
 	text-align: left;
 }
 
@@ -126,5 +126,7 @@
     font-weight: bold;
 }
 .pre_page:hover, .next_page:hover {
-	background-color: #eaeded;
+/* 	background-color: #eaeded; */
+	background-color: #192B53;
+	color: white;
 }

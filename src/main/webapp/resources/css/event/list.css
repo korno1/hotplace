@@ -40,9 +40,12 @@
 	border-bottom: 2px solid rgb(216, 216, 219);
 }
 
-.eve_title,
-.eve_content_title {
+.eve_title{
   width: 800px;
+}
+.eve_content_title {
+	width: 790px;
+	margin-left:10px;	
 }
 
 .eve_writer,
@@ -58,6 +61,7 @@
 .eve_content_deadline {
   width: 100px;
   margin-right: 25px;
+  margin-left: 25px;
   
 }
 .eve_vcount,
@@ -128,8 +132,8 @@
 	color: rgb(23, 57, 92);
     font-weight: bold;
 }
-.eve_searchBtn:hover{
-	background-color: #eaeded;
-}
+/* .eve_searchBtn:hover{ */
+/* 	background-color: #eaeded; */
+/* } */
 
 

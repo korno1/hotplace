@@ -47,5 +47,7 @@
 
 .faq_grade_button:hover, .faq_grade_button2:hover,
 .faq_pre_button:hover, .faq_next_button:hover, .faq_button:hover{
-	background-color: #eaeded;
+/* 	background-color: #eaeded; */
+	background-color: #192B53;
+	color: white;
 }

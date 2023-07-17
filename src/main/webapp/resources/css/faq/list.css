@@ -10,7 +10,7 @@
 }
 
 .faq_div{
-	width: 1150px;
+	width: 1100px;
 }
 
 .faq_title{
@@ -25,8 +25,8 @@
 
 .faq_header {
 	border-bottom: 1px solid rgb(219, 219, 219);
-	text-align: center;
-	padding: 15px 0;
+/* 	text-align: center; */
+	padding: 15px 0 15px 30px;
 	cursor: pointer;
 }
 .faq_header:hover{

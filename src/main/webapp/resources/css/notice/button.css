@@ -11,7 +11,9 @@
 }
 
 .not_grade_button:hover{
-	background-color: #eaeded;
+/* 	background-color: #eaeded; */
+	background-color: #192B53;
+	color: white;
 }
 
 .not_button{
@@ -25,6 +27,8 @@
 }
 
 .not_button:hover{
-	background-color: #eaeded;
+/* 	background-color: #eaeded; */
+	background-color: #192B53;
+	color: white;
 }
 

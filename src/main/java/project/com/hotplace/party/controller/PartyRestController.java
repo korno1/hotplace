@@ -48,8 +48,9 @@ public class PartyRestController {
 	}
 
 	@RequestMapping(value = "/party/json/approveOK.do", method = RequestMethod.POST)
+	@ResponseBody
 	public String approveOK(PartyVO vo) {
-		log.info("/approveOK.do...{}", vo);
+		log.info("/json/approveOK.do...{}", vo);
 		
 		int result = service.approveOK(vo);
 		log.info("result: {}", result);

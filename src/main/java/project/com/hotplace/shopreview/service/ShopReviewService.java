@@ -34,19 +34,25 @@ public class ShopReviewService {
 	{
 		return dao.countNum();
 	}
+	
+	public int count(ShopReviewVO vo)
+	{
+		return dao.count(vo);
+	}
 
 	public int delete(int num)
 	{
 		return dao.delete(num);
 	}
 	
-	public List<ShopReviewVO> selectAll(ShopReviewVO vo)
+	public List<ShopReviewVO> selectAll(ShopReviewVO vo, int page)
 	{
-		return dao.selectAll(vo);
+		return dao.selectAll(vo, page);
 	}
 	
 	public ShopReviewVO selectOne(ShopReviewVO vo)
 	{
 		return dao.selectOne(vo);
 	}
+	
 }

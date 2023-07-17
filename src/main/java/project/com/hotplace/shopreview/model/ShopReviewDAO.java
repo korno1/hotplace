@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface ShopReviewDAO {
 	
-	List<ShopReviewVO> selectAll(ShopReviewVO vo);
+	List<ShopReviewVO> selectAll(ShopReviewVO vo, int page);
 	
 	ShopReviewVO selectOne(ShopReviewVO vo);
 	
@@ -13,6 +13,8 @@ public interface ShopReviewDAO {
 	int update(ShopReviewVO vo);
 	
 	public int countNum();
+	
+	public int count(ShopReviewVO vo);
 
 	int delete(int num);
 }

@@ -6,14 +6,21 @@
 <mapper namespace="project.com.hotplace.shop">
 	<select id="SRE_SEQ_NUM" resultType="int">
         SELECT MAX(num) FROM shopreview
+    </select>
+    
+    <select id="SRE_COUNT_VO" resultType="int">
+        SELECT COUNT(*) FROM shopreview WHERE SHOPNUM=#{shopNum}
     </select>	
 
 	<select id="SRE_SELECT_ALL" resultType="project.com.hotplace.shopreview.model.ShopReviewVO">
-		select sr.*, m.nick_name as writerName
-    	from shopreview sr
-   		left join member m on sr.writer = m.num
-	    where sr.shopnum = #{shopNum}
-	    order by sr.num
+		SELECT *
+		FROM (
+    		SELECT sr.*, m.nick_name AS writerName, rownum AS rn
+    		FROM shopreview sr
+    		LEFT JOIN member m ON sr.writer = m.num
+    		WHERE sr.shopnum = #{shopNum}
+		)
+		WHERE rn BETWEEN #{start} AND #{end}
 	</select>
 	
 	<select id="SRE_SELECT_ONE" resultType="project.com.hotplace.shopreview.model.ShopReviewVO">

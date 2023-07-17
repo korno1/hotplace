@@ -114,6 +114,7 @@ iframe {
 	color: #ffffff;
 	font: normal normal 600 18px/21px Pretendard;
 	letter-spacing: 0px;
+	cursor: pointer;
 	opacity: 1;
 }
 
@@ -123,9 +124,13 @@ iframe {
 	border-bottom: 1px solid #807F87;
 }
 
+.imageContainer {
+	width: 300px;
+	height: 300px;
+}
+
 .symbol {
-	margin-bottom: 30px;
-	width: 290px;
+	width: 270px;
 	height: 270px;
 }
 
@@ -191,6 +196,7 @@ iframe {
 	letter-spacing: 0px;
 	color: #17395C;
 	opacity: 1;
+	cursor: pointer;
 }
 
 .delete {
@@ -205,4 +211,18 @@ iframe {
 	letter-spacing: 0px;
 	color: #ffffff;
 	opacity: 1;
+	cursor: pointer;
+}
+
+.pagination {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.pagination-button {
+	width: 55px;
+    height: 25px;
+    border-radius: 25px;
+    border: 1px solid #17395C;
+    cursor: pointer;
 }

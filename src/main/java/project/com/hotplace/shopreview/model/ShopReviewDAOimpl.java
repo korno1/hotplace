@@ -1,6 +1,8 @@
 package project.com.hotplace.shopreview.model;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +22,22 @@ public class ShopReviewDAOimpl implements ShopReviewDAO {
 	}
 
 	@Override
-	public List<ShopReviewVO> selectAll(ShopReviewVO vo) {
+	public List<ShopReviewVO> selectAll(ShopReviewVO vo, int page) {
 		log.info("selectAll()...");
 		log.info("{}", vo);
+		log.info("page...:{}", page);
+		
+		Map<String, Object> param = new HashMap<String, Object>();
+		
+		int itemsPerPage = 5;
+		int end = itemsPerPage * page;
+		int start = (page - 1) * itemsPerPage + 1;
+		
+		param.put("end", end);
+		param.put("start", start);
+		param.put("shopNum", vo.getShopNum());
 
-		return sqlSession.selectList("SRE_SELECT_ALL", vo);
+		return sqlSession.selectList("SRE_SELECT_ALL", param);
 	}
 	
 	@Override
@@ -60,6 +73,12 @@ public class ShopReviewDAOimpl implements ShopReviewDAO {
 		log.info("delete()...");
 		
 		return sqlSession.delete("SRE_DELETE", num);
+	}
+	
+	public int count(ShopReviewVO vo) {
+		log.info("countVOS()...");
+		
+		return sqlSession.selectOne("SRE_COUNT_VO", vo);
 	}
 
 }

@@ -63,6 +63,11 @@
 	margin-left: 10px;
 } 
 
+.filter-bt:hover {
+	background-color: #192B53;
+	color: #FFFFFF;
+}
+
 
 
 .par-selectAll {
@@ -173,60 +178,3 @@
 	background-color: #192B53;
 	color: #FFFFFF;
 }
-
-/* .container { */
-/* 	width: 1000px; */
-/* 	margin: 0 auto; */
-/* 	padding: 20px; */
-/* } */
-
-/* .header { */
-/* 	display: flex; */
-/* 	justify-content: space-between; */
-/* 	align-items: center; */
-/* 	margin-bottom: 20px; */
-/* } */
-
-/* .search-form { */
-/* 	width: 500px; */
-/* } */
-
-/* .write-post { */
-/* 	text-align: right; */
-/* } */
-
-/* .post { */
-/* 	width: 300px; */
-/* 	height: 300px; */
-/* 	border : 1px solid #ccc; */
-/* 	border-radius: 5px; */
-/* 	padding: 10px; */
-/* 	margin: 10px 44px 20px 0px; */
-/* 	box-sizing: border-box; */
-/* 	display: inline-block; */
-/* 	vertical-align: top; */
-/* 	overflow: hidden; */
-/* } */
-
-/* .pagination { */
-/* 	margin-top: 20px; */
-/* 	text-align: center; */
-/* } */
-
-/* .pagination-links { */
-/* 	display: inline-block; */
-/* } */
-
-/* .pagination a { */
-/* 	margin-right: 10px; */
-/* 	text-decoration: none; */
-/* 	color: #000; */
-/* } */
-
-/* .pagination a:hover { */
-/* 	color: blue; */
-/* } */
-
-/* /* Additional styles can be added as per your requirements */
-*
-/

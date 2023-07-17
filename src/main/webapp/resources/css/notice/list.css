@@ -1,5 +1,7 @@
 @charset "UTF-8";
 
+
+
 .not_top{
 	display: flex;
 	margin-bottom: 20px;
@@ -18,7 +20,7 @@
 .not_header{
 	display: flex;
 	border-top: 1px solid rgb(172, 172, 177);
-	padding: 10px 0 10px 0;
+	padding: 15px 0 15px 0;
 	font-weight: bold;
 }
 
@@ -31,9 +33,12 @@
 .not_selectOne{
 	display: flex;	
 	border-bottom: 1px solid rgb(219, 219, 219);
-;
 	align-items: center;
-	padding: 10px 0 10px 0;
+	padding: 15px 0 15px 0;
+}
+.not_selectOne:hover{
+/*  	background-color: #EAEAEA; */
+ 	background-color: #f1e5d4;
 }
 
 .not_selectOne:last-child{
@@ -41,11 +46,13 @@
 
 }
 
-.not_title, .not_content_title{
-	width: 450px;
+.not_title{
+	width: 820px;
 	
 }
 .not_content_title{
+	width: 800px;
+	padding-left: 20px;
 	text-align: left;
 }
 
@@ -54,7 +61,7 @@
 }
 .not_wdate, .not_content_wdate{
 	width: 100px;
-	margin-right: 100px;
+	margin-right: 50px;
 }
 .not_vcount, .not_content_vcount{
 	width: 75px;
@@ -105,6 +112,9 @@
 	color: rgb(23, 57, 92);
     font-weight: bold;
 }
+.not_searchBtn:hover{
+	background-color: #eaeded;
+}
 
 .pre_page, .next_page {
 	border-radius: 20px;
@@ -114,4 +124,9 @@
 	border: 1px solid rgb(105, 126, 149);
 	color: rgb(23, 57, 92);
     font-weight: bold;
+}
+.pre_page:hover, .next_page:hover {
+/* 	background-color: #eaeded; */
+	background-color: #192B53;
+	color: white;
 }

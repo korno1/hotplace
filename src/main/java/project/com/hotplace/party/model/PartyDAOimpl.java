@@ -109,6 +109,8 @@ public class PartyDAOimpl implements PartyDAO {
 
 	@Override
 	public int approveOK(PartyVO vo) {
+		log.info("approveOK()...{}", vo);
+		
 		return sqlSession.update("par_approveOK", vo);		
 	}
 

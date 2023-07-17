@@ -211,7 +211,7 @@
 <body>
 
 	<div class="faq_top">
-		<h3 class="faq_h3">FAQ</h3>
+		<h1 class="faq_h1">FAQ</h1>
 		<button class="faq_grade_button" onclick="location.href='insert.do'" class="faq_grade_button">글작성</button>
 	</div>
 	

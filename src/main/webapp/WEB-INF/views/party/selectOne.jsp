@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>모임정보</title>
-<link rel="stylesheet" href="/hotplace/resources/css/party/selectOne.css" />
+<link rel="stylesheet" href="/hotplace/resources/css/party/selectOne.css?after" >
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
 <script type="text/javascript">
@@ -40,40 +40,48 @@ function app_selectAll(applicantsNum=0){
 				console.log('vo...',vo);
 				console.log('status...',vo.status);
 				if (vo.status===1) {
-// 				<img width="100px" src="../resources/ProfileImage/${vo2.writerNum}"
-// 							onerror="this.src='../resources/ProfileImage/default.png'">
+							
 					tag_OK +=`
-						<div>
-							<div>\${vo.userName}</div>
-							<div>\${vo.comments}</div>
+						<div class="app-date">
+							<div class="appImpo">
+								<img width="50px" src="../resources/ProfileImage/${vo.writerNum}"
+								onerror="this.src='../resources/ProfileImage/default.png'">
+								<div>
+									<div class="app-name">\${vo.userName}</div>
+									<div class="app-comments">\${vo.comments}</div>
+								</div>
+							</div>
 						</div>
 					`;
 				}
 
 				if (vo.status===0) { // user_id
-// 				<img width="100px" src="../resources/ProfileImage/${vo2.writerNum}"
-// 							onerror="this.src='../resources/ProfileImage/default.png'">
-
 					let tag_div = ``;
 					if(${num}==vo.userNum){ //'${user_id}'===vo.userNum
 						tag_div = `<div>
-							<button type="button" onclick="deleteOK(\${vo.applicantsNum})">신청취소</button>
+							<button class="delete-bt" onclick="deleteOK(\${vo.applicantsNum})">신청취소</button>
 						</div>`;
 					}
 
 					if(${num}===${vo2.writerNum}){ //'${user_id}'===vo.userNum
 						tag_div = `<div>
-							<button type="button" onclick="approveOK(\${vo.applicantsNum})">승인</button>
-							<button type="button" onclick="rejectOK(\${vo.applicantsNum})">거절</button>
+							<button class="app-ok" type="button" onclick="approveOK(\${vo.applicantsNum})">승인</button>
+							<button class="app-no" type="button" onclick="rejectOK(\${vo.applicantsNum})">거절</button>
 						</div>`;
 					}
 
 					tag_NotOK +=`
-						<div>
-							<div>\${vo.userName}</div>
-							<div>\${vo.comments}</div>
+						<div class="app-date">
+						<div class="appImpo">
+							<img width="50px" src="../resources/ProfileImage/${vo.writerNum}"
+							onerror="this.src='../resources/ProfileImage/default.png'">
+							<div>
+								<div class="app-name">\${vo.userName}</div>
+								<div class="app-comments">\${vo.comments}</div>
+							</div>
 							\${tag_div}
 						</div>
+					</div>
 					`;
 					
 				}
@@ -91,7 +99,6 @@ function app_selectAll(applicantsNum=0){
 };// end app_selectAll
 
 function insertOK() {
-	
 	if (confirm("신청하시겠습니까?")) {
 		   console.log('insertOK()....');
 	       console.log($('#comments').val());
@@ -118,17 +125,10 @@ function insertOK() {
 	       confirm("신청이 완료되었습니다")
 	       return;
 	  }
-	
-	
-	
-	
-    
 }//end insertOK
 
 function deleteOK(applicantsNum=0) {
-	
 	console.log('deleteOK()....',applicantsNum);
-	
 	if (confirm("신청 취소하시겠습니까?")) {
 		$.ajax({
 			url : "json/deleteOK.do",
@@ -155,7 +155,6 @@ function deleteOK(applicantsNum=0) {
 
 function approveOK(applicantsNum=0) {
 	console.log('approveOK()....',applicantsNum);
-	
 	if (confirm("승인하시겠습니까?")) {
 		$.ajax({
 			url : "json/AppapproveOK.do",
@@ -179,7 +178,6 @@ function approveOK(applicantsNum=0) {
 
 function par_approveOK(partyNum=0) {
 	console.log('par_approveOK()....',partyNum);
-	
 	$.ajax({
 		url : "json/approveOK.do",
 		data:{
@@ -232,55 +230,61 @@ function rejectOK(applicantsNum=0) {
 </script>
 </head>
 <body onload="app_selectAll()">
-	<h1>모임정보</h1>
-	
-	<div class="application">
-		<div>${num}</div>
-		<div>(status)</div>
-		
-		<div>${vo2.title}(제목)</div>
-		
-		<div>
-			<img width="100px" src="../resources/ProfileImage/${vo2.writerNum}"
-						onerror="this.src='../resources/ProfileImage/default.png'">
-			<div><a href="/hotplace/userpage.do?num=${vo2.writerNum}">${vo2.writerName}(작성자)</a></div>
-		</div>
 
+	<div class="body">
+		<div class="application">
+			<div class="title">
+				<div class="par-title">${vo2.title}(제목)</div>
+			</div>
+			<div class="writerImpo">
+				<div><img width="60px" src="../resources/ProfileImage/${vo2.writerNum}" onerror="this.src='../resources/ProfileImage/default.png'"></div>
+				<div class="par-name"><a href="/hotplace/userpage.do?num=${vo2.writerNum}">${vo2.writerName}</a></div>
+				<div>
+					<div class="par-views">${vo2.views}</div>
+					<div class="par-wdate">${vo2.wdate}</div>
+				</div>
+			</div>
+			<div class="par-post">
+				<div class="par-row">
+					<div class="par-cell">모집인원</div>
+					<div class="par-date">${vo2.applicants}/${vo2.max}명</div>
+				</div>
+				<div class="par-row">
+					<div class="par-cell">모집마감일</div>
+					<div class="par-date">${vo2.deadLine}</div>
+				</div>
+				<div class="par-row">
+					<div class="par-cell">식당</div>
+					<div class="par-date">${vo2.place}</div>
+				</div>
+				<div class="par-row">
+					<div class="par-cell">모임날짜</div>
+					<div class="par-date">${vo2.timeLimit}</div>
+				</div>
+			</div>
+			<div class="par-content">${vo2.content}(내용)</div>
+			
+			<div class="par_button">
+				<button class="par-update" onclick="location.href='update.do?partyNum=${param.partyNum}'">수정</button>
+				<button class="par-delete" id="delButton">삭제</button>
+			</div>
+		</div>
+		
+		<div class="app_title">승인된 구성원</div>
+		<div id="app_OK"></div>
+
+		<div class="app_title">대기중인 구성원</div>
+		<div id="app_NotOK"></div>
 		
 		<div>
-			<div>${vo2.wdate}(작성일)</div>
-			<div>조회수 : ${vo2.views}</div>
-		</div>
-		<div>
-			<div>모집인원 : ${vo2.applicants}/${vo2.max} 명</div>
-			<div>모집마감일 : ${vo2.deadLine}</div>
-			<div>식당 : ${vo2.place}</div>
-			<div>모집날짜 : ${vo2.timeLimit}</div>
-		</div>
-		<div>${vo2.content}(내용)</div>
-		<div class="par_button">
-			<button type="button"
-				onclick="location.href='update.do?partyNum=${param.partyNum}'">수정</button>
-			<button type="button" id="delButton">삭제</button>
+			<div class="insert_form">
+				<textarea name="comments" id="comments" placeholder="간단한 자기소개를 해주세요 (필수)"
+				onfocus="this.placeholder=''" onblur="this.placeholder='간단한 자기소개를 해주세요 (필수)'" 
+				class="textarea"></textarea>
+				<button class="input-bt" onclick="insertOK()">신청하기</button>
+			</div>
 		</div>
 	</div>
-	
-	<hr>
-	<div class="app_title">승인된 구성원</div>
-	<div id="app_OK"></div>
-	<hr>
-	<div class="app_title">대기중인 구성원</div>
-	<div id="app_NotOK"></div>
-	
-	<div>
-		<div class="insert_form">
-			<textarea name="comments" id="comments" placeholder="간단한 자기소개를 해주세요 (필수)"
-			onfocus="this.placeholder=''" onblur="this.placeholder='간단한 자기소개를 해주세요 (필수)'" 
-			style="resize: none; width: 80%; height: 100px;"></textarea>
-			<button onclick="insertOK()">신청하기</button>
-		</div>
-	</div>
-	
 	
 	<script type="text/javascript">
 		if("${vo2.writerNum}"=="${num}"){

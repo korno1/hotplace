@@ -48,8 +48,10 @@
 </script>
 </head>
 <body>
-	<h3>공지사항</h3>
-	
+	<div class="notice_h1_list">
+		<h1>공지사항</h1>
+		<button class="not_button" onclick="location.href='selectAll.do'">목록</button>
+	</div>
 	<div class="not_body">
 		<fmt:parseDate var="dateFmt" value="${vo2.wdate}"  pattern="yyyy-MM-dd HH:mm:ss.SSS" />
 		<fmt:formatDate var="fmtwdate" value="${dateFmt}" pattern="yyyy-MM-dd HH:mm" />

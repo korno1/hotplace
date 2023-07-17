@@ -193,7 +193,7 @@
 <body>
 
 	<div class="eve_top">
-		<h3 class="event_h3">이벤트</h3>
+		<h1 class="event_h1">이벤트</h1>
 		<button onclick="location.href='insert.do'" id="event_insert" class="eve_grade_button">글작성</button>
 	</div>
 

@@ -47,4 +47,8 @@ public class ShopService {
 	public List<ShopVO> selectAll(String searchKey, String searchWord, int pageNum) {
 		return dao.selectAll(searchKey, searchWord, pageNum);
 	}
+	
+	public List<ShopVO> searchListTest(String searchWord) {
+		return dao.searchListTest(searchWord);
+	}
 }

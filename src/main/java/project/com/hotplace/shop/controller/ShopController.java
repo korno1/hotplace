@@ -49,6 +49,16 @@ public class ShopController {
 		
 		return "shop/selectAll.tiles";
 	}
+	
+	@RequestMapping(value = "/searchList.do", method = RequestMethod.GET)
+	public String searchList(String searchWord, int page) {
+		log.info("/searchList.do");
+		
+		List<ShopVO> vos = service.searchListTest(searchWord);
+		log.info("{}", vos);
+		
+		return "shop/selectAll.tiles";
+	}
 
 	@RequestMapping(value = "/searchLocation.do", method = RequestMethod.GET)
 	public String searchLocation() {
@@ -64,49 +74,8 @@ public class ShopController {
 		return "shop/insert";
 	}
 	
-	@RequestMapping(value = "/insertOK.do", method = RequestMethod.POST)
-	public String insertOK(ShopVO vo) {
-		log.info("/insertOK.do...{}", vo);
-		
-		int result = service.insert(vo);
-		log.info("result...{}", result);
-		
-		return "redirect:insert.do";
-		
-	}
-	
-	@RequestMapping(value = "/updateOK.do", method = RequestMethod.POST)
-	public String updateOK(ShopVO vo) {
-		log.info("/updateOK.do...{}", vo);
-		
-		int result = service.update(vo);
-		log.info("result...{}", result);
-		
-		if(result==1) {
-			return "redirect:selectOne.do?num="+vo.getNum();
-		}else {
-			return "redirect:update.do?num="+vo.getNum();
-		}
-		
-	}
-	
-	@RequestMapping(value = "/deleteOK.do", method = RequestMethod.GET)
-	public String deleteOK(ShopVO vo) {
-		log.info("/deleteOK.do...{}", vo);
-		
-		int result = service.delete(vo);
-		log.info("result...{}", result);
-		
-		if(result==1) {
-			return "redirect:selectAll.do";
-		}else {
-			return "redirect:selectOne.do?num="+vo.getNum();
-		}
-		
-	}
-	
 	@RequestMapping(value = "/selectOne.do", method = RequestMethod.GET)
-	public String selectOne(ShopVO vo, Model model) {
+	public String selectOne(ShopVO vo, Model model, int page) {
 	    ShopVO shoVO = service.selectOne(vo);
 	    
 	    log.info("{}",vo);
@@ -115,8 +84,12 @@ public class ShopController {
 
 	    ShopReviewVO sreVO = new ShopReviewVO();
 	    sreVO.setShopNum(num);
-
-	    List<ShopReviewVO> sreVOS = sreService.selectAll(sreVO);
+	    
+	    List<ShopReviewVO> sreVOS = sreService.selectAll(sreVO, page);
+	    
+	    int totalCount = sreService.count(sreVO);
+	    int pageSize = 5; // Number of items per page
+	    int totalPages = (int) Math.ceil((double) totalCount / pageSize);
 	    
 	    double avgRate;
 	    
@@ -141,18 +114,17 @@ public class ShopController {
 	    log.info("/sreList...{}", sreVOS);
 	    
 	    log.info("/partyList...{}", parVO);
+	    
+	    log.info("total_count...{}", totalCount);
+	    
+	    log.info("total_page...{}", totalPages);
 
 	    model.addAttribute("shoVO", shoVO);
 	    model.addAttribute("sreVOS", sreVOS);
 	    model.addAttribute("avgRate", avgRate);
+	    model.addAttribute("page", page);
+	    model.addAttribute("totalPages", totalPages);
 
 	    return "shop/selectOne.tiles";
 	}
-	
-	@RequestMapping(value = "/test.do", method = RequestMethod.GET)
-	public String test() {
-
-		return "shop/test";
-	}
-	
 }

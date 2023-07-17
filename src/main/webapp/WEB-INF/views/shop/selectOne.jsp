@@ -18,6 +18,14 @@
 
 	
 <script>
+
+	var linkElement = document.querySelector('link[href$="selectOne.css"]');
+	var cssPath = linkElement.href;
+	console.log("CSS 파일 경로: " + cssPath);
+
+	function paginate(page) {
+		window.location.href = "selectOne.do?num=${shoVO.num}&page=" + page;
+	}
 	//모달 열기
 	function openModal() {
 		document.getElementById("modal").style.display = "block";
@@ -98,7 +106,7 @@
 	</div>
     <c:forEach var="vo" items="${sreVOS}">
         <div class="reviewContentForm">
-            <img id="symbol" class="symbol" src="../resources/ShopReviewImage/${vo.num}.png" onerror="this.src='../resources/ShopReviewImage/default.png';">
+            <div class="imageContainer"><img id="symbol" class="symbol" src="../resources/ShopReviewImage/${vo.num}.png" onerror="this.src='../resources/ShopReviewImage/default.png';"></div>
             <div class="writerForm">
             	<div class="writerInform">
                 	<img id="profile" width="70px" height="70px" src="../resources/ProfileImage/${vo.writer}.png">
@@ -123,7 +131,22 @@
             </div>
         </div>
     </c:forEach>
+	
+	
+	<!-- 페이징 -->
+<div class="pagination">
+    <c:choose>
+        <c:when test="${page > 1}">
+            <button class="pagination-button" onclick="paginate(${page - 1})">이전</button>
+        </c:when>
+    </c:choose>
 
+    <c:choose>
+        <c:when test="${page < totalPages}">
+            <button class="pagination-button" onclick="paginate(${page + 1})">다음</button>
+        </c:when>
+    </c:choose>
+</div>
 </div>
 
 

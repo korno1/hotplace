@@ -56,6 +56,14 @@ public class ShopDAOimpl implements ShopDAO {
 		log.info("selectOne()....{}", vo);
 		return sqlSession.selectOne("SHO_SELECT_ONE",vo);
 	}
+	
+	@Override
+	public List<ShopVO> searchListTest(String searchWord) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		
+		param.put("searchWord", searchWord);
+		return sqlSession.selectList("SHO_SEARCH_LIST_TEST", param);
+	}
 
 	@Override
 	public List<ShopVO> selectAll(String searchKey, String searchWord, int pageNum) {

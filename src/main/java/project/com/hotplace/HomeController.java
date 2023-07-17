@@ -3,6 +3,9 @@ package project.com.hotplace;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import lombok.extern.slf4j.Slf4j;
+import project.com.hotplace.member.model.MemberVO;
+import project.com.hotplace.member.service.MemberService;
 import project.com.hotplace.shop.model.ShopVO;
 import project.com.hotplace.shop.service.ShopService;
 
@@ -19,6 +25,9 @@ import project.com.hotplace.shop.service.ShopService;
  */
 @Controller
 public class HomeController {
+	
+	@Autowired
+	MemberService memService;
 	
 	@Autowired
 	ShopService shopService;
@@ -30,8 +39,29 @@ public class HomeController {
 	 * 
 	 */
 	@RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
-	    logger.info("Welcome home! The client locale is {}.", locale);
+	public String home(Model model, HttpServletRequest request) {    
+	    HttpSession session = request.getSession();
+	    Object nickName = session.getAttribute("nick_name");
+	    
+	    logger.info("nickName....{}", nickName);
+	    
+	    if(nickName != null) {
+	    	MemberVO memVO = new MemberVO();
+		    
+		    memVO.setNick_name(nickName.toString());
+		    
+		    memVO = memService.idAuth(memVO);
+		    
+		    if(memVO.getGrade() == 1 || memVO.getGrade() == 2)
+		    	model.addAttribute("Authority", "true");
+		    else
+		    	model.addAttribute("Authority", "false");
+		    
+		    logger.info("{}", memVO);
+	    }
+	    else
+	    	model.addAttribute("Authority", "false");
+
 	    
 	    // 데이터 조회
 	    List<ShopVO> shopList = shopService.selectAllHome();

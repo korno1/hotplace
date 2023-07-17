@@ -180,9 +180,6 @@
     			<h2>현재 주소</h2>
     			<p id="currentAddress"></p>
 			</div>
-			<c:if test="${showAddButton}">
-                <a href="insert.do">매장 추가</a>
-            </c:if>
 		</form>
 	</div>
 

@@ -1,0 +1,77 @@
+.shop-container {
+    width: 1100px;
+    display: flex;
+    overflow-x: hidden;
+    position: relative;
+    min-width: 1100px;
+    justify-Content: space-between;
+}
+
+.shop-item {
+    flex-shrink: 0;
+    width: 290px;
+    height: 290px;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid black;
+    cursor:pointer;
+}
+
+.shop-items {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.left-arrow,
+.right-arrow {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor:pointer;
+}
+
+.shop-item .symbolImage {
+    width: 250px;
+    height: 250px;
+    margin-left : 20px;
+    margin-bottom: 10px;
+}
+
+.shopTitle {
+	textAlign: left;
+}
+
+.shopInfo {
+	display: flex;
+	justify-Content: space-between;
+	margin-left: 20px;
+	margin-right: 20px
+	
+}
+
+.modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 9999;
+}
+
+.modal iframe {
+	width: 840px;
+	height: 890px;
+	border: none;
+	background-color: white;
+	border-radius:25px;
+}

@@ -19,6 +19,10 @@
 	
 <script>
 
+	var linkElement = document.querySelector('link[href$="selectOne.css"]');
+	var cssPath = linkElement.href;
+	console.log("CSS 파일 경로: " + cssPath);
+
 	function paginate(page) {
 		window.location.href = "selectOne.do?num=${shoVO.num}&page=" + page;
 	}

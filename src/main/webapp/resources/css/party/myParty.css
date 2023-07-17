@@ -1,70 +1,115 @@
-.board {
-	width: calc(100% - 20px);
-	border-top: 1px solid #ccc;
-	border-radius: 5px;
-	padding: 10px;
-	margin-top: 10px;
-	margin-right: 20px;
-	box-sizing: border-box;
-	display: inline-block;
-	vertical-align: top;
-	cursor: pointer;
-}
-
-.pagination {
-	margin-top: 20px;
-	text-align: center;
-}
-
-.pagination-links {
-	display: inline-block;
-}
-
-.pagination a {
-	margin-right: 10px;
-	text-decoration: none;
-	color: #000;
-}
-
-.pagination a:hover {
-	color: blue;
-}
-
-.board-row {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: center; 
-	margin-bottom: 5px;
-}
-
-.board-cell {
-	flex: 1;
-	padding: 5px;
-}
-
-.board-title {
-	font-weight: bold;
-}
-
-.board-content {
-	margin-top: 10px;
-	border-top: 1px solid #ccc;
-	padding-top: 10px;
-}
-
-.board-content-cell {
-	padding: 5px;
-}
-
-insert-from {
-	width: calc(100% - 20px);
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	padding: 10px;
+.title {
+	font-size: 24px;
+	border: 0px solid #192B53;
 	margin-bottom: 20px;
-	margin-right: 20px;
+}
+
+.header {
+	display: flex;
+	border-bottom: 1px solid #ccc;
+	justify-content: space-between;
+	padding-bottom: 20px
+}
+
+.userPage {
+	height: 40px;
+	border-radius: 20px;
+	padding: 5px 40px;
+	border: 1px solid #192B53;
+	color: #192B53;
+	cursor: pointer;
+	background-color: transparent;
+	margin-top: auto;
+}
+
+.userPage:hover {
+	background-color: #192B53;
+	color: #FFFFFF;
+}
+
+.board {
+	width: 100%;
+	border-bottom: 1px solid #ccc;
+	padding-top: 10px;
+	margin-top: 20px;
 	box-sizing: border-box;
 	display: inline-block;
 	vertical-align: top;
+}
+
+.userImpo {
+	display: flex;
+	border: 0px solid #192B53;
+/* 	justify-content: space-between; */
+}
+
+.userName {
+	margin-top: 10px;
+	margin-left: 16px;
+}
+
+.status {
+	height: 20px;
+	margin-top: 9px;
+	margin-left: 16px;
+	border: 1px solid #DC3545;
+	border-radius: 20px;
+	padding: 1px 5px;
+	background-color: #DC3545 ;
+	color: #FFF;
+}
+
+.content {
+	display: flex;
+	border: 0px solid #192B53;
+	justify-content: space-between;
+}
+
+.par-title {
+	width: 900px;
+	border: 0px solid #192B53;
+	margin-top: 10px;
+}
+
+.view {
+	border-radius: 20px;
+	padding: 10px 10px;
+	border: 1px solid #192B53;
+	color: #192B53;
+	cursor: pointer;
+	background-color: transparent;
+	margin: 0 auto;
+}
+
+.view:hover {
+	background-color: #192B53;
+	color: #FFFFFF;
+}
+
+.applicants {
+	margin-top: 9px;
+	margin-left: 780px;
+}
+
+.par_paging {
+	text-align: center;
+	margin-top: 20px;
+	display: flex;
+	justify-content: center;
+	border: 0px solid #192B53;
+}
+
+.par_back_page, .par_next_page {
+	margin-left: 10px;
+	border-radius: 20px;
+	padding: 10px 20px;
+	border: 1px solid #192B53;
+	color: #192B53;
+	cursor: pointer;
+	background-color: transparent;
+}
+
+.par_back_page:hover, .par_next_page:hover {
+	background-color: #192B53;
+	color: #FFFFFF;
 }

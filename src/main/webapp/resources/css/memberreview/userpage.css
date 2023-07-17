@@ -68,7 +68,7 @@
 }
 
 .par_back_page, .par_next_page, .mre_back_page, .mre_next_page {
-	margin-right: 10px;
+	margin-left: 10px;
 	border-radius: 20px;
 	padding: 10px 20px;
 	border: 1px solid #192B53;
@@ -83,11 +83,21 @@
 	color: #FFFFFF;
 }
 
+.mre_paging {
+	display: flex;
+	justify-content: flex-end;
+	border: 0px solid #192B53;
+}
+
+.mre_back_page {
+	margin-left: 400px;	
+}
+
 .formContainer {
+	margin-left: 300px;
 	border-radius: 20px;
 	padding: 10px 20px;
 	border: 1px solid #192B53;
-	margin-left: auto;
 	color: #192B53;
 	cursor: pointer;
 	background-color: transparent;

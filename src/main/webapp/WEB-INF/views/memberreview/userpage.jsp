@@ -6,9 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>유저페이지</title>
-<link rel="stylesheet" href="/hotplace//resources/css/memberreview/userpage.css?after" >
-<link rel="stylesheet" href="/hotplace//resources/css/memberreview/userpage_json.css?after" >
-<link rel="stylesheet" href="/hotplace//resources/css/party/selectAll.css?after" >
+<link rel="stylesheet" href="/hotplace/resources/css/memberreview/userpage.css?after" >
+<link rel="stylesheet" href="/hotplace/resources/css/memberreview/userpage_json.css?after" >
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -153,14 +152,14 @@ function mre_selectAll(memberreviewNum=0, mrePage){ // ${param.memberreviewNum}
 			
 			$.each(vos,function(index,vo){
 // 				console.log('ajax...success:', vo);
-				let tag_td = `<div class="board-cell">\${vo.content}</div>`;
 				
 				let ratedValue = parseInt(vo.rated);
 // 				console.log('vo.rated:', vo.rated);
 // 				console.log('vo.partynum:', vo.partyNum);
 
+				let tag_td = `\${vo.content}`;
 				let tag_rated = `
-			        <div id="starRating" class="board-cell">
+			        <div id="starRating">
 		            <ul class="star-rating"  data-rating="\${ratedValue}">
 		                <li class="star fa fa-star"></li>
 		                <li class="star fa fa-star"></li>
@@ -172,17 +171,16 @@ function mre_selectAll(memberreviewNum=0, mrePage){ // ${param.memberreviewNum}
 		       
 				// userNum==vo.userNum
 				if(memberreviewNum==vo.memberreviewNum) {
-					tag_td = `<div class="board-cell"><input type="text" value="\${vo.content}" id="input_content"><button onclick="updateOK(\${vo.memberreviewNum})">수정완료</button></div>`;
+					tag_td = `<input type="text" value="\${vo.content}" id="input_content"><button onclick="updateOK(\${vo.memberreviewNum})">수정완료</button>`;
 					tag_rated = `
-				        <div id="starRating">
-			            <ul class="star-rating"  data-rating="\${ratedValue}">
-			                <li class="star fa fa-star" data-rating="1"></li>
-			                <li class="star fa fa-star" data-rating="2"></li>
-			                <li class="star fa fa-star" data-rating="3"></li>
-			                <li class="star fa fa-star" data-rating="4"></li>
-			                <li class="star fa fa-star" data-rating="5"></li>
-			            </ul>
-			        </div>`;
+				            <ul class="star-rating"  data-rating="\${ratedValue}">
+				                <li class="star fa fa-star" data-rating="1"></li>
+				                <li class="star fa fa-star" data-rating="2"></li>
+				                <li class="star fa fa-star" data-rating="3"></li>
+				                <li class="star fa fa-star" data-rating="4"></li>
+				                <li class="star fa fa-star" data-rating="5"></li>
+				            </ul>
+			        	`;
 					$(document).ready(function() {
 			            $('.star-rating .star').click(function() {
 			              var rating = $(this).attr('data-rating');
@@ -197,24 +195,24 @@ function mre_selectAll(memberreviewNum=0, mrePage){ // ${param.memberreviewNum}
 				
 				let tag_div = ``;
 				if(vo.writerNum==${num}){ //'${user_id}'===vo.writerNum
-					tag_div = `<div>
-						<button onclick="mre_selectAll(\${vo.userNum},\${vo.memberreviewNum})">수정</button>
-						<button type="button" onclick="deleteOK(\${vo.memberreviewNum})">삭제</button>
-					</div>`;
+					tag_div = `
+						<button class="mre-update" onclick="mre_selectAll(\${vo.userNum},\${vo.memberreviewNum}, mrePage)">수정</button>
+						<button class="mre-delete" onclick="deleteOK(\${vo.memberreviewNum})">삭제</button>
+					`;
 				}
 
 				tag_txt += `
-					<div class="board">
-						<div class="board-row">
+					<div class="mre-post">
+						<div class="mre-userImpo">
 							<img id="preview" width="50px" src="${pageContext.request.contextPath}/resources/ProfileImage/\${vo.writerNum}.png"
 							onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/resources/ProfileImage/default.png';">
-							<div class="board-cell">\${vo.writerName}</div>
-							\${tag_rated}
-							<div class="board-cell">\${vo.wdate}</div>
+							<div class="mre-writerName">\${vo.writerName}</div>
+							<div class="mre-rated" id="starRating">\${tag_rated}</div>
+							<div class="mre-date">\${vo.wdate}</div>
 						</div>
-						<div class="board-content">
-							\${tag_td}
-							<div colspan="3" class="board-content-cell">\${tag_div}</div>
+						<div class="mre-input">
+							<div class="mre-content">\${tag_td}</div>
+							<div class="mre-bt">\${tag_div}</div>
 						</div>
 					</div>
 				`;
@@ -302,6 +300,8 @@ $(document).on('click', '#mre_next_page', function(e) {
 let isFormInserted = false;
 
 function insert() {
+	console.log('insert()...');
+	
     if (!isFormInserted) {
 		$('#par_vos').hide();
 		$('#memberreview_list').hide();
@@ -393,24 +393,43 @@ function insertOK() {
 	    
     }
 }//end insertOK
-
-
 	
+function updateOK(memberreviewNum=0){
+	console.log('updateOK()....',memberreviewNum);
+	console.log($('#starRating').val());
 	
-	function updateOK(memberreviewNum=0){
-		console.log('updateOK()....',memberreviewNum);
-		console.log($('#starRating').val());
-		
-		let rated = $('.star-rating .star.active').last().data('rating');
-		
-		$.ajax({
-			url : "memberreview/json/updateOK.do",
+	let rated = $('.star-rating .star.active').last().data('rating');
+	
+	$.ajax({
+		url : "memberreview/json/updateOK.do",
+		data:{
+			memberreviewNum:memberreviewNum,
+			content: $('#input_content').val(),
+			rated: rated
+		},
+		method:'POST',
+		dataType:'json',
+		success : function(obj) {
+			console.log('ajax...success:', obj);
+			if(obj.result==1) mre_selectAll(userNum='\${vo.userNum}');
+		},
+		error:function(xhr,status,error){
+			console.log('xhr.status:', xhr.status);
+		}
+	});
+	
+}//end updateOK
+	
+function deleteOK(memberreviewNum=0){
+	console.log('deleteOK()....',memberreviewNum);
+	
+  if (confirm("글을 삭제하시겠습니까?")) {
+	  $.ajax({
+			url : "memberreview/json/deleteOK.do",
 			data:{
-				memberreviewNum:memberreviewNum,
-				content: $('#input_content').val(),
-				rated: rated
+				memberreviewNum:memberreviewNum
 			},
-			method:'POST',
+			method:'GET',
 			dataType:'json',
 			success : function(obj) {
 				console.log('ajax...success:', obj);
@@ -420,31 +439,9 @@ function insertOK() {
 				console.log('xhr.status:', xhr.status);
 			}
 		});
-		
-	}//end updateOK
-	
-	function deleteOK(memberreviewNum=0){
-		console.log('deleteOK()....',memberreviewNum);
-		
-	  if (confirm("글을 삭제하시겠습니까?")) {
-		  $.ajax({
-				url : "memberreview/json/deleteOK.do",
-				data:{
-					memberreviewNum:memberreviewNum
-				},
-				method:'GET',
-				dataType:'json',
-				success : function(obj) {
-					console.log('ajax...success:', obj);
-					if(obj.result==1) mre_selectAll(userNum='\${vo.userNum}');
-				},
-				error:function(xhr,status,error){
-					console.log('xhr.status:', xhr.status);
-				}
-			});
-		    return;
-		  }
-	}//end deleteOK
+	    return;
+	  }
+}//end deleteOK
 	
 function par_selectAll(page){
 	$('#par_vos').show(); // 모임리스트 요소를 보이도록 설정
@@ -526,8 +523,8 @@ function par_selectAll(page){
 		
 		
 		<div class="par_paging" id="par_paging">
-			<button class="par_back_page" id="par_back_page">모임이전</button>
-			<button class="par_next_page" id="par_next_page">모임다음</button>
+			<button class="par_back_page" id="par_back_page">이전</button>
+			<button class="par_next_page" id="par_next_page">다음</button>
 		</div>
 	
 		<div class="mre_paging" id="mre_paging">

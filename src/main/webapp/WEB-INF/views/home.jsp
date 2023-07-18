@@ -9,12 +9,8 @@
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d326b067d6341afa0b918f0c45297208&libraries=services,clusterer"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
     <script>
-    	var linkElement = document.querySelector('link[href$="home.css"]');
-    	var cssPath = linkElement.href;
-    	console.log("CSS 파일 경로: " + cssPath);
-    
    		var isDragging = false;
    		var startX, scrollLeft;
    		
@@ -26,15 +22,15 @@
     
         function slideLeft() {
             var container = document.querySelector('.shop-items');
-            container.scrollLeft -= 800; // Adjust the sliding distance as needed
+            container.scrollLeft -= 800; 
         }
 
         function slideRight() {
             var container = document.querySelector('.shop-items');
-            container.scrollLeft += 800; // Adjust the sliding distance as needed
+            container.scrollLeft += 800; 
         }
         function selectOne(num) {
-            // Redirect to selectOne.do with the provided num parameter
+            
             window.location.href = 'shop/selectOne.do?num=' + num + '&page=1';
         }
 
@@ -104,7 +100,7 @@
                                     },
                                     success: function(response) {
                                         console.log("현재 주소 업데이트 성공");
-                                        updateShopItems(processedAddress); // 현재 주소를 기반으로 목록 업데이트
+                                        updateRecommendedShopItems(); // 현재 주소를 기반으로 목록 업데이트
                                     },
                                     error: function(xhr, status) {
                                         console.log("현재 주소 업데이트 실패");
@@ -135,74 +131,94 @@
         	image.src = 'resources/ShopSymbol/default.png';
         }
         
-        function updateShopItems(currentAddress) {
-            // 현재 주소를 기반으로 20km 이내의 정보만 가져와서 목록 업데이트
+        function updateRecommendedShopItems() {
             $.ajax({
                 type: "GET",
-                url: "home/json/getNearbyShops.do",
+                url: "home/json/getRecommendedShops.do",
                 data: {},
                 success: function(response) {
                     console.log(response);
-                    var shopList = response; // shopList를 response로 변경
+                    var shopLists = response; // shopList를 response로 변경
 
-                    // shop-items 목록 초기화
-                    var shopItems = document.getElementById("shopItems");
-                    shopItems.innerHTML = "";
+                    
 
-                    // shopList를 순회하며 목록 추가
-                    for (var i = 0; i < shopList.length; i++) {
-					    var shop = shopList[i];
+                    var index = 1;
+                    // 추천 카테고리별로 상점 목록 구성
+                    for (var category in shopLists) {
+                    	console.log(index);
+                    	console.log(category);
+                    	console.log("shop"+index+"Items");
+                    	
+                    	// shop-items 목록 초기화
+                        var shopItems = document.getElementById("shop"+index+"Items");
+                        shopItems.innerHTML = "";
+                        
+                        var filteredShops = shopLists[category];
 
-					    // shop-item 요소 생성
-					    var shopItem = document.createElement("div");
-					    shopItem.className = "shop-item";
-					    shopItem.onclick = function() {
-					        selectOne(shop.num);
-						};
+                        // 상점 목록 추가
+                        for (var j = 0; j < filteredShops.length; j++) {
+                            var shop = filteredShops[j];
 
-					    // 이미지 요소 추가
-					    var imageDiv = document.createElement("div");
-						var image = document.createElement("img");
-					    image.id = "symbol";
-						imageDiv.className = "symbolImageContainer";
-    
-					    image.onerror = function() {
-    	    				handleImageError(this);
-    					};
-    
-    					image.src = "resources/ShopSymbol/" + shop.num + ".png";
-					    image.draggable = false;
-					    image.className = "symbolImage";
-					    imageDiv.appendChild(image);
+                            // 상점 아이템 요소 생성
+                            var shopItem = document.createElement("div");
+                            shopItem.className = "shop-item";
+                            shopItem.onclick = function () {
+                                selectOne(shop.num);
+                            };
 
-						// 상점 정보를 감싸는 부모 요소 생성
-					    var shopInfoDiv = document.createElement("div");
-						shopInfoDiv.className = "shopInfo";
-					    
-					    // 상점 이름 추가
-    					var nameDiv = document.createElement("div");
-					    nameDiv.textContent = shop.name;
-					    nameDiv.className = "shopTitle";
-					    shopInfoDiv.appendChild(nameDiv);
-					    
-						 // 거리 정보 추가
-						var distanceDiv = document.createElement("div");
-						distanceDiv.textContent = shop.distance.toFixed(1) + " km";
-					    distanceDiv.className = "shopDistance";
-					    shopInfoDiv.appendChild(distanceDiv);
+                            // 이미지 요소 추가
+                            var imageDiv = document.createElement("div");
+                            var image = document.createElement("img");
+                            image.id = "symbol";
+                            imageDiv.className = "symbolImageContainer";
 
-						// shop-item에 이미지와 이름 추가
-    					shopItem.appendChild(imageDiv);
-    					shopItem.appendChild(shopInfoDiv);
+                            image.onerror = function() {
+                                handleImageError(this);
+                            };
 
-					    // shopItems에 shop-item 추가
-    					shopItems.appendChild(shopItem);
-					}
+                            image.src = "resources/ShopSymbol/" + shop.num + ".png";
+                            image.draggable = false;
+                            image.className = "symbolImage";
+                            imageDiv.appendChild(image);
+
+                            // 상점 정보를 감싸는 부모 요소 생성
+                            var shopInfoDiv = document.createElement("div");
+                            shopInfoDiv.className = "shopInfo";
+
+                            // 상점 이름 추가
+                            var nameDiv = document.createElement("div");
+                            nameDiv.textContent = truncateShopTitle(shop.name);
+                            nameDiv.className = "shopTitle";
+                            shopInfoDiv.appendChild(nameDiv);
+
+                            // 거리 정보 추가
+                            var distanceDiv = document.createElement("div");
+                            distanceDiv.textContent = shop.distance.toFixed(1) + " km";
+                            distanceDiv.className = "shopDistance";
+                            shopInfoDiv.appendChild(distanceDiv);
+
+                            // shop-item에 이미지와 이름 추가
+                            shopItem.appendChild(imageDiv);
+                            shopItem.appendChild(shopInfoDiv);
+
+                            // shopItems에 shop-item 추가
+                            shopItems.appendChild(shopItem);
+                        }
+                        index++;
+                    }
                 },
                 error: function(xhr, status) {
                     console.log("Failed to get nearby shops.");
                 }
             });
+        }
+        
+        function truncateShopTitle(title) {
+            const maxTitleLength = 10;
+            if (title.length > maxTitleLength) {
+                return title.slice(0, maxTitleLength) + "...";
+            }
+            return title;
         }
     </script>
 </head>
@@ -220,12 +236,52 @@
 </div>
 <div>
     <div>
-        <div>집 주변에 이런게 있어요</div>
+        <div>cate1</div>
         <div class="shop-container" onmousedown="startDrag(event)" onmousemove="drag(event)" onmouseup="endDrag()">
     		<div class="arrow left-arrow" onclick="slideLeft()">
         		<img id="prevArrow" width="30px" src="resources/ArrowSource/Left.png">
     		</div>
-    		<div class="shop-items" id="shopItems"></div>
+    		<div class="shop-items" id="shop1Items"></div>
+    		<div class="arrow right-arrow" onclick="slideRight()">
+        		<img id="nextArrow" width="30px" src="resources/ArrowSource/Right.png">
+    		</div>
+		</div>
+		<div>cate2</div>
+		<div class="shop-container" onmousedown="startDrag(event)" onmousemove="drag(event)" onmouseup="endDrag()">
+    		<div class="arrow left-arrow" onclick="slideLeft()">
+        		<img id="prevArrow" width="30px" src="resources/ArrowSource/Left.png">
+    		</div>
+    		<div class="shop-items" id="shop2Items"></div>
+    		<div class="arrow right-arrow" onclick="slideRight()">
+        		<img id="nextArrow" width="30px" src="resources/ArrowSource/Right.png">
+    		</div>
+		</div>
+		<div>cate3</div>
+		<div class="shop-container" onmousedown="startDrag(event)" onmousemove="drag(event)" onmouseup="endDrag()">
+    		<div class="arrow left-arrow" onclick="slideLeft()">
+        		<img id="prevArrow" width="30px" src="resources/ArrowSource/Left.png">
+    		</div>
+    		<div class="shop-items" id="shop3Items"></div>
+    		<div class="arrow right-arrow" onclick="slideRight()">
+        		<img id="nextArrow" width="30px" src="resources/ArrowSource/Right.png">
+    		</div>
+		</div>
+		<div>cate4</div>
+		<div class="shop-container" onmousedown="startDrag(event)" onmousemove="drag(event)" onmouseup="endDrag()">
+    		<div class="arrow left-arrow" onclick="slideLeft()">
+        		<img id="prevArrow" width="30px" src="resources/ArrowSource/Left.png">
+    		</div>
+    		<div class="shop-items" id="shop4Items"></div>
+    		<div class="arrow right-arrow" onclick="slideRight()">
+        		<img id="nextArrow" width="30px" src="resources/ArrowSource/Right.png">
+    		</div>
+		</div>
+		<div>cate5</div>
+		<div class="shop-container" onmousedown="startDrag(event)" onmousemove="drag(event)" onmouseup="endDrag()">
+    		<div class="arrow left-arrow" onclick="slideLeft()">
+        		<img id="prevArrow" width="30px" src="resources/ArrowSource/Left.png">
+    		</div>
+    		<div class="shop-items" id="shop5Items"></div>
     		<div class="arrow right-arrow" onclick="slideRight()">
         		<img id="nextArrow" width="30px" src="resources/ArrowSource/Right.png">
     		</div>

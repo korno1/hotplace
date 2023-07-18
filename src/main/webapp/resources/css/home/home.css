@@ -1,5 +1,5 @@
 .shop-container {
-    width: 1100px;
+    width: 1310px;
     display: flex;
     overflow-x: hidden;
     position: relative;
@@ -9,9 +9,9 @@
 
 .shop-item {
     flex-shrink: 0;
-    width: 290px;
-    height: 290px;
-    margin: 10px;
+    width: 270px;
+    height: 270px;
+    margin: 9px;
     padding: 10px;
     border: 1px solid black;
     cursor:pointer;
@@ -19,6 +19,8 @@
 
 .shop-items {
     display: flex;
+    width: 1300px;
+    margin-left: 9px;
     flex-wrap: nowrap;
     overflow-x: hidden;
     scroll-behavior: smooth;
@@ -26,6 +28,7 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    margin-right: 9px;
 }
 
 .left-arrow,
@@ -37,8 +40,8 @@
 }
 
 .shop-item .symbolImage {
-    width: 250px;
-    height: 250px;
+    width: 230px;
+    height: 230px;
     margin-left : 20px;
     margin-bottom: 10px;
 }
@@ -51,7 +54,7 @@
 	display: flex;
 	justify-Content: space-between;
 	margin-left: 20px;
-	margin-right: 20px
+	margin-right: 20px;
 	
 }
 

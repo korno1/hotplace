@@ -234,7 +234,7 @@ function rejectOK(applicantsNum=0) {
 	<div class="body">
 		<div class="application">
 			<div class="title">
-				<div class="par-title">${vo2.title}(제목)</div>
+				<div class="par-title">${vo2.title}</div>
 			</div>
 			<div class="writerImpo">
 				<div><img width="60px" src="../resources/ProfileImage/${vo2.writerNum}" onerror="this.src='../resources/ProfileImage/default.png'"></div>
@@ -244,25 +244,23 @@ function rejectOK(applicantsNum=0) {
 					<div class="par-wdate">${vo2.wdate}</div>
 				</div>
 			</div>
-			<div class="par-post">
-				<div class="par-row">
-					<div class="par-cell">모집인원</div>
-					<div class="par-date">${vo2.applicants}/${vo2.max}명</div>
-				</div>
-				<div class="par-row">
-					<div class="par-cell">모집마감일</div>
-					<div class="par-date">${vo2.deadLine}</div>
-				</div>
-				<div class="par-row">
-					<div class="par-cell">식당</div>
-					<div class="par-date">${vo2.place}</div>
-				</div>
-				<div class="par-row">
-					<div class="par-cell">모임날짜</div>
-					<div class="par-date">${vo2.timeLimit}</div>
-				</div>
+			<div class="par-row">
+				<div class="par-cell">모집인원</div>
+				<div class="par-date">${vo2.applicants}/${vo2.max}명</div>
 			</div>
-			<div class="par-content">${vo2.content}(내용)</div>
+			<div class="par-row">
+				<div class="par-cell">모집마감일</div>
+				<div class="par-date">${vo2.deadLine}</div>
+			</div>
+			<div class="par-row">
+				<div class="par-cell">식당</div>
+				<div class="par-date">${vo2.place}</div>
+			</div>
+			<div class="par-row">
+				<div class="par-cell">모임날짜</div>
+				<div class="par-date">${vo2.timeLimit}</div>
+			</div>
+			<div class="par-content">${vo2.content}</div>
 			
 			<div class="par_button">
 				<button class="par-update" onclick="location.href='update.do?partyNum=${param.partyNum}'">수정</button>

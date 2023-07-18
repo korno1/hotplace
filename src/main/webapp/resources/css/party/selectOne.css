@@ -49,13 +49,6 @@
 	margin-top: 5px;
 }
 
-*/.par-post {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	border-bottom: 1px solid #ccc;
-	padding: 10px;
-}
-
 .par-row {
 	display: flex;
 }

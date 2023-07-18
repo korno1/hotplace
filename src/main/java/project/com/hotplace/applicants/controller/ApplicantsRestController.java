@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import lombok.extern.slf4j.Slf4j;
 import project.com.hotplace.applicants.model.ApplicantsVO;
 import project.com.hotplace.applicants.service.ApplicantsService;
-import project.com.hotplace.party.model.PartyVO;
 import project.com.hotplace.party.service.PartyService;
 
 /**
@@ -43,9 +42,6 @@ public class ApplicantsRestController {
 	@ResponseBody
 	public String insertOK(ApplicantsVO vo) {
 		log.info("/party/json/AppinsertOK.do...{}", vo);
-		// partyNum = parameter
-		// userNum = session
-		// comments, status = view
 
 		int result = service.insert(vo);
 		
@@ -73,7 +69,6 @@ public class ApplicantsRestController {
 			msg = "{\"result\" : 1}"; // {"result" : 1}
 		}
 		else msg = "{\"result\" : 0}";
-		
 		
 		return msg;
 	}

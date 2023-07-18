@@ -11,6 +11,12 @@
     color: rgb(23, 57, 92);
     font-weight: bold;
 }
+.eve_grade_button:hover{
+/* 	background-color: #eaeded; */
+	background-color: #192B53;
+	color: white;
+}
+
 .eve_button{
 	border-radius: 20px;
 	padding: 10px 40px;
@@ -19,6 +25,11 @@
 	background-color: white;
 	color: rgb(23, 57, 92);
     font-weight: bold;
+}
+.eve_button:hover{
+/*  	background-color: #eaeded; */
+	background-color: #192B53;
+	color: white;
 }
 
 .eve_pre_button, .eve_next_button {
@@ -29,4 +40,10 @@
 	background-color: white;
 	color: rgb(23, 57, 92);
     font-weight: bold;
+}
+
+.eve_pre_button:hover, .eve_next_button:hover{
+/* 	background-color: #eaeded; */
+	background-color: #192B53;
+	color: white;
 }

@@ -30,6 +30,11 @@
 		select * from shop where num = #{num}
 	</select>
 	
+	<select id="SHO_SEARCH_LIST_TEST" parameterType="java.util.Map"
+		resultType="project.com.hotplace.shop.model.ShopVO">
+			SELECT * FROM SHOP WHERE CATE LIKE '%'||#{searchWord}||'%' OR NAME LIKE '%'||#{searchWord}||'%' OR ADDRESS LIKE '%'||#{searchWord}||'%'
+	</select>
+	
 	<select id="SHO_SEARCH_LIST_NAME" parameterType="java.util.Map"
 		resultType="project.com.hotplace.shop.model.ShopVO">
 			select s.*, (

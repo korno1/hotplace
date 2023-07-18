@@ -100,9 +100,10 @@
 </script>
 </head>
 <body>
-	<h3>이벤트</h3>
-<%-- 	<jsp:include page="../top_menujm.jsp"></jsp:include> --%>
-
+	<div class="event_h1_list">
+		<h1>이벤트</h1>
+		<button class="eve_button" onclick="location.href='selectAll.do'">목록</button>
+	</div>
 	
 	
 	<div class="eve_body">

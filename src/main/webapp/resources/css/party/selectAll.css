@@ -49,8 +49,8 @@
 	border: 0px solid #192B53;
 	margin-right: 632px;
 }
-
-.filter-bt {
+ 
+.filter-All, .filter-ing, .filter-end {
 	border-radius: 20px;
 	padding: 5px 20px;
 	border: 1px solid #192B53;
@@ -63,7 +63,9 @@
 	margin-left: 10px;
 } 
 
-.filter-bt:hover {
+.filter-All:hover, 
+.filter-ing:hover, 
+.filter-end:hover {
 	background-color: #192B53;
 	color: #FFFFFF;
 }

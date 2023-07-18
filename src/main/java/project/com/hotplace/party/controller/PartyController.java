@@ -58,6 +58,7 @@ public class PartyController {
 		model.addAttribute("searchKey", searchKey);
 		model.addAttribute("searchWord", searchWord);
 		model.addAttribute("page", page);
+		model.addAttribute("page", page);
 		
 		return "party/selectAll.tiles";
 	}

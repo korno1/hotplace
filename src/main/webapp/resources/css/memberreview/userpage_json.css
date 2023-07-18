@@ -151,8 +151,19 @@
 	color: #FFFFFF;
 }
 
+.formContainer {
+	width: 1000px;
+	border: 1px solid #ccc;
+	padding: 10px;
+	margin: 10px 0px 20px 0px;
+	box-sizing: border-box;
+	display: inline-block;
+	vertical-align: top;
+	overflow: hidden;
+}
+
 .insert-from {
-	width: calc(100% - 20px);
+	width: 1000px;
 	border: 1px solid #ccc;
 	border-radius: 5px;
 	padding: 10px;
@@ -161,6 +172,34 @@
 	box-sizing: border-box;
 	display: inline-block;
 	vertical-align: top;
+}
+
+.insert-rated {
+	margin-right: auto;
+	margin-left: 100px;
+}
+
+.insert-content{
+	width: 500px; 
+	height: 100px;	
+	padding: 0px 10px;
+	border-radius: 15px; 
+	resize: none;
+}
+
+.insert-bt {
+	margin: 20px;
+	border-radius: 20px;
+	padding: 30px 40px;
+	border: 1px solid #192B53;
+	color: #192B53;
+	cursor: pointer;
+	background-color: transparent;
+}
+
+.insert-bt:hover {
+	background-color: #192B53;
+	color: #FFFFFF;
 }
 
 .star-rating {

@@ -16,7 +16,7 @@
 			<input type="hidden" name="partyNum" value="${param.partyNum}">
 			
 			<div class="par-title">
-				<input type="text" name="title" id="title" value="${vo2.title}">
+				<input type="text" name="title" id="title" value="${vo2.title}" required>
 			</div>
 			
 			<div class="writerImpo">
@@ -34,7 +34,7 @@
 			
 			<div class="par-row">
 				<div class="par-cell">모집인원</div>
-				<select name="max" id="max" class="par-date">
+				<select name="max" id="max" class="par-date" required>
 							<option hidden="" value="${vo2.max}" selected>${vo2.max}명</option>
 							<option value="1">1명</option>
 							<option value="2">2명</option>
@@ -50,19 +50,19 @@
 			</div>
 			<div class="par-row">
 				<div class="par-cell">모집마감일</div>
-				<input class="par-date" type="datetime-local" name="deadLine" id="deadLine" value="${vo2.deadLine}">
+				<input class="par-date" type="datetime-local" name="deadLine" id="deadLine" value="${vo2.deadLine}" required>
 			</div>
 			<div class="par-row">
 				<div class="par-cell">식당</div>
-				<input class="par-date" type="text" name="place" id="place" value="${vo2.place}">
+				<input class="par-date" type="text" name="place" id="place" value="${vo2.place}" required>
 			</div>
 			<div class="par-row">
 				<div class="par-cell">모임날짜</div>
-				<input class="par-date" type="datetime-local" name="timeLimit" id="timeLimit" value="${vo2.timeLimit}">
+				<input class="par-date" type="datetime-local" name="timeLimit" id="timeLimit" value="${vo2.timeLimit}" required>
 			</div>
 			
 			<div class="par-content">
-				<textarea class="textarea" name="content" id="content">${vo2.content}</textarea>
+				<textarea class="textarea" name="content" id="content" required>${vo2.content}</textarea>
 			</div>
 			<div>
 				<input class="updateOK-bt" type="submit" value="글수정"> 

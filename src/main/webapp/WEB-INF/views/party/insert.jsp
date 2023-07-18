@@ -17,7 +17,7 @@
 		<div class="body">
 			<input type="hidden" name="writerNum" id="writerNum" value="${num}">
 			<div class="par-title">
-				<input type="text" name="title" id="title" placeholder="제목"
+				<input type="text" name="title" id="title" placeholder="제목" required
 					onfocus="this.placeholder=''" onblur="this.placeholder='제목'">
 			</div>
 			<div class="form-group">
@@ -26,7 +26,7 @@
 						<label for="max">모집인원</label>
 					</div>
 					<div class="par-cell">
-						<select name="max" id="max" class="par-date">
+						<select name="max" id="max" class="par-date" required>
 							<option value="1">1명</option>
 							<option value="2">2명</option>
 							<option value="3">3명</option>
@@ -46,7 +46,7 @@
 					</div>
 					<div class="par-cell">
 						<input class="par-date" type="datetime-local" name="deadLine"
-							id="deadLine">
+							id="deadLine" required>
 					</div>
 				</div>
 				<div class="par-row">
@@ -54,7 +54,7 @@
 						<label for="place">식당</label>
 					</div>
 					<div class="par-cell">
-						<input class="par-date" type="text" name="place" id="place">
+						<input class="par-date" type="text" name="place" id="place" required>
 					</div>
 				</div>
 				<div class="par-row">
@@ -63,16 +63,16 @@
 					</div>
 					<div class="par-cell">
 						<input class="par-date" type="datetime-local" name="timeLimit"
-							id="timeLimit">
+							id="timeLimit" required>
 					</div>
 				</div>
 			</div>
 			<div class="content">
 				<div class="content-title">모임에 대해 설명해주세요</div>
-				<textarea class="textarea" name="content" id="content"></textarea>
+				<textarea class="textarea" name="content" id="content" required></textarea>
 			</div>
 			<div>
-				<input class="insertOK-bt" type="submit" value="글등록">
+				<input class="insertOK-bt" type="submit" value="글등록" required>
 			</div>
 		</div>
 	</form>

@@ -230,7 +230,13 @@ function rejectOK(applicantsNum=0) {
 </script>
 </head>
 <body onload="app_selectAll()">
-
+	<fmt:parseDate var="newDeadLine" value="${vo2.deadLine}"  pattern="yyyy-MM-dd HH:mm:ss.SSS" />
+	<fmt:formatDate var="deadLine" value="${newDeadLine}" pattern="yyyy-MM-dd HH:mm" />
+	<fmt:parseDate var="newTimeLimit" value="${vo2.timeLimit}"  pattern="yyyy-MM-dd HH:mm:ss.SSS" />
+	<fmt:formatDate var="timeLimit" value="${newTimeLimit}" pattern="yyyy-MM-dd HH:mm" />
+	<fmt:parseDate var="newWdate" value="${vo2.wdate}"  pattern="yyyy-MM-dd HH:mm:ss.SSS" />
+	<fmt:formatDate var="wdate" value="${newWdate}" pattern="yyyy-MM-dd HH:mm" />
+	
 	<div class="body">
 		<div class="application">
 			<div class="title">
@@ -241,7 +247,7 @@ function rejectOK(applicantsNum=0) {
 				<div class="par-name"><a href="/hotplace/userpage.do?num=${vo2.writerNum}">${vo2.writerName}</a></div>
 				<div>
 					<div class="par-views">${vo2.views}</div>
-					<div class="par-wdate">${vo2.wdate}</div>
+					<div class="par-wdate">작성일 ${wdate}</div>
 				</div>
 			</div>
 			<div class="par-row">
@@ -250,7 +256,7 @@ function rejectOK(applicantsNum=0) {
 			</div>
 			<div class="par-row">
 				<div class="par-cell">모집마감일</div>
-				<div class="par-date">${vo2.deadLine}</div>
+				<div class="par-date">${deadLine}</div>
 			</div>
 			<div class="par-row">
 				<div class="par-cell">식당</div>
@@ -258,7 +264,7 @@ function rejectOK(applicantsNum=0) {
 			</div>
 			<div class="par-row">
 				<div class="par-cell">모임날짜</div>
-				<div class="par-date">${vo2.timeLimit}</div>
+				<div class="par-date">${timeLimit}</div>
 			</div>
 			<div class="par-content">${vo2.content}</div>
 			

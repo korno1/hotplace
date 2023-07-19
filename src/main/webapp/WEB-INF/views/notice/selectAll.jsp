@@ -11,9 +11,6 @@
 <link rel="stylesheet" href="../resources/css/notice/list.css?after">
 <link rel="stylesheet" href="../resources/css/notice/button.css?after">
 <script type="text/javascript"> 
-// 	$(function(){
-// 		 history.replaceState({}, null, location.pathname); 
-// 	})
 
 	// a 태그로 이동 시 post 전송
 	function listView(searchKey, searchWord, page){
@@ -84,7 +81,6 @@
 				<fmt:parseDate var="dateFmt" value="${vo.wdate}"  pattern="yyyy-MM-dd HH:mm:ss.SSS" />
 				<fmt:formatDate var="fmtwdate" value="${dateFmt}" pattern="yyyy-MM-dd" />
 				
-<%-- 				<div class="not_selectOne" onclick="location.href='selectOne.do?num=${vo.num}'" style="cursor:pointer"> --%>
 				<div class="not_selectOne" onclick="selectOneForm(${vo.num})" style="cursor:pointer">
 					<div class="not_content_title">${vo.title}</div>
 					<div class="not_content_writer">${vo.writer}</div>
@@ -112,7 +108,6 @@
 				<button class="pre_page" id="pre_page">이전</button>
 				<button class="next_page" id="next_page">다음</button>
 				
-<!-- 				<a href="insert.do">글작성</a> -->
 		</div>
 	</div>
 	
@@ -151,24 +146,6 @@
 	</script>
 	
 	
-<!-- 		<div> -->
-<!-- 			<ul style="list-style:none"> -->
-<!-- 				<li> -->
-<!-- 					<div style="display:table-cell"> -->
-<!-- 						<span>제목</span> -->
-<!-- 					</div> -->
-<!-- 					<div style="display:table-cell"> -->
-<!-- 						<span>작성자</span> -->
-<!-- 					</div> -->
-<!-- 					<div style="display:table-cell"> -->
-<!-- 						<span>작성일</span> -->
-<!-- 					</div> -->
-<!-- 					<div style="display:table-cell"> -->
-<!-- 						<span>조회수</span> -->
-<!-- 					</div> -->
-<!-- 				</li> -->
-<!-- 			</ul> -->
-<!-- 		</div> -->
 	
 </body>
 </html>

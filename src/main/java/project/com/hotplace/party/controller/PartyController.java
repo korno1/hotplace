@@ -28,14 +28,24 @@ public class PartyController {
 	}
 	
 	@RequestMapping(value = "/party/selectAll.do", method = RequestMethod.GET)
-	public String selectAll(Model model) {
+	public String selectAll(String searchKey, String searchWord, Integer page, Integer status, Model model) {
 		log.info("/par_selectAll.do...");
 		
-		int page = 1;
-		int status =0;
-		String searchKey = "title";
-		String searchWord = "";
+		if(page == null) {
+			page = 1;
+		}
 		
+		if(status == null) {
+			status = 0;
+		}
+		
+		if(searchKey == null) {
+			searchKey = "title";
+		}
+		
+		if(searchWord == null) {
+			searchWord = "";
+		}
 		
 		List<PartyVO> vos = service.searchList(searchKey, searchWord, page, status);
 		log.info("vos: {}", vos);
@@ -118,7 +128,6 @@ public class PartyController {
 		
 		vo.setTimeLimit(vo.getTimeLimit().replace("T", " "));
 		vo.setDeadLine(vo.getDeadLine().replace("T", " "));
-		vo.setWriterNum(3);
 		
 		int result = service.insert(vo);
 		log.info("result: {}", result);

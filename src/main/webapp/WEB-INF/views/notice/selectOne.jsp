@@ -28,6 +28,7 @@
 		
 	});
 	
+	// update.jsp로 이동
 	function updateForm(num){
 		var form = document.createElement("form");
 	    form.setAttribute("method", "post");
@@ -81,7 +82,6 @@
 		
 		<div class="up_del_button">
 			<div>
-<%-- 				<button type="button" class="not_grade_button" onclick="location.href='update.do?num=${param.num}'">수정</button> --%>
 				<button type="button" class="not_grade_button" onclick="updateForm(${vo2.num})">수정</button>
 				<button type="button" class="not_grade_button" id="delButton">삭제</button>
 			</div>

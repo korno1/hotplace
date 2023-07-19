@@ -10,7 +10,7 @@
 }
 
 .faq_div{
-	width: 1100px;
+	width: 1000px;
 }
 
 .faq_title{
@@ -40,8 +40,8 @@
 }
 
 .faq_con{
-	padding-top: 10px;
-	margin-left: 50px;
+	padding-top: 20px;
+	margin: 0 0 20px 35px;
 	min-height: 100px;
 }
 

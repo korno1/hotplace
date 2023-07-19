@@ -64,7 +64,6 @@
 </head>
 <body>
 	<h1>공지사항</h1>
-<%-- 	<jsp:include page="../top_menujm.jsp"></jsp:include> --%>
 	<form action="updateOK.do" method="post" enctype="multipart/form-data" id="not_updateOK">
 	<input type="hidden" name="num" value="${param.num}">
 	<fmt:parseDate var="dateFmt" value="${vo2.wdate}"  pattern="yyyy-MM-dd HH:mm:ss.SSS" />
@@ -176,45 +175,6 @@
 		
 		
 		
-// 		ClassicEditor
-// 	    .create(document.querySelector('#content'), {
-// 	        language: "ko",
-// 	    })
-// 	    .then(content => {
-// 	    	let previousContent = content.getData();
-// 	    	console.log("precontent:", previousContent);
-// 	        content.editing.view.document.on('keyup', () => {
-// 	            var str = content.getData();
-// 	            var str_len = str.length;
-// 	            var maxByte = 100;
-// 	            var rbyte = 0;
-// 	            var rlen = 0;
-// 	            var one_char = "";
-// 	            var str2 = "";
-
-// 	            for(var i = 0; i < str_len; i++) {
-// 	                one_char = str.charAt(i);
-// 	                if (escape(one_char).length > 4) {
-// 	                    rbyte += 3; // 한글 3Byte
-// 	                } else {
-// 	                    rbyte++; // 영문 등 나머지 1Byte
-// 	                }
-// 	                if (rbyte <= maxByte) {
-// 	                    rlen = i + 1; // return할 문자열 갯수
-// 	                }
-// 	            }
-// 	            if (rbyte > maxByte) {
-// 	                alert("메세지는 최대 " + maxByte + "byte를 초과할 수 없습니다.")
-// // 	                str2 = str.substr(0, rlen); // 문자열 자르기
-// 					str2 = previousContent;
-// 	                console.log('str2:', str2);
-// 	                content.setData(str2);
-// 	            } else {
-// 	                $('#checkby').html(rbyte);
-// 	                previousContent = str;
-// 	            }
-// 	        });
-// 	    });
 		</script>
 	
 </body>

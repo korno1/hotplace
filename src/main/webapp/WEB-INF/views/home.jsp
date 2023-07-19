@@ -40,11 +40,11 @@
         	  scrollLeft = document.getElementById('shop' + index + 'Items').scrollLeft;
         	}
 
-        function drag(event) {
+        function drag(event, index) {
             if (!isDragging) return;
             var x = event.clientX;
             var walk = (x - startX) * 2; // 슬라이딩 속도 조절을 위해 스칼라 값 조정
-            document.getElementById('shopItems').scrollLeft = scrollLeft - walk;
+            document.getElementById('shop' + index + 'Items').scrollLeft = scrollLeft - walk;
         }
 
         function endDrag() {
@@ -249,7 +249,7 @@
 <div>
     <div>
         <div class="cate1"></div>
-        <div class="shop-container" onmousedown="startDrag(event)" onmousemove="drag(event)" onmouseup="endDrag()">
+        <div class="shop-container" onmousedown="startDrag(event,1)" onmousemove="drag(event,1)" onmouseup="endDrag()">
     		<div class="arrow left-arrow" onclick="slideLeft()">
         		<img id="prevArrow" width="30px" src="resources/ArrowSource/Left.png">
     		</div>
@@ -259,7 +259,7 @@
     		</div>
 		</div>
 		<div class="cate2"></div>
-		<div class="shop-container" onmousedown="startDrag(event)" onmousemove="drag(event)" onmouseup="endDrag()">
+		<div class="shop-container" onmousedown="startDrag(event,2)" onmousemove="drag(event,2)" onmouseup="endDrag()">
     		<div class="arrow left-arrow" onclick="slideLeft()">
         		<img id="prevArrow" width="30px" src="resources/ArrowSource/Left.png">
     		</div>
@@ -269,7 +269,7 @@
     		</div>
 		</div>
 		<div class="cate3"></div>
-		<div class="shop-container" onmousedown="startDrag(event)" onmousemove="drag(event)" onmouseup="endDrag()">
+		<div class="shop-container" onmousedown="startDrag(event,3)" onmousemove="drag(event,3)" onmouseup="endDrag()">
     		<div class="arrow left-arrow" onclick="slideLeft()">
         		<img id="prevArrow" width="30px" src="resources/ArrowSource/Left.png">
     		</div>
@@ -279,7 +279,7 @@
     		</div>
 		</div>
 		<div class="cate4"></div>
-		<div class="shop-container" onmousedown="startDrag(event)" onmousemove="drag(event)" onmouseup="endDrag()">
+		<div class="shop-container" onmousedown="startDrag(event,4)" onmousemove="drag(event,4)" onmouseup="endDrag()">
     		<div class="arrow left-arrow" onclick="slideLeft()">
         		<img id="prevArrow" width="30px" src="resources/ArrowSource/Left.png">
     		</div>
@@ -289,7 +289,7 @@
     		</div>
 		</div>
 		<div class="cate5"></div>
-		<div class="shop-container" onmousedown="startDrag(event)" onmousemove="drag(event)" onmouseup="endDrag()">
+		<div class="shop-container" onmousedown="startDrag(event,5)" onmousemove="drag(event,5)" onmouseup="endDrag()">
     		<div class="arrow left-arrow" onclick="slideLeft()">
         		<img id="prevArrow" width="30px" src="resources/ArrowSource/Left.png">
     		</div>

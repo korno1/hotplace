@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import lombok.extern.slf4j.Slf4j;
 import project.com.hotplace.shop.model.ShopVO;
 import project.com.hotplace.shop.service.ShopService;
+import project.com.hotplace.shop.util.ShopUtil;
 import project.com.hotplace.shopreview.service.ShopReviewService;
 
 @Slf4j
@@ -45,20 +47,53 @@ public class ShopRestController {
 	@ResponseBody
 	public Map<String, Object> selectAll(Model model, String searchKey, String searchWord, int pageNum) {
 		log.info("/selectAll.do");
-		log.info("searchKey:{}",searchKey);
-		log.info("searchWord:{}",searchWord);
+	    log.info("searchWord:{}", searchWord);
+	    
+	    List<ShopVO> vos = service.searchListTest(searchWord);
+	    
+	    
+	    double latitude = Double.parseDouble(session.getAttribute("latitude").toString());
+		double longitude = Double.parseDouble(session.getAttribute("longitude").toString());
 		
-		List<ShopVO> vos = service.selectAll(searchKey,searchWord, pageNum);
+		vos.sort(new Comparator<ShopVO>() {
+		    @Override
+		    public int compare(ShopVO vo1, ShopVO vo2) {
+		        if (vo1 == null || vo2 == null) {
+		            return 0; // 두 요소 모두 null이라면 순서 변경 없음
+		        }
+		        // 좌표 계산
+		        double distance1 = ShopUtil.calculateDistance(latitude, longitude, vo1.getLoc_y(), vo1.getLoc_x());
+		        double distance2 = ShopUtil.calculateDistance(latitude, longitude, vo2.getLoc_y(), vo2.getLoc_x());
+		        
+		        log.info("{}", distance1);
+		        log.info("{}", distance2);
+
+		        // 거리를 기준으로 오름차순 정렬
+		        return Double.compare(distance1, distance2);
+		    }
+		});
 		
-		List<ShopVO> nextVos = service.selectAll(searchKey,searchWord,pageNum+1);
-		
-		boolean isLast = nextVos.isEmpty();
-		
-		Map<String, Object> response = new HashMap<String, Object>();
-		response.put("vos", vos);
-		response.put("isLast", isLast);
-		
-		return response;
+		log.info("{}", latitude);
+		log.info("{}", longitude);
+	    
+	    log.info("{}", vos);
+
+	    int itemsPerPage = 10;
+	    int startIndex = (pageNum - 1) * itemsPerPage;
+	    int endIndex = Math.min(startIndex + itemsPerPage, vos.size());
+	    List<ShopVO> paginatedVos = vos.subList(startIndex, endIndex);
+	    
+	    boolean isLast = false;
+	    
+	    if (endIndex >= vos.size())
+	    	isLast = true;
+
+	    Map<String, Object> response = new HashMap<String, Object>();
+	    
+	    response.put("vos", paginatedVos);
+	    response.put("isLast", isLast);
+
+	    return response;
 	}
 	
 	@RequestMapping(value = "shop/json/insertOK.do", method = RequestMethod.POST)

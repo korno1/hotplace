@@ -30,15 +30,15 @@
             container.scrollLeft += 800; 
         }
         function selectOne(num) {
-            
+            console.log(num);
             window.location.href = 'shop/selectOne.do?num=' + num + '&page=1';
         }
 
-        function startDrag(event) {
-            isDragging = true;
-            startX = event.clientX;
-            scrollLeft = document.getElementById('shopItems').scrollLeft;
-        }
+        function startDrag(event, index) {
+        	  isDragging = true;
+        	  startX = event.clientX;
+        	  scrollLeft = document.getElementById('shop' + index + 'Items').scrollLeft;
+        	}
 
         function drag(event) {
             if (!isDragging) return;
@@ -139,15 +139,16 @@
                 success: function(response) {
                     console.log(response);
                     var shopLists = response; // shopList를 response로 변경
-
-                    
-
                     var index = 1;
+                    
                     // 추천 카테고리별로 상점 목록 구성
                     for (var category in shopLists) {
                     	console.log(index);
                     	console.log(category);
                     	console.log("shop"+index+"Items");
+                    	
+                    	 var categoryTitle = document.querySelector('.cate' + index);
+                         categoryTitle.textContent = category;
                     	
                     	// shop-items 목록 초기화
                         var shopItems = document.getElementById("shop"+index+"Items");
@@ -159,11 +160,22 @@
                         for (var j = 0; j < filteredShops.length; j++) {
                             var shop = filteredShops[j];
 
+                            console.log("shop!")
+                            console.log(shop);
+                            
                             // 상점 아이템 요소 생성
                             var shopItem = document.createElement("div");
                             shopItem.className = "shop-item";
+                            
+                         // 보이지 않는 div에 num 값을 저장
+                            var numDiv = document.createElement("div");
+                            numDiv.style.display = "none"; // 숨김 처리
+                            numDiv.textContent = shop.num;
+                            shopItem.appendChild(numDiv);
+                            
                             shopItem.onclick = function () {
-                                selectOne(shop.num);
+                            	var num = this.querySelector("div").textContent;
+                                selectOne(num);
                             };
 
                             // 이미지 요소 추가
@@ -236,7 +248,7 @@
 </div>
 <div>
     <div>
-        <div>cate1</div>
+        <div class="cate1"></div>
         <div class="shop-container" onmousedown="startDrag(event)" onmousemove="drag(event)" onmouseup="endDrag()">
     		<div class="arrow left-arrow" onclick="slideLeft()">
         		<img id="prevArrow" width="30px" src="resources/ArrowSource/Left.png">
@@ -246,7 +258,7 @@
         		<img id="nextArrow" width="30px" src="resources/ArrowSource/Right.png">
     		</div>
 		</div>
-		<div>cate2</div>
+		<div class="cate2"></div>
 		<div class="shop-container" onmousedown="startDrag(event)" onmousemove="drag(event)" onmouseup="endDrag()">
     		<div class="arrow left-arrow" onclick="slideLeft()">
         		<img id="prevArrow" width="30px" src="resources/ArrowSource/Left.png">
@@ -256,7 +268,7 @@
         		<img id="nextArrow" width="30px" src="resources/ArrowSource/Right.png">
     		</div>
 		</div>
-		<div>cate3</div>
+		<div class="cate3"></div>
 		<div class="shop-container" onmousedown="startDrag(event)" onmousemove="drag(event)" onmouseup="endDrag()">
     		<div class="arrow left-arrow" onclick="slideLeft()">
         		<img id="prevArrow" width="30px" src="resources/ArrowSource/Left.png">
@@ -266,7 +278,7 @@
         		<img id="nextArrow" width="30px" src="resources/ArrowSource/Right.png">
     		</div>
 		</div>
-		<div>cate4</div>
+		<div class="cate4"></div>
 		<div class="shop-container" onmousedown="startDrag(event)" onmousemove="drag(event)" onmouseup="endDrag()">
     		<div class="arrow left-arrow" onclick="slideLeft()">
         		<img id="prevArrow" width="30px" src="resources/ArrowSource/Left.png">
@@ -276,7 +288,7 @@
         		<img id="nextArrow" width="30px" src="resources/ArrowSource/Right.png">
     		</div>
 		</div>
-		<div>cate5</div>
+		<div class="cate5"></div>
 		<div class="shop-container" onmousedown="startDrag(event)" onmousemove="drag(event)" onmouseup="endDrag()">
     		<div class="arrow left-arrow" onclick="slideLeft()">
         		<img id="prevArrow" width="30px" src="resources/ArrowSource/Left.png">

@@ -7,12 +7,9 @@
 <head>
 <meta charset="UTF-8">
 <title>모임리스트</title>
-<link rel="stylesheet" href="/hotplace/resources/css/party/selectAll.css?after" >
+<link rel="stylesheet" href="/hotplace//resources/css/party/selectAll.css?after" >
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
-//$(function(){
-//	 history.replaceState({}, null, location.pathname); 
-//})
 
 function listView(searchKey, searchWord, page){
 	    let f = document.createElement('form');
@@ -47,7 +44,6 @@ function listView(searchKey, searchWord, page){
 </head>
 <body>
 	<div class="party-body">
-
 		<div class="search-form">
 			<form action="searchList.do" method="post">
 				<select name="searchKey" class="par-searchKey">
@@ -64,13 +60,18 @@ function listView(searchKey, searchWord, page){
 
 		<div class="filter">
 			<div class="title">모임리스트</div>
-			<button class="filter-bt" onclick="location.href='selectAll.do?searchKey=${searchKey}&searchWord=${searchWord}&page=1&status=0'">전체</button>
-			<button class="filter-bt" onclick="location.href='selectAll.do?searchKey=${searchKey}&searchWord=${searchWord}&page=1&status=1'">모집중</button>
-			<button class="filter-bt" onclick="location.href='selectAll.do?searchKey=${searchKey}&searchWord=${searchWord}&page=1&status=2'">모집완료</button>
+			<button class="filter-All" onclick="location.href='selectAll.do?searchKey=${searchKey}&searchWord=${searchWord}&page=1&status=0'">전체</button>
+			<button class="filter-ing" onclick="location.href='selectAll.do?searchKey=${searchKey}&searchWord=${searchWord}&page=1&status=1'">모집중</button>
+			<button class="filter-end" onclick="location.href='selectAll.do?searchKey=${searchKey}&searchWord=${searchWord}&page=1&status=2'">모집완료</button>
 		</div>
 
 		<div class="par-selectAll">
 			<c:forEach var="vo" items="${vos}">
+				<fmt:parseDate var="newDeadLine" value="${vo.deadLine}"  pattern="yyyy-MM-dd HH:mm:ss.SSS" />
+				<fmt:formatDate var="deadLine" value="${newDeadLine}" pattern="yyyy-MM-dd HH:mm" />
+				<fmt:parseDate var="newTimeLimit" value="${vo.timeLimit}"  pattern="yyyy-MM-dd HH:mm:ss.SSS" />
+				<fmt:formatDate var="timeLimit" value="${newTimeLimit}" pattern="yyyy-MM-dd HH:mm" />
+			
 				<div class="par-post">
 					<div class="par-status">${vo.applicants}/${vo.max}</div>
 					<div class="par-title">[${vo.place}] ${vo.title}</div>
@@ -81,8 +82,8 @@ function listView(searchKey, searchWord, page){
 							<div>주최자</div>
 						</div>
 						<div class="par-data">
-							<div>${vo.deadLine}</div>
-							<div>${vo.timeLimit}</div>
+							<div>${deadLine}</div>
+							<div id="timeLimit">${timeLimit}</div>
 							<div>${vo.writerName}</div>
 						</div>
 					</div>
@@ -100,34 +101,35 @@ function listView(searchKey, searchWord, page){
 		</div>
 	</div>
 
-	<script type="text/javascript">
-	if(${page}==1){
-		$('#par_back_page').click(function(){
-			alert('첫번째 페이지입니다.');
-			return false;
-		});
-		$('#par_next_page').click(function(){
-			listView('${searchKey}', '${searchWord}', ${page+1});
-		});
-	}
-	else if((${page}*6) >= ${cnt}){
-		$('#par_next_page').click(function(){
-			alert('마지막 페이지입니다.');
-			return false;
-		});
-		$('#par_back_page').click(function(){
-			listView('${searchKey}', '${searchWord}', ${page-1})
-		});
-	}
-	else{
-		$('#par_next_page').click(function(){
-			listView('${searchKey}', '${searchWord}', ${page+1});
-		});
-		$('#par_back_page').click(function(){
-			listView('${searchKey}', '${searchWord}', ${page-1})
-		});
-	}
-	</script>
+<script type="text/javascript">
+
+if(${page}==1){
+	$('#par_back_page').click(function(){
+		alert('첫번째 페이지입니다.');
+		return false;
+	});
+	$('#par_next_page').click(function(){
+		listView('${searchKey}', '${searchWord}', ${page+1});
+	});
+}
+else if((${page}*6) >= ${cnt}){
+	$('#par_next_page').click(function(){
+		alert('마지막 페이지입니다.');
+		return false;
+	});
+	$('#par_back_page').click(function(){
+		listView('${searchKey}', '${searchWord}', ${page-1})
+	});
+}
+else{
+	$('#par_next_page').click(function(){
+		listView('${searchKey}', '${searchWord}', ${page+1});
+	});
+	$('#par_back_page').click(function(){
+		listView('${searchKey}', '${searchWord}', ${page-1})
+	});
+}
+</script>
 	
 </body>
 </html>

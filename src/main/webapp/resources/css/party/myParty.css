@@ -16,15 +16,10 @@
 	border-radius: 20px;
 	padding: 5px 40px;
 	border: 1px solid #192B53;
-	color: #192B53;
+	color: #FFF;
 	cursor: pointer;
-	background-color: transparent;
-	margin-top: auto;
-}
-
-.userPage:hover {
 	background-color: #192B53;
-	color: #FFFFFF;
+	margin-top: auto;
 }
 
 .board {

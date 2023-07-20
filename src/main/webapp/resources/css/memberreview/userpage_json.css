@@ -245,3 +245,11 @@
 .star-rating .star.selected {
 	color: gold;
 }
+
+.update-star {
+	display: inline-block;
+}
+
+.update-star .star.selected {
+	color: gold;
+}

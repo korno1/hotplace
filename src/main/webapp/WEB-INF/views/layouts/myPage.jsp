@@ -13,7 +13,7 @@
 		</div>
 		<div class="partyWrap leftWrap">
 			<div class="partyTitle leftTitle">모임 관리</div>
-			<div class="partyInfo leftMenu">내 모임 정보</div>
+			<div class="partyInfo leftMenu">내 신청 정보</div>
 			<div class="partyAll leftMenu">모임 정보</div>
 		</div>
 		<div class="memberWrap leftWrap">

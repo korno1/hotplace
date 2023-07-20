@@ -149,7 +149,7 @@ function mre_selectAll(userNum=0, memberreviewNum=0, mrePage){ // ${param.member
 			
 			$.each(vos,function(index,vo){
 				let wdate = vo.wdate.substring(0,16);
-				let ratedValue = parseInt(vo.rated);
+				let ratedValue = vo.rated;
 // 				console.log('ajax...success:', vo);
 				
 // 				console.log('vo.rated:', vo.rated);
@@ -167,13 +167,16 @@ function mre_selectAll(userNum=0, memberreviewNum=0, mrePage){ // ${param.member
 		            </ul>
 		        </div>`;
 		       
-				console.log('vo.memberreviewNum:', vo.memberreviewNum);
-				console.log('memberreviewNum:', memberreviewNum);
+// 				console.log('vo.memberreviewNum:', vo.memberreviewNum);
+// 				console.log('memberreviewNum:', memberreviewNum);
 				// userNum==vo.userNum
 				if(memberreviewNum==vo.memberreviewNum) {
+					console.log('ratedValue:', ratedValue);
+					
 					tag_td = `<input class="update-content" type="text" value="\${vo.content}" id="input_content" onkeyup="contentCheckByte(this, 500)"><button class="mre-updateOK" onclick="updateOK(\${vo.memberreviewNum})">수정완료</button>`;
 					tag_rated = `
-				            <ul class="star-rating"  data-rating="\${ratedValue}" required>
+							<input type="hidden" name="rated" id="mre_rated" value="\${ratedValue}" required>
+				            <ul class="update-star"  data-rating="\${ratedValue}">
 				                <li class="star fa fa-star" data-rating="1"></li>
 				                <li class="star fa fa-star" data-rating="2"></li>
 				                <li class="star fa fa-star" data-rating="3"></li>
@@ -183,9 +186,9 @@ function mre_selectAll(userNum=0, memberreviewNum=0, mrePage){ // ${param.member
 			        	`;
 			        	
 					$(document).ready(function() {
-			            $('.star-rating .star').click(function() {
+			            $('.update-star .star').click(function() {
 			              var rating = $(this).attr('data-rating');
-			              $('.star-rating .star').removeClass('active');
+			              $('.update-star .star').removeClass('active');
 			              $(this).prevAll().addBack().addClass('active');
 			              console.log('별점: ' + rating);
 			              $('#mre_rated').val(rating); // input2 폼에 선택한 별점 값 설
@@ -234,7 +237,6 @@ function mre_selectAll(userNum=0, memberreviewNum=0, mrePage){ // ${param.member
 			
 // 			$(".formContainer").css("display", "block");
 			$('#memberreview_list').html(tag_txt);
-			
 			// 별점 채우기
 			$('.star-rating').each(function() {
 			  var ratedValue = parseInt($(this).data('rating'));
@@ -244,6 +246,13 @@ function mre_selectAll(userNum=0, memberreviewNum=0, mrePage){ // ${param.member
 			  }
 			});
 			
+			$('.update-star').each(function() {
+			  var ratedValue = parseInt($(this).data('rating'));
+			  var stars = $(this).find('.star');
+			  for (var i = 0; i < ratedValue; i++) {
+			    $(stars[i]).addClass('active');
+			  }
+			});
 // 			mre_totalCount();
 		},
 		error:function(xhr,status,error){
@@ -422,16 +431,13 @@ function insertOK() {
 	
 function updateOK(memberreviewNum=0){
 	console.log('updateOK()....',memberreviewNum);
-	console.log($('#starRating').val());
-	
-	let rated = $('.star-rating .star.active').last().data('rating');
 	
 	$.ajax({
 		url : "memberreview/json/updateOK.do",
 		data:{
 			memberreviewNum:memberreviewNum,
 			content: $('#input_content').val(),
-			rated: rated
+			rated: $('#mre_rated').val()
 		},
 		method:'POST',
 		dataType:'json',

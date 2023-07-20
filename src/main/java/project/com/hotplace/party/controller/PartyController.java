@@ -163,9 +163,9 @@ public class PartyController {
 		log.info("result: {}", result);
 		
 		if(result==1) {
-			return "redirect:selectAll.do?searchKey=title&searchWord=&page=1";
-		}else {
 			return "redirect:selectOne.do?partyNum=" + vo.getPartyNum();
+		}else {
+			return "redirect:update.do?partyNum=" + vo.getPartyNum();
 		}	
 	}
 	

@@ -17,6 +17,7 @@ let page =1;
 let mrePage = 1;
 let par_count; // 게시글 개수
 let mer_count; // 게시글 개수
+let isFormInserted = false;
 
 $(function(){
 	console.log('onload...');
@@ -131,13 +132,8 @@ $(function(){
 }); // end onload	
 
 
-function mre_selectAll(memberreviewNum=0, mrePage){ // ${param.memberreviewNum} 
-// 	console.log('mer_selectAll()....userNum:',userNum);
-// 	console.log('mer_selectAll()....memverreviewNum:',memberreviewNum);
+function mre_selectAll(userNum=0, memberreviewNum=0, mrePage){ // ${param.memberreviewNum} 
 	
-// 	$('#par_vos').hide(); // 모임리스트 요소를 숨기도록 설정
-// 	$('#memberreview_list').show();
-// 	$('#insertButton').show();
 	$.ajax({
 		url : "memberreview/json/selectAll.do",
 		data:{
@@ -153,10 +149,9 @@ function mre_selectAll(memberreviewNum=0, mrePage){ // ${param.memberreviewNum}
 			
 			$.each(vos,function(index,vo){
 				let wdate = vo.wdate.substring(0,16);
-				
+				let ratedValue = parseInt(vo.rated);
 // 				console.log('ajax...success:', vo);
 				
-				let ratedValue = parseInt(vo.rated);
 // 				console.log('vo.rated:', vo.rated);
 // 				console.log('vo.partynum:', vo.partyNum);
 
@@ -172,9 +167,11 @@ function mre_selectAll(memberreviewNum=0, mrePage){ // ${param.memberreviewNum}
 		            </ul>
 		        </div>`;
 		       
+				console.log('vo.memberreviewNum:', vo.memberreviewNum);
+				console.log('memberreviewNum:', memberreviewNum);
 				// userNum==vo.userNum
 				if(memberreviewNum==vo.memberreviewNum) {
-					tag_td = `<input type="text" value="\${vo.content}" id="input_content" required><button onclick="updateOK(\${vo.memberreviewNum})">수정완료</button>`;
+					tag_td = `<input class="update-content" type="text" value="\${vo.content}" id="input_content" onkeyup="contentCheckByte(this, 500)"><button class="mre-updateOK" onclick="updateOK(\${vo.memberreviewNum})">수정완료</button>`;
 					tag_rated = `
 				            <ul class="star-rating"  data-rating="\${ratedValue}" required>
 				                <li class="star fa fa-star" data-rating="1"></li>
@@ -184,6 +181,7 @@ function mre_selectAll(memberreviewNum=0, mrePage){ // ${param.memberreviewNum}
 				                <li class="star fa fa-star" data-rating="5"></li>
 				            </ul>
 			        	`;
+			        	
 					$(document).ready(function() {
 			            $('.star-rating .star').click(function() {
 			              var rating = $(this).attr('data-rating');
@@ -224,8 +222,15 @@ function mre_selectAll(memberreviewNum=0, mrePage){ // ${param.memberreviewNum}
 			$(".mre-post").css("display", "block");
 			$(".par-post").css("display", "none");
 			
-			$(".mre_paging").css("display", "block");
+			
 			$(".par_paging").css("display", "none");
+			$(".mre_paging").css("display", "block");
+			if (${param.num}==${num}) {
+				$(".mre-insert").off("click"); // click 이벤트를 제거합니다.
+				$(".mre-insert").prop("disabled", true); // 버튼을 비활성화(disabled)합니다.
+				$(".mre-insert").css("background-color", "#ccc");
+				$(".mre-insert").off("mouseenter mouseleave");
+			}
 			
 // 			$(".formContainer").css("display", "block");
 			$('#memberreview_list').html(tag_txt);
@@ -264,7 +269,6 @@ function mre_totalCount(){ // 게시글 개수 계산
 		
 		error:function(xhr,status,error){
 			console.log('xhr.status:', xhr.status);
-			
 		} // end error
 	}) // end ajax;	
 };
@@ -282,7 +286,7 @@ $(document).on('click', '#mre_back_page', function(e) { // 이전 버튼 클릭 
 	console.log('mre_count',mre_count);
     
  	// parameter 수정 후 페이지 다시 로드
-	mre_selectAll(memberreviewNum=0, mrePage)
+	mre_selectAll(userNum='\${vo.userNum}', memberreviewNum=0, mrePage)
 });
 
 $(document).on('click', '#mre_next_page', function(e) {
@@ -299,11 +303,8 @@ $(document).on('click', '#mre_next_page', function(e) {
 	console.log('mrePage...',mrePage);
 	
 	// parameter 수정 후 페이지 다시 로드
-    mre_selectAll(memberreviewNum=0, mrePage)
+    mre_selectAll(userNum='\${vo.userNum}', memberreviewNum=0, mrePage)
 });
-	
-
-let isFormInserted = false;
 
 function insert() {
 	console.log('insert()...');
@@ -338,7 +339,7 @@ function insert() {
 		        		    </ul>
 		        		</div>
 					</div>
-        		    <input class="insert-content" type="text" name="content" id="mre_content">
+        		    <input class="insert-content" type="text" name="content" id="mre_content" onkeyup="contentCheckByte(this, 500)">
         		    <button class="insert-bt" onclick="insertOK()">작성완료</button>
         		  </form>
         		`);
@@ -407,7 +408,7 @@ function insertOK() {
                     isFormInserted = false; // 폼이 초기화되면 false로 설정하여 다시 작성 버튼이 나타날 수 있도록 함
                     $('#formContainer').replaceWith('<div id="formContainer"></div>');
                     // 기존 폼으로 돌아감
-                    mre_selectAll(userNum='\${vo.userNum}');
+                    mre_selectAll(userNum='\${vo.userNum}', memberreviewNum=0, mrePage);
                 }
             },
             error: function(xhr, status, error) {
@@ -436,7 +437,7 @@ function updateOK(memberreviewNum=0){
 		dataType:'json',
 		success : function(obj) {
 			console.log('ajax...success:', obj);
-			if(obj.result==1) mre_selectAll(userNum='\${vo.userNum}');
+			if(obj.result==1) mre_selectAll(userNum='\${vo.userNum}', memberreviewNum=0, mrePage);
 		},
 		error:function(xhr,status,error){
 			console.log('xhr.status:', xhr.status);
@@ -458,7 +459,7 @@ function deleteOK(memberreviewNum=0){
 			dataType:'json',
 			success : function(obj) {
 				console.log('ajax...success:', obj);
-				if(obj.result==1) mre_selectAll(userNum='\${vo.userNum}');
+				if(obj.result==1) mre_selectAll(userNum='\${vo.userNum}', memberreviewNum=0, mrePage);
 			},
 			error:function(xhr,status,error){
 				console.log('xhr.status:', xhr.status);
@@ -469,10 +470,8 @@ function deleteOK(memberreviewNum=0){
 }//end deleteOK
 	
 function par_selectAll(page){
-	$('#par_vos').show(); // 모임리스트 요소를 보이도록 설정
-	$('#memberreview_list').hide();
 // 	console.log('par_selectAll...');
-	
+
 	$.ajax({
 		url: "party/json/selectAll.do",
 		data:{
@@ -576,6 +575,41 @@ $('.mre-selectAll').on('click', function() {
 	  $(this).css('color', '#F47420');
 	  $(".par-selectAll").css("color", "gray");
 	});
+	
+function contentCheckByte(obj, maxByte){
+	var str = obj.value;
+    var str_len = str.length;
+
+    var rbyte = 0;
+    var rlen = 0;
+    var one_char = "";
+    var str2 = "";
+
+    for(var i=0; i<str_len; i++)
+    {
+        one_char = str.charAt(i);
+        if(escape(one_char).length > 4) {
+            rbyte += 3;                                         //한글3Byte
+        }else{
+            rbyte++;                                            //영문 등 나머지 1Byte
+        }
+        if(rbyte <= maxByte){
+            rlen = i+1;                                          //return할 문자열 갯수
+        }
+     }
+     if(rbyte > maxByte)
+     {
+        // alert("한글 "+(maxByte/2)+"자 / 영문 "+maxByte+"자를 초과 입력할 수 없습니다.");
+        alert("메세지는 최대 " + maxByte + "byte를 초과할 수 없습니다.")
+        str2 = str.substr(0,rlen);                                  //문자열 자르기
+        obj.value = str2;
+        titlecheckByte(obj, maxByte);
+     }
+     else{
+    	 $('#checkby').html(rbyte);
+     }
+}	
+
 
 </script>
 	

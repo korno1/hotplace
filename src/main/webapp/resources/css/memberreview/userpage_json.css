@@ -202,6 +202,30 @@
 	color: #FFFFFF;
 }
 
+.update-content {
+	width: 500px;
+	height: 100px;	
+	padding: 0px 10px;
+	border-radius: 15px; 
+	resize: none;
+}
+
+.mre-updateOK {
+	margin: 20px;
+	border-radius: 20px;
+	padding: 30px 40px;
+	border: 1px solid #192B53;
+	color: #192B53;
+	cursor: pointer;
+	background-color: transparent;
+}
+
+.mre-updateOK:hover {
+	background-color: #192B53;
+	color: #FFFFFF;
+}
+
+
 .star-rating {
 	display: inline-block;
 }

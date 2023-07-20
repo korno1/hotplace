@@ -10,6 +10,113 @@
 <link rel="stylesheet" href="/hotplace/resources/css/party/insert.css?after" >
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script type="text/javascript">
+function titleCheckByte(obj, maxByte){
+	var str = obj.value;
+    var str_len = str.length;
+
+    var rbyte = 0;
+    var rlen = 0;
+    var one_char = "";
+    var str2 = "";
+
+    for(var i=0; i<str_len; i++)
+    {
+        one_char = str.charAt(i);
+        if(escape(one_char).length > 4) {
+            rbyte += 3;                                         //한글3Byte
+        }else{
+            rbyte++;                                            //영문 등 나머지 1Byte
+        }
+        if(rbyte <= maxByte){
+            rlen = i+1;                                          //return할 문자열 갯수
+        }
+     }
+     if(rbyte > maxByte)
+     {
+        // alert("한글 "+(maxByte/2)+"자 / 영문 "+maxByte+"자를 초과 입력할 수 없습니다.");
+        alert("메세지는 최대 " + maxByte + "byte를 초과할 수 없습니다.")
+        str2 = str.substr(0,rlen);                                  //문자열 자르기
+        obj.value = str2;
+        titlecheckByte(obj, maxByte);
+     }
+     else{
+    	 $('#checkby').html(rbyte);
+     }
+}
+
+function placeCheckByte(obj, maxByte){
+	var str = obj.value;
+    var str_len = str.length;
+
+
+    var rbyte = 0;
+    var rlen = 0;
+    var one_char = "";
+    var str2 = "";
+
+
+    for(var i=0; i<str_len; i++)
+    {
+        one_char = str.charAt(i);
+        if(escape(one_char).length > 4) {
+            rbyte += 3;                                         //한글3Byte
+        }else{
+            rbyte++;                                            //영문 등 나머지 1Byte
+        }
+        if(rbyte <= maxByte){
+            rlen = i+1;                                          //return할 문자열 갯수
+        }
+     }
+     if(rbyte > maxByte)
+     {
+        // alert("한글 "+(maxByte/2)+"자 / 영문 "+maxByte+"자를 초과 입력할 수 없습니다.");
+        alert("메세지는 최대 " + maxByte + "byte를 초과할 수 없습니다.")
+        str2 = str.substr(0,rlen);                                  //문자열 자르기
+        obj.value = str2;
+        titlecheckByte(obj, maxByte);
+     }
+     else{
+    	 $('#checkby').html(rbyte);
+     }
+}
+
+function contentCheckByte(obj, maxByte){
+	var str = obj.value;
+    var str_len = str.length;
+
+
+    var rbyte = 0;
+    var rlen = 0;
+    var one_char = "";
+    var str2 = "";
+
+
+    for(var i=0; i<str_len; i++)
+    {
+        one_char = str.charAt(i);
+        if(escape(one_char).length > 4) {
+            rbyte += 3;                                         //한글3Byte
+        }else{
+            rbyte++;                                            //영문 등 나머지 1Byte
+        }
+        if(rbyte <= maxByte){
+            rlen = i+1;                                          //return할 문자열 갯수
+        }
+     }
+     if(rbyte > maxByte)
+     {
+        // alert("한글 "+(maxByte/2)+"자 / 영문 "+maxByte+"자를 초과 입력할 수 없습니다.");
+        alert("메세지는 최대 " + maxByte + "byte를 초과할 수 없습니다.")
+        str2 = str.substr(0,rlen);                                  //문자열 자르기
+        obj.value = str2;
+        titlecheckByte(obj, maxByte);
+     }
+     else{
+    	 $('#checkby').html(rbyte);
+     }
+}
+</script>
 </head>
 <body>
 	<div class="title">모임글쓰기</div>
@@ -18,7 +125,7 @@
 			<input type="hidden" name="writerNum" id="writerNum" value="${num}">
 			<div class="par-title">
 				<input type="text" name="title" id="title" placeholder="제목" required
-					onfocus="this.placeholder=''" onblur="this.placeholder='제목'">
+					onfocus="this.placeholder=''" onblur="this.placeholder='제목'" onkeyup="titleCheckByte(this, 100)">
 			</div>
 			<div class="form-group">
 				<div class="par-row">
@@ -54,7 +161,7 @@
 						<label for="place">식당</label>
 					</div>
 					<div class="par-cell">
-						<input class="par-date" type="text" name="place" id="place" required>
+						<input class="par-date" type="text" name="place" id="place" onkeyup="placeCheckByte(this, 50)" required>
 					</div>
 				</div>
 				<div class="par-row">
@@ -69,7 +176,7 @@
 			</div>
 			<div class="content">
 				<div class="content-title">모임에 대해 설명해주세요</div>
-				<textarea class="textarea" name="content" id="content" required></textarea>
+				<textarea class="textarea" name="content" id="content" onkeyup="contentCheckByte(this, 1800)" required></textarea>
 			</div>
 			<div>
 				<input class="insertOK-bt" type="submit" value="글등록" required>

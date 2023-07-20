@@ -15,6 +15,7 @@
 .searchWord {
 	width: 300px;
 	height: 30px;
+	padding: 1px 10px;
 	font-size: 16px;
 	margin-top: 2px;
 	border-radius: 10px;
@@ -109,10 +110,16 @@
 	color: #FFFFFF;
 }
 
-}
 .par-title {
+ 	width: 300px;
+ 	height: 43px;
 	font-size: 16px;
 	font-weight: bold;
+	border: 0px solid #192B53;
+	white-space: normal;
+    overflow-wrap: break-word;
+    text-overflow: ellipsis; /* 일정 길이 이상의 텍스트를 ...으로 대체 */
+ 	overflow: hidden;
 }
 
 .par-container {

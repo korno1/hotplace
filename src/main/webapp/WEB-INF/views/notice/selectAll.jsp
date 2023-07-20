@@ -118,9 +118,17 @@
 				alert('첫번째 페이지입니다.');
 				return false;
 			});
-			$('#next_page').click(function(){
-				listView('${searchKey}', '${searchWord}', ${page+1});
-			});
+			if((${page}*10) < ${cnt}){
+				$('#next_page').click(function(){
+					listView('${searchKey}', '${searchWord}', ${page+1});
+				});
+			}
+			else{
+				$('#next_page').click(function(){
+					alert('마지막 페이지입니다.');
+					return false;
+				});
+			}
 		}
 		else if((${page}*10) >= ${cnt}){
 			$('#next_page').click(function(){

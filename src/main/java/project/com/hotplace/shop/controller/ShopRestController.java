@@ -25,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 import project.com.hotplace.shop.model.ShopVO;
 import project.com.hotplace.shop.service.ShopService;
 import project.com.hotplace.shop.util.ShopUtil;
+import project.com.hotplace.shopreview.model.ShopReviewVO;
 import project.com.hotplace.shopreview.service.ShopReviewService;
 
 @Slf4j
@@ -50,6 +51,21 @@ public class ShopRestController {
 	    log.info("searchWord:{}", searchWord);
 	    
 	    List<ShopVO> vos = service.searchListTest(searchWord);
+	    
+	    for(ShopVO shopVO : vos)
+	    {
+	    	int avgRate = 0;
+	    	int count = 0;
+	    	List<ShopReviewVO> sreVOS = sreService.selectAllReview(shopVO.getNum());
+	    	log.info("{}", sreVOS);
+	    	for(ShopReviewVO sreVO : sreVOS) {
+	    		avgRate += sreVO.getRated();
+	    		count++;
+	    	}
+	    	if(count != 0)
+	    		avgRate = avgRate / count;
+	    	shopVO.setAvgRated(avgRate);
+	    }
 	    
 	    if(session.getAttribute("latitude")!= null && session.getAttribute("longitude")!=null) {
 	    	double latitude = Double.parseDouble(session.getAttribute("latitude").toString());

@@ -47,13 +47,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	      const menuClass = this.classList[0];
 	      let link;
-
+	      
 	      switch (menuClass) {
 	        case 'partyInfo':
-	          link = '/hotplace/party/selectAll.do';
+	          link = '/hotplace/party/myParty.do?userNum='+${num};
 	          break;
 	        case 'partyAll':
-	          link = '/hotplace/party/selectAll.do';
+	          link = '/hotplace/party/myParty.do?userNum='+${num};
 	          break;
 	        case 'memberInfo':
 	          link = '/hotplace/member/selectOne.do?num='+${num};

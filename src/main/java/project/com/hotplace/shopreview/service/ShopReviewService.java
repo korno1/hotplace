@@ -50,6 +50,11 @@ public class ShopReviewService {
 		return dao.selectAll(vo, page);
 	}
 	
+	public List<ShopReviewVO> selectAllReview(int shopNum)
+	{
+		return dao.selectAllReview(shopNum);
+	}
+	
 	public ShopReviewVO selectOne(ShopReviewVO vo)
 	{
 		return dao.selectOne(vo);

@@ -225,12 +225,37 @@ function rejectOK(applicantsNum=0) {
 	  }
 }//end rejectOK
 
+// function insertMail(button) {
+// 	  let buttonClass = $(button).attr('class');
+// 	  let num = buttonClass.match(/\d+/)[0];
+
+// 	  let width = 840; // 팝업창의 너비
+// 	  let height = 700; // 팝업창의 높이
+
+// 	  // 브라우저 사이즈 측정
+// 	  let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+// 	  let screenHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+
+// 	  // 팝업창 위치 계산
+// 	  let left = (screenWidth - width) / 2;
+// 	  let top = (screenHeight - height) / 2;
+
+// 	  // 팝업창 열기
+// 	  window.open('../mail/insert.do?num=' + num, 'Popup', 'width=' + width + ',height=' + height + ',left=' + left + ',top=' + top + ',resizable=no');
+// }
+
 
 
 </script>
 </head>
 <body onload="app_selectAll()">
-
+	<fmt:parseDate var="newDeadLine" value="${vo2.deadLine}"  pattern="yyyy-MM-dd HH:mm:ss.SSS" />
+	<fmt:formatDate var="deadLine" value="${newDeadLine}" pattern="yyyy-MM-dd HH:mm" />
+	<fmt:parseDate var="newTimeLimit" value="${vo2.timeLimit}"  pattern="yyyy-MM-dd HH:mm:ss.SSS" />
+	<fmt:formatDate var="timeLimit" value="${newTimeLimit}" pattern="yyyy-MM-dd HH:mm" />
+	<fmt:parseDate var="newWdate" value="${vo2.wdate}"  pattern="yyyy-MM-dd HH:mm:ss.SSS" />
+	<fmt:formatDate var="wdate" value="${newWdate}" pattern="yyyy-MM-dd HH:mm" />
+	
 	<div class="body">
 		<div class="application">
 			<div class="title">
@@ -239,9 +264,10 @@ function rejectOK(applicantsNum=0) {
 			<div class="writerImpo">
 				<div><img width="60px" src="../resources/ProfileImage/${vo2.writerNum}" onerror="this.src='../resources/ProfileImage/default.png'"></div>
 				<div class="par-name"><a href="/hotplace/userpage.do?num=${vo2.writerNum}">${vo2.writerName}</a></div>
+<!-- 				<button class="insertMailBtn\${arr.vos[i].num}" onclick="insertMail(this)">쪽지발송</button> -->
 				<div>
 					<div class="par-views">${vo2.views}</div>
-					<div class="par-wdate">${vo2.wdate}</div>
+					<div class="par-wdate">작성일 ${wdate}</div>
 				</div>
 			</div>
 			<div class="par-row">
@@ -250,7 +276,7 @@ function rejectOK(applicantsNum=0) {
 			</div>
 			<div class="par-row">
 				<div class="par-cell">모집마감일</div>
-				<div class="par-date">${vo2.deadLine}</div>
+				<div class="par-date">${deadLine}</div>
 			</div>
 			<div class="par-row">
 				<div class="par-cell">식당</div>
@@ -258,7 +284,7 @@ function rejectOK(applicantsNum=0) {
 			</div>
 			<div class="par-row">
 				<div class="par-cell">모임날짜</div>
-				<div class="par-date">${vo2.timeLimit}</div>
+				<div class="par-date">${timeLimit}</div>
 			</div>
 			<div class="par-content">${vo2.content}</div>
 			

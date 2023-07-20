@@ -20,6 +20,15 @@ public class ShopReviewDAOimpl implements ShopReviewDAO {
 	public ShopReviewDAOimpl() {
 		log.info("ShopDAOimpl()...");
 	}
+	
+	@Override
+	public List<ShopReviewVO> selectAllReview(int shopNum) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("shopNum", shopNum);
+
+		return sqlSession.selectList("SRE_SELECT_ALL", param);
+		
+	}
 
 	@Override
 	public List<ShopReviewVO> selectAll(ShopReviewVO vo, int page) {
@@ -37,14 +46,15 @@ public class ShopReviewDAOimpl implements ShopReviewDAO {
 		param.put("start", start);
 		param.put("shopNum", vo.getShopNum());
 
-		return sqlSession.selectList("SRE_SELECT_ALL", param);
+		return sqlSession.selectList("SRE_SELECT_ALL_PAGE", param);
 	}
 	
 	@Override
 	public int countNum() {
 		log.info("countNum()...");
 		
-		return sqlSession.selectOne("SRE_SEQ_NUM");
+		Integer maxNum = sqlSession.selectOne("SRE_SEQ_NUM");
+	    return maxNum != null ? maxNum : 0;
 	}
 	
 	@Override

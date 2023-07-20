@@ -6,8 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>유저페이지</title>
-<link rel="stylesheet" href="/hotplace/resources/css/memberreview/userpage.css?after" >
-<link rel="stylesheet" href="/hotplace/resources/css/memberreview/userpage_json.css?after" >
+<link rel="stylesheet" href="/hotplace//resources/css/memberreview/userpage.css?after" >
+<link rel="stylesheet" href="/hotplace//resources/css/memberreview/userpage_json.css?after" >
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -17,6 +17,7 @@ let page =1;
 let mrePage = 1;
 let par_count; // 게시글 개수
 let mer_count; // 게시글 개수
+let isFormInserted = false;
 
 $(function(){
 	console.log('onload...');
@@ -35,7 +36,9 @@ $(function(){
 			
 			
 			$.each(arr, function(index, vo){
-
+				let deadLine = vo.deadLine.substring(0,16);
+				let timeLimit = vo.timeLimit.substring(0,16);
+					
 				if (vo.writerNum === ${vo2.num}) { // user_id
 					tag_vos +=`
 						<div class="par-post">
@@ -48,8 +51,8 @@ $(function(){
 									<div>주최자</div>
 								</div>
 								<div class="par-data">
-									<div>\${vo.deadLine}</div>
-									<div>\${vo.timeLimit}</div>
+									<div>\${deadLine}</div>
+									<div>\${timeLimit}</div>
 									<div>\${vo.writerName}</div>
 								</div>
 							</div>
@@ -129,14 +132,8 @@ $(function(){
 }); // end onload	
 
 
-function mre_selectAll(memberreviewNum=0, mrePage){ // ${param.memberreviewNum} 
-// 	console.log('mer_selectAll()....userNum:',userNum);
-// 	console.log('mer_selectAll()....memverreviewNum:',memberreviewNum);
+function mre_selectAll(userNum=0, memberreviewNum=0, mrePage){ // ${param.memberreviewNum} 
 	
-	$('#par_vos').hide(); // 모임리스트 요소를 숨기도록 설정
-	$('#memberreview_list').show();
-	$('#insertButton').show();
-
 	$.ajax({
 		url : "memberreview/json/selectAll.do",
 		data:{
@@ -151,9 +148,10 @@ function mre_selectAll(memberreviewNum=0, mrePage){ // ${param.memberreviewNum}
 			let tag_txt = '';
 			
 			$.each(vos,function(index,vo){
+				let wdate = vo.wdate.substring(0,16);
+				let ratedValue = parseInt(vo.rated);
 // 				console.log('ajax...success:', vo);
 				
-				let ratedValue = parseInt(vo.rated);
 // 				console.log('vo.rated:', vo.rated);
 // 				console.log('vo.partynum:', vo.partyNum);
 
@@ -169,11 +167,13 @@ function mre_selectAll(memberreviewNum=0, mrePage){ // ${param.memberreviewNum}
 		            </ul>
 		        </div>`;
 		       
+				console.log('vo.memberreviewNum:', vo.memberreviewNum);
+				console.log('memberreviewNum:', memberreviewNum);
 				// userNum==vo.userNum
 				if(memberreviewNum==vo.memberreviewNum) {
-					tag_td = `<input type="text" value="\${vo.content}" id="input_content"><button onclick="updateOK(\${vo.memberreviewNum})">수정완료</button>`;
+					tag_td = `<input class="update-content" type="text" value="\${vo.content}" id="input_content" onkeyup="contentCheckByte(this, 500)"><button class="mre-updateOK" onclick="updateOK(\${vo.memberreviewNum})">수정완료</button>`;
 					tag_rated = `
-				            <ul class="star-rating"  data-rating="\${ratedValue}">
+				            <ul class="star-rating"  data-rating="\${ratedValue}" required>
 				                <li class="star fa fa-star" data-rating="1"></li>
 				                <li class="star fa fa-star" data-rating="2"></li>
 				                <li class="star fa fa-star" data-rating="3"></li>
@@ -181,6 +181,7 @@ function mre_selectAll(memberreviewNum=0, mrePage){ // ${param.memberreviewNum}
 				                <li class="star fa fa-star" data-rating="5"></li>
 				            </ul>
 			        	`;
+			        	
 					$(document).ready(function() {
 			            $('.star-rating .star').click(function() {
 			              var rating = $(this).attr('data-rating');
@@ -208,7 +209,7 @@ function mre_selectAll(memberreviewNum=0, mrePage){ // ${param.memberreviewNum}
 							onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/resources/ProfileImage/default.png';">
 							<div class="mre-writerName">\${vo.writerName}</div>
 							<div class="mre-rated" id="starRating">\${tag_rated}</div>
-							<div class="mre-date">\${vo.wdate}</div>
+							<div class="mre-date">\${wdate}</div>
 						</div>
 						<div class="mre-input">
 							<div class="mre-content">\${tag_td}</div>
@@ -218,11 +219,21 @@ function mre_selectAll(memberreviewNum=0, mrePage){ // ${param.memberreviewNum}
 				`;
 			});//end ajax
 			
-			$('#memberreview_list').html(tag_txt);
-			$('#insertButton').show();
+			$(".mre-post").css("display", "block");
+			$(".par-post").css("display", "none");
+			
 			
 			$(".par_paging").css("display", "none");
 			$(".mre_paging").css("display", "block");
+			if (${param.num}==${num}) {
+				$(".mre-insert").off("click"); // click 이벤트를 제거합니다.
+				$(".mre-insert").prop("disabled", true); // 버튼을 비활성화(disabled)합니다.
+				$(".mre-insert").css("background-color", "#ccc");
+				$(".mre-insert").off("mouseenter mouseleave");
+			}
+			
+// 			$(".formContainer").css("display", "block");
+			$('#memberreview_list').html(tag_txt);
 			
 			// 별점 채우기
 			$('.star-rating').each(function() {
@@ -258,7 +269,6 @@ function mre_totalCount(){ // 게시글 개수 계산
 		
 		error:function(xhr,status,error){
 			console.log('xhr.status:', xhr.status);
-			
 		} // end error
 	}) // end ajax;	
 };
@@ -276,7 +286,7 @@ $(document).on('click', '#mre_back_page', function(e) { // 이전 버튼 클릭 
 	console.log('mre_count',mre_count);
     
  	// parameter 수정 후 페이지 다시 로드
-	mre_selectAll(memberreviewNum=0, mrePage)
+	mre_selectAll(userNum='\${vo.userNum}', memberreviewNum=0, mrePage)
 });
 
 $(document).on('click', '#mre_next_page', function(e) {
@@ -293,43 +303,50 @@ $(document).on('click', '#mre_next_page', function(e) {
 	console.log('mrePage...',mrePage);
 	
 	// parameter 수정 후 페이지 다시 로드
-    mre_selectAll(memberreviewNum=0, mrePage)
+    mre_selectAll(userNum='\${vo.userNum}', memberreviewNum=0, mrePage)
 });
-	
-
-let isFormInserted = false;
 
 function insert() {
 	console.log('insert()...');
 	
     if (!isFormInserted) {
-		$('#par_vos').hide();
-		$('#memberreview_list').hide();
+		console.log('insert()...if');
+    	
+    	$(".mre-post").css("display", "none");
+		$(".par-post").css("display", "none");
+		$(".mre_paging").css("display", "none");
+		$(".par_paging").css("display", "none");
+		
+// 		$('#par_vos').hide();
+// 		$('#memberreview_list').hide();
     	
         // 폼을 감싸는 부모 요소 생성
-        var formContainer = $('<div id="formContainer"></div>');
-
+        var formContainer = $('<div id="formContainer" class="formContainer"></div>');
+// 		<div class="mre-writerName">\${vo.writerName}</div>
         var form = $(`
         		  <form class="insert-form">
-        		    <ul class="star-rating">
-        		      <li class="star fa fa-star" data-rating="1"></li>
-        		      <li class="star fa fa-star" data-rating="2"></li>
-        		      <li class="star fa fa-star" data-rating="3"></li>
-        		      <li class="star fa fa-star" data-rating="4"></li>
-        		      <li class="star fa fa-star" data-rating="5"></li>
-        		    </ul>
-        		    <input type="text" name="content" id="mre_content">
-        		    <input type="hidden" name="rated" id="mre_rated">
-        		    <button onclick="insertOK()">작성완료</button>
+		        	<div class="mre-userImpo">
+						<img id="preview" width="50px" src="${pageContext.request.contextPath}/resources/ProfileImage/${num}.png"
+						onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/resources/ProfileImage/default.png';">
+						<div class="insert-rated">
+		        		    <input type="hidden" name="rated" id="mre_rated" required>
+							<ul class="star-rating">
+		        		      <li class="star fa fa-star" data-rating="1"></li>
+		        		      <li class="star fa fa-star" data-rating="2"></li>
+		        		      <li class="star fa fa-star" data-rating="3"></li>
+		        		      <li class="star fa fa-star" data-rating="4"></li>
+		        		      <li class="star fa fa-star" data-rating="5"></li>
+		        		    </ul>
+		        		</div>
+					</div>
+        		    <input class="insert-content" type="text" name="content" id="mre_content" onkeyup="contentCheckByte(this, 500)">
+        		    <button class="insert-bt" onclick="insertOK()">작성완료</button>
         		  </form>
         		`);
 
         formContainer.append(form);
         formContainer.addClass('show-star-rating');
 
-        // 기존 폼을 제거하고 새로운 폼으로 교체
-        $('#formContainer').replaceWith(formContainer);
-        
         $(document).ready(function() {
             $('.star-rating .star').click(function() {
               var rating = $(this).attr('data-rating');
@@ -341,22 +358,37 @@ function insert() {
           });
 
         isFormInserted = true;
+    	// 기존 폼을 제거하고 새로운 폼으로 교체
+        $('#formContainer').replaceWith(formContainer);
     }else {
     	// 초기화 작업 수행
     	$('#formContainer').replaceWith(formContainer);
-        $('#par_vos').show();
-        $('#memberreview_list').show();
         $('.insert-form').remove();
+        $(".mre-post").css("display", "block");
+//         $('#par_vos').show();
+//         $('#memberreview_list').show();
         isFormInserted = false;
     }
 }//end insert
 
 function insertOK() {
+    var rated = $('#mre_rated').val();
+    var content = $('#mre_content').val();
+
+    if (!rated) {
+        alert('별점을 입력하세요.');
+        isFormInserted = false;
+        return insert();
+    }
+    
+    if (content==null) {
+    	content = '';
+    }
+	
     if (isFormInserted) {
         $('form').on('submit', function(event) {
             event.preventDefault();
         });
-
         console.log('insertOK()....');
         console.log($('#mre_content').val());
         $.ajax({
@@ -366,31 +398,25 @@ function insertOK() {
                 userNum: ${vo2.num}, //
                 writerNum: ${num},
                 rated: $('#mre_rated').val(),
-                content: $('#mre_content').val()
+                content: content || ''
             },
             method: 'POST',
             dataType: 'json',
             success: function(obj) {
                 console.log('ajax...success:', obj);
                 if (obj.result == 1) {
-                    mre_selectAll(userNum='\${vo.userNum}');
                     isFormInserted = false; // 폼이 초기화되면 false로 설정하여 다시 작성 버튼이 나타날 수 있도록 함
                     $('#formContainer').replaceWith('<div id="formContainer"></div>');
                     // 기존 폼으로 돌아감
-                    var insertButton = $('<button></button>');
-                    insertButton.attr('onclick', "insert()");
-                    insertButton.text('작성');
-                    $('#formContainer').append(insertButton);
+                    mre_selectAll(userNum='\${vo.userNum}', memberreviewNum=0, mrePage);
                 }
             },
             error: function(xhr, status, error) {
                 console.log('xhr.status:', xhr.status);
             }
         });
-        
 	    $('#mre_content').val(''); // input 폼 초기화
 	    $('#mre_rated').val(''); // input 폼 초기화
-	    
     }
 }//end insertOK
 	
@@ -411,7 +437,7 @@ function updateOK(memberreviewNum=0){
 		dataType:'json',
 		success : function(obj) {
 			console.log('ajax...success:', obj);
-			if(obj.result==1) mre_selectAll(userNum='\${vo.userNum}');
+			if(obj.result==1) mre_selectAll(userNum='\${vo.userNum}', memberreviewNum=0, mrePage);
 		},
 		error:function(xhr,status,error){
 			console.log('xhr.status:', xhr.status);
@@ -433,7 +459,7 @@ function deleteOK(memberreviewNum=0){
 			dataType:'json',
 			success : function(obj) {
 				console.log('ajax...success:', obj);
-				if(obj.result==1) mre_selectAll(userNum='\${vo.userNum}');
+				if(obj.result==1) mre_selectAll(userNum='\${vo.userNum}', memberreviewNum=0, mrePage);
 			},
 			error:function(xhr,status,error){
 				console.log('xhr.status:', xhr.status);
@@ -444,10 +470,8 @@ function deleteOK(memberreviewNum=0){
 }//end deleteOK
 	
 function par_selectAll(page){
-	$('#par_vos').show(); // 모임리스트 요소를 보이도록 설정
-	$('#memberreview_list').hide();
 // 	console.log('par_selectAll...');
-	
+
 	$.ajax({
 		url: "party/json/selectAll.do",
 		data:{
@@ -461,6 +485,8 @@ function par_selectAll(page){
 			let tag_vos = '';
 			
 			$.each(arr, function(index, vo){
+				let deadLine = vo.deadLine.substring(0,16);
+				let timeLimit = vo.timeLimit.substring(0,16);
 				if (vo.writerNum === ${vo2.num}) { // user_id
 					tag_vos +=`
 						<div class="par-post">
@@ -473,8 +499,8 @@ function par_selectAll(page){
 									<div>주최자</div>
 								</div>
 								<div class="par-data">
-									<div>\${vo.deadLine}</div>
-									<div>\${vo.timeLimit}</div>
+									<div>\${deadLine}</div>
+									<div>\${timeLimit}</div>
 									<div>\${vo.writerName}</div>
 								</div>
 							</div>
@@ -484,10 +510,14 @@ function par_selectAll(page){
 				}
 				
 			}); // end for-each
-
+			
+			$(".par-post").css("display", "block");
+			$(".mre-post").css("display", "none");
+			
+			$(".mre_paging").css("display", "block");
+			$(".par_paging").css("display", "none");
+			
 			$('#par_vos').html(tag_vos);
-			$(".par_paging").css("display", "block");
-			$(".mre_paging").css("display", "none");
 		}, // end success
 		
 		error:function(xhr,status,error){
@@ -519,6 +549,7 @@ function par_selectAll(page){
 		<div class="userPage-data">
 			<div id="par_vos"></div>
 			<div id="memberreview_list"></div>
+			<div id="formContainer"></div>
 		</div>
 		
 		
@@ -530,7 +561,7 @@ function par_selectAll(page){
 		<div class="mre_paging" id="mre_paging">
 			<button class="mre_back_page" id="mre_back_page">이전</button>
 			<button class="mre_next_page" id="mre_next_page">다음</button>
-			<button class="formContainer" onclick="insert()">작성</button>
+			<button class="mre-insert" onclick="insert()">작성</button>
 		</div>
 	</div>
 	
@@ -544,6 +575,41 @@ $('.mre-selectAll').on('click', function() {
 	  $(this).css('color', '#F47420');
 	  $(".par-selectAll").css("color", "gray");
 	});
+	
+function contentCheckByte(obj, maxByte){
+	var str = obj.value;
+    var str_len = str.length;
+
+    var rbyte = 0;
+    var rlen = 0;
+    var one_char = "";
+    var str2 = "";
+
+    for(var i=0; i<str_len; i++)
+    {
+        one_char = str.charAt(i);
+        if(escape(one_char).length > 4) {
+            rbyte += 3;                                         //한글3Byte
+        }else{
+            rbyte++;                                            //영문 등 나머지 1Byte
+        }
+        if(rbyte <= maxByte){
+            rlen = i+1;                                          //return할 문자열 갯수
+        }
+     }
+     if(rbyte > maxByte)
+     {
+        // alert("한글 "+(maxByte/2)+"자 / 영문 "+maxByte+"자를 초과 입력할 수 없습니다.");
+        alert("메세지는 최대 " + maxByte + "byte를 초과할 수 없습니다.")
+        str2 = str.substr(0,rlen);                                  //문자열 자르기
+        obj.value = str2;
+        titlecheckByte(obj, maxByte);
+     }
+     else{
+    	 $('#checkby').html(rbyte);
+     }
+}	
+
 
 </script>
 	

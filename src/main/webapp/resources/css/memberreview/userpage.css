@@ -93,7 +93,7 @@
 	margin-left: 400px;	
 }
 
-.formContainer {
+.mre-insert {
 	margin-left: 300px;
 	border-radius: 20px;
 	padding: 10px 20px;
@@ -103,6 +103,7 @@
 	background-color: transparent;
 }
 
-.formContainer:hover {
+.mre-insert:hover {
 	background-color: #192B53;
+	color: #FFF;
 }

@@ -22,7 +22,7 @@
     function selectOne(num) {
     	
         // GET 요청을 통해 selectOne.do로 접근
-        window.location.href = "selectOne.do?num=" + num;
+        window.location.href = "selectOne.do?num=" + num + "&page=1";
     }
     
     $(function() {
@@ -78,7 +78,6 @@
             $.ajax({
                 url: "json/selectAll.do",
                 data: {
-                    searchKey: $("#searchKey").val(),
                     searchWord: $("#searchWord").val(),
                     pageNum: page
                 },

@@ -20,6 +20,7 @@ import project.com.hotplace.member.model.MemberVO;
 import project.com.hotplace.member.service.MemberService;
 import project.com.hotplace.shop.model.ShopVO;
 import project.com.hotplace.shop.service.ShopService;
+import project.com.hotplace.shop.util.ShopUtil;
 
 @Slf4j
 @Controller
@@ -48,69 +49,43 @@ public class HomeRestController {
 	@RequestMapping(value = "/home/json/getRecommendedShops.do", method = RequestMethod.GET)
     @ResponseBody
     public Map<String, List<ShopVO>> getRecommendedShops(HttpSession session) {
-		double latitude = Double.parseDouble(session.getAttribute("latitude").toString());
-		double longitude = Double.parseDouble(session.getAttribute("longitude").toString());
-		
 		Object nickName = session.getAttribute("nick_name");
 		
 		String[] recommendCate = new String[5];
 		int recommendIndex = 0;
 		
-		log.info("{}", nickName);
-		
-		// 1순위 처리로 사용자 선호 음식 카테고리로 설정(로그인 되었을 경우 가져옴)
-		if(nickName != null) {
-			MemberVO memVO = new MemberVO();
-			memVO.setNick_name(nickName.toString());
-			
-			memVO = memService.idAuth(memVO);
-			
-			log.info("{}", memVO);
-			
-			String foodLike = memVO.getFood_like();
-			
-			if(foodLike != null) {
-				String[] foodLikes = foodLike.split(",");
-				for (String food : foodLikes) {
-					if (recommendIndex >= 5) break;
-					recommendCate[recommendIndex++] = food.trim();
-				}
-			}
-		}
-		
-		log.info("recommendCate:{}", Arrays.toString(recommendCate));
-		
 		List<ShopVO> vos = shoService.selectAllHome();
        
 		List<ShopVO> nearShops = new ArrayList<>();
+       
+		if(session.getAttribute("latitude")!= null && session.getAttribute("longitude")!=null) {
+			double latitude = Double.parseDouble(session.getAttribute("latitude").toString());
+			double longitude = Double.parseDouble(session.getAttribute("longitude").toString());
 		
-	    double degreeToKmRatio = 40075.16 / 360.0; // 1도에 해당하는 거리 (단위: km)
-       
-	   
-       
-		for(ShopVO shop : vos) {
-    	   double locX = shop.getLoc_x();
-    	   double locY = shop.getLoc_y();
+			for(ShopVO shop : vos) {
+				double locX = shop.getLoc_x();
+				double locY = shop.getLoc_y();
     	   
-    	   double deltaX = locX - longitude;
-           double deltaY = locY - latitude;
-    	   
-           double distance = Math.sqrt(Math.pow(deltaX * degreeToKmRatio, 2) + Math.pow(deltaY * degreeToKmRatio, 2));
+				double distance = ShopUtil.calculateDistance(latitude, longitude, locY, locX);
+			
+				log.info("{}", shop);
+				log.info("distance:{}", distance);
            
-           log.info("{}", shop);
-    	   log.info("distance:{}", distance);
-           
-           shop.setDistance(distance);
-           
-           if (distance <= 20.0)
-               nearShops.add(shop);
+				shop.setDistance(distance);
+				
+				if (distance <= 20.0)
+					nearShops.add(shop);
+			}
 		}
+		else
+			nearShops = vos;
 		
 		 Map<String, Integer> categoryCountMap = new HashMap<>(); // 카테고리별 count를 저장할 맵
 		
 		// 카테고리별 count 정보가 구성된 Map 생성
 	    for (ShopVO shop : nearShops) {
 	        String[] categories = shop.getCate().split(","); // 카테고리 목록을 쉼표로 분리하여 배열로 변환
+	        
 	        
 	        for (String category : categories) {
 	        	if(category.contains("음식점")) {}
@@ -119,6 +94,32 @@ public class HomeRestController {
                 	categoryCountMap.put(category, count + 1); // 해당 카테고리의 count 증가
 	        	}
             }
+	    }
+	    
+	    log.info("{}", nickName);
+		
+		// 사용자 선호 음식 카테고리로 설정(로그인 되었을 경우 가져옴)
+	    if (nickName != null) {
+	        MemberVO memVO = new MemberVO();
+	        memVO.setNick_name(nickName.toString());
+
+	        memVO = memService.idAuth(memVO);
+
+	        log.info("{}", memVO);
+
+	        String foodLike = memVO.getFood_like();
+
+	        if (foodLike != null) {
+	            String[] foodLikes = foodLike.split(",");
+	            for (String food : foodLikes) {
+	            	log.info("음식:{}",food);
+	                int count = categoryCountMap.getOrDefault(food.trim(), 0);
+	                log.info("Count:{}",count);
+	                if (count > 0 && recommendIndex < 5) {
+	                    recommendCate[recommendIndex++] = food.trim();
+	                }
+	            }
+	        }
 	    }
 	    
 	    // 카테고리 count 내림차순으로 정렬
@@ -159,7 +160,7 @@ public class HomeRestController {
         for (int i = 0; i < recommendCate.length; i++) {
             resultMap.put(recommendCate[i], filteredShopLists.get(i));
         }
-
+        
         return resultMap;
     }
 }

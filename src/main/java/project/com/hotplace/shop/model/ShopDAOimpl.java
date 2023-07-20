@@ -48,7 +48,8 @@ public class ShopDAOimpl implements ShopDAO {
 	public int countNum() {
 		log.info("countNum()...");
 		
-		return sqlSession.selectOne("SHO_SEQ_NUM");
+		Integer maxNum = sqlSession.selectOne("SHO_SEQ_NUM");
+	    return maxNum != null ? maxNum : 0;
 	}
 
 	@Override

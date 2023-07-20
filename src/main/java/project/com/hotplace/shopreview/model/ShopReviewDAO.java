@@ -6,15 +6,17 @@ public interface ShopReviewDAO {
 	
 	List<ShopReviewVO> selectAll(ShopReviewVO vo, int page);
 	
+	List<ShopReviewVO> selectAllReview(int shopNum);
+	
 	ShopReviewVO selectOne(ShopReviewVO vo);
 	
 	int insert(ShopReviewVO vo);
 
 	int update(ShopReviewVO vo);
 	
-	public int countNum();
+	int countNum();
 	
-	public int count(ShopReviewVO vo);
+	int count(ShopReviewVO vo);
 
 	int delete(int num);
 }

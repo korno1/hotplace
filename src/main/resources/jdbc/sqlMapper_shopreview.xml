@@ -13,6 +13,13 @@
     </select>	
 
 	<select id="SRE_SELECT_ALL" resultType="project.com.hotplace.shopreview.model.ShopReviewVO">
+    		SELECT sr.*, m.nick_name AS writerName, rownum AS rn
+    		FROM shopreview sr
+    		LEFT JOIN member m ON sr.writer = m.num
+    		WHERE sr.shopnum = #{shopNum}
+	</select>
+
+	<select id="SRE_SELECT_ALL_PAGE" resultType="project.com.hotplace.shopreview.model.ShopReviewVO">
 		SELECT *
 		FROM (
     		SELECT sr.*, m.nick_name AS writerName, rownum AS rn

@@ -113,6 +113,7 @@
                     },
                     function(error) {
                         console.log("Error getting current position: ", error);
+                        updateRecommendedShopItems();
                     }
                 );
             } else {
@@ -204,10 +205,12 @@
                             shopInfoDiv.appendChild(nameDiv);
 
                             // 거리 정보 추가
-                            var distanceDiv = document.createElement("div");
-                            distanceDiv.textContent = shop.distance.toFixed(1) + " km";
-                            distanceDiv.className = "shopDistance";
-                            shopInfoDiv.appendChild(distanceDiv);
+                            if (shop.distance != 0) {
+                    			var distanceDiv = document.createElement("div");
+                    			distanceDiv.textContent = shop.distance.toFixed(1) + " km";
+                    			distanceDiv.className = "shopDistance";
+                    			shopInfoDiv.appendChild(distanceDiv);
+                			}
 
                             // shop-item에 이미지와 이름 추가
                             shopItem.appendChild(imageDiv);

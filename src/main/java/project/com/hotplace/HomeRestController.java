@@ -49,34 +49,36 @@ public class HomeRestController {
 	@RequestMapping(value = "/home/json/getRecommendedShops.do", method = RequestMethod.GET)
     @ResponseBody
     public Map<String, List<ShopVO>> getRecommendedShops(HttpSession session) {
-		double latitude = Double.parseDouble(session.getAttribute("latitude").toString());
-		double longitude = Double.parseDouble(session.getAttribute("longitude").toString());
-		
 		Object nickName = session.getAttribute("nick_name");
 		
 		String[] recommendCate = new String[5];
 		int recommendIndex = 0;
 		
-		log.info("recommendCate:{}", Arrays.toString(recommendCate));
-		
 		List<ShopVO> vos = shoService.selectAllHome();
        
 		List<ShopVO> nearShops = new ArrayList<>();
        
-		for(ShopVO shop : vos) {
-    	   double locX = shop.getLoc_x();
-    	   double locY = shop.getLoc_y();
+		if(session.getAttribute("latitude")!= null && session.getAttribute("longitude")!=null) {
+			double latitude = Double.parseDouble(session.getAttribute("latitude").toString());
+			double longitude = Double.parseDouble(session.getAttribute("longitude").toString());
+		
+			for(ShopVO shop : vos) {
+				double locX = shop.getLoc_x();
+				double locY = shop.getLoc_y();
     	   
-    	   double distance = ShopUtil.calculateDistance(latitude, longitude, locY, locX);
+				double distance = ShopUtil.calculateDistance(latitude, longitude, locY, locX);
+			
+				log.info("{}", shop);
+				log.info("distance:{}", distance);
            
-           log.info("{}", shop);
-    	   log.info("distance:{}", distance);
-           
-           shop.setDistance(distance);
-           
-           if (distance <= 20.0)
-               nearShops.add(shop);
+				shop.setDistance(distance);
+				
+				if (distance <= 20.0)
+					nearShops.add(shop);
+			}
 		}
+		else
+			nearShops = vos;
 		
 		 Map<String, Integer> categoryCountMap = new HashMap<>(); // 카테고리별 count를 저장할 맵
 		

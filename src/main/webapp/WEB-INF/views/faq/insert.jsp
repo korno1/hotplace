@@ -47,7 +47,7 @@
 			success: function(obj){
 				console.log('ajax...', obj.result);
 				if(obj.result==1){
-					let url='selectAll.do?searchKey=title&page=1';
+					let url='selectAll.do';
 					location.replace(url);
 				}
 			},

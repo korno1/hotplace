@@ -19,4 +19,6 @@ public interface ShopReviewDAO {
 	int count(ShopReviewVO vo);
 
 	int delete(int num);
+
+	int rateAvg(int shopNum);
 }

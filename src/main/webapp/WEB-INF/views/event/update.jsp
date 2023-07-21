@@ -25,6 +25,9 @@
 <script type="text/javascript">
 	
 	$(function(){
+		date = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, -8);
+		$('#deadline').val(date);
+		$('#deadline').attr('min', date);
 		let eve_content;
 		
 		$.ajax({
@@ -128,6 +131,13 @@
 	     else{
 	    	 $('#checkby').html(rbyte);
 	     }
+	}
+	
+	function setMin(){
+		if($('#deadline').val() < date){
+			alert('현재 시간보다 이전의 시간입니다.');
+			$('#deadline').val(date);
+		}
 	}
 </script>
 

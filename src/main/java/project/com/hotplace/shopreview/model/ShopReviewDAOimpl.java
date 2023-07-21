@@ -90,5 +90,15 @@ public class ShopReviewDAOimpl implements ShopReviewDAO {
 		
 		return sqlSession.selectOne("SRE_COUNT_VO", vo);
 	}
+	
+	public int rateAvg(int shopNum) {
+		log.info("rateAvg()...{}", shopNum);
+		
+		Map<String, Object> param = new HashMap<String, Object>();
+		
+		param.put("shopNum", shopNum);
+		
+		return sqlSession.selectOne("SRE_AVG_RATE", param);
+	}
 
 }

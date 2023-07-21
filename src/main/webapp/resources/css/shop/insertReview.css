@@ -111,7 +111,7 @@
 	background: #17395C 0% 0% no-repeat padding-box;
 	border-radius: 25px;
 	color: white;
-	top: 790px;
+	top: 810px;
 	left: 617px;
 	width: 180px;
 	height: 50px;
@@ -132,4 +132,9 @@
 /* 선택된 별의 색상을 노란색으로 변경 */
 .star.selected {
   color: #ffc107; /* 노란색 */
+}
+
+.charCountInfo {
+	text-align: right;
+	margin-right: 35px;
 }

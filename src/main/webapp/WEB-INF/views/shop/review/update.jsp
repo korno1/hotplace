@@ -4,6 +4,32 @@
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script>
+var maxCharCount = 100;
+
+function updateCharCount() {
+    var contentTextArea = document.getElementById("content");
+    var currentCharCount = contentTextArea.value.length;
+    var charCountInfoDiv = document.getElementById("charCountInfo");
+
+    // 현재 입력된 글자 수와 최대 입력 글자 수를 표시
+    charCountInfoDiv.innerHTML = "(" + currentCharCount + "자" + "/" + maxCharCount + "자)";
+
+    // 현재 글자 수가 최대 글자 수를 초과하는 경우, 경고 메시지 표시
+    if (currentCharCount > maxCharCount) {
+        charCountInfoDiv.style.color = "red";
+    } else {
+        charCountInfoDiv.style.color = ""; // 기본 색상으로 설정
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    // content 텍스트 영역의 입력 이벤트를 감지하여 updateCharCount 함수 호출
+    document.getElementById("content").addEventListener("input", updateCharCount);
+
+    // 초기에 한 번 업데이트해줍니다.
+    updateCharCount();
+});
+
 $(document).ready(function() {
     // sreVO.rated 값을 읽어와서 해당되는 별점을 먼저 부여
     var ratedValue = ${sreVO.rated};
@@ -119,6 +145,7 @@ function showImagePreview(input) {
 	    </div>
     </div>
     <textarea id="content" name="content" class="content">${sreVO.content}</textarea>
+    <div id="charCountInfo" class="charCountInfo"></div>
     <input type="hidden" id="rated" name="rated" value="${sreVO.rated}">
     <button class="submit-button" onclick="updateReview()">수정 완료</button>
 </body>

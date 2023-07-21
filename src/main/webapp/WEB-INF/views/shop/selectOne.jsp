@@ -23,8 +23,8 @@
 	var cssPath = linkElement.href;
 	console.log("CSS 파일 경로: " + cssPath);
 
-	function Paginate(srePage. parPage) {
-		window.location.href = "selectOne.do?num=${shoVO.num}&srePage=" + srePage + "&parPage=" + parPage];
+	function Paginate(srePage, parPage) {
+		window.location.href = "selectOne.do?num=${shoVO.num}&srePage=" + srePage + "&parPage=" + parPage;
 	}
 	//모달 열기
 	function openModal() {
@@ -127,7 +127,7 @@
     	<c:if test="${not empty sessionScope.nick_name}">
         	<!-- 로그인된 경우 -->
         	<div class="reviewButtonContainer">
-        		<input type="button" value="후기등록" class="reviewButton" onclick="openReviewInsertForm(${shoVO.num}, '${vo.writerName}')">
+        		<input type="button" value="후기등록" class="reviewButton" onclick="openReviewInsertForm(${shoVO.num}, '${sessionScope.nick_name}')">
         	</div>
     	</c:if>
 	</div>

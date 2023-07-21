@@ -5,6 +5,24 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script>
 
+var maxCharCount = 100;
+
+function updateCharCount() {
+    var contentTextArea = document.getElementById("content");
+    var currentCharCount = contentTextArea.value.length;
+    var charCountInfoDiv = document.getElementById("charCountInfo");
+
+    // 현재 입력된 글자 수와 최대 입력 글자 수를 표시
+    charCountInfoDiv.innerHTML = "(" + currentCharCount + "자" + "/" + maxCharCount + "자)";
+
+    // 현재 글자 수가 최대 글자 수를 초과하는 경우, 경고 메시지 표시
+    if (currentCharCount > maxCharCount) {
+        charCountInfoDiv.style.color = "red";
+    } else {
+        charCountInfoDiv.style.color = ""; // 기본 색상으로 설정
+    }
+}
+
 function insertReview() {
 	var nickName = "${param.nickName}"; // 사용자의 닉네임 정보
     var shopNum = ${shopVO.num}; // 가게 번호 정보
@@ -18,8 +36,11 @@ function insertReview() {
     }
     
     if (content.trim() === "") {
-    	alert("내용을 입력해주세요");
-    	return;
+        alert("내용을 입력해주세요");
+        return;
+    } else if (content.length > 100) {
+        alert("내용은 100자 이내로 작성 가능합니다");
+        return;
     }
     
     var formData = new FormData();
@@ -105,10 +126,19 @@ function showImagePreview(input) {
 	    </div>
     </div>
     <textarea id="content" name="content" class="content"></textarea>
+    <div id="charCountInfo" class="charCountInfo"></div>
     <input type="hidden" id="rated" name="rated" value="${sreVO.rated}">
     <button class="submit-button" onclick="insertReview()">작성 완료</button>
 </body>
 <script>
+
+document.addEventListener("DOMContentLoaded", function() {
+    // content 텍스트 영역의 입력 이벤트를 감지하여 updateCharCount 함수 호출
+    document.getElementById("content").addEventListener("input", updateCharCount);
+
+    // 초기에 한 번 업데이트해줍니다.
+    updateCharCount();
+});
 
 $(document).ready(function() {
     var shopNameDiv = $("#shopName");

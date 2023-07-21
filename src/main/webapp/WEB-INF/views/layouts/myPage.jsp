@@ -13,8 +13,7 @@
 		</div>
 		<div class="partyWrap leftWrap">
 			<div class="partyTitle leftTitle">모임 관리</div>
-			<div class="partyInfo leftMenu">내 모임 정보</div>
-			<div class="partyAll leftMenu">모임 정보</div>
+			<div class="partyInfo leftMenu">내 신청 정보</div>
 		</div>
 		<div class="memberWrap leftWrap">
 			<div class="memberTitle leftTitle">회원 관리</div>
@@ -50,9 +49,6 @@ document.addEventListener('DOMContentLoaded', function() {
 	      
 	      switch (menuClass) {
 	        case 'partyInfo':
-	          link = '/hotplace/party/myParty.do?userNum='+${num};
-	          break;
-	        case 'partyAll':
 	          link = '/hotplace/party/myParty.do?userNum='+${num};
 	          break;
 	        case 'memberInfo':

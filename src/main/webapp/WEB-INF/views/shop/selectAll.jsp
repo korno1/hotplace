@@ -8,13 +8,7 @@
 <meta charset="UTF-8">
 <title>selectAll</title>
 
-<style type="text/css">
-        .large {
-            border: 1px solid black;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-    </style>
+<link rel="stylesheet" href="../resources/css/shop/selectAll.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d326b067d6341afa0b918f0c45297208&libraries=services,clusterer"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -22,7 +16,7 @@
     function selectOne(num) {
     	
         // GET 요청을 통해 selectOne.do로 접근
-        window.location.href = "selectOne.do?num=" + num + "&page=1";
+        window.location.href = "selectOne.do?num=" + num + "&srePage=1&parPage=1";
     }
     
     $(function() {
@@ -104,19 +98,35 @@
                     ')"></div>');
                 listItem.append(
                     '<div><img id="preview" width="100px" src="../resources/ShopSymbol/' +
-                    vo.num +
-                    '.png"></div>'
+                    vo.num + '" onerror="this.src=\'../resources/ShopSymbol/default.png\';"></div>'
                 );
+                var rateHtml = vo.rate === 0 ? '평가없음' : getStarRatingHtml(vo.rate);
                 listItem.append(
                     '<div><div>' +
                     vo.name +
                     '</div><div>' +
-                    vo.avgRated +
+                    rateHtml +
                     '</div></div>'
                 );
 
                 shopList.append(listItem);
             });
+        }
+        
+     	// 별점을 만들어주는 함수
+        function getStarRatingHtml(rating) {
+            var fullStarCount = Math.floor(rating);
+            var emptyStarCount = 5 - Math.ceil(rating);
+
+            var starHtml = '';
+            for (var i = 0; i < fullStarCount; i++) {
+                starHtml += '<span class="yellowStar">&#9733;</span>';
+            }
+            for (var j = 0; j < emptyStarCount; j++) {
+                starHtml += '<span class="grayStar">&#9734;</span>';
+            }
+
+            return starHtml;
         }
         
 
@@ -168,10 +178,6 @@
 	
 	<div style="padding:5px">
 		<form action="selectAll.do">
-			<select name="searchKey" id="searchKey">
-				<option value="name" ${param.searchKey == 'name' ? 'selected' : ''}>name</option>
-				<option value="cate" ${param.searchKey == 'cate' ? 'selected' : ''}>cate</option>
-			</select>
 			<input type="text" name="searchWord" id="searchWord" value="${param.searchWord}">
 			<input type="hidden" name="pageNum" id="pageNum" value=1>
 			<input type="submit" value="검색">

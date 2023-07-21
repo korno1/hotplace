@@ -29,15 +29,5 @@ public class MemberReviewController {
 		
 		return "memberreview/userpage.tiles";
 	}
-
-	@RequestMapping(value = {"memberreview/insert.do"}, method = RequestMethod.GET)
-	public String insert() {
-		log.info("/insert.do");
-		
-		return "memberreview/insert.tiles";
-	}
-	
-	
-	
 	
 }

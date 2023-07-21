@@ -54,17 +54,10 @@ public class ShopController {
 	public String searchList(String searchWord, int page) {
 		log.info("/searchList.do");
 		
-		List<ShopVO> vos = service.searchListTest(searchWord);
+		List<ShopVO> vos = service.searchList(searchWord);
 		log.info("{}", vos);
 		
 		return "shop/selectAll.tiles";
-	}
-
-	@RequestMapping(value = "/searchLocation.do", method = RequestMethod.GET)
-	public String searchLocation() {
-		log.info("/shop/searchLocation.do");
-
-		return "shop/searchLocation";
 	}
 	
 	@RequestMapping(value = "/insert.do", method = RequestMethod.GET)
@@ -75,7 +68,7 @@ public class ShopController {
 	}
 	
 	@RequestMapping(value = "/selectOne.do", method = RequestMethod.GET)
-	public String selectOne(ShopVO vo, Model model, int page) {
+	public String selectOne(ShopVO vo, Model model, int srePage, int parPage) {
 	    ShopVO shoVO = service.selectOne(vo);
 	    
 	    log.info("{}",vo);
@@ -85,45 +78,33 @@ public class ShopController {
 	    ShopReviewVO sreVO = new ShopReviewVO();
 	    sreVO.setShopNum(num);
 	    
-	    List<ShopReviewVO> sreVOS = sreService.selectAll(sreVO, page);
+	    List<ShopReviewVO> sreVOS = sreService.selectAll(sreVO, srePage);
 	    
 	    int totalCount = sreService.count(sreVO);
 	    int pageSize = 5; // Number of items per page
-	    int totalPages = (int) Math.ceil((double) totalCount / pageSize);
+	    int totalSrePages = (int) Math.ceil((double) totalCount / pageSize);
 	    
-	    double avgRate;
-	    
-	    if (sreVOS == null || sreVOS.isEmpty()) {
-            avgRate = 0;
-        }
-	    else
-	    {
-	    	double totalRate = 0.0;
-	    	for (ShopReviewVO review : sreVOS) {
-	    		totalRate += review.getRated();
-	    	}
-
-	    	avgRate = totalRate / sreVOS.size();
-	    }
-
-	    // 소수점 한자리만 남도록
-	    avgRate = Math.round(avgRate * 10) / 10;
-	    
-	    List<PartyVO> parVO = parService.selectAll("place", shoVO.getName(), 0);
+	    List<PartyVO> parVOS = parService.searchList("place", shoVO.getName(), parPage, 1);
+	    int totalParCount = parService.shopPartyCount(shoVO.getName());
+	    int parPageSize = 6; // Number of items per page
+	    int totalParPages = (int) Math.ceil((double) totalParCount / parPageSize);
 	    
 	    log.info("/sreList...{}", sreVOS);
 	    
-	    log.info("/partyList...{}", parVO);
+	    log.info("/PartyVOs...{}", parVOS);
 	    
 	    log.info("total_count...{}", totalCount);
 	    
-	    log.info("total_page...{}", totalPages);
+	    log.info("total_page...{}", totalSrePages);
+	    
+	    log.info("total_page...{}", totalParPages);
 
 	    model.addAttribute("shoVO", shoVO);
 	    model.addAttribute("sreVOS", sreVOS);
-	    model.addAttribute("avgRate", avgRate);
-	    model.addAttribute("page", page);
-	    model.addAttribute("totalPages", totalPages);
+	    model.addAttribute("parVOS", parVOS);
+	    model.addAttribute("srePage", srePage);
+	    model.addAttribute("parPage", parPage);
+	    model.addAttribute("totalSrePages", totalSrePages);
 
 	    return "shop/selectOne.tiles";
 	}

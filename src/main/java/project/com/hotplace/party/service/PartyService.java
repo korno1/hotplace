@@ -44,7 +44,6 @@ public class PartyService {
 		return dao.delete(vo);
 	}
 	
-	
 	public void vCountUp(PartyVO vo) {
 		dao.vCountUp(vo);
 	}
@@ -69,4 +68,7 @@ public class PartyService {
 		return dao.myPartyCount(vo);
 	}
 
+	public int shopPartyCount(String searchWord) {
+		return dao.shopPartyCount(searchWord);
+	}
 }

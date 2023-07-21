@@ -116,3 +116,20 @@
 	width: 180px;
 	height: 50px;
 }
+
+/* 별점 아이콘 스타일 */
+.star-rating {
+  	font-size: 30px;
+  	margin-bottom: 10px;
+  	margin-left: 10px;
+}
+
+.star {
+  cursor: pointer;
+  color: #ccc; /* 기본 별 색상 (회색) */
+}
+
+/* 선택된 별의 색상을 노란색으로 변경 */
+.star.selected {
+  color: #ffc107; /* 노란색 */
+}

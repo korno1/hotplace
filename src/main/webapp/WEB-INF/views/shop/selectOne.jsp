@@ -23,8 +23,8 @@
 	var cssPath = linkElement.href;
 	console.log("CSS 파일 경로: " + cssPath);
 
-	function paginate(page) {
-		window.location.href = "selectOne.do?num=${shoVO.num}&page=" + page;
+	function Paginate(srePage. parPage) {
+		window.location.href = "selectOne.do?num=${shoVO.num}&srePage=" + srePage + "&parPage=" + parPage];
 	}
 	//모달 열기
 	function openModal() {
@@ -34,6 +34,23 @@
 	// 모달 닫기
 	function closeModal() {
 	    document.getElementById("modal").style.display = "none";
+	}
+	
+	function openReviewInsertForm(shopNum, writerName) {
+    	// 사용자 nickname 가져오기
+	    var nickName = '<%= session.getAttribute("nick_name") %>';
+		
+	    if (writerName == null) {
+	        alert("로그인이 필요합니다.");
+	        return;
+	    }
+	    
+	    // 모달 열기
+	    openModal();
+	    
+	    // iframe에 update.jsp 로드하기
+	    var iframe = document.getElementById("modal-iframe");
+	    iframe.src = "review/insert.do?nickName=" + nickName + "&shopNum=" + shopNum;
 	}
 	
 	function openReviewUpdateForm(num, shopNum, writerName) {
@@ -85,12 +102,20 @@
 <body>
 <div class="page">
 <div class="upperForm">
-	<div><img width="420px" height="420px" class="img" src="../resources/ShopSymbol/${shoVO.num}.png"></div>
+	<div><img width="420px" height="420px" class="img" src="../resources/ShopSymbol/${shoVO.num}.png" onerror="src='../resources/ShopReviewImage/default.png'"></div>
 	<div class="informForm">
 		<div class="title">${shoVO.name}</div>
 		<div class="inform">${shoVO.cate}</div>
 		<div class="inform">${shoVO.tel}</div>
-		<div class="rate">평점 ${avgRate}</div>
+		<div class="rate">
+    		<span class="star-rating" data-rated="${shoVO.rate}">
+        		<span class="star ${(shoVO.rate >= 1) ? 'selected' : ''}">&#9733;</span>
+        		<span class="star ${(shoVO.rate >= 2) ? 'selected' : ''}">&#9733;</span>
+        		<span class="star ${(shoVO.rate >= 3) ? 'selected' : ''}">&#9733;</span>
+        		<span class="star ${(shoVO.rate >= 4) ? 'selected' : ''}">&#9733;</span>
+        		<span class="star ${(shoVO.rate >= 5) ? 'selected' : ''}">&#9733;</span>
+    		</span>
+		</div>
 		<div class="inform">${shoVO.address}</div>
 	</div>
 		
@@ -101,7 +126,9 @@
 		<div class="mainTitle">후기</div>
     	<c:if test="${not empty sessionScope.nick_name}">
         	<!-- 로그인된 경우 -->
-        	<input type="button" value="후기등록" class="reviewButton" onclick="openModal()">
+        	<div class="reviewButtonContainer">
+        		<input type="button" value="후기등록" class="reviewButton" onclick="openReviewInsertForm(${shoVO.num}, '${vo.writerName}')">
+        	</div>
     	</c:if>
 	</div>
     <c:forEach var="vo" items="${sreVOS}">
@@ -109,7 +136,7 @@
             <div class="imageContainer"><img id="symbol" class="symbol" src="../resources/ShopReviewImage/${vo.num}.png" onerror="this.src='../resources/ShopReviewImage/default.png';"></div>
             <div class="writerForm">
             	<div class="writerInform">
-                	<img id="profile" width="70px" height="70px" src="../resources/ProfileImage/${vo.writer}.png">
+                	<img id="profile" width="70px" height="70px" src="../resources/ProfileImage/${vo.writer}.png" onerror="src='../resources/ProfileImage/default.png'">
     	            <div class="writerReview">
         	            <div class="writerName">
         	            	<c:choose>
@@ -117,7 +144,25 @@
                             	<c:otherwise>${vo.writerName}</c:otherwise>
                         	</c:choose>
         	            </div>
-            	        <div class="writerRate">${vo.rated}</div>
+            	        <div class="writerRate">
+                			<c:if test="${vo.rated == 0}">
+                    			평가없음
+                			</c:if>
+			                <c:if test="${vo.rated > 0}">
+            			        <div class="star-rating" data-rated="${vo.rated}">
+                        			<c:forEach var="i" begin="1" end="5">
+                            			<c:choose>
+			                                <c:when test="${i <= vo.rated}">
+            			                        <span class="star selected" data-value="${i}">&#9733;</span>
+                        			        </c:when>
+		                	                <c:otherwise>
+        		        	                    <span class="star" data-value="${i}">&#9733;</span>
+                			                </c:otherwise>
+                        			    </c:choose>
+		                        	</c:forEach>
+        			            </div>
+			                </c:if>
+            			</div>
                 	</div>
                 </div>
             	<div class="writeContent">${vo.content}</div>     
@@ -134,39 +179,52 @@
 	
 	
 	<!-- 페이징 -->
-<div class="pagination">
-    <c:choose>
-        <c:when test="${page > 1}">
-            <button class="pagination-button" onclick="paginate(${page - 1})">이전</button>
-        </c:when>
-    </c:choose>
+	<div class="pagination">
+    	<c:choose>
+        	<c:when test="${srePage > 1}">
+        	    <button class="pagination-button" onclick="Paginate(${srePage - 1}, ${parPage})">이전</button>
+    	    </c:when>
+	    </c:choose>
 
-    <c:choose>
-        <c:when test="${page < totalPages}">
-            <button class="pagination-button" onclick="paginate(${page + 1})">다음</button>
-        </c:when>
-    </c:choose>
+    	<c:choose>
+        	<c:when test="${srePage < totalSrePages}">
+        	    <button class="pagination-button" onclick="Paginate(${srePage + 1}, ${parPage})">다음</button>
+        	</c:when>
+    	</c:choose>
+	</div>
+	
+	<c:forEach var="vo" items="${prtVOS}">
+        
+    </c:forEach>
 </div>
-</div>
-
-
-<!-- 파티관련
-<div>
-	<div class="mainTitle">관련 모임</div>
-	<c:forEach var="vo" items="${partyList}">
-		<div>
-			<div>
-				<div>
-					<div>${vo.title}</div>
-					<div></div>
-				</div>
-				<div>
-					<div>${vo.rated}</div>
-					<div>${vo.writer}</div>
-				</div>
+<div class="partyForm">
+	<div class="partyCollection">관련 모임</div>
+	<c:forEach var="vo" items="${parVOS}">
+		<div class="partyItem">
+			<div class="partyLeft">
+				<div class="partyTitle">${vo.title}</div>
+				<div class="partyMaster">${vo.writerName}</div>
+			</div>
+			<div Class="partyRight">
+				<div class="partyRemain">${vo.applicants + 1} / ${vo.max + 1}</div>
+				<div class="partyDate">${vo.deadLine}</div>
+			</div>
 		</div>
 	</c:forEach>
--->
+	<div class="pagination">
+    	<c:choose>
+        	<c:when test="${parPage > 1}">
+        	    <button class="pagination-button" onclick="Paginate(${srePage}, ${parPage - 1})">이전</button>
+    	    </c:when>
+	    </c:choose>
+
+    	<c:choose>
+        	<c:when test="${parPage < totalParPages}">
+        	    <button class="pagination-button" onclick="Paginate(${srePage}, ${parPage + 1})">다음</button>
+        	</c:when>
+    	</c:choose>
+	</div>
+</div>
 
 <!-- 모달 창 -->
 <div id="modal" class="modal">

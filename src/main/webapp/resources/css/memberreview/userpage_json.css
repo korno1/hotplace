@@ -30,10 +30,16 @@
 	color: #FFFFFF;
 }
 
-}
 .par-title {
+ 	width: 280px;
+ 	height: 43px;
 	font-size: 16px;
 	font-weight: bold;
+	border: 0px solid #192B53;
+	white-space: normal;
+    overflow-wrap: break-word;
+    text-overflow: ellipsis; /* 일정 길이 이상의 텍스트를 ...으로 대체 */
+ 	overflow: hidden;
 }
 
 .par-container {
@@ -243,5 +249,13 @@
 }
 
 .star-rating .star.selected {
+	color: gold;
+}
+
+.update-star {
+	display: inline-block;
+}
+
+.update-star .star.selected {
 	color: gold;
 }

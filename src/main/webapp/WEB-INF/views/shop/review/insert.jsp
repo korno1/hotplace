@@ -4,6 +4,7 @@
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script>
+
 function insertReview() {
 	var nickName = "${param.nickName}"; // 사용자의 닉네임 정보
     var shopNum = ${shopVO.num}; // 가게 번호 정보
@@ -11,6 +12,16 @@ function insertReview() {
     var rated = document.getElementById("rated").value; // 평점 정보
     var fileInput = $('input[type=file]')[0]; // 파일 인풋 엘리먼트
 
+    if (rated === "") {
+    	alert("평점을 선택해주세요");
+    	return;
+    }
+    
+    if (content.trim() === "") {
+    	alert("내용을 입력해주세요");
+    	return;
+    }
+    
     var formData = new FormData();
     formData.append("writerName", nickName);
     formData.append("shopNum", shopNum);
@@ -76,24 +87,51 @@ function showImagePreview(input) {
 	    	</div>
     	</div>
 	    <div class="right-form">
-	    	<div class="inform-title">${shopVO.name}</div>
+	    	<div class="inform-title" id="shopName">${shopVO.name}</div>
 	    	<div class="inform-data">${shopVO.cate}</div>
     		<div class="inform-data">${shopVO.tel}</div>
 	    	<div class="rate">
 		   		<div class="rate-label">평점</div>
-	            <select id="rated" name="rated" class="rate-dropdown">
-                	<option value="1" ${vo.rated == 1 ? 'selected' : ''}>1</option>
-	        	    <option value="2" ${vo.rated == 2 ? 'selected' : ''}>2</option>
-    		        <option value="3" ${vo.rated == 3 ? 'selected' : ''}>3</option>
-    	    	    <option value="4" ${vo.rated == 4 ? 'selected' : ''}>4</option>
-	            	<option value="5" ${vo.rated == 5 ? 'selected' : ''}>5</option>
-	        	</select>
+	            <div class="star-rating" data-rated="${vo.rated}">
+        			<span class="star" data-value="1">&#9733;</span>
+        			<span class="star" data-value="2">&#9733;</span>
+        			<span class="star" data-value="3">&#9733;</span>
+        			<span class="star" data-value="4">&#9733;</span>
+        			<span class="star" data-value="5">&#9733;</span>
+    			</div>
 	        	<input type="checkbox" class="privateNick" id="privateNickname" name="privateNickname" value="true">
             	<div class="privateLabel">닉네임 비공개</div>
             </div>
 	    </div>
     </div>
     <textarea id="content" name="content" class="content"></textarea>
+    <input type="hidden" id="rated" name="rated" value="${sreVO.rated}">
     <button class="submit-button" onclick="insertReview()">작성 완료</button>
 </body>
+<script>
+
+$(document).ready(function() {
+    var shopNameDiv = $("#shopName");
+    var shopName = shopNameDiv.text();
+
+    // 긴 글자일 경우, 글자 크기를 조정하여 표시
+    if (shopName.length > 10) {
+        shopNameDiv.css("font-size", "30px");
+    }
+});
+
+$('.star-rating .star').on('click', function() {
+	console.log("star clicked");
+    var selectedValue = parseInt($(this).attr('data-value'));
+    $('#rated').val(selectedValue); // 선택된 별점 값을 hidden input에 저장
+
+    // 선택된 별 이후의 별 아이콘들을 노란색으로 변경
+    $('.star-rating .star').removeClass('selected');
+    $('.star-rating .star[data-value="' + selectedValue + '"]').addClass('selected');
+    $('.star-rating .star[data-value="' + selectedValue + '"]').prevAll('.star').addClass('selected');
+
+    // 선택 이전의 별 아이콘들을 회색으로 변경
+    $('.star-rating .star[data-value="' + selectedValue + '"]').nextAll('.star').removeClass('selected');
+});
+</script>
 </html>

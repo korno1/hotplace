@@ -41,7 +41,11 @@
     margin: 9px;
     padding: 10px;
     border: 1px solid black;
-    cursor:pointer;
+}
+
+.shop-item:hover {
+    background-color: #f0f0f0; /* 살짝 회색으로 지정, 원하는 색상으로 변경 가능 */
+    cursor: pointer; /* 마우스 커서 모양을 포인터로 변경 */
 }
 
 .shop-items {

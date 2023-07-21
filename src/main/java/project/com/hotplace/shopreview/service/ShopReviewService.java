@@ -39,6 +39,10 @@ public class ShopReviewService {
 	{
 		return dao.count(vo);
 	}
+	
+	public int rateAvg(int shopNum) {
+		return dao.rateAvg(shopNum);
+	}
 
 	public int delete(int num)
 	{

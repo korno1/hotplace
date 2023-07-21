@@ -27,5 +27,7 @@ public interface PartyDAO {
 	public List<PartyVO> myAppcants(PartyVO vo, int page);
 
 	public int myPartyCount(PartyVO vo);
+
+	public int shopPartyCount(String searchWord);
 	
 }

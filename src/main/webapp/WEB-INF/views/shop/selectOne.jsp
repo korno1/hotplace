@@ -23,8 +23,8 @@
 	var cssPath = linkElement.href;
 	console.log("CSS 파일 경로: " + cssPath);
 
-	function paginate(page) {
-		window.location.href = "selectOne.do?num=${shoVO.num}&page=" + page;
+	function Paginate(srePage. parPage) {
+		window.location.href = "selectOne.do?num=${shoVO.num}&srePage=" + srePage + "&parPage=" + parPage];
 	}
 	//모달 열기
 	function openModal() {
@@ -181,79 +181,50 @@
 	<!-- 페이징 -->
 	<div class="pagination">
     	<c:choose>
-        	<c:when test="${page > 1}">
-        	    <button class="pagination-button" onclick="paginate(${page - 1})">이전</button>
+        	<c:when test="${srePage > 1}">
+        	    <button class="pagination-button" onclick="Paginate(${srePage - 1}, ${parPage})">이전</button>
     	    </c:when>
 	    </c:choose>
 
     	<c:choose>
-        	<c:when test="${page < totalPages}">
-        	    <button class="pagination-button" onclick="paginate(${page + 1})">다음</button>
+        	<c:when test="${srePage < totalSrePages}">
+        	    <button class="pagination-button" onclick="Paginate(${srePage + 1}, ${parPage})">다음</button>
         	</c:when>
     	</c:choose>
 	</div>
 	
 	<c:forEach var="vo" items="${prtVOS}">
-        <div class="reviewContentForm">
-            <div class="imageContainer"><img id="symbol" class="symbol" src="../resources/ShopReviewImage/${vo.num}.png" onerror="this.src='../resources/ShopReviewImage/default.png';"></div>
-            <div class="writerForm">
-            	<div class="writerInform">
-                	<img id="profile" width="70px" height="70px" src="../resources/ProfileImage/${vo.writer}.png">
-    	            <div class="writerReview">
-        	            <div class="writerName">
-        	            	<c:choose>
-                            	<c:when test="${vo.anonymous eq 1 && vo.writerName ne sessionScope.nick_name}">비공개</c:when>
-                            	<c:otherwise>${vo.writerName}</c:otherwise>
-                        	</c:choose>
-        	            </div>
-            	        <div class="writerRate">${vo.rated}</div>
-                	</div>
-                </div>
-            	<div class="writeContent">${vo.content}</div>     
-            </div>
-            <div class="rightContainer">
-            	<div class="writeDate"><fmt:formatDate value="${vo.wdate}" pattern="yyyy-MM-dd HH:mm:ss" /></div>
-            	<div class="buttonList">
-                	<input type="button" value="수정" class="update" onclick="openReviewUpdateForm(${vo.num}, ${shoVO.num}, '${vo.writerName}')">
-                	<input type="button" value="삭제" class="delete"  onclick="deleteReview(${vo.num}, '${vo.writerName}')">
-                </div>
-            </div>
-        </div>
+        
     </c:forEach>
-    
-    <div class="pagination">
+</div>
+<div class="partyForm">
+	<div class="partyCollection">관련 모임</div>
+	<c:forEach var="vo" items="${parVOS}">
+		<div class="partyItem">
+			<div class="partyLeft">
+				<div class="partyTitle">${vo.title}</div>
+				<div class="partyMaster">${vo.writerName}</div>
+			</div>
+			<div Class="partyRight">
+				<div class="partyRemain">${vo.applicants + 1} / ${vo.max + 1}</div>
+				<div class="partyDate">${vo.deadLine}</div>
+			</div>
+		</div>
+	</c:forEach>
+	<div class="pagination">
     	<c:choose>
-        	<c:when test="${page > 1}">
-        	    <button class="pagination-button" onclick="paginate(${page - 1})">이전</button>
+        	<c:when test="${parPage > 1}">
+        	    <button class="pagination-button" onclick="Paginate(${srePage}, ${parPage - 1})">이전</button>
     	    </c:when>
 	    </c:choose>
 
     	<c:choose>
-        	<c:when test="${page < totalPages}">
-        	    <button class="pagination-button" onclick="paginate(${page + 1})">다음</button>
+        	<c:when test="${parPage < totalParPages}">
+        	    <button class="pagination-button" onclick="Paginate(${srePage}, ${parPage + 1})">다음</button>
         	</c:when>
     	</c:choose>
 	</div>
 </div>
-
-
-<!-- 파티관련
-<div>
-	<div class="mainTitle">관련 모임</div>
-	<c:forEach var="vo" items="${partyList}">
-		<div>
-			<div>
-				<div>
-					<div>${vo.title}</div>
-					<div></div>
-				</div>
-				<div>
-					<div>${vo.rated}</div>
-					<div>${vo.writer}</div>
-				</div>
-		</div>
-	</c:forEach>
--->
 
 <!-- 모달 창 -->
 <div id="modal" class="modal">

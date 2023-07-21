@@ -6,8 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>유저페이지</title>
-<link rel="stylesheet" href="/hotplace//resources/css/memberreview/userpage.css?after" >
-<link rel="stylesheet" href="/hotplace//resources/css/memberreview/userpage_json.css?after" >
+<link rel="stylesheet" href="/hotplace/resources/css/memberreview/userpage.css?after" >
+<link rel="stylesheet" href="/hotplace/resources/css/memberreview/userpage_json.css?after" >
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -198,7 +198,8 @@ function mre_selectAll(userNum=0, memberreviewNum=0, mrePage){ // ${param.member
 				}
 				
 				let tag_div = ``;
-				if(vo.writerNum==${num}){ //'${user_id}'===vo.writerNum
+				
+				if("${grade}"==1 || vo.writerNum==${num}){ //'${user_id}'===vo.writerNum
 					tag_div = `
 						<button class="mre-update" onclick="mre_selectAll(\${vo.userNum},\${vo.memberreviewNum}, mrePage)">수정</button>
 						<button class="mre-delete" onclick="deleteOK(\${vo.memberreviewNum})">삭제</button>
@@ -621,6 +622,3 @@ function contentCheckByte(obj, maxByte){
 	
 </body>
 </html>
-
-
-

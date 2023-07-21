@@ -20,9 +20,9 @@ $(function(){
 }); 
 
 function app_selectAll(applicantsNum=0){
-	console.log('app_selectAll()....');
-	console.log('writerNum....',${vo2.writerNum});
-	console.log(${param.partyNum});
+// 	console.log('app_selectAll()....');
+// 	console.log('writerNum....',${vo2.writerNum});
+// 	console.log(${param.partyNum});
 
 	$.ajax({
 		url: "json/AppselectAll.do",
@@ -32,13 +32,13 @@ function app_selectAll(applicantsNum=0){
 		method: 'GET',	
 		dataType: 'json',
 		success: function(arr){
-			console.log('ajax...',arr);
+// 			console.log('ajax...',arr);
 			let tag_OK = '';
 			let tag_NotOK = '';
 			
 			$.each(arr, function(index, vo){
-				console.log('vo...',vo);
-				console.log('status...',vo.status);
+// 				console.log('vo...',vo);
+// 				console.log('status...',vo.status);
 				if (vo.status===1) {
 							
 					tag_OK +=`
@@ -311,11 +311,11 @@ function rejectOK(applicantsNum=0) {
 	</div>
 	
 	<script type="text/javascript">
-		if("${vo2.writerNum}"=="${num}"){
+		if("${grade}"==1){
+			console.log('grade:', ${grade});
+		}else if("${vo2.writerNum}"=="${num}"){
 			$('.insert_form').css("display", "none");
-		}
-
-		if("${vo2.writerNum}"!="${num}"){
+		}else {
 			$('.par_button').css("display", "none");
 		}
 	</script>

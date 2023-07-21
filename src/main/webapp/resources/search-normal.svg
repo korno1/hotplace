@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22">
+  <g id="search-normal" transform="translate(-429 -189)">
+    <path id="Vector" d="M9.5-1A10.5,10.5,0,1,1-1,9.5,10.512,10.512,0,0,1,9.5-1Zm0,19A8.5,8.5,0,1,0,1,9.5,8.51,8.51,0,0,0,9.5,18Z" transform="translate(430 190)" fill="#292d32"/>
+    <path id="Vector-2" data-name="Vector" d="M2,3a1,1,0,0,1-.707-.293l-2-2a1,1,0,0,1,0-1.414,1,1,0,0,1,1.414,0l2,2A1,1,0,0,1,2,3Z" transform="translate(448 208)" fill="#292d32"/>
+  </g>
+</svg>

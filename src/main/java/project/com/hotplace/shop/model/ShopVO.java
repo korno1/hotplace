@@ -15,5 +15,6 @@ public class ShopVO {
 	private String address;
 	private int rate;
 	private double distance;
+	private int reviewCount;
 	private MultipartFile multipartFile;
 }

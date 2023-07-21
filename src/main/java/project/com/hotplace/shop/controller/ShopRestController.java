@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -46,33 +47,59 @@ public class ShopRestController {
 	
 	@RequestMapping(value = "shop/json/selectAll.do", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> selectAll(Model model, String searchWord, int pageNum) {
+	public Map<String, Object> selectAll(Model model, String searchWord, String sortOption, int pageNum) {
 		log.info("/selectAll.do");
 	    log.info("searchWord:{}", searchWord);
 	    
 	    List<ShopVO> vos = service.searchList(searchWord);
 	    
-	    if(session.getAttribute("latitude")!= null && session.getAttribute("longitude")!=null) {
-	    	double latitude = Double.parseDouble(session.getAttribute("latitude").toString());
-			double longitude = Double.parseDouble(session.getAttribute("longitude").toString());
-		
-			vos.sort(new Comparator<ShopVO>() {
-		    	@Override
-		    	public int compare(ShopVO vo1, ShopVO vo2) {
-		        	if (vo1 == null || vo2 == null) {
-		           		return 0; // 두 요소 모두 null이라면 순서 변경 없음
-		        	}
-		        	// 좌표 계산
-		        	double distance1 = ShopUtil.calculateDistance(latitude, longitude, vo1.getLoc_y(), vo1.getLoc_x());
-		        	double distance2 = ShopUtil.calculateDistance(latitude, longitude, vo2.getLoc_y(), vo2.getLoc_x());
-
-		        	// 거리를 기준으로 오름차순 정렬
-		        	return Double.compare(distance1, distance2);
-		    	}
-			});
+	    log.info("sort...{}", sortOption);
+	    
+	    switch (sortOption) {
+	    	case "title":
+	    		Collections.sort(vos, new Comparator<ShopVO>() {
+	    		    @Override
+	    		    public int compare(ShopVO vo1, ShopVO vo2) {
+	    		        return vo1.getName().compareTo(vo2.getName());
+	    		    }
+	    		});
+	    		break;
+	    	case "address":
+	    		Collections.sort(vos, new Comparator<ShopVO>() {
+	    		    @Override
+	    		    public int compare(ShopVO vo1, ShopVO vo2) {
+	    		        return vo1.getAddress().compareTo(vo2.getAddress());
+	    		    }
+	    		});
+	    		break;
+	    	case "review":
+	    		Collections.sort(vos, new Comparator<ShopVO>() {
+	    		    @Override
+	    		    public int compare(ShopVO vo1, ShopVO vo2) {
+	    		    	return Integer.compare(vo2.getReviewCount(), vo1.getReviewCount());
+	    		    }
+	    		});
+	    		break;
+	    	case "distance":
+	    		double latitude = Double.parseDouble(session.getAttribute("latitude").toString());
+				double longitude = Double.parseDouble(session.getAttribute("longitude").toString());
 			
-			log.info("{}", latitude);
-			log.info("{}", longitude);
+				vos.sort(new Comparator<ShopVO>() {
+			    	@Override
+			    	public int compare(ShopVO vo1, ShopVO vo2) {
+			        	if (vo1 == null || vo2 == null) {
+			           		return 0; // 두 요소 모두 null이라면 순서 변경 없음
+			        	}
+			        	// 좌표 계산
+			        	double distance1 = ShopUtil.calculateDistance(latitude, longitude, vo1.getLoc_y(), vo1.getLoc_x());
+			        	double distance2 = ShopUtil.calculateDistance(latitude, longitude, vo2.getLoc_y(), vo2.getLoc_x());
+
+			        	// 거리를 기준으로 오름차순 정렬
+			        	return Double.compare(distance1, distance2);
+			    	}
+				});
+            default:
+            	break;
 	    }
 	    
 	    log.info("{}", vos);

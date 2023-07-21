@@ -41,12 +41,14 @@ public class ShopReviewRestController {
 	    
 	    @RequestMapping(value = "/shop/review/json/delete.do", method = RequestMethod.POST)
 	    @ResponseBody
-	    public String deleteReview(int num) {
+	    public String deleteReview(int num, int shopNum) {
 	        log.info("/ShopReviewDelete.do");
 	        
 	        // 삭제 로직 수행
 	        int result = service.delete(num);
 	        if (result > 0) {
+	        	log.info("deleteOK");
+	        	shoService.decreaseReview(shopNum);
 	            return "success";
 	        } else {
 	            return "failure";
@@ -95,7 +97,7 @@ public class ShopReviewRestController {
 		    
 		    int avgRate = service.rateAvg(vo.getShopNum());
 		    
-		    shoService.updateRate(vo.getShopNum(), avgRate);
+		    shoService.updateRate(vo.getShopNum(), avgRate, 1);
 		    log.info("result:{}",result);
 		    if (result > 0) {
 	            // 삽입 성공
@@ -134,7 +136,7 @@ public class ShopReviewRestController {
 			log.info("vo:{}", vo);
 		       
 		    int result = service.update(vo);
-		    shoService.updateRate(vo.getShopNum(), vo.getRated());
+		    shoService.updateRate(vo.getShopNum(), vo.getRated(), 0);
 		    log.info("result:{}",result);
 		    if (result > 0) {
 	            // 삽입 성공

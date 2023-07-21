@@ -13,6 +13,7 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d326b067d6341afa0b918f0c45297208&libraries=services,clusterer"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script type="text/javascript">
+    
     function selectOne(num) {
     	
         // GET 요청을 통해 selectOne.do로 접근
@@ -28,6 +29,18 @@
 
         // 페이지 로드 시 매장 목록을 가져와 화면에 표시
         searchList();
+        
+        function scrollToTop() {
+            $("html, body").animate({ scrollTop: 0 }, "fast");
+        }
+        
+        function hideCurrentAddress() {
+            $("#addressContainer").hide();
+        }
+
+        function showCurrentAddress() {
+            $("#addressContainer").show();
+        }
 
         function getCurrentAddress() {
             if (navigator.geolocation) {
@@ -53,10 +66,12 @@
                     },
                     function(error) {
                         console.log("Error getting current position: ", error);
+                        hideCurrentAddress();
                     }
                 );
             } else {
                 console.log("Geolocation is not supported by this browser.");
+                hideCurrentAddress();
             }
         }
 
@@ -69,15 +84,39 @@
         
         function searchList() {
             console.log('searchList()...');
+            var selectedSortOption = $("#sortingOptions").val();
             $.ajax({
                 url: "json/selectAll.do",
                 data: {
                     searchWord: $("#searchWord").val(),
-                    pageNum: page
+                    pageNum: page,
+                    sortOption: selectedSortOption
                 },
                 method: 'GET',
                 dataType: "json",
                 success: function(data) {
+                    updateShopList(data.vos);
+                    updatePageNavigation(data.isLast);
+                },
+                error: function(xhr, status, error) {
+                    console.log("Error: " + error);
+                }
+            });
+        }
+        
+        function sortList(sortOption) {
+        	$.ajax({
+                url: "json/selectAll.do",
+                data: {
+                    searchWord: $("#searchWord").val(),
+                    pageNum: 1,
+                    sortOption: sortOption // 정렬 옵션을 파라미터로 전달
+                },
+                method: 'GET',
+                dataType: "json",
+                success: function(data) {
+                    // 매장 목록 업데이트
+                    page = 1;
                     updateShopList(data.vos);
                     updatePageNavigation(data.isLast);
                 },
@@ -97,16 +136,22 @@
                     vo.num +
                     ')"></div>');
                 listItem.append(
-                    '<div><img id="preview" width="100px" src="../resources/ShopSymbol/' +
+                    '<div class="imgContainer"><img id="preview" width="100px" src="../resources/ShopSymbol/' +
                     vo.num + '" onerror="this.src=\'../resources/ShopSymbol/default.png\';"></div>'
                 );
-                var rateHtml = vo.rate === 0 ? '평가없음' : getStarRatingHtml(vo.rate);
+                var rateHtml = getStarRatingHtml(vo.rate);
+                var reviewCountHtml = '<div class="reviewCount">(' + vo.reviewCount + ')</div>';
                 listItem.append(
-                    '<div><div>' +
+                    '<div class="shopName"><div>' +
                     vo.name +
-                    '</div><div>' +
+                    '</div><div class="category">' + vo.cate + '</div>'
+                    + '<div class="rateForm"><div class="rateContent">' +
                     rateHtml +
-                    '</div></div>'
+                    '</div>' +
+                    reviewCountHtml + 
+                    '</div>' +
+                    '<div class="address">' + vo.address + '</div>' +
+                    '</div>'
                 );
 
                 shopList.append(listItem);
@@ -151,6 +196,18 @@
             }
         }
         
+        $("#sortingOptions").on("change", function() {
+            var selectedSortOption = $(this).val();
+            sortList(selectedSortOption);
+        });
+        
+        $(document).ready(function() {
+            // 이미지를 클릭하면 폼 제출 이벤트를 발생시킴
+            $(".button").on("click", function() {
+                $("#searchForm").submit();
+            });
+        });
+        
         $("input[type='submit']").on("click", function(e) {
             e.preventDefault(); // 기본 동작(폼 제출) 방지
             page = 1; // 페이지 번호 초기화
@@ -162,6 +219,8 @@
             e.preventDefault(); // 기본 동작(링크 이동) 방지
             page--; // page 값을 감소시킴
             searchList(); // 새로운 페이지 데이터 가져오기
+            scrollToTop();
+            
         });
 
         // 다음 버튼 클릭 이벤트 처리
@@ -169,27 +228,42 @@
             e.preventDefault(); // 기본 동작(링크 이동) 방지
             page++; // page 값을 증가시킴
             searchList(); // 새로운 페이지 데이터 가져오기
+            scrollToTop();
         });
     });
 </script>
 </head>
 <body>
-	<h1>매장목록</h1>
-	
 	<div style="padding:5px">
-		<form action="selectAll.do">
-			<input type="text" name="searchWord" id="searchWord" value="${param.searchWord}">
-			<input type="hidden" name="pageNum" id="pageNum" value=1>
-			<input type="submit" value="검색">
-			<div id="addressContainer">
-    			<h2>현재 주소</h2>
-    			<p id="currentAddress"></p>
-			</div>
+		<form action="selectAll.do" class="topForm">
+			<div class="searchForm">
+				<input type="text" name="searchWord" id="searchWord" class="searchWord" value="${param.searchWord}">
+				<input type="hidden" name="pageNum" id="pageNum" value=1>
+				<button type="submit" class="button">
+               		<img src="../resources/search-normal.svg">
+            	</button>
+            </div>
 		</form>
 	</div>
+<div id="addressContainer">
+	<h2>현재 주소</h2>
+	<p id="currentAddress"></p>
+</div>
+<div class="dropdown" id="sortDropdown">
+    <div class="form-group" id="sortDropdown">
+        <label for="sortingOptions">정렬 순서:</label>
+        <select class="form-control" id="sortingOptions">
+            <option value="title">가게명순</option>
+            <option value="address">주소순</option>
+            <option value="review">리뷰순</option>
+            <% if (session.getAttribute("latitude") != null && session.getAttribute("longitude") != null) { %>
+	           	<option value="distance">거리순</option>
+	       	<% } %>
+       </select>
+   </div>
+</div>
 
-
-<div id="shopList">
+<div id="shopList" class="shopList">
         <!-- 동적으로 생성될 매장 목록 -->
 </div>
 <div>

@@ -58,7 +58,7 @@ public class HomeRestController {
        
 		List<ShopVO> nearShops = new ArrayList<>();
        
-		if(session.getAttribute("latitude")!= null && session.getAttribute("longitude")!=null) {
+		if(session.getAttribute("latitude")!= null || session.getAttribute("longitude")!=null) {
 			double latitude = Double.parseDouble(session.getAttribute("latitude").toString());
 			double longitude = Double.parseDouble(session.getAttribute("longitude").toString());
 		
@@ -95,7 +95,7 @@ public class HomeRestController {
 	        	}
             }
 	    }
-	    
+	    log.info("CategoryCountMap...{}", categoryCountMap);
 	    log.info("{}", nickName);
 		
 		// 사용자 선호 음식 카테고리로 설정(로그인 되었을 경우 가져옴)

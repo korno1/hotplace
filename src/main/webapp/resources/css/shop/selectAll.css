@@ -1,17 +1,106 @@
-.large {
-    border: 1px solid black;
-    padding: 10px;
-    margin-bottom: 10px;
+.shopList {
+	margin-top: 15px;
 }
 
+.large {
+	display: flex;
+	width: 1280px;
+	height: 240px;
+    border-bottom: 1px solid black;
+}
+
+.large:hover {
+    background-color: #f0f0f0; /* 살짝 회색으로 지정, 원하는 색상으로 변경 가능 */
+    cursor: pointer; /* 마우스 커서 모양을 포인터로 변경 */
+}
+
+.large:first-child {
+	border-top: 1px solid black;
+}
+
+.large img {
+    width: 300px;
+    height: 200px;
+}
+
+.imgContainer {
+	margin-top: 15px;
+}
+
+.shopName {
+	margin-top: 30px;
+	margin-left: 20px;
+}
+.shopName .div {
+	martin-bottom: 10px;
+}
+
+.rateForm {
+	display: flex;
+}
+
+.rateContent{
+	text-align: center;
+}
+
+.reviewCount {
+	margin-top: 5px;
+	margin-left: 15px;
+}
+
+.address {
+	margin-top: 15px;
+}
+
+.large > div > div:first-child {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.large > div > div:last-child {
+    font-size: 16px;
+    color: #666;
+}
+
+.topForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1320px;
+    height: 50px;
+}
+
+.searchForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 700px;
+    height: 50px;
+    border: 1px solid;
+    border-radius: 25px;
+}
+
+.searchWord {
+	display: inline-block;
+	width: 635px;
+	border: none;
+	outline: none;
+}
+.button {
+    background: none;
+    border: none;
+}
 
 .yellowStar {
     font-size: 20px;
     color: #ffc107; 
 }
 
-
-.star {
+.grayStar {
     color: #ccc;
     font-size: 20px;
+}
+
+.reviewCount {
+	color: #ccc;
 }

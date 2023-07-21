@@ -7,6 +7,8 @@ public interface ShopDAO {
 	public int insert(ShopVO vo);
 
 	public int update(ShopVO vo);
+	
+	public int updateRate(int num, int rate);
 
 	public int delete(ShopVO vo);
 	
@@ -15,8 +17,6 @@ public interface ShopDAO {
 	public int countNum();
 
 	public ShopVO selectOne(ShopVO vo);
-
-	public List<ShopVO> selectAll(String searchKey, String searchWord, int pageNum);
 	
-	public List<ShopVO> searchListTest(String searchWord);
+	public List<ShopVO> searchList(String searchWord);
 }

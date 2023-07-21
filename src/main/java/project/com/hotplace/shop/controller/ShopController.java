@@ -54,17 +54,10 @@ public class ShopController {
 	public String searchList(String searchWord, int page) {
 		log.info("/searchList.do");
 		
-		List<ShopVO> vos = service.searchListTest(searchWord);
+		List<ShopVO> vos = service.searchList(searchWord);
 		log.info("{}", vos);
 		
 		return "shop/selectAll.tiles";
-	}
-
-	@RequestMapping(value = "/searchLocation.do", method = RequestMethod.GET)
-	public String searchLocation() {
-		log.info("/shop/searchLocation.do");
-
-		return "shop/searchLocation";
 	}
 	
 	@RequestMapping(value = "/insert.do", method = RequestMethod.GET)
@@ -91,29 +84,11 @@ public class ShopController {
 	    int pageSize = 5; // Number of items per page
 	    int totalPages = (int) Math.ceil((double) totalCount / pageSize);
 	    
-	    double avgRate;
-	    
-	    if (sreVOS == null || sreVOS.isEmpty()) {
-            avgRate = 0;
-        }
-	    else
-	    {
-	    	double totalRate = 0.0;
-	    	for (ShopReviewVO review : sreVOS) {
-	    		totalRate += review.getRated();
-	    	}
-
-	    	avgRate = totalRate / sreVOS.size();
-	    }
-
-	    // 소수점 한자리만 남도록
-	    avgRate = Math.round(avgRate * 10) / 10;
-	    
-	    List<PartyVO> parVO = parService.selectAll("place", shoVO.getName(), 0);
+	    List<PartyVO> parVOS = parService.selectAll("place", shoVO.getName(), 1);
 	    
 	    log.info("/sreList...{}", sreVOS);
 	    
-	    log.info("/partyList...{}", parVO);
+	    log.info("/PartyVOs...{}", parVOS);
 	    
 	    log.info("total_count...{}", totalCount);
 	    
@@ -121,7 +96,6 @@ public class ShopController {
 
 	    model.addAttribute("shoVO", shoVO);
 	    model.addAttribute("sreVOS", sreVOS);
-	    model.addAttribute("avgRate", avgRate);
 	    model.addAttribute("page", page);
 	    model.addAttribute("totalPages", totalPages);
 

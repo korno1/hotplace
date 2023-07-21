@@ -36,6 +36,23 @@
 	    document.getElementById("modal").style.display = "none";
 	}
 	
+	function openReviewInsertForm(shopNum, writerName) {
+    	// 사용자 nickname 가져오기
+	    var nickName = '<%= session.getAttribute("nick_name") %>';
+		
+	    if (writerName == null) {
+	        alert("로그인이 필요합니다.");
+	        return;
+	    }
+	    
+	    // 모달 열기
+	    openModal();
+	    
+	    // iframe에 update.jsp 로드하기
+	    var iframe = document.getElementById("modal-iframe");
+	    iframe.src = "review/insert.do?nickName=" + nickName + "&shopNum=" + shopNum;
+	}
+	
 	function openReviewUpdateForm(num, shopNum, writerName) {
     	// 사용자 nickname 가져오기
 	    var nickName = '<%= session.getAttribute("nick_name") %>';
@@ -85,12 +102,20 @@
 <body>
 <div class="page">
 <div class="upperForm">
-	<div><img width="420px" height="420px" class="img" src="../resources/ShopSymbol/${shoVO.num}.png"></div>
+	<div><img width="420px" height="420px" class="img" src="../resources/ShopSymbol/${shoVO.num}.png" onerror="src='../resources/ShopReviewImage/default.png'"></div>
 	<div class="informForm">
 		<div class="title">${shoVO.name}</div>
 		<div class="inform">${shoVO.cate}</div>
 		<div class="inform">${shoVO.tel}</div>
-		<div class="rate">평점 ${avgRate}</div>
+		<div class="rate">
+    		<span class="star-rating" data-rated="${shoVO.rate}">
+        		<span class="star ${(shoVO.rate >= 1) ? 'selected' : ''}">&#9733;</span>
+        		<span class="star ${(shoVO.rate >= 2) ? 'selected' : ''}">&#9733;</span>
+        		<span class="star ${(shoVO.rate >= 3) ? 'selected' : ''}">&#9733;</span>
+        		<span class="star ${(shoVO.rate >= 4) ? 'selected' : ''}">&#9733;</span>
+        		<span class="star ${(shoVO.rate >= 5) ? 'selected' : ''}">&#9733;</span>
+    		</span>
+		</div>
 		<div class="inform">${shoVO.address}</div>
 	</div>
 		
@@ -101,10 +126,74 @@
 		<div class="mainTitle">후기</div>
     	<c:if test="${not empty sessionScope.nick_name}">
         	<!-- 로그인된 경우 -->
-        	<input type="button" value="후기등록" class="reviewButton" onclick="openModal()">
+        	<div class="reviewButtonContainer">
+        		<input type="button" value="후기등록" class="reviewButton" onclick="openReviewInsertForm(${shoVO.num}, '${vo.writerName}')">
+        	</div>
     	</c:if>
 	</div>
     <c:forEach var="vo" items="${sreVOS}">
+        <div class="reviewContentForm">
+            <div class="imageContainer"><img id="symbol" class="symbol" src="../resources/ShopReviewImage/${vo.num}.png" onerror="this.src='../resources/ShopReviewImage/default.png';"></div>
+            <div class="writerForm">
+            	<div class="writerInform">
+                	<img id="profile" width="70px" height="70px" src="../resources/ProfileImage/${vo.writer}.png" onerror="src='../resources/ProfileImage/default.png'">
+    	            <div class="writerReview">
+        	            <div class="writerName">
+        	            	<c:choose>
+                            	<c:when test="${vo.anonymous eq 1 && vo.writerName ne sessionScope.nick_name}">비공개</c:when>
+                            	<c:otherwise>${vo.writerName}</c:otherwise>
+                        	</c:choose>
+        	            </div>
+            	        <div class="writerRate">
+                			<c:if test="${vo.rated == 0}">
+                    			평가없음
+                			</c:if>
+			                <c:if test="${vo.rated > 0}">
+            			        <div class="star-rating" data-rated="${vo.rated}">
+                        			<c:forEach var="i" begin="1" end="5">
+                            			<c:choose>
+			                                <c:when test="${i <= vo.rated}">
+            			                        <span class="star selected" data-value="${i}">&#9733;</span>
+                        			        </c:when>
+		                	                <c:otherwise>
+        		        	                    <span class="star" data-value="${i}">&#9733;</span>
+                			                </c:otherwise>
+                        			    </c:choose>
+		                        	</c:forEach>
+        			            </div>
+			                </c:if>
+            			</div>
+                	</div>
+                </div>
+            	<div class="writeContent">${vo.content}</div>     
+            </div>
+            <div class="rightContainer">
+            	<div class="writeDate"><fmt:formatDate value="${vo.wdate}" pattern="yyyy-MM-dd HH:mm:ss" /></div>
+            	<div class="buttonList">
+                	<input type="button" value="수정" class="update" onclick="openReviewUpdateForm(${vo.num}, ${shoVO.num}, '${vo.writerName}')">
+                	<input type="button" value="삭제" class="delete"  onclick="deleteReview(${vo.num}, '${vo.writerName}')">
+                </div>
+            </div>
+        </div>
+    </c:forEach>
+	
+	
+	<!-- 페이징 -->
+	<div class="pagination">
+    	<c:choose>
+        	<c:when test="${page > 1}">
+        	    <button class="pagination-button" onclick="paginate(${page - 1})">이전</button>
+    	    </c:when>
+	    </c:choose>
+
+    	<c:choose>
+        	<c:when test="${page < totalPages}">
+        	    <button class="pagination-button" onclick="paginate(${page + 1})">다음</button>
+        	</c:when>
+    	</c:choose>
+	</div>
+	
+	<c:forEach var="vo" items="${prtVOS}">
         <div class="reviewContentForm">
             <div class="imageContainer"><img id="symbol" class="symbol" src="../resources/ShopReviewImage/${vo.num}.png" onerror="this.src='../resources/ShopReviewImage/default.png';"></div>
             <div class="writerForm">
@@ -131,22 +220,20 @@
             </div>
         </div>
     </c:forEach>
-	
-	
-	<!-- 페이징 -->
-<div class="pagination">
-    <c:choose>
-        <c:when test="${page > 1}">
-            <button class="pagination-button" onclick="paginate(${page - 1})">이전</button>
-        </c:when>
-    </c:choose>
+    
+    <div class="pagination">
+    	<c:choose>
+        	<c:when test="${page > 1}">
+        	    <button class="pagination-button" onclick="paginate(${page - 1})">이전</button>
+    	    </c:when>
+	    </c:choose>
 
-    <c:choose>
-        <c:when test="${page < totalPages}">
-            <button class="pagination-button" onclick="paginate(${page + 1})">다음</button>
-        </c:when>
-    </c:choose>
-</div>
+    	<c:choose>
+        	<c:when test="${page < totalPages}">
+        	    <button class="pagination-button" onclick="paginate(${page + 1})">다음</button>
+        	</c:when>
+    	</c:choose>
+	</div>
 </div>
 
 

@@ -46,26 +46,11 @@ public class ShopRestController {
 	
 	@RequestMapping(value = "shop/json/selectAll.do", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> selectAll(Model model, String searchKey, String searchWord, int pageNum) {
+	public Map<String, Object> selectAll(Model model, String searchWord, int pageNum) {
 		log.info("/selectAll.do");
 	    log.info("searchWord:{}", searchWord);
 	    
-	    List<ShopVO> vos = service.searchListTest(searchWord);
-	    
-	    for(ShopVO shopVO : vos)
-	    {
-	    	int avgRate = 0;
-	    	int count = 0;
-	    	List<ShopReviewVO> sreVOS = sreService.selectAllReview(shopVO.getNum());
-	    	log.info("{}", sreVOS);
-	    	for(ShopReviewVO sreVO : sreVOS) {
-	    		avgRate += sreVO.getRated();
-	    		count++;
-	    	}
-	    	if(count != 0)
-	    		avgRate = avgRate / count;
-	    	shopVO.setAvgRated(avgRate);
-	    }
+	    List<ShopVO> vos = service.searchList(searchWord);
 	    
 	    if(session.getAttribute("latitude")!= null && session.getAttribute("longitude")!=null) {
 	    	double latitude = Double.parseDouble(session.getAttribute("latitude").toString());
@@ -112,6 +97,22 @@ public class ShopRestController {
 
 	    return response;
 	}
+	
+	@RequestMapping(value = "/shop/json/updateRate.do", method = RequestMethod.POST)
+    @ResponseBody
+    public String updateReviewRate(int shopNum, int rate) {
+    	List<ShopReviewVO> vos = sreService.selectAllReview(shopNum);
+    	
+    	int avg = 0, count = 0;
+    	for(ShopReviewVO reviews : vos) {
+    		avg += reviews.getRated();
+    		count++;
+    	}
+    	avg = avg / count;
+    	
+    	
+    	return "success";
+    }
 	
 	@RequestMapping(value = "shop/json/insertOK.do", method = RequestMethod.POST)
 	@ResponseBody

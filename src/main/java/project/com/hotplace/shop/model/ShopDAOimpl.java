@@ -58,41 +58,24 @@ public class ShopDAOimpl implements ShopDAO {
 		return sqlSession.selectOne("SHO_SELECT_ONE",vo);
 	}
 	
+	public int updateRate(int num, int rate)
+	{
+		Map<String, Object> param = new HashMap<String, Object>();
+		
+		param.put("num", num);
+		param.put("rate", rate);
+		
+		log.info("updateRate()....{}", param);
+		
+		return sqlSession.update("SHO_UPDATE_RATE", param);
+	}
+	
 	@Override
-	public List<ShopVO> searchListTest(String searchWord) {
+	public List<ShopVO> searchList(String searchWord) {
 		Map<String, Object> param = new HashMap<String, Object>();
 		
 		param.put("searchWord", searchWord);
-		return sqlSession.selectList("SHO_SEARCH_LIST_TEST", param);
-	}
-
-	@Override
-	public List<ShopVO> selectAll(String searchKey, String searchWord, int pageNum) {
-		log.info("searchList()....searchKey:{}",searchKey);
-		log.info("searchList()....searchWord:{}",searchWord);
-		log.info("searchList()....pageNum:{}", pageNum);
-		
-		Map<String, Object> param = new HashMap<String, Object>();
-		
-		int itemsPerPage = 10;
-		int end = itemsPerPage * pageNum;
-		int start = (pageNum - 1) * itemsPerPage + 1;
-		
-		param.put("end", end);
-		param.put("start", start);
-		
-		if(!searchWord.isEmpty()) {
-			param.put("sW", "%" + searchWord + "%");
-			log.info("searchKey...{}", searchKey);
-
-			if(searchKey.toLowerCase().equals("cate"))
-				return sqlSession.selectList("SHO_SEARCH_LIST_CATE", param);
-			else
-				return sqlSession.selectList("SHO_SEARCH_LIST_NAME", param);
-		}else {
-			log.info("{}", param);
-			return sqlSession.selectList("SHO_SELECT_ALL", param);
-		}
+		return sqlSession.selectList("SHO_SEARCH_LIST", param);
 	}
 
 }

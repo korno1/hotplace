@@ -40,15 +40,17 @@ public class ShopService {
 		return dao.selectAllHome();
 	}
 	
+	public int updateRate(int num, int rate)
+	{
+		return dao.updateRate(num, rate);
+	}
+	
 	public ShopVO selectOne(ShopVO vo) {
 		return dao.selectOne(vo);
 	}
 	
-	public List<ShopVO> selectAll(String searchKey, String searchWord, int pageNum) {
-		return dao.selectAll(searchKey, searchWord, pageNum);
-	}
 	
-	public List<ShopVO> searchListTest(String searchWord) {
-		return dao.searchListTest(searchWord);
+	public List<ShopVO> searchList(String searchWord) {
+		return dao.searchList(searchWord);
 	}
 }

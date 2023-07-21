@@ -98,6 +98,13 @@ iframe {
 .reviewTitle {
 	margin-top: 30px;
 	display: flex;
+	justify-content: space-between;
+    align-items: center;
+}
+
+.reviewButtonContainer {
+    width: 280px;
+    text-align: center;
 }
 
 .mainTitle {
@@ -107,14 +114,14 @@ iframe {
 .reviewButton {
 	width:180px;
 	height:50px;
-	margin-left:1020px;
 	border-radius: 25px;
-	background: #17395C 0% 0% no-repeat padding-box;
+	background: #C24229;
 	text-align: center;
 	color: #ffffff;
 	font: normal normal 600 18px/21px Pretendard;
 	letter-spacing: 0px;
 	cursor: pointer;
+	border: 0px;
 	opacity: 1;
 }
 
@@ -145,11 +152,11 @@ iframe {
 
 .writerName {
 	text-align: left;
-	font: normal normal medium 24px/29px Pretendard;
+	font-size:24px;
 	letter-spacing: 0px;
 	color: #3D3D3D;
 	opacity: 1;
-	margin-bottom: 13px;
+	margin-bottom: 10px;
 }
 
 .writerRate {
@@ -169,8 +176,11 @@ iframe {
 	height: 166px;
 }
 
+.rightContainer {
+	text-align: center;
+}
+
 .writeDate {
-	text-align: left;
 	font: normal normal normal 22px/35px Pretendard;
 	letter-spacing: -0.55px;
 	color: #3D3D3D;
@@ -179,22 +189,20 @@ iframe {
 }
 
 .buttonList {
-	margin-left: 5px;
 	display: block;
 }
 
 .update {
 	width: 180px;
 	height: 50px;
-	border: 1px solid var(--unnamed-color-17395c);
-	border: 1px solid #17395C;
+	border: 1px solid #C24229;
 	border-radius: 25px;
 	opacity: 1;
 	text-align: center;
 	font: normal normal 600 18px/21px Pretendard;
 	margin-bottom: 15px;
 	letter-spacing: 0px;
-	color: #17395C;
+	color: #C24229;
 	opacity: 1;
 	cursor: pointer;
 }
@@ -202,16 +210,15 @@ iframe {
 .delete {
 	width: 180px;
 	height: 50px;
-	background: var(--unnamed-color-17395c) 0% 0% no-repeat padding-box;
-	background: #17395C 0% 0% no-repeat padding-box;
+	background: #C24229;
 	border-radius: 25px;
-	opacity: 1;
 	text-align: center;
 	font: normal normal 600 18px/21px Pretendard;
 	letter-spacing: 0px;
 	color: #ffffff;
 	opacity: 1;
 	cursor: pointer;
+	border: 0;
 }
 
 .pagination {
@@ -225,4 +232,21 @@ iframe {
     border-radius: 25px;
     border: 1px solid #17395C;
     cursor: pointer;
+}
+
+.star-rating {
+    display: inline-block;
+    font-size: 20px;
+    color: #CCC; /* 별점 색상을 노란색으로 지정 */
+}
+/* 선택된 별점 스타일 */
+.star-rating .star.selected {
+    color: #f2b600; /* 선택된 별점의 색상을 노란색으로 지정 */
+}
+
+/* 별점 개수 스타일 */
+.star-rating::after {
+    content: attr(data-rated) "/5";
+    padding-left: 5px;
+    color: #AAA;
 }

@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import lombok.extern.slf4j.Slf4j;
 import project.com.hotplace.member.model.MemberVO;
 import project.com.hotplace.member.service.MemberService;
+import project.com.hotplace.shop.service.ShopService;
 import project.com.hotplace.shopreview.model.ShopReviewVO;
 import project.com.hotplace.shopreview.service.ShopReviewService;
 
@@ -28,6 +30,9 @@ public class ShopReviewRestController {
 		@Autowired
 		ServletContext sContext;
 	
+		@Autowired
+		ShopService shoService;
+		
 		@Autowired
 	    ShopReviewService service;
 		
@@ -87,6 +92,8 @@ public class ShopReviewRestController {
 			log.info("vo:{}", vo);
 		       
 		    int result = service.insert(vo);
+		    
+		    shoService.updateRate(vo.getShopNum(), vo.getRated());
 		    log.info("result:{}",result);
 		    if (result > 0) {
 	            // 삽입 성공
@@ -125,6 +132,7 @@ public class ShopReviewRestController {
 			log.info("vo:{}", vo);
 		       
 		    int result = service.update(vo);
+		    shoService.updateRate(vo.getShopNum(), vo.getRated());
 		    log.info("result:{}",result);
 		    if (result > 0) {
 	            // 삽입 성공

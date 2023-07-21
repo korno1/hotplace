@@ -13,7 +13,7 @@ public class ShopVO {
 	private float loc_x;
 	private float loc_y;
 	private String address;
-	private double avgRated;
+	private int rate;
 	private double distance;
 	private MultipartFile multipartFile;
 }

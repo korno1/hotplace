@@ -4,6 +4,28 @@
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script>
+$(document).ready(function() {
+    // sreVO.rated 값을 읽어와서 해당되는 별점을 먼저 부여
+    var ratedValue = ${sreVO.rated};
+    $('.star-rating .star').removeClass('selected');
+    $('.star-rating .star[data-value="' + ratedValue + '"]').addClass('selected');
+    $('.star-rating .star[data-value="' + ratedValue + '"]').prevAll('.star').addClass('selected');
+
+    // 별점 클릭 이벤트 설정
+    $('.star-rating .star').on('click', function() {
+        var selectedValue = parseInt($(this).attr('data-value'));
+        $('#rated').val(selectedValue); // 선택된 별점 값을 hidden input에 저장
+
+        // 선택된 별 이후의 별 아이콘들을 노란색으로 변경
+        $('.star-rating .star').removeClass('selected');
+        $('.star-rating .star[data-value="' + selectedValue + '"]').addClass('selected');
+        $('.star-rating .star[data-value="' + selectedValue + '"]').prevAll('.star').addClass('selected');
+
+        // 선택 이전의 별 아이콘들을 회색으로 변경
+        $('.star-rating .star[data-value="' + selectedValue + '"]').nextAll('.star').removeClass('selected');
+    });
+});
+
 function updateReview() {
 	var nickName = "${param.nickName}"; // 사용자의 닉네임 정보
     var shopNum = ${shoVO.num}; // 가게 번호 정보
@@ -73,8 +95,9 @@ function showImagePreview(input) {
     <div class="upper-form">
     	<div class="left-form">
 	    	<div class="img-insert">
-        	    <img id="imagePreview" src="../../resources/ShopReviewImage/${sreVO.num}.png" onerror="this.src='../resources/ShopReviewImage/default.png' alt="Image Preview" style="width:220px;height:220px;object-fit:cover;object-position:center;">
-				<input type="file" name="multipartFile" accept="image/*" onchange="showImagePreview(this)">
+        	    <img id="imagePreview" src="../../resources/ShopReviewImage/${sreVO.num}.png" onerror="src='../../resources/ShopReviewImage/default.png'" alt="Image Preview" style="width:220px;height:220px;object-fit:cover;object-position:center;">
+                <input type="file" name="multipartFile" accept="image/*" onchange="showImagePreview(this)" style="display: none;">
+                <button type="button" onclick="document.querySelector('input[name=multipartFile]').click()">파일 선택</button>
 	    	</div>
     	</div>
 	    <div class="right-form">
@@ -83,19 +106,20 @@ function showImagePreview(input) {
     		<div class="inform-data">${shoVO.tel}</div>
 	    	<div class="rate">
 		   		<div class="rate-label">평점</div>
-	            <select id="rated" name="rated" class="rate-dropdown">
-                	<option value="1" ${sreVO.rated == 1 ? 'selected' : ''}>1</option>
-	        	    <option value="2" ${sreVO.rated == 2 ? 'selected' : ''}>2</option>
-    		        <option value="3" ${sreVO.rated == 3 ? 'selected' : ''}>3</option>
-    	    	    <option value="4" ${sreVO.rated == 4 ? 'selected' : ''}>4</option>
-	            	<option value="5" ${sreVO.rated == 5 ? 'selected' : ''}>5</option>
-	        	</select>
+	            <div class="star-rating" data-rated="${sreVO.rated}">
+        			<span class="star" data-value="1">&#9733;</span>
+        			<span class="star" data-value="2">&#9733;</span>
+        			<span class="star" data-value="3">&#9733;</span>
+        			<span class="star" data-value="4">&#9733;</span>
+        			<span class="star" data-value="5">&#9733;</span>
+    			</div>
 	        	<input type="checkbox" class="privateNick" id="privateNickname" name="privateNickname" value="true">
             	<div class="privateLabel">닉네임 비공개</div>
             </div>
 	    </div>
     </div>
     <textarea id="content" name="content" class="content">${sreVO.content}</textarea>
+    <input type="hidden" id="rated" name="rated" value="${sreVO.rated}">
     <button class="submit-button" onclick="updateReview()">수정 완료</button>
 </body>
 </html>

@@ -1,10 +1,12 @@
 package project.com.hotplace.event.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import lombok.extern.slf4j.Slf4j;
+import project.com.hotplace.event.service.EventService;
 
 /**
  * Handles requests for the application home page.
@@ -17,17 +19,17 @@ public class EventController {
 	/** 
 	 * Simply selects the home view to render by returning its name.
 	 */
-
+	@Autowired
+	EventService service;
 	
 	@RequestMapping(value = "/event/selectAll.do", method = RequestMethod.GET)
 	public String selectAll() {
 		log.info("/event/selectAll.do...");
 		
-		
 		return "event/selectAll.tiles";
 	}
 	
-	@RequestMapping(value = "/event/selectOne.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/event/selectOne.do", method = {RequestMethod.GET,RequestMethod.POST})
 	public String selectOne() {
 		log.info("/event/selectOne.do...");
 		

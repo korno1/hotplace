@@ -17,25 +17,34 @@
 	let searchWord = ''; // 초기화면을 위한 초기화
 	let searchKey = 'title';  // 초기화면을 위한 초기화
 	
-	function selectOneForm(num) {
-	    var form = document.createElement("form");
-	    form.setAttribute("method", "post");
-	    form.setAttribute("action", "selectOne.do");
-
-	    var numInput = document.createElement("input");
-	    numInput.setAttribute("type", "hidden");
-	    numInput.setAttribute("name", "num");
-	    numInput.setAttribute("value", num);
-
-	    form.appendChild(numInput);
-
-	    document.body.appendChild(form);
-	    form.submit();
-	  }
+	function countPost(callback){ // 게시글 개수 계산
+		console.log($('#searchWord').val());
 	
-	$(function(){
-		
-		function loadPage(page){
+		$.ajax({
+			url: "json/selectAll.do",
+			data:{
+				searchKey: searchKey,
+ 				searchWord: searchWord,
+			},
+			method: 'GET',
+			dataType: 'json',
+			success: function(cnt){
+				console.log('ajax...',cnt);
+				count = cnt;
+				if (callback) {
+			        callback(); // 비동기 작업이 끝난 후에 콜백 함수 호출
+			     }
+			}, // end success
+			
+			error:function(xhr,status,error){
+				console.log('xhr.status:', xhr.status);
+				
+			} // end error
+		}); // end selectAll ajax;
+	}
+	
+	function loadPage(page){
+		countPost(function(){
 			$('#searchKey').val(searchKey);
 			$('#searchWord').val(searchWord);
 			$.ajax({
@@ -48,7 +57,9 @@
 	 			method: 'GET',
 	 			dataType: 'json',
 	 			success: function(arr){
+	 				
 	 				console.log('ajax...',arr);
+	 				console.log('count...', count);
 	 				let tag_vos = '';
 					
 	 				$.each(arr, function(index, vo){
@@ -62,6 +73,7 @@
 	 					if(new Date(vo.deadline) < today){ // 마감일 < 현재시간 => 종료
 	 						tag_vos += `
 	 							<div class="eve_selectOne" onclick="selectOneForm(\${vo.num})" style="cursor:pointer">
+	 							<div class="eve_content_seq">\${count - (vo.rn-1)}</div>
 	 							<div class="eve_content_title">
 	 								<span class="event_check">종료</span>
 	 								<span class="vo_title">\${vo.title}</span>
@@ -71,6 +83,7 @@
 	 					else{ // 마감일 >= 현재시간 => 진행중
 	 						tag_vos += `
 	 							<div class="eve_selectOne" onclick="selectOneForm(\${vo.num})" style="cursor:pointer">
+	 							<div class="eve_content_seq">\${count - (vo.rn-1)}</div>
 	 							<div class="eve_content_title">
 	 								<span class="event_check">진행중</span>
 	 								<span class="vo_title">\${vo.title}</span>
@@ -105,35 +118,33 @@
 	 				console.log('xhr.status:', xhr.status);
 	 			} // end error
 			}); // end ajax
-		} // end loadPage
+		}); // end callback(countPost)
 		
+		
+	} // end loadPage
+	
+	function selectOneForm(num) {
+	    var form = document.createElement("form");
+	    form.setAttribute("method", "post");
+	    form.setAttribute("action", "selectOne.do");
+
+	    var numInput = document.createElement("input");
+	    numInput.setAttribute("type", "hidden");
+	    numInput.setAttribute("name", "num");
+	    numInput.setAttribute("value", num);
+
+	    form.appendChild(numInput);
+
+	    document.body.appendChild(form);
+	    form.submit();
+	  }
+	
+	$(function(){
+		let seq;
+		
+// 		countPost();
 		loadPage(page); // selectAll.do에 처음화면 로드
-		
-		
-		
-		function countPost(){ // 게시글 개수 계산
-			console.log($('#searchWord').val());
-		
-			$.ajax({
-				url: "json/selectAll.do",
-				data:{
-					searchKey: searchKey,
-	 				searchWord: searchWord,
-				},
-				method: 'GET',
-				dataType: 'json',
-				success: function(cnt){
-					console.log('ajax...',cnt);
-					count = cnt;
-				}, // end success
-				
-				error:function(xhr,status,error){
-					console.log('xhr.status:', xhr.status);
-					
-				} // end error
-			}); // end selectAll ajax;
-		}
-		countPost();
+	
 		
 		$(document).on('click', '#eve_pre_page', function(e) { // 이전 버튼 클릭 시 동작
 		    e.preventDefault(); // 기본 링크 동작(페이지 다시로드)을 막음.
@@ -200,6 +211,7 @@
 	<div class="eve_body">
 		<div class="eve_header">
 			
+			<div class="eve_seq">번호</div>
 			<div class="eve_title">제목</div>
 			<div class="eve_writer">작성자</div>
 			<div class="eve_wdate">작성일</div>

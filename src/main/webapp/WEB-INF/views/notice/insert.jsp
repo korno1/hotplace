@@ -54,9 +54,7 @@
 	        obj.value = str2;
 	        titlecheckByte(obj, maxByte);
 	     }
-	     else{
-	    	 $('#checkby').html(rbyte);
-	     }
+	     
 	}
 	
 </script>
@@ -71,7 +69,7 @@
 				작성자
 			</div>
 			<div  class="not_writer_right">
-				<input class="not_title_insert" type="hidden" name="writer" id="writer" value="${nick_name}">
+				<input class="not_title_insert" type="hidden" name="writerNum" id="writerNum" value="${num}">
 				<span>${nick_name}</span>
 			</div>
 		</div>

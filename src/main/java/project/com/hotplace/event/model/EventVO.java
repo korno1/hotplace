@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class EventVO {
+	private int rn;
 	private int num;
 	private String title;
 	private String content;

@@ -71,6 +71,7 @@
 	</div>
 	<div class="not_body">
 		<div class="not_header">
+			<div class="not_seq">번호</div>
 			<div class="not_title">제목</div>
 			<div class="not_writer">작성자</div>
 			<div class="not_wdate">작성일</div>
@@ -82,12 +83,14 @@
 				<fmt:formatDate var="fmtwdate" value="${dateFmt}" pattern="yyyy-MM-dd" />
 				
 				<div class="not_selectOne" onclick="selectOneForm(${vo.num})" style="cursor:pointer">
+					<div class="not_content_seq">${cnt - (vo.rn-1)}</div>
 					<div class="not_content_title">${vo.title}</div>
 					<div class="not_content_writer">${vo.writer}</div>
 					<div class="not_content_wdate">${fmtwdate}</div>
 					<div class="not_content_vcount">${vo.viewCount}</div>
 				</div>
 			</c:forEach>
+
 		</div>
 	</div>
 	
@@ -118,9 +121,17 @@
 				alert('첫번째 페이지입니다.');
 				return false;
 			});
-			$('#next_page').click(function(){
-				listView('${searchKey}', '${searchWord}', ${page+1});
-			});
+			if((${page}*10) < ${cnt}){
+				$('#next_page').click(function(){
+					listView('${searchKey}', '${searchWord}', ${page+1});
+				});
+			}
+			else{
+				$('#next_page').click(function(){
+					alert('마지막 페이지입니다.');
+					return false;
+				});
+			}
 		}
 		else if((${page}*10) >= ${cnt}){
 			$('#next_page').click(function(){

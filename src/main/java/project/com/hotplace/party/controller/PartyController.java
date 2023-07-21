@@ -134,7 +134,7 @@ public class PartyController {
 		log.info("result: {}", result);
 		
 		if(result==1) {
-			return "redirect:selectAll.do?searchKey=title&searchWord=&page=1";
+			return "redirect:selectAll.do";
 		}else {
 			return "redirect:insert.do";
 		}		
@@ -176,7 +176,7 @@ public class PartyController {
 		int result = service.delete(vo);
 		log.info("result: {}", result);
 		
-		return "redirect:selectAll.do?searchKey=title&searchWord=&page=1";
+		return "redirect:selectAll.do";
 	}
 	
 	@RequestMapping(value = "/party/myParty.do", method = RequestMethod.GET)

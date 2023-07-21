@@ -10,6 +10,26 @@
 <link rel="stylesheet" href="/hotplace/resources/css/party/update.css?after" >
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
+
+$(function(){
+	date = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, -8);
+	$('#deadLine').attr('min', date);
+	$('#timeLimit').attr('min', date);
+})
+
+
+function setMin(){
+	if($('#deadLine').val() < date){
+		alert('현재 시간보다 이전의 시간입니다.');
+		$('#deadLine').val(date);
+	}
+	if($('#timeLimit').val() < date){
+		alert('현재 시간보다 이전의 시간입니다.');
+		$('#timeLimit').val(date);
+	}
+}
+
+
 function titleCheckByte(obj, maxByte){
 	var str = obj.value;
     var str_len = str.length;
@@ -157,7 +177,7 @@ function contentCheckByte(obj, maxByte){
 			</div>
 			<div class="par-row">
 				<div class="par-cell">모집마감일</div>
-				<input class="par-date" type="datetime-local" name="deadLine" id="deadLine" value="${vo2.deadLine}" required>
+				<input class="par-date" type="datetime-local" name="deadLine" id="deadLine" value="${vo2.deadLine}" onchange="setMin()" required>
 			</div>
 			<div class="par-row">
 				<div class="par-cell">식당</div>
@@ -165,7 +185,7 @@ function contentCheckByte(obj, maxByte){
 			</div>
 			<div class="par-row">
 				<div class="par-cell">모임날짜</div>
-				<input class="par-date" type="datetime-local" name="timeLimit" id="timeLimit" value="${vo2.timeLimit}" required>
+				<input class="par-date" type="datetime-local" name="timeLimit" id="timeLimit" value="${vo2.timeLimit}" onchange="setMin()" required>
 			</div>
 			
 			<div class="par-content">

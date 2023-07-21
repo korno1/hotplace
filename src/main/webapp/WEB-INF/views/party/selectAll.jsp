@@ -10,7 +10,6 @@
 <link rel="stylesheet" href="/hotplace/resources/css/party/selectAll.css?after" >
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
-
 function listView(searchKey, searchWord, page){
 	    let f = document.createElement('form');
 	    
@@ -31,7 +30,7 @@ function listView(searchKey, searchWord, page){
 	    pg.setAttribute('type', 'hidden');
 	    pg.setAttribute('name', 'page');
 	    pg.setAttribute('value', page);
-	    
+
 	    f.appendChild(sKey);
 	    f.appendChild(sWord);
 	    f.appendChild(pg);
@@ -102,6 +101,8 @@ function listView(searchKey, searchWord, page){
 	</div>
 
 <script type="text/javascript">
+console.log('status...', ${param.status});
+console.log('status', ${status});
 
 if(${page}==1){
 	$('#par_back_page').click(function(){

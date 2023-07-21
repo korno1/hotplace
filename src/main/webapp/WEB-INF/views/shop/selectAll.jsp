@@ -151,6 +151,13 @@
             }
         }
         
+        $(document).ready(function() {
+            // 이미지를 클릭하면 폼 제출 이벤트를 발생시킴
+            $(".button").on("click", function() {
+                $("#searchForm").submit();
+            });
+        });
+        
         $("input[type='submit']").on("click", function(e) {
             e.preventDefault(); // 기본 동작(폼 제출) 방지
             page = 1; // 페이지 번호 초기화
@@ -174,20 +181,21 @@
 </script>
 </head>
 <body>
-	<h1>매장목록</h1>
-	
 	<div style="padding:5px">
-		<form action="selectAll.do">
-			<input type="text" name="searchWord" id="searchWord" value="${param.searchWord}">
-			<input type="hidden" name="pageNum" id="pageNum" value=1>
-			<input type="submit" value="검색">
-			<div id="addressContainer">
-    			<h2>현재 주소</h2>
-    			<p id="currentAddress"></p>
+		<form action="selectAll.do" class="searchForm">
+			<div>
+				<input type="text" name="searchWord" id="searchWord" class="searchWord" value="${param.searchWord}">
+				<input type="hidden" name="pageNum" id="pageNum" value=1>
+				<button type="submit" class="button">
+                    <img src="../resources/search-normal.svg">
+                </button>
 			</div>
 		</form>
 	</div>
-
+<div id="addressContainer">
+	<h2>현재 주소</h2>
+	<p id="currentAddress"></p>
+</div>
 
 <div id="shopList">
         <!-- 동적으로 생성될 매장 목록 -->

@@ -239,10 +239,14 @@
 </head>
 <body>
 <div>
-    <form action="shop/searchList.do">
-        <input type="text" name="searchWord" id="searchWord">
-        <input type="hidden" name="page" id="page" value="1">
-        <input type="submit" value="검색">
+    <form action="shop/searchList.do"  class="topForm">
+        	<div class="searchForm">
+				<input type="text" name="searchWord" id="searchWord" class="searchWord" value="${param.searchWord}">
+				<input type="hidden" name="page" id="page" value=1>
+				<button type="submit" class="button">
+                    <img src="resources/search-normal.svg">
+                </button>
+			</div>
     </form>
     <div id="addressContainer">
     		<h2>현재 주소</h2>

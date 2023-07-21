@@ -86,7 +86,7 @@
 // 		alert(eve_content.getData());
 		formData.append('title', $('#title').val());
 		formData.append('content', eve_content.getData());
-		formData.append('writerNum', 1);
+		formData.append('writerNum', $('#writerNum').val());
 		formData.append('deadline', $('#deadline').val());
 		if($('#file')[0].files[0] != undefined)
 			formData.append('file', $('#file')[0].files[0]);
@@ -164,7 +164,7 @@
 				작성자
 			</div>
 			<div  class="eve_writer_right">
-				<input class="eve_title_insert" type="hidden" name="writer" id="writer" value="${nick_name}">
+				<input class="eve_title_insert" type="hidden" name="writerNum" id="writerNum" value="${num}">
 				<span>${nick_name}</span>
 			</div>
 		</div>

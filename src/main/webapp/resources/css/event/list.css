@@ -31,7 +31,8 @@
   display: flex;
   border-bottom: 1px solid rgb(219, 219, 219);
   align-items: center;
-  padding: 15px 0 15px 0;
+/*   padding: 15px 0 15px 0; */
+	height:50px;
 }
 .eve_selectOne:hover{
 	background-color: #f1e5d4;
@@ -40,12 +41,17 @@
 	border-bottom: 2px solid rgb(216, 216, 219);
 }
 
+.eve_seq, .eve_content_seq{
+	width: 50px;
+	padding-left: 10px;
+}
+
 .eve_title{
-  width: 800px;
+  width: 750px;
 }
 .eve_content_title {
-	width: 790px;
-	margin-left:10px;	
+	width: 745px;
+	margin-left:5px;	
 }
 
 .eve_writer,
@@ -67,7 +73,7 @@
 .eve_vcount,
 .eve_content_vcount {
   width: 75px;
-
+	padding-right: 10px;
 }
 
 .eve_content_title {

@@ -52,6 +52,7 @@ public class NoticeController {
 		
 		int cnt = service.selectAll(searchKey, searchWord).size();
 		log.info("cnt: {}", cnt);
+
 	
 		
 		model.addAttribute("vos", vos);
@@ -65,7 +66,7 @@ public class NoticeController {
 	
 	@RequestMapping(value = "/notice/searchList.do", method = RequestMethod.POST)
 	public String searchList(String searchKey, String searchWord, Integer page, Model model) {
-		log.info("/not_selectAll.do...");
+		log.info("/not_searchList.do...");
 		
 		if(page == null) {
 			page = 1;
@@ -154,7 +155,7 @@ public class NoticeController {
 		
 		log.info("vo: {}", vo);
 		
-		vo.setWriterNum(1);
+		vo.setWriterNum(vo.getWriterNum());
 		int result = service.insert(vo);
 		log.info("result: {}", result);
 		

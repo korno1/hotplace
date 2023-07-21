@@ -16,9 +16,34 @@
 	let searchWord = ''; // 초기화면을 위한 초기화
 	let searchKey = 'title'; // 초기화면을 위한 초기화
 	
-	$(function(){		
-		
-		function loadPage(page){
+	function countPost(callback){ // 게시글 개수 계산
+		$.ajax({
+			url: "json/selectAll.do",
+			data:{
+				searchKey: searchKey,
+				searchWord: searchWord,
+			},
+			method: 'GET',
+			dataType: 'json',
+			success: function(cnt){
+				console.log('ajax...',cnt);
+				count = cnt;
+				if (callback) {
+			        callback(); // 비동기 작업이 끝난 후에 콜백 함수 호출
+			     }
+			}, // end success
+			
+			error:function(xhr,status,error){
+				console.log('xhr.status:', xhr.status);
+				
+			} // end error
+		}); // end selectAll ajax;	
+	
+		}
+		countPost();
+	
+	function loadPage(page){
+		countPost(function(){
 			$('#searchKey').val(searchKey);
 			$('#searchWord').val(searchWord);
 			$.ajax({
@@ -35,7 +60,8 @@
 	 				let tag_vos = `
 	 					<div>
 	 						<div class="faq_title">
-	 							<span>제목</span>
+	 							<div class="faq_seq">번호</div>
+	 							<div class="faq_head_title">제목</div>
 	 						</div>
 	 					</div>
 	 				`;
@@ -44,7 +70,8 @@
 	 					tag_vos +=`
 	 						<div class="faq_header_size">
 	 							<div class="faq_header" onclick="clickPlain(\${vo.num})">
-	 								<span>\${vo.title}</span>
+	 								<div class="faq_content_seq">\${count-(vo.rn-1)}</div>
+	 								<div class="faq_content_title">\${vo.title}</div>
 	 							</div>
 	 							<div class="faq_content_background" id="content_bg\${vo.num}">
 		 							<div class="faq_con" id="clickNum\${vo.num}">
@@ -62,10 +89,10 @@
 	 				
 					
 	 				$('#faq_div').html(tag_vos);
-
-// 	 				if("${grade}"=="1"){
-// 	 					$('.faq_grade_button').css("display", "inline-block");
-// 	 				}
+	
+	//	 				if("${grade}"=="1"){
+	//	 					$('.faq_grade_button').css("display", "inline-block");
+	//	 				}
 					let grade = '<%= session.getAttribute("grade") %>';
 			        // grade 값이 "1"인 경우 버튼을 표시
 			        if (grade && grade === "1") {
@@ -79,33 +106,16 @@
 	 				console.log('xhr.status:', xhr.status);
 	 			} // end error
 			}); // end ajax
-		} // end loadPage
+		}); // end callback(countPost)
+	} // end loadPage
+	
+	$(function(){		
+		
+		
 		
 		loadPage(page); // selectAll.do에 처음화면 로드
 	
-		function countPost(){ // 게시글 개수 계산
-		$.ajax({
-			url: "json/selectAll.do",
-			data:{
-				searchKey: searchKey,
-				searchWord: searchWord,
-			},
-			method: 'GET',
-			dataType: 'json',
-			success: function(cnt){
-				console.log('ajax...',cnt);
-				count = cnt;
-	
-			}, // end success
-			
-			error:function(xhr,status,error){
-				console.log('xhr.status:', xhr.status);
-				
-			} // end error
-		}); // end selectAll ajax;	
-	
-		}
-		countPost();
+		
 		
 		$(document).on('click', '#faq_pre_page', function(e) { // 이전 버튼 클릭 시 동작
 		    e.preventDefault(); // 기본 링크 동작(페이지 다시로드)을 막음.

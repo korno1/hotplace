@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>모임리스트</title>
-<link rel="stylesheet" href="/hotplace//resources/css/party/selectAll.css?after" >
+<link rel="stylesheet" href="/hotplace/resources/css/party/selectAll.css?after" >
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
 

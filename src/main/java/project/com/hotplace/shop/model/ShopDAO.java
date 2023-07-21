@@ -8,7 +8,7 @@ public interface ShopDAO {
 
 	public int update(ShopVO vo);
 	
-	public int updateRate(int num, int rate);
+	public int updateRate(int num, int rate, int reviewCount);
 
 	public int delete(ShopVO vo);
 	
@@ -19,4 +19,6 @@ public interface ShopDAO {
 	public ShopVO selectOne(ShopVO vo);
 	
 	public List<ShopVO> searchList(String searchWord);
+
+	public int decreaseReview(int shopNum);
 }

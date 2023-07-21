@@ -40,9 +40,12 @@ public class ShopService {
 		return dao.selectAllHome();
 	}
 	
-	public int updateRate(int num, int rate)
-	{
-		return dao.updateRate(num, rate);
+	public int updateRate(int num, int rate, int reviewCount) {
+		return dao.updateRate(num, rate, reviewCount);
+	}
+	
+	public int decreaseReview(int shopNum) {
+		return dao.decreaseReview(shopNum);
 	}
 	
 	public ShopVO selectOne(ShopVO vo) {

@@ -15,6 +15,10 @@
         document.getElementById('tel').value = itemInfo.phone;
         document.getElementById('keyword').value = itemInfo.address;
         var cateValue = itemInfo.cate.replace(/\s*>\s*/g, ',');
+        if (!cateValue.includes('음식점')) {
+            alert('음식점을 포함해야 합니다. 다시 확인해주세요.');
+            return;
+        }
         document.getElementById('cate').value = cateValue;
         document.getElementById('loc_x').value = itemInfo.loc_x;
         document.getElementById('loc_y').value = itemInfo.loc_y;
@@ -187,13 +191,12 @@ function searchPlaces() {
     }
 
     // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
-    ps.keywordSearch( keyword, placesSearchCB); 
+    ps.keywordSearch(keyword, placesSearchCB); 
 }
 
 // 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
 function placesSearchCB(data, status, pagination) {
     if (status === kakao.maps.services.Status.OK) {
-
         // 정상적으로 검색이 완료됐으면
         // 검색 목록과 마커를 표출합니다
         displayPlaces(data);

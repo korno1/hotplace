@@ -182,8 +182,8 @@
 </head>
 <body>
 	<div style="padding:5px">
-		<form action="selectAll.do" class="searchForm">
-			<div>
+		<form action="selectAll.do">
+			<div class="searchForm">
 				<input type="text" name="searchWord" id="searchWord" class="searchWord" value="${param.searchWord}">
 				<input type="hidden" name="pageNum" id="pageNum" value=1>
 				<button type="submit" class="button">

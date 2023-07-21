@@ -248,10 +248,6 @@
                 </button>
 			</div>
     </form>
-    <div id="addressContainer">
-    		<h2>현재 주소</h2>
-    		<p id="currentAddress"></p>
-	</div>
 </div>
 <div>
     <div>

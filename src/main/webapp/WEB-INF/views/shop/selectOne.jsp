@@ -70,7 +70,7 @@
 	    iframe.src = "review/update.do?nickName=" + nickName + "&shopNum=" + shopNum + "&num=" + num;
 	}
 
-    function deleteReview(num, writerName) {
+    function deleteReview(num, shopNum, writerName) {
     	 var nickName = '<%= session.getAttribute("nick_name") %>';
     	 
     	 if (writerName !== nickName) {
@@ -84,7 +84,11 @@
  	        $.ajax({
  	            url: "review/json/delete.do",
  	            type: "POST",
- 	            data: { num: num },
+ 	            data: {
+ 	            	num: num,
+ 	            	shopNum: shopNum
+ 	            	
+ 	            },
  	            success: function(response) {
  	                alert("리뷰가 삭제되었습니다.");
  	                // 삭제 성공 시
@@ -171,7 +175,7 @@
             	<div class="writeDate"><fmt:formatDate value="${vo.wdate}" pattern="yyyy-MM-dd HH:mm:ss" /></div>
             	<div class="buttonList">
                 	<input type="button" value="수정" class="update" onclick="openReviewUpdateForm(${vo.num}, ${shoVO.num}, '${vo.writerName}')">
-                	<input type="button" value="삭제" class="delete"  onclick="deleteReview(${vo.num}, '${vo.writerName}')">
+                	<input type="button" value="삭제" class="delete"  onclick="deleteReview(${vo.num}, ${vo.shopNum}, '${vo.writerName}')">
                 </div>
             </div>
         </div>

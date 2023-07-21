@@ -21,17 +21,26 @@
 
 	<select id="SRE_SELECT_ALL_PAGE" resultType="project.com.hotplace.shopreview.model.ShopReviewVO">
 		SELECT *
-		FROM (
-    		SELECT sr.*, m.nick_name AS writerName, rownum AS rn
-    		FROM shopreview sr
-    		LEFT JOIN member m ON sr.writer = m.num
-    		WHERE sr.shopnum = #{shopNum}
-		)
-		WHERE rn BETWEEN #{start} AND #{end}
+			FROM (
+    			SELECT sr.*, rownum AS rn
+    				FROM (
+        				SELECT sr.*, m.nick_name AS writerName
+        				FROM shopreview sr
+        				LEFT JOIN member m ON sr.writer = m.num
+        				WHERE sr.shopnum = #{shopNum}
+        				ORDER BY wdate DESC
+    				) sr
+				)
+			WHERE rn BETWEEN #{start} AND #{end}
 	</select>
 	
 	<select id="SRE_SELECT_ONE" resultType="project.com.hotplace.shopreview.model.ShopReviewVO">
 		select * from shopreview where num = #{num}
+	</select>
+	
+	<select id="SRE_AVG_RATE" resultType="int">
+		select avg(rated) from 
+		(select * from shopreview where shopnum = #{shopNum})
 	</select>
 	
 	

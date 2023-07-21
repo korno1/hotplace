@@ -93,7 +93,9 @@ public class ShopReviewRestController {
 		       
 		    int result = service.insert(vo);
 		    
-		    shoService.updateRate(vo.getShopNum(), vo.getRated());
+		    int avgRate = service.rateAvg(vo.getShopNum());
+		    
+		    shoService.updateRate(vo.getShopNum(), avgRate);
 		    log.info("result:{}",result);
 		    if (result > 0) {
 	            // 삽입 성공

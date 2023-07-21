@@ -68,7 +68,7 @@ public class ShopController {
 	}
 	
 	@RequestMapping(value = "/selectOne.do", method = RequestMethod.GET)
-	public String selectOne(ShopVO vo, Model model, int page) {
+	public String selectOne(ShopVO vo, Model model, int srePage, int parPage) {
 	    ShopVO shoVO = service.selectOne(vo);
 	    
 	    log.info("{}",vo);
@@ -78,13 +78,16 @@ public class ShopController {
 	    ShopReviewVO sreVO = new ShopReviewVO();
 	    sreVO.setShopNum(num);
 	    
-	    List<ShopReviewVO> sreVOS = sreService.selectAll(sreVO, page);
+	    List<ShopReviewVO> sreVOS = sreService.selectAll(sreVO, srePage);
 	    
 	    int totalCount = sreService.count(sreVO);
 	    int pageSize = 5; // Number of items per page
-	    int totalPages = (int) Math.ceil((double) totalCount / pageSize);
+	    int totalSrePages = (int) Math.ceil((double) totalCount / pageSize);
 	    
-	    List<PartyVO> parVOS = parService.selectAll("place", shoVO.getName(), 1);
+	    List<PartyVO> parVOS = parService.searchList("place", shoVO.getName(), parPage, 1);
+	    int totalParCount = parService.shopPartyCount(shoVO.getName());
+	    int parPageSize = 6; // Number of items per page
+	    int totalParPages = (int) Math.ceil((double) totalParCount / parPageSize);
 	    
 	    log.info("/sreList...{}", sreVOS);
 	    
@@ -92,12 +95,16 @@ public class ShopController {
 	    
 	    log.info("total_count...{}", totalCount);
 	    
-	    log.info("total_page...{}", totalPages);
+	    log.info("total_page...{}", totalSrePages);
+	    
+	    log.info("total_page...{}", totalParPages);
 
 	    model.addAttribute("shoVO", shoVO);
 	    model.addAttribute("sreVOS", sreVOS);
-	    model.addAttribute("page", page);
-	    model.addAttribute("totalPages", totalPages);
+	    model.addAttribute("parVOS", parVOS);
+	    model.addAttribute("srePage", srePage);
+	    model.addAttribute("parPage", parPage);
+	    model.addAttribute("totalSrePages", totalSrePages);
 
 	    return "shop/selectOne.tiles";
 	}

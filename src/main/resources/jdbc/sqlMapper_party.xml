@@ -149,4 +149,11 @@
 		select count(*) from party
 		where writer_num=#{writerNum}
 	</select>
+	
+	<select id="partyCount" resultType="int">
+		select count(*) from party 
+		where place like #{searchWord}
+		and applicants <![CDATA[<]]> max and dead_line <![CDATA[>]]> sysdate
+		 order by party_num desc
+	</select>
 </mapper>

@@ -31,7 +31,7 @@
         }
         function selectOne(num) {
             console.log(num);
-            window.location.href = 'shop/selectOne.do?num=' + num + '&page=1';
+            window.location.href = 'shop/selectOne.do?num=' + num + '&srePage=1&parPage=1';
         }
 
         function startDrag(event, index) {

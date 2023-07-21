@@ -65,9 +65,6 @@ public class ShopRestController {
 		        	// 좌표 계산
 		        	double distance1 = ShopUtil.calculateDistance(latitude, longitude, vo1.getLoc_y(), vo1.getLoc_x());
 		        	double distance2 = ShopUtil.calculateDistance(latitude, longitude, vo2.getLoc_y(), vo2.getLoc_x());
-		        
-		        	log.info("{}", distance1);
-		        	log.info("{}", distance2);
 
 		        	// 거리를 기준으로 오름차순 정렬
 		        	return Double.compare(distance1, distance2);

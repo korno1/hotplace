@@ -160,5 +160,16 @@ public class PartyDAOimpl implements PartyDAO {
 		return sqlSession.selectOne("myPartyCount", vo);
 	}
 
+
+	@Override
+	public int shopPartyCount(String searchWord) {
+		log.info("shopPartyCount()...{}", searchWord);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("searchWord", searchWord);
+		
+		return sqlSession.selectOne("partyCount", map);
+	}
+
 }
  

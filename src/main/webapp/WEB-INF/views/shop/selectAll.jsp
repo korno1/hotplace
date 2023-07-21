@@ -16,7 +16,7 @@
     function selectOne(num) {
     	
         // GET 요청을 통해 selectOne.do로 접근
-        window.location.href = "selectOne.do?num=" + num + "&page=1";
+        window.location.href = "selectOne.do?num=" + num + "&srePage=1&parPage=1";
     }
     
     $(function() {
@@ -98,8 +98,7 @@
                     ')"></div>');
                 listItem.append(
                     '<div><img id="preview" width="100px" src="../resources/ShopSymbol/' +
-                    vo.num +
-                    '.png"></div>'
+                    vo.num + '" onerror="this.src=\'../resources/ShopSymbol/default.png\';"></div>'
                 );
                 var rateHtml = vo.rate === 0 ? '평가없음' : getStarRatingHtml(vo.rate);
                 listItem.append(

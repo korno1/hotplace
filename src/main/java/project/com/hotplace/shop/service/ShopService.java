@@ -44,10 +44,6 @@ public class ShopService {
 		return dao.updateRate(num, rate, reviewCount);
 	}
 	
-	public int decreaseReview(int shopNum) {
-		return dao.decreaseReview(shopNum);
-	}
-	
 	public ShopVO selectOne(ShopVO vo) {
 		return dao.selectOne(vo);
 	}

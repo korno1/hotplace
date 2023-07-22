@@ -52,10 +52,6 @@
 		update shop set rate = #{rate}, reviewcount = reviewcount + #{reviewCount} where num = #{num}
 	</update>
 	
-	<update id="SHO_DECREASE_REVIEW" parameterType="project.com.hotplace.shop.model.ShopVO">
-		update shop set reviewcount = reviewcount - 1 where num = #{shopNum}
-	</update>
-	
 	<update id="SHO_UPDATE" parameterType="project.com.hotplace.shop.model.ShopVO">
 		update shop set name=#{name} , cate=#{cate} , 
 		tel=#{tel}, loc_x=#{loc_x}, loc_y=#{loc_y}

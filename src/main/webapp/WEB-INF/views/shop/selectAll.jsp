@@ -266,7 +266,7 @@
 <div id="shopList" class="shopList">
         <!-- 동적으로 생성될 매장 목록 -->
 </div>
-<div>
+<div class="pagination">
 	<a href="" id="pre_page">이전</a>
 	<a href="" id="next_page">다음</a>
 </div>

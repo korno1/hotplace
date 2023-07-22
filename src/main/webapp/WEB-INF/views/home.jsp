@@ -335,7 +335,7 @@
     		</div>
 		</div>
     </div>
-    <div>
+    <div class="buttonContainer">
     	<c:if test="${Authority eq 'true'}">
    			<input type="button" value="가게 추가" class="addShopButton" onclick="addShop()">
 		</c:if>

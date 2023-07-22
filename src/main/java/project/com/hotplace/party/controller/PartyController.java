@@ -124,6 +124,17 @@ public class PartyController {
 		return "party/insert.tiles";
 	}
 	
+	@RequestMapping(value = "/party/insertInShop.do", method = RequestMethod.GET)
+	public String insertInShop(String place, Model model) {
+		log.info("/par_insertInShop.do...");
+		
+		log.info("{}", place);
+		
+		model.addAttribute("place", place);
+		
+		return "party/insert.tiles";
+	}
+	
 	@RequestMapping(value = "/party/insertOK.do", method = RequestMethod.POST)
 	public String insertOK(PartyVO vo) {
 		log.info("/par_insertOK.do...{}", vo);

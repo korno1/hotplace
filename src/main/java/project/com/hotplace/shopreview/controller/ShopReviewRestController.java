@@ -9,6 +9,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,7 +47,10 @@ public class ShopReviewRestController {
 	        
 	        // 삭제 로직 수행
 	        int result = service.delete(num);
+	        
 	        int avgRate = service.rateAvg(shopNum);
+	        
+	        log.info("AvgRate...{}",avgRate);
 	        
 	        if (result > 0) {
 	        	log.info("deleteOK");

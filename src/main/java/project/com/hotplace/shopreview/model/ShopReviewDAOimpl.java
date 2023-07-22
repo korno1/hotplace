@@ -85,12 +85,14 @@ public class ShopReviewDAOimpl implements ShopReviewDAO {
 		return sqlSession.delete("SRE_DELETE", num);
 	}
 	
+	@Override
 	public int count(ShopReviewVO vo) {
 		log.info("countVOS()...");
 		
 		return sqlSession.selectOne("SRE_COUNT_VO", vo);
 	}
 	
+	@Override
 	public int rateAvg(int shopNum) {
 		log.info("rateAvg()...{}", shopNum);
 		
@@ -98,7 +100,10 @@ public class ShopReviewDAOimpl implements ShopReviewDAO {
 		
 		param.put("shopNum", shopNum);
 		
-		return sqlSession.selectOne("SRE_AVG_RATE", param);
+		if(sqlSession.selectOne("SRE_AVG_RATE", param)!=null)
+			return sqlSession.selectOne("SRE_AVG_RATE", param);
+		else
+			return 0;
 	}
 
 }

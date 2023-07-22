@@ -20,13 +20,13 @@
    		    openModal();
    		}
     
-        function slideLeft() {
-            var container = document.querySelector('.shop-items');
+        function slideLeft(index) {
+            var container = document.querySelector('.shop'+index+'-items');
             container.scrollLeft -= 800; 
         }
 
-        function slideRight() {
-            var container = document.querySelector('.shop-items');
+        function slideRight(index) {
+            var container = document.querySelector('.shop'+index+'-items');
             container.scrollLeft += 800; 
         }
         function selectOne(num) {
@@ -193,6 +193,28 @@
                             image.draggable = false;
                             image.className = "symbolImage";
                             imageDiv.appendChild(image);
+                            
+                            // partyCount 박스 생성
+                            var partyCountBox = document.createElement("div");
+                            partyCountBox.className = "partyCountBox";
+
+                            // partyIcon 이미지 추가
+                            var partyIcon = document.createElement("img");
+                            partyIcon.src = "resources/partyIcon.png";
+                            partyIcon.className = "partyIcon";
+                            partyCountBox.appendChild(partyIcon);
+
+                            // partyCount 텍스트 추가
+                            var partyCountText = document.createElement("div");
+                            partyCountText.className = "partyCountText";
+                            partyCountText.textContent = shop.partyCount;
+                            partyCountBox.appendChild(partyCountText);
+
+                            // shop-item에 partyCountBox 추가
+                            shopItem.appendChild(partyCountBox);
+
+                            // shopItems에 shop-item 추가
+                            shopItems.appendChild(shopItem);
 
                             // 상점 정보를 감싸는 부모 요소 생성
                             var shopInfoDiv = document.createElement("div");
@@ -250,54 +272,65 @@
     </form>
 </div>
 <div>
-    <div>
-        <div class="cate1"></div>
+    <div class="shopList">
         <div class="shop-container" onmousedown="startDrag(event,1)" onmousemove="drag(event,1)" onmouseup="endDrag()">
-    		<div class="arrow left-arrow" onclick="slideLeft()">
+    		<div class="arrow left-arrow" onclick="slideLeft(1)">
         		<img id="prevArrow" width="30px" src="resources/ArrowSource/Left.png">
     		</div>
-    		<div class="shop-items" id="shop1Items"></div>
-    		<div class="arrow right-arrow" onclick="slideRight()">
+    		<div class="shop1Container">
+    			<div class="cate1"></div>
+    			<div class="shop1-items" id="shop1Items"></div>
+    		</div>
+    		<div class="arrow right-arrow" onclick="slideRight(1)">
         		<img id="nextArrow" width="30px" src="resources/ArrowSource/Right.png">
     		</div>
 		</div>
-		<div class="cate2"></div>
+		
 		<div class="shop-container" onmousedown="startDrag(event,2)" onmousemove="drag(event,2)" onmouseup="endDrag()">
-    		<div class="arrow left-arrow" onclick="slideLeft()">
+    		<div class="arrow left-arrow" onclick="slideLeft(2)">
         		<img id="prevArrow" width="30px" src="resources/ArrowSource/Left.png">
     		</div>
-    		<div class="shop-items" id="shop2Items"></div>
-    		<div class="arrow right-arrow" onclick="slideRight()">
+    		<div class="shop1Container">
+    			<div class="cate2"></div>
+    			<div class="shop2-items" id="shop2Items"></div>
+    		</div>
+    		<div class="arrow right-arrow" onclick="slideRight(2)">
         		<img id="nextArrow" width="30px" src="resources/ArrowSource/Right.png">
     		</div>
 		</div>
-		<div class="cate3"></div>
 		<div class="shop-container" onmousedown="startDrag(event,3)" onmousemove="drag(event,3)" onmouseup="endDrag()">
-    		<div class="arrow left-arrow" onclick="slideLeft()">
+    		<div class="arrow left-arrow" onclick="slideLeft(3)">
         		<img id="prevArrow" width="30px" src="resources/ArrowSource/Left.png">
     		</div>
-    		<div class="shop-items" id="shop3Items"></div>
-    		<div class="arrow right-arrow" onclick="slideRight()">
+    		<div class="shop1Container">
+    			<div class="cate3"></div>
+    			<div class="shop3-items" id="shop3Items"></div>
+    		</div>
+    		<div class="arrow right-arrow" onclick="slideRight(3)">
         		<img id="nextArrow" width="30px" src="resources/ArrowSource/Right.png">
     		</div>
 		</div>
-		<div class="cate4"></div>
 		<div class="shop-container" onmousedown="startDrag(event,4)" onmousemove="drag(event,4)" onmouseup="endDrag()">
-    		<div class="arrow left-arrow" onclick="slideLeft()">
+    		<div class="arrow left-arrow" onclick="slideLeft(4)">
         		<img id="prevArrow" width="30px" src="resources/ArrowSource/Left.png">
     		</div>
-    		<div class="shop-items" id="shop4Items"></div>
-    		<div class="arrow right-arrow" onclick="slideRight()">
+    		<div class="shop1Container">
+    			<div class="cate4"></div>
+    			<div class="shop4-items" id="shop4Items"></div>
+    		</div>
+    		<div class="arrow right-arrow" onclick="slideRight(4)">
         		<img id="nextArrow" width="30px" src="resources/ArrowSource/Right.png">
     		</div>
 		</div>
-		<div class="cate5"></div>
 		<div class="shop-container" onmousedown="startDrag(event,5)" onmousemove="drag(event,5)" onmouseup="endDrag()">
-    		<div class="arrow left-arrow" onclick="slideLeft()">
+    		<div class="arrow left-arrow" onclick="slideLeft(5)">
         		<img id="prevArrow" width="30px" src="resources/ArrowSource/Left.png">
     		</div>
-    		<div class="shop-items" id="shop5Items"></div>
-    		<div class="arrow right-arrow" onclick="slideRight()">
+    		<div class="shop1Container">
+    			<div class="cate5"></div>
+    			<div class="shop5-items" id="shop5Items"></div>
+    		</div>
+    		<div class="arrow right-arrow" onclick="slideRight(5)">
         		<img id="nextArrow" width="30px" src="resources/ArrowSource/Right.png">
     		</div>
 		</div>

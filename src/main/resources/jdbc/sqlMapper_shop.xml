@@ -23,14 +23,20 @@
 	</select>
 	
 	<select id="SHO_SELECT_ALL_HOME" resultType="project.com.hotplace.shop.model.ShopVO">
-		select * from shop
+		SELECT s.*,
+    	(
+    		SELECT COUNT(p.place)
+    		FROM party p
+    		WHERE p.place = s.name
+    		AND p.time_limit >= TRUNC(SYSDATE)
+    	)
+    	AS partyCount
+		FROM shop s
 	</select>
 	  
 	<select id="SHO_SELECT_ONE" resultType="project.com.hotplace.shop.model.ShopVO">
 		select * from shop where num = #{num}
 	</select>
-	
-	
 	
 	<select id="SHO_SEARCH_LIST" parameterType="java.util.Map"
 		resultType="project.com.hotplace.shop.model.ShopVO">

@@ -25,6 +25,10 @@
     border: none;
 }
 
+.shopList {
+	margin-top: 50px;
+}
+
 .shop-container {
     width: 1310px;
     display: flex;
@@ -32,6 +36,32 @@
     position: relative;
     min-width: 1100px;
     justify-Content: space-between;
+    margin-bottom: 30px;
+}
+
+.cate1,
+.cate2,
+.cate3,
+.cate4,
+.cate5 {
+	padding-left: 45px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    background: #DDDDDD;
+    border-radius: 25px 25px 0 0;
+    border-bottom: 1px solid;
+}
+
+.shop1Container,
+.shop2Container,
+.shop3Container,
+.shop4Container,
+.shop5Container {
+	background:#EEEEEE;
+	width: 1230px;
+	border-radius: 25px;
 }
 
 .shop-item {
@@ -40,7 +70,28 @@
     height: 270px;
     margin: 9px;
     padding: 10px;
-    border: 1px solid black;
+    position: relative;
+}
+
+.partyCountBox {
+	position: absolute;
+    top: 20px;
+    left: 50px;
+    display: flex;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 5px;
+    border-radius: 5px;
+    color: #FFFFFF;
+    font-size: 14px;
+}
+
+/* partyIcon 스타일 */
+.partyIcon {
+	width: 20px;
+	height: 20px;
+	margin-right: 5px;
+	filter: invert(100%);
 }
 
 .shop-item:hover {
@@ -48,12 +99,17 @@
     cursor: pointer; /* 마우스 커서 모양을 포인터로 변경 */
 }
 
-.shop-items {
+.shop1-items,
+.shop2-items,
+.shop3-items,
+.shop4-items,
+.shop5-items {
     display: flex;
-    width: 1300px;
+    width: 1230px;
     margin-left: 9px;
     flex-wrap: nowrap;
     overflow-x: hidden;
+    border-radius:25px;
     scroll-behavior: smooth;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -75,6 +131,7 @@
     height: 230px;
     margin-left : 20px;
     margin-bottom: 10px;
+    border-radius: 10px;
 }
 
 .shopTitle {

@@ -158,6 +158,7 @@ public class HomeRestController {
 	    // 추천 카테고리별 가게 리스트를 Map에 담아서 반환
         Map<String, List<ShopVO>> resultMap = new HashMap<>();
         for (int i = 0; i < recommendCate.length; i++) {
+        	log.info("{}",filteredShopLists.get(i));
             resultMap.put(recommendCate[i], filteredShopLists.get(i));
         }
         

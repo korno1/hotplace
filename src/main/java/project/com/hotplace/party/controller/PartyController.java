@@ -49,6 +49,7 @@ public class PartyController {
 		
 		List<PartyVO> vos = service.searchList(searchKey, searchWord, page, status);
 		log.info("vos: {}", vos);
+		log.info("vos.size: {}", vos.size());
 		
 		int cnt = service.selectAll(searchKey, searchWord, status).size();
 		log.info("cnt: {}", cnt);
@@ -58,14 +59,14 @@ public class PartyController {
 		model.addAttribute("searchKey", searchKey);
 		model.addAttribute("searchWord", searchWord);
 		model.addAttribute("page", page);
-		model.addAttribute("page", page);
+		model.addAttribute("status", status);
 		
 		return "party/selectAll.tiles";
 	}
 
 	@RequestMapping(value = "/party/searchList.do", method = RequestMethod.POST)
 	public String searchList(String searchKey, String searchWord, Integer page, Integer status, Model model) {
-		log.info("/par_selectAll.do...");
+		log.info("/searchList.do...");
 		
 		if(page == null) {
 			page = 1;

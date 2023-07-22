@@ -521,8 +521,8 @@ function par_selectAll(page){
 			$(".par-post").css("display", "block");
 			$(".mre-post").css("display", "none");
 			
-			$(".mre_paging").css("display", "block");
-			$(".par_paging").css("display", "none");
+			$(".mre_paging").css("display", "none");
+			$(".par_paging").css("display", "block");
 			
 			$('#par_vos').html(tag_vos);
 		}, // end success

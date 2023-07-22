@@ -21,6 +21,10 @@
 	var linkElement = document.querySelector('link[href$="selectOne.css"]');
 	var cssPath = linkElement.href;
 	console.log("CSS 파일 경로: " + cssPath);
+	
+	function redirectToPartyDetail(partyNum) {
+        window.location.href = '../party/selectOne.do?partyNum=' + partyNum;
+    }
 
 	function Paginate(srePage, parPage) {
 		window.location.href = "selectOne.do?num=${shoVO.num}&srePage=" + srePage + "&parPage=" + parPage;
@@ -33,6 +37,18 @@
 	// 모달 닫기
 	function closeModal() {
 	    document.getElementById("modal").style.display = "none";
+	}
+	
+	function openPartyInsertForm(shopName) {
+    	// 사용자 nickname 가져오기
+	    var nickName = '<%= session.getAttribute("nick_name") %>';
+		
+	    if (nickName == null) {
+	        alert("로그인이 필요합니다.");
+	        return;
+	    }
+	    
+	    window.location.href = '../party/insertInShop.do?place=' + shopName;
 	}
 	
 	function openReviewInsertForm(shopNum, writerName) {
@@ -134,102 +150,114 @@
         	</div>
     	</c:if>
 	</div>
-    <c:forEach var="vo" items="${sreVOS}">
-        <div class="reviewContentForm">
-            <div class="imageContainer"><img id="symbol" class="symbol" src="../resources/ShopReviewImage/${vo.num}.png" onerror="this.src='../resources/ShopReviewImage/default.png';"></div>
-            <div class="writerForm">
-            	<div class="writerInform">
-                	<img id="profile" width="70px" height="70px" src="../resources/ProfileImage/${vo.writer}.png" onerror="src='../resources/ProfileImage/default.png'">
-    	            <div class="writerReview">
-        	            <div class="writerName">
-        	            	<c:choose>
-                            	<c:when test="${vo.anonymous eq 1 && vo.writerName ne sessionScope.nick_name}">비공개</c:when>
-                            	<c:otherwise>${vo.writerName}</c:otherwise>
-                        	</c:choose>
-        	            </div>
-            	        <div class="writerRate">
-                			<c:if test="${vo.rated == 0}">
-                    			평가없음
-                			</c:if>
-			                <c:if test="${vo.rated > 0}">
-            			        <div class="star-rating" data-rated="${vo.rated}">
-                        			<c:forEach var="i" begin="1" end="5">
-                            			<c:choose>
-			                                <c:when test="${i <= vo.rated}">
-            			                        <span class="star selected" data-value="${i}">&#9733;</span>
-                        			        </c:when>
-		                	                <c:otherwise>
-        		        	                    <span class="star" data-value="${i}">&#9733;</span>
-                			                </c:otherwise>
-                        			    </c:choose>
-		                        	</c:forEach>
-        			            </div>
-			                </c:if>
-            			</div>
-                	</div>
-                </div>
-            	<div class="writeContent">${vo.content}</div>     
-            </div>
-            <div class="rightContainer">
-            	<div class="writeDate"><fmt:formatDate value="${vo.wdate}" pattern="yyyy-MM-dd HH:mm:ss" /></div>
-            	<div class="buttonList">
-                	<input type="button" value="수정" class="update" onclick="openReviewUpdateForm(${vo.num}, ${shoVO.num}, '${vo.writerName}')">
-                	<input type="button" value="삭제" class="delete"  onclick="deleteReview(${vo.num}, ${vo.shopNum}, '${vo.writerName}')">
-                </div>
-            </div>
-        </div>
-    </c:forEach>
-	
-	
-	<!-- 페이징 -->
-	<div class="pagination">
-    	<c:choose>
-        	<c:when test="${srePage > 1}">
-        	    <button class="pagination-button" onclick="Paginate(${srePage - 1}, ${parPage})">이전</button>
-    	    </c:when>
-	    </c:choose>
+	<c:choose>
+        <c:when test="${not empty sreVOS}">
+    		<c:forEach var="vo" items="${sreVOS}">
+        		<div class="reviewContentForm">
+            		<div class="imageContainer"><img id="symbol" class="symbol" src="../resources/ShopReviewImage/${vo.num}.png" onerror="this.src='../resources/ShopReviewImage/default.png';"></div>
+            			<div class="writerForm">
+            				<div class="writerInform">
+                				<img id="profile" width="70px" height="70px" src="../resources/ProfileImage/${vo.writer}.png" onerror="src='../resources/ProfileImage/default.png'">
+    	            			<div class="writerReview">
+        	        	    		<div class="writerName">
+        	        	    			<c:choose>
+                    	        			<c:when test="${vo.anonymous eq 1 && vo.writerName ne sessionScope.nick_name}">비공개</c:when>
+                    	        			<c:otherwise>${vo.writerName}</c:otherwise>
+                    	    			</c:choose>
+		        	        	    </div>
+            			    	    <div class="writerRate">
+				           			    <div class="star-rating" data-rated="${vo.rated}">
+		        	                		<c:forEach var="i" begin="1" end="5">
+        		                  		  		<c:choose>
+			    		            	            <c:when test="${i <= vo.rated}">
+            					        	            <span class="star selected" data-value="${i}">&#9733;</span>
+                        					        </c:when>
+		                	  	    				<c:otherwise>
+		        		        	    	            <span class="star" data-value="${i}">&#9733;</span>
+        		        			    	        </c:otherwise>
+                		        		    	</c:choose>
+		                		      		</c:forEach>
+        			        			</div>
+		            				</div>
+        		        		</div>
+                			</div>
+		            		<div class="writeContent">${vo.content}</div>     
+        		    </div>
+		            <div class="rightContainer">
+        		    	<div class="writeDate"><fmt:formatDate value="${vo.wdate}" pattern="yyyy-MM-dd HH:mm:ss" /></div>
+            			<div class="buttonList">
+		                	<input type="button" value="수정" class="update" onclick="openReviewUpdateForm(${vo.num}, ${shoVO.num}, '${vo.writerName}')">
+        		        	<input type="button" value="삭제" class="delete"  onclick="deleteReview(${vo.num}, ${vo.shopNum}, '${vo.writerName}')">
+		                </div>
+        		    </div>
+		        </div>
+		    </c:forEach>
 
-    	<c:choose>
-        	<c:when test="${srePage < totalSrePages}">
-        	    <button class="pagination-button" onclick="Paginate(${srePage + 1}, ${parPage})">다음</button>
-        	</c:when>
-    	</c:choose>
+			<div class="pagination">
+    			<c:choose>
+		        	<c:when test="${srePage > 1}">
+        			    <button class="pagination-button" onclick="Paginate(${srePage - 1}, ${parPage})">이전</button>
+		    	    </c:when>
+	    		</c:choose>
+
+		    	<c:choose>
+        			<c:when test="${srePage < totalSrePages}">
+        	    		<button class="pagination-button" onclick="Paginate(${srePage + 1}, ${parPage})">다음</button>
+		        	</c:when>
+    			</c:choose>
+			</div>
+			</c:when>
+			<c:otherwise>
+            <!-- 후기가 없는 경우 -->
+	            <div class="noReviewMessage">해당 매장에 후기가 없어요</div>
+    	    </c:otherwise>
+		</c:choose>
 	</div>
-	
-	<c:forEach var="vo" items="${prtVOS}">
-        
-    </c:forEach>
-</div>
 <div class="partyForm">
-	<div class="partyCollection">관련 모임</div>
-	<c:forEach var="vo" items="${parVOS}">
-		<div class="partyItem">
-			<div class="partyLeft">
-				<div class="partyTitle">${vo.title}</div>
-				<div class="partyMaster">${vo.writerName}</div>
-			</div>
-			<div Class="partyRight">
-				<div class="partyRemain">${vo.applicants + 1} / ${vo.max + 1}</div>
-                <div class="partyDate">
-                    <fmt:parseDate value="${vo.deadLine}" pattern="yyyy-MM-dd HH:mm:ss.S" var="deadlineDate" />
-                    <fmt:formatDate value="${deadlineDate}" pattern="yyyy년 MM월 dd일" />
-                </div>
-			</div>
-		</div>
-	</c:forEach>
-	<div class="pagination">
-    	<c:choose>
-        	<c:when test="${parPage > 1}">
-        	    <button class="pagination-button" onclick="Paginate(${srePage}, ${parPage - 1})">이전</button>
-    	    </c:when>
-	    </c:choose>
-
-    	<c:choose>
-        	<c:when test="${parPage < totalParPages}">
-        	    <button class="pagination-button" onclick="Paginate(${srePage}, ${parPage + 1})">다음</button>
-        	</c:when>
-    	</c:choose>
+	<div class="reviewTitle">
+		<div class="partyCollection">관련 모임</div>
+    	<c:if test="${not empty sessionScope.nick_name}">
+        	<!-- 로그인된 경우 -->
+        	<div class="reviewButtonContainer">
+        		<input type="button" value="모임등록" class="partyButton" onclick="openPartyInsertForm('${shoVO.name}')">
+        	</div>
+    	</c:if>
 	</div>
+	<c:choose>
+		<c:when test="${not empty parVOS}">
+			<c:forEach var="vo" items="${parVOS}">
+				<div class="partyItem" onclick="redirectToPartyDetail(${vo.partyNum})">
+					<div class="partyLeft">
+						<div class="partyTitle">${vo.title}</div>
+						<div class="partyMaster">주최자 : ${vo.writerName}</div>
+					</div>
+					<div Class="partyRight">
+						<div class="partyRemain">${vo.applicants + 1} / ${vo.max + 1}</div>
+            		    <div class="partyDate">약속일 : 
+            		        <fmt:parseDate value="${vo.deadLine}" pattern="yyyy-MM-dd HH:mm:ss.S" var="deadlineDate" />
+	           	        	<fmt:formatDate value="${deadlineDate}" pattern="yyyy년 MM월 dd일" />
+    	       	    	</div>
+					</div>
+				</div>
+			</c:forEach>
+		<div class="pagination">
+    		<c:choose>
+        		<c:when test="${parPage > 1}">
+        	    	<button class="pagination-button" onclick="Paginate(${srePage}, ${parPage - 1})">이전</button>
+	    	    </c:when>
+		    </c:choose>
+
+	    	<c:choose>
+    	    	<c:when test="${parPage < totalParPages}">
+        		    <button class="pagination-button" onclick="Paginate(${srePage}, ${parPage + 1})">다음</button>
+        		</c:when>
+	    	</c:choose>
+		</div>
+		</c:when>
+		<c:otherwise>
+			<div class="noReviewMessage">현재 모집중인 모임이 없어요</div>
+		</c:otherwise>
+	</c:choose>
 </div>
 
 <!-- 모달 창 -->

@@ -20,6 +20,16 @@ $(function(){
 	$('#timeLimit').attr('min', date);
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+	// 컨트롤러에서 넘어온 place 값을 가져와서 입력 칸에 넣어주는 함수
+	function setPlaceValue(placeValue) {
+		document.getElementById("place").value = placeValue;
+	}
+
+	// 컨트롤러에서 넘어온 place 값을 사용하여 입력 칸에 값을 설정합니다.
+	setPlaceValue("${place}");
+});
+
 function setMin(){
 	if($('#deadLine').val() < date){
 		alert('현재 시간보다 이전의 시간입니다.');

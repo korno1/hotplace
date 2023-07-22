@@ -91,12 +91,14 @@ iframe {
 }
 
 .reviewForm {
+	padding: 10px;
 	display: block;
 	border-top: 1px solid #807F87;
 }
 
 .reviewTitle {
-	margin-top: 30px;
+	margin-top: 10px;
+	margin-bottom: 15px;
 	display: flex;
 	justify-content: space-between;
     align-items: center;
@@ -142,7 +144,8 @@ iframe {
 }
 
 .writerForm {
-	margin-left: 40px;
+	margin-left: 20px;
+    width: 660px;
 }
 
 .writerInform {
@@ -178,6 +181,7 @@ iframe {
 
 .rightContainer {
 	text-align: center;
+	width: 280px;
 }
 
 .writeDate {
@@ -196,6 +200,7 @@ iframe {
 	width: 180px;
 	height: 50px;
 	border: 1px solid #C24229;
+	background: #ffffff;
 	border-radius: 25px;
 	opacity: 1;
 	text-align: center;
@@ -249,4 +254,95 @@ iframe {
     content: attr(data-rated) "/5";
     padding-left: 5px;
     color: #AAA;
+}
+
+.noReviewMessage {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.partyForm {
+  margin-top: 50px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+}
+
+.partyCollection {
+	font-size: 35px;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+.partyItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  border-bottom: 1px solid #ccc;
+}
+
+.partyLeft {
+  display: flex;
+  flex-direction: column;
+}
+
+.partyTitle {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.partyMaster {
+  font-size: 14px;
+  color: #888;
+}
+
+.partyRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.partyRemain {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.partyDate {
+  font-size: 14px;
+  color: #555;
+}
+
+.partyButton {
+	width: 180px;
+    height: 50px;
+    border-radius: 25px;
+    background: #ffffff;
+    text-align: center;
+    color: #C24229;
+    font: normal normal 600 18px/21px Pretendard;
+    letter-spacing: 0px;
+    cursor: pointer;
+    border: 1px #C24229 solid;
+    opacity: 1;
+}
+
+.pagination {
+  margin-top: 10px;
+}
+
+.pagination-button {
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.pagination-button:hover {
+  background-color: #0056b3;
 }

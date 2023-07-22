@@ -16,5 +16,6 @@ public class ShopVO {
 	private int rate;
 	private double distance;
 	private int reviewCount;
+	private int partyCount;
 	private MultipartFile multipartFile;
 }

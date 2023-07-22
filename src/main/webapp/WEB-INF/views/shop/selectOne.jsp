@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -211,7 +210,10 @@
 			</div>
 			<div Class="partyRight">
 				<div class="partyRemain">${vo.applicants + 1} / ${vo.max + 1}</div>
-				<div class="partyDate">${vo.deadLine}</div>
+                <div class="partyDate">
+                    <fmt:parseDate value="${vo.deadLine}" pattern="yyyy-MM-dd HH:mm:ss.S" var="deadlineDate" />
+                    <fmt:formatDate value="${deadlineDate}" pattern="yyyy년 MM월 dd일" />
+                </div>
 			</div>
 		</div>
 	</c:forEach>

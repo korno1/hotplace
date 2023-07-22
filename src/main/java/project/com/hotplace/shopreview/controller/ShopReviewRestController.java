@@ -46,9 +46,11 @@ public class ShopReviewRestController {
 	        
 	        // 삭제 로직 수행
 	        int result = service.delete(num);
+	        int avgRate = service.rateAvg(shopNum);
+	        
 	        if (result > 0) {
 	        	log.info("deleteOK");
-	        	shoService.decreaseReview(shopNum);
+	        	shoService.updateRate(shopNum, avgRate, -1);
 	            return "success";
 	        } else {
 	            return "failure";
@@ -136,7 +138,8 @@ public class ShopReviewRestController {
 			log.info("vo:{}", vo);
 		       
 		    int result = service.update(vo);
-		    shoService.updateRate(vo.getShopNum(), vo.getRated(), 0);
+		    int avgRate = service.rateAvg(vo.getShopNum());
+		    shoService.updateRate(vo.getShopNum(), avgRate, 0);
 		    log.info("result:{}",result);
 		    if (result > 0) {
 	            // 삽입 성공

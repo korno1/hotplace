@@ -78,13 +78,4 @@ public class ShopDAOimpl implements ShopDAO {
 		param.put("searchWord", searchWord);
 		return sqlSession.selectList("SHO_SEARCH_LIST", param);
 	}
-
-	@Override
-	public int decreaseReview(int shopNum) {
-		Map<String, Object> param = new HashMap<String, Object>();
-		
-		param.put("shopNum", shopNum);
-		return sqlSession.update("SHO_DECREASE_REVIEW", param);
-	}
-
 }

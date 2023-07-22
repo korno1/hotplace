@@ -19,6 +19,4 @@ public interface ShopDAO {
 	public ShopVO selectOne(ShopVO vo);
 	
 	public List<ShopVO> searchList(String searchWord);
-
-	public int decreaseReview(int shopNum);
 }

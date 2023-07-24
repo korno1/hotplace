@@ -19,7 +19,7 @@
 	
 	function countPost(callback){ // 게시글 개수 계산
 		console.log($('#searchWord').val());
-	
+		
 		$.ajax({
 			url: "json/selectAll.do",
 			data:{
@@ -123,6 +123,12 @@
 		
 	} // end loadPage
 	
+	function updatePageState() {
+        // History API를 사용하여 페이지 상태를 업데이트
+        let state = { page: page };
+        history.pushState(state, "", "");
+    }
+	
 	function selectOneForm(num) {
 	    var form = document.createElement("form");
 	    form.setAttribute("method", "post");
@@ -137,7 +143,9 @@
 
 	    document.body.appendChild(form);
 	    form.submit();
+	    
 	  }
+	
 	
 	$(function(){
 		let seq;

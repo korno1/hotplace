@@ -16,7 +16,7 @@ import project.com.hotplace.member.service.MemberService;
 public class MemberReviewController {
 	
 	@Autowired
-	MemberService mem_service;
+	private MemberService mem_service;
 
 	@RequestMapping(value = {"/userpage.do"}, method = RequestMethod.GET)
 	public String userpage(MemberVO vo, Model model) {

@@ -20,13 +20,6 @@ public class PartyController {
 	@Autowired
 	private PartyService service;
 	
-	@RequestMapping(value = "/my.do", method = RequestMethod.GET)
-	public String my() {
-		log.info("/my.do...");
-		
-		return "my";
-	}
-	
 	@RequestMapping(value = "/party/selectAll.do", method = RequestMethod.GET)
 	public String selectAll(String searchKey, String searchWord, Integer page, Integer status, Model model) {
 		log.info("/par_selectAll.do...");

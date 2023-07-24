@@ -244,7 +244,7 @@ function textlimit(category, obj) {
 	        	$("#nickName").val('');
 			}
 	}else if(cateogry==="email"){
-		pattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{5,33}$/;
+		pattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,33}$/;
 			if (str !== "" && !pattern.test(str)) {
 				alert("유효하지 않은 이메일 형식입니다");
 			}

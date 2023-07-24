@@ -51,8 +51,8 @@ $(document).on('click', '#par_next_page', function() {
 	<div>
 		<div class="title">내 신청 정보</div>
 		<div class="header">
-			<img width="100px" src="../resources/ProfileImage/${num}"
-						onerror="this.src='../resources/ProfileImage/default.png'">
+			<img id="preview" width="100px" src="${pageContext.request.contextPath}/resources/ProfileImage/${num}.png" 
+					onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/resources/ProfileImage/default.png';">
 			<button class="userPage" onclick="location.href='/hotplace/userpage.do?num=${num}'">내 모임 정보</button>
 		</div>
 	
@@ -60,8 +60,8 @@ $(document).on('click', '#par_next_page', function() {
 			<c:forEach var="vo" items="${vos}">
 				<div class="board">
 					<div class="userImpo">
-						<img width="50px" src="../resources/ProfileImage/${vo.writerNum}"
-						onerror="this.src='../resources/ProfileImage/default.png'">
+						<img id="preview" width="50px" src="${pageContext.request.contextPath}/resources/ProfileImage/${num}.png" 
+						onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/resources/ProfileImage/default.png';">
 						<div class="userName">${vo.writerName}</div>
 						<div class="status">
 							<c:choose>

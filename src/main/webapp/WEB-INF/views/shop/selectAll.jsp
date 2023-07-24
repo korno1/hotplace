@@ -135,9 +135,16 @@
                 var listItem = $('<div class="large" onclick="selectOne(' +
                     vo.num +
                     ')"></div>');
+
+                // 반투명한 검은 상자 (vo.partyCount를 표시)
+               var partyCountBox = $('<div class="partyCountBox"></div>');
+                partyCountBox.append('<img class="partyIcon" src="../resources/partyIcon.png">');
+                partyCountBox.append(vo.partyCount);
+                listItem.append(partyCountBox);
+
                 listItem.append(
-                    '<div class="imgContainer"><img id="preview" width="100px" src="../resources/ShopSymbol/' +
-                    vo.num + '" onerror="this.src=\'../resources/ShopSymbol/default.png\';"></div>'
+                    '<div class="imgContainer"><img id="preview" class="preview" width="100px" src="../resources/ShopSymbol/' +
+                    vo.num + '.png" onerror="this.src=\'../resources/ShopSymbol/default.png\';"></div>'
                 );
                 var rateHtml = getStarRatingHtml(vo.rate);
                 var reviewCountHtml = '<div class="reviewCount">(' + vo.reviewCount + ')</div>';
@@ -148,7 +155,7 @@
                     + '<div class="rateForm"><div class="rateContent">' +
                     rateHtml +
                     '</div>' +
-                    reviewCountHtml + 
+                    reviewCountHtml +
                     '</div>' +
                     '<div class="address">' + vo.address + '</div>' +
                     '</div>'

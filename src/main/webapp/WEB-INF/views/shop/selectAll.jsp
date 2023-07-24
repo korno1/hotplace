@@ -146,6 +146,12 @@
                     '<div class="imgContainer"><img id="preview" class="preview" width="100px" src="../resources/ShopSymbol/' +
                     vo.num + '.png" onerror="this.src=\'../resources/ShopSymbol/default.png\';"></div>'
                 );
+                
+                var distanceBox = $('<div class="distanceBox"></div>');
+                distanceBox.append('<img class="navIcon" src="../resources/navIcon.png">');
+                distanceBox.append(vo.distance.toFixed(1) + 'km');
+                listItem.append(distanceBox);
+                
                 var rateHtml = getStarRatingHtml(vo.rate);
                 var reviewCountHtml = '<div class="reviewCount">(' + vo.reviewCount + ')</div>';
                 listItem.append(
@@ -159,7 +165,14 @@
                     '</div>' +
                     '<div class="address">' + vo.address + '</div>' +
                     '</div>'
-                );
+                    );
+                if (vo.distance !== null && vo.distance !== 0) {
+                	var distanceBox = listItem.find(".distanceBox");
+                	distanceBox.show();
+                	distanceBox.find(".distance").text(vo.distance);
+           		} else {
+                	listItem.find(".distanceBox").hide();
+                	}
 
                 shopList.append(listItem);
             });
@@ -263,6 +276,7 @@
             <option value="title">가게명순</option>
             <option value="address">주소순</option>
             <option value="review">리뷰순</option>
+            <option value="reviewCount">리뷰많은순</option>
             <% if (session.getAttribute("latitude") != null && session.getAttribute("longitude") != null) { %>
 	           	<option value="distance">거리순</option>
 	       	<% } %>

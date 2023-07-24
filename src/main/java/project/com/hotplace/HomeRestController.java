@@ -82,6 +82,10 @@ public class HomeRestController {
 		
 		 Map<String, Integer> categoryCountMap = new HashMap<>(); // 카테고리별 count를 저장할 맵
 		
+		 for (ShopVO shop : nearShops) {
+			 shop.setCate(shop.getCate().replaceAll("중식,중국요리", "중식"));
+		 }
+		 
 		// 카테고리별 count 정보가 구성된 Map 생성
 	    for (ShopVO shop : nearShops) {
 	        String[] categories = shop.getCate().split(","); // 카테고리 목록을 쉼표로 분리하여 배열로 변환

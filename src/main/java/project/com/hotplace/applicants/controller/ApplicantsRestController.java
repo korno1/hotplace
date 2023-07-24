@@ -34,6 +34,8 @@ public class ApplicantsRestController {
 		// vo = partyNum & status
 		
 		List<ApplicantsVO> vos = service.selectAll(vo);
+		log.info("vos:{}", vos);
+		
 		
 		return vos;
 	}

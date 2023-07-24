@@ -27,7 +27,7 @@
 .partyCountBox {
     position: absolute;
     top: 20px;
-    left: 20px;
+    left: 10px;
     background-color: rgba(0, 0, 0, 0.7);
     color: white;
     padding: 3px 5px;

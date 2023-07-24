@@ -44,8 +44,8 @@ function app_selectAll(applicantsNum=0){
 					tag_OK +=`
 						<div class="app-date">
 							<div class="appImpo">
-								<img width="50px" src="../resources/ProfileImage/${vo.writerNum}"
-								onerror="this.src='../resources/ProfileImage/default.png'">
+							<img id="preview" width="50px" src="${pageContext.request.contextPath}/resources/ProfileImage/\${vo.userNum}.png"
+								onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/resources/ProfileImage/default.png';">
 								<div>
 									<div class="app-name">\${vo.userName}</div>
 									<div class="app-comments">\${vo.comments}</div>
@@ -73,8 +73,8 @@ function app_selectAll(applicantsNum=0){
 					tag_NotOK +=`
 						<div class="app-date">
 						<div class="appImpo">
-							<img width="50px" src="../resources/ProfileImage/${vo.writerNum}"
-							onerror="this.src='../resources/ProfileImage/default.png'">
+						<img id="preview" width="50px" src="${pageContext.request.contextPath}/resources/ProfileImage/\${vo.userNum}.png"
+							onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/resources/ProfileImage/default.png';">
 							<div>
 								<div class="app-name">\${vo.userName}</div>
 								<div class="app-comments">\${vo.comments}</div>

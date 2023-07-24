@@ -17,7 +17,6 @@ let page =1;
 let mrePage = 1;
 let par_count; // 게시글 개수
 let mer_count; // 게시글 개수
-let isFormInserted = false;
 
 $(function(){
 	console.log('onload...');
@@ -223,12 +222,17 @@ function mre_selectAll(userNum=0, memberreviewNum=0, mrePage){ // ${param.member
 				`;
 			});//end ajax
 			
+			
+			isFormInserted = false; // 폼이 초기화되면 false로 설정하여 다시 작성 버튼이 나타날 수 있도록 함
+            $('#formContainer').replaceWith('<div id="formContainer"></div>');
+			$(".formContainer").css("display", "none");
+			
 			$(".mre-post").css("display", "block");
 			$(".par-post").css("display", "none");
 			
-			
-			$(".par_paging").css("display", "none");
 			$(".mre_paging").css("display", "block");
+			$(".par_paging").css("display", "none");
+			
 			if (${param.num}==${num}) {
 				$(".mre-insert").off("click"); // click 이벤트를 제거합니다.
 				$(".mre-insert").prop("disabled", true); // 버튼을 비활성화(disabled)합니다.
@@ -316,12 +320,15 @@ $(document).on('click', '#mre_next_page', function(e) {
     mre_selectAll(userNum='\${vo.userNum}', memberreviewNum=0, mrePage)
 });
 
+let isFormInserted = false;
+
 function insert() {
 	console.log('insert()...');
+	$(".formContainer").css("display", "block");
 	
     if (!isFormInserted) {
 		console.log('insert()...if');
-    	
+		
     	$(".mre-post").css("display", "none");
 		$(".par-post").css("display", "none");
 		$(".mre_paging").css("display", "none");
@@ -332,7 +339,6 @@ function insert() {
     	
         // 폼을 감싸는 부모 요소 생성
         var formContainer = $('<div id="formContainer" class="formContainer"></div>');
-// 		<div class="mre-writerName">\${vo.writerName}</div>
         var form = $(`
         		  <form class="insert-form">
 		        	<div class="mre-userImpo">
@@ -431,7 +437,7 @@ function insertOK() {
 }//end insertOK
 	
 function updateOK(memberreviewNum=0){
-	console.log('updateOK()....',memberreviewNum);
+	console.log('updateOK()....', memberreviewNum);
 	
 	$.ajax({
 		url : "memberreview/json/updateOK.do",
@@ -444,18 +450,19 @@ function updateOK(memberreviewNum=0){
 		dataType:'json',
 		success : function(obj) {
 			console.log('ajax...success:', obj);
-			if(obj.result==1) mre_selectAll(userNum='\${vo.userNum}', memberreviewNum=0, mrePage);
+			if(obj.result==1) {
+				isFormInserted = false; // 폼이 초기화되면 false로 설정하여 다시 작성 버튼이 나타날 수 있도록 함
+				mre_selectAll(userNum=0, memberreviewNum=0, mrePage);
+			}
 		},
 		error:function(xhr,status,error){
 			console.log('xhr.status:', xhr.status);
 		}
 	});
-	
 }//end updateOK
 	
 function deleteOK(memberreviewNum=0){
 	console.log('deleteOK()....',memberreviewNum);
-	
   if (confirm("글을 삭제하시겠습니까?")) {
 	  $.ajax({
 			url : "memberreview/json/deleteOK.do",
@@ -466,7 +473,10 @@ function deleteOK(memberreviewNum=0){
 			dataType:'json',
 			success : function(obj) {
 				console.log('ajax...success:', obj);
-				if(obj.result==1) mre_selectAll(userNum='\${vo.userNum}', memberreviewNum=0, mrePage);
+				if(obj.result==1) {
+					isFormInserted = false; // 폼이 초기화되면 false로 설정하여 다시 작성 버튼이 나타날 수 있도록 함
+					mre_selectAll(userNum='\${vo.userNum}', memberreviewNum=0, mrePage);
+				}
 			},
 			error:function(xhr,status,error){
 				console.log('xhr.status:', xhr.status);
@@ -515,8 +525,11 @@ function par_selectAll(page){
 						</div>
 					`;
 				}
-				
 			}); // end for-each
+			
+			isFormInserted = false; // 폼이 초기화되면 false로 설정하여 다시 작성 버튼이 나타날 수 있도록 함
+            $('#formContainer').replaceWith('<div id="formContainer"></div>');
+			$(".formContainer").css("display", "none");
 			
 			$(".par-post").css("display", "block");
 			$(".mre-post").css("display", "none");
@@ -537,7 +550,6 @@ function par_selectAll(page){
 </script>
 </head>
 <body>
-
 	<div class="userPage-body">
 		<div class="userImpo">
 			<img id="preview" width="80px" src="${pageContext.request.contextPath}/resources/ProfileImage/${vo2.num}.png"

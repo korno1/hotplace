@@ -256,15 +256,17 @@ function rejectOK(applicantsNum=0) {
 	<fmt:parseDate var="newWdate" value="${vo2.wdate}"  pattern="yyyy-MM-dd HH:mm:ss.SSS" />
 	<fmt:formatDate var="wdate" value="${newWdate}" pattern="yyyy-MM-dd HH:mm" />
 	
+	
 	<div class="body">
 		<div class="application">
 			<div class="title">
 				<div class="par-title">${vo2.title}</div>
 			</div>
 			<div class="writerImpo">
-				<div><img width="60px" src="../resources/ProfileImage/${vo2.writerNum}" onerror="this.src='../resources/ProfileImage/default.png'"></div>
+			
+				<div><img id="preview" width="60px" src="${pageContext.request.contextPath}/resources/ProfileImage/${vo2.writerNum}.png" 
+					onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/resources/ProfileImage/default.png';"></div>
 				<div class="par-name"><a href="/hotplace/userpage.do?num=${vo2.writerNum}">${vo2.writerName}</a></div>
-<!-- 				<button class="insertMailBtn\${arr.vos[i].num}" onclick="insertMail(this)">쪽지발송</button> -->
 				<div>
 					<div class="par-views">${vo2.views}</div>
 					<div class="par-wdate">작성일 ${wdate}</div>

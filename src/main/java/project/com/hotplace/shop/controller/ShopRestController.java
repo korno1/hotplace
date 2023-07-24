@@ -54,7 +54,16 @@ public class ShopRestController {
 	    List<ShopVO> vos = service.searchList(searchWord);
 	    
 	    log.info("sort...{}", sortOption);
-	    
+	    if(session.getAttribute("latitude") != null && session.getAttribute("longitude") != null)
+	    {
+	    	double latitude = Double.parseDouble(session.getAttribute("latitude").toString());
+	    	double longitude = Double.parseDouble(session.getAttribute("longitude").toString());
+	    	
+	    	for(ShopVO shop:vos)
+	    	{
+	    		shop.setDistance(ShopUtil.calculateDistance(latitude, longitude, shop.getLoc_y(), shop.getLoc_x()));
+	    	}
+	    }
 	    switch (sortOption) {
 	    	case "title":
 	    		Collections.sort(vos, new Comparator<ShopVO>() {
@@ -73,31 +82,37 @@ public class ShopRestController {
 	    		});
 	    		break;
 	    	case "review":
-	    		Collections.sort(vos, new Comparator<ShopVO>() {
-	    		    @Override
-	    		    public int compare(ShopVO vo1, ShopVO vo2) {
-	    		    	return Integer.compare(vo2.getReviewCount(), vo1.getReviewCount());
-	    		    }
-	    		});
-	    		break;
+	            Collections.sort(vos, new Comparator<ShopVO>() {
+	                @Override
+	                public int compare(ShopVO vo1, ShopVO vo2) {
+	                    int rateComparison = Integer.compare(vo2.getRate(), vo1.getRate());
+	                    if (rateComparison == 0) {
+	                        return Integer.compare(vo2.getReviewCount(), vo1.getReviewCount());
+	                    }
+	                    return rateComparison;
+	                }
+	            });
+	            break;
+	        case "reviewCount":
+	            Collections.sort(vos, new Comparator<ShopVO>() {
+	                @Override
+	                public int compare(ShopVO vo1, ShopVO vo2) {
+	                    int reviewCountComparison = Integer.compare(vo2.getReviewCount(), vo1.getReviewCount());
+	                    if (reviewCountComparison == 0) {
+	                        return Integer.compare(vo2.getRate(), vo1.getRate());
+	                    }
+	                    return reviewCountComparison;
+	                }
+	            });
+	            break;
 	    	case "distance":
-	    		double latitude = Double.parseDouble(session.getAttribute("latitude").toString());
-				double longitude = Double.parseDouble(session.getAttribute("longitude").toString());
-			
-				vos.sort(new Comparator<ShopVO>() {
-			    	@Override
-			    	public int compare(ShopVO vo1, ShopVO vo2) {
-			        	if (vo1 == null || vo2 == null) {
-			           		return 0; // 두 요소 모두 null이라면 순서 변경 없음
-			        	}
-			        	// 좌표 계산
-			        	double distance1 = ShopUtil.calculateDistance(latitude, longitude, vo1.getLoc_y(), vo1.getLoc_x());
-			        	double distance2 = ShopUtil.calculateDistance(latitude, longitude, vo2.getLoc_y(), vo2.getLoc_x());
-
-			        	// 거리를 기준으로 오름차순 정렬
-			        	return Double.compare(distance1, distance2);
-			    	}
-				});
+	    		Collections.sort(vos, new Comparator<ShopVO>() {
+	    	        @Override
+	    	        public int compare(ShopVO vo1, ShopVO vo2) {
+	    	            return Double.compare(vo1.getDistance(), vo2.getDistance());
+	    	        }
+	    	    });
+	    	    break;
             default:
             	break;
 	    }
